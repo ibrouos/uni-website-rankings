@@ -38,16 +38,27 @@ class LighthouseMonitor:
         
         logger.info(f"Testing {name} ({url}) on {device}")
         
-        # Lighthouse CLI command
+        # Lighthouse CLI command - build based on device type
         cmd = [
             "lighthouse",
             url,
             "--output=json",
             "--quiet",
             "--chrome-flags=--headless",
-            f"--preset={device}",  # 'mobile' or 'desktop'
             "--only-categories=performance,accessibility,best-practices,seo"
         ]
+        
+        # Add device-specific flags
+        if device == "mobile":
+            cmd.extend([
+                "--emulated-form-factor=mobile",
+                "--throttling-method=devtools"
+            ])
+        else:  # desktop
+            cmd.extend([
+                "--emulated-form-factor=desktop",
+                "--throttling-method=devtools"
+            ])
         
         try:
             with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp_file:
