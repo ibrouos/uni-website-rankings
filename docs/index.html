@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Performance Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .controls { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .controls select, .controls input { margin: 0 10px 10px 0; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .result-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .site-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333; }
+        .device-badge { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-left: 10px; }
+        .mobile { background: #e3f2fd; color: #1976d2; }
+        .desktop { background: #f3e5f5; color: #7b1fa2; }
+        .scores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .score { text-align: center; padding: 10px; border-radius: 6px; }
+        .score-label { font-size: 12px; color: #666; }
+        .score-value { font-size: 20px; font-weight: bold; }
+        .score-good { background: #e8f5e8; color: #2e7d32; }
+        .score-average { background: #fff3e0; color: #f57c00; }
+        .score-poor { background: #ffebee; color: #d32f2f; }
+        .metrics { margin-top: 15px; }
+        .metric { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .metric:last-child { border-bottom: none; }
+        .timestamp { font-size: 12px; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚦 Lighthouse Performance Dashboard</h1>
+            <p>Monitor website performance, accessibility, and SEO scores</p>
+        </div>
+        
+        <div class="controls">
+            <select id="sortBy">
+                <option value="performance">Sort by Performance</option>
+                <option value="accessibility">Sort by Accessibility</option>
+                <option value="best_practices">Sort by Best Practices</option>
+                <option value="seo">Sort by SEO</option>
+                <option value="timestamp">Sort by Date</option>
+            </select>
+            
+            <select id="deviceFilter">
+                <option value="all">All Devices</option>
+                <option value="mobile">Mobile Only</option>
+                <option value="desktop">Desktop Only</option>
+            </select>
+            
+            <input type="text" id="urlFilter" placeholder="Filter by name or URL..." />
+        </div>
+        
+        <div id="results" class="results-grid"></div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script>
+        let currentData = window.lighthouseData || [];
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function renderResults(data) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            
+            data.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                
+                const url = new URL(result.url);
+                const siteName = url.hostname.replace('www.', '');
+                
+                card.innerHTML = `
+                    <div class="site-name">
+                        ${siteName}
+                        <span class="device-badge ${result.device}">${result.device}</span>
+                    </div>
+                    
+                    <div class="scores">
+                        <div class="score ${getScoreClass(result.scores.performance)}">
+                            <div class="score-label">Performance</div>
+                            <div class="score-value">${Math.round(result.scores.performance)}</div>
+                        </div>
+                        <div class="score ${getScoreClass(result.scores.accessibility)}">
+                            <div class="score-label">Accessibility</div>
+                            <div class="score-value">${Math.round(result.scores.accessibility)}</div>
+                        </div>
+                        <div class="score ${getScoreClass(result.scores.best_practices)}">
+                            <div class="score-label">Best Practices</div>
+                            <div class="score-value">${Math.round(result.scores.best_practices)}</div>
+                        </div>
+                        <div class="score ${getScoreClass(result.scores.seo)}">
+                            <div class="score-label">SEO</div>
+                            <div class="score-value">${Math.round(result.scores.seo)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics">
+                        <div class="metric">
+                            <span>First Contentful Paint</span>
+                            <span>${formatMetric(result.metrics.first_contentful_paint)}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Largest Contentful Paint</span>
+                            <span>${formatMetric(result.metrics.largest_contentful_paint)}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Cumulative Layout Shift</span>
+                            <span>${result.metrics.cumulative_layout_shift.toFixed(3)}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Speed Index</span>
+                            <span>${formatMetric(result.metrics.speed_index)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timestamp">
+                        Last tested: ${new Date(result.timestamp).toLocaleString()}
+                    </div>
+                `;
+                
+                resultsContainer.appendChild(card);
+            });
+        }
+        
+        function filterAndSort() {
+            let filteredData = [...currentData];
+            
+            // Apply URL filter
+            const urlFilter = document.getElementById('urlFilter').value.toLowerCase();
+            if (urlFilter) {
+                filteredData = filteredData.filter(result => 
+                    result.name.toLowerCase().includes(urlFilter) || 
+                    result.url.toLowerCase().includes(urlFilter)
+                );
+            }
+            
+            // Apply device filter
+            const deviceFilter = document.getElementById('deviceFilter').value;
+            if (deviceFilter !== 'all') {
+                filteredData = filteredData.filter(result => result.device === deviceFilter);
+            }
+            
+            // Sort data
+            const sortBy = document.getElementById('sortBy').value;
+            filteredData.sort((a, b) => {
+                if (sortBy === 'timestamp') {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                }
+                return b.scores[sortBy] - a.scores[sortBy];
+            });
+            
+            renderResults(filteredData);
+        }
+        
+        // Event listeners
+        document.getElementById('sortBy').addEventListener('change', filterAndSort);
+        document.getElementById('deviceFilter').addEventListener('change', filterAndSort);
+        document.getElementById('urlFilter').addEventListener('input', filterAndSort);
+        
+        // Initial render
+        filterAndSort();
+    </script>
+</body>
+</html>
