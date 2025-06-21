@@ -12,6 +12,9 @@ from pathlib import Path
 import logging
 from typing import Dict, List, Any
 import tempfile
+import asyncio
+import concurrent.futures
+from functools import partial
 
 # Configure logging
 logging.basicConfig(
@@ -25,11 +28,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class LighthouseMonitor:
-    def __init__(self, sites: List[Dict[str, str]], output_dir: str = "lighthouse_results"):
+    def __init__(self, sites: List[Dict[str, str]], output_dir: str = "lighthouse_results", max_workers: int = 8):
         self.sites = sites
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
         self.today = date.today().isoformat()
+        self.max_workers = max_workers  # Number of concurrent tests
         
     def run_lighthouse_test(self, site: Dict[str, str], device: str) -> Dict[str, Any]:
         """Run Lighthouse test for a single site and device type"""
@@ -67,7 +71,7 @@ class LighthouseMonitor:
                     cmd + [f"--output-path={tmp_file.name}"],
                     capture_output=True,
                     text=True,
-                    timeout=120  # 2 minute timeout
+                    timeout=180  # 3 minute timeout per test
                 )
                 
                 if result.returncode != 0:
@@ -117,15 +121,42 @@ class LighthouseMonitor:
             return None
     
     def run_all_tests(self) -> List[Dict[str, Any]]:
-        """Run Lighthouse tests for all sites on both mobile and desktop"""
-        all_results = []
-        
+        """Run Lighthouse tests for all sites on both mobile and desktop concurrently"""
+        # Create list of all test tasks
+        test_tasks = []
         for site in self.sites:
             for device in ['mobile', 'desktop']:
-                result = self.run_lighthouse_test(site, device)
-                if result:
-                    all_results.append(result)
+                test_tasks.append((site, device))
         
+        logger.info(f"Running {len(test_tasks)} tests with {self.max_workers} concurrent workers")
+        
+        # Run tests concurrently using ThreadPoolExecutor
+        all_results = []
+        completed = 0
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            # Submit all tasks
+            future_to_task = {
+                executor.submit(self.run_lighthouse_test, site, device): (site, device)
+                for site, device in test_tasks
+            }
+            
+            # Process completed tests
+            for future in concurrent.futures.as_completed(future_to_task):
+                site, device = future_to_task[future]
+                completed += 1
+                
+                try:
+                    result = future.result()
+                    if result:
+                        all_results.append(result)
+                        logger.info(f"✅ Completed {site['name']} ({device}) - {completed}/{len(test_tasks)}")
+                    else:
+                        logger.warning(f"❌ Failed {site['name']} ({device}) - {completed}/{len(test_tasks)}")
+                except Exception as e:
+                    logger.error(f"❌ Exception for {site['name']} ({device}): {str(e)} - {completed}/{len(test_tasks)}")
+        
+        logger.info(f"Completed all tests. {len(all_results)} successful results out of {len(test_tasks)} total tests")
         return all_results
     
     def save_results(self, results: List[Dict[str, Any]]):
@@ -403,8 +434,19 @@ def main():
         logger.error(f"Failed to load sites configuration: {str(e)}")
         return
     
+    # Determine optimal number of workers based on site count
+    # Use fewer workers for smaller batches, more for larger
+    if len(sites_to_test) <= 10:
+        max_workers = 4
+    elif len(sites_to_test) <= 50:
+        max_workers = 8
+    else:
+        max_workers = 12
+    
+    logger.info(f"Using {max_workers} concurrent workers for {len(sites_to_test)} sites")
+    
     # Initialize monitor
-    monitor = LighthouseMonitor(sites_to_test)
+    monitor = LighthouseMonitor(sites_to_test, max_workers=max_workers)
     
     # Run tests
     logger.info("Starting Lighthouse tests...")
