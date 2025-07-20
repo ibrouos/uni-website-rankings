@@ -22027,3 +22027,790 @@
 2025-07-19 07:18:41,860 - INFO - Generating dashboard...
 2025-07-19 07:18:41,965 - INFO - Dashboard generated at docs/index.html
 2025-07-19 07:18:41,967 - INFO - All tasks completed successfully!
+2025-07-20 06:29:53,773 - INFO - Loaded 130 sites from universities.json
+2025-07-20 06:29:53,773 - INFO - Using 12 concurrent workers for 130 sites
+2025-07-20 06:29:53,773 - INFO - Starting Lighthouse tests...
+2025-07-20 06:29:53,774 - INFO - Running 260 tests with 12 concurrent workers
+2025-07-20 06:29:53,786 - INFO - Testing University of Oxford (https://www.ox.ac.uk) on mobile
+2025-07-20 06:29:53,786 - INFO - Testing University of Oxford (https://www.ox.ac.uk) on desktop
+2025-07-20 06:29:53,786 - INFO - Testing University of Cambridge (https://www.cam.ac.uk) on mobile
+2025-07-20 06:29:53,787 - INFO - Testing University of Cambridge (https://www.cam.ac.uk) on desktop
+2025-07-20 06:29:53,788 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on mobile
+2025-07-20 06:29:53,788 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on desktop
+2025-07-20 06:29:53,791 - INFO - Testing London School of Economics and Political Science (https://www.lse.ac.uk) on mobile
+2025-07-20 06:29:53,792 - INFO - Testing London School of Economics and Political Science (https://www.lse.ac.uk) on desktop
+2025-07-20 06:29:53,798 - INFO - Testing University College London (https://www.ucl.ac.uk) on mobile
+2025-07-20 06:29:53,807 - INFO - Testing University College London (https://www.ucl.ac.uk) on desktop
+2025-07-20 06:29:53,815 - INFO - Testing King's College London (https://www.kcl.ac.uk) on mobile
+2025-07-20 06:29:53,819 - INFO - Testing King's College London (https://www.kcl.ac.uk) on desktop
+2025-07-20 06:31:45,500 - INFO - Testing University of Edinburgh (https://www.ed.ac.uk) on mobile
+2025-07-20 06:31:45,508 - INFO - ✅ Completed University of Cambridge (desktop) - 1/260
+2025-07-20 06:31:46,229 - INFO - Testing University of Edinburgh (https://www.ed.ac.uk) on desktop
+2025-07-20 06:31:46,239 - INFO - ✅ Completed University of Cambridge (mobile) - 2/260
+2025-07-20 06:31:57,526 - INFO - Testing University of Manchester (https://www.manchester.ac.uk) on mobile
+2025-07-20 06:31:57,528 - INFO - ✅ Completed King's College London (mobile) - 3/260
+2025-07-20 06:31:59,028 - INFO - Testing University of Manchester (https://www.manchester.ac.uk) on desktop
+2025-07-20 06:31:59,034 - INFO - ✅ Completed King's College London (desktop) - 4/260
+2025-07-20 06:32:01,538 - INFO - Testing University of Warwick (https://www.warwick.ac.uk) on mobile
+2025-07-20 06:32:01,538 - INFO - ✅ Completed Imperial College London (mobile) - 5/260
+2025-07-20 06:32:01,861 - INFO - Testing University of Warwick (https://www.warwick.ac.uk) on desktop
+2025-07-20 06:32:01,868 - INFO - ✅ Completed Imperial College London (desktop) - 6/260
+2025-07-20 06:32:02,819 - INFO - Testing University of Glasgow (https://www.gla.ac.uk) on mobile
+2025-07-20 06:32:02,832 - INFO - ✅ Completed University of Oxford (desktop) - 7/260
+2025-07-20 06:32:02,915 - INFO - Testing University of Glasgow (https://www.gla.ac.uk) on desktop
+2025-07-20 06:32:02,923 - INFO - ✅ Completed University of Oxford (mobile) - 8/260
+2025-07-20 06:32:04,283 - INFO - Testing University of Southampton (https://www.southampton.ac.uk) on mobile
+2025-07-20 06:32:04,291 - INFO - ✅ Completed University College London (mobile) - 9/260
+2025-07-20 06:32:05,826 - INFO - Testing University of Southampton (https://www.southampton.ac.uk) on desktop
+2025-07-20 06:32:05,836 - INFO - ✅ Completed University College London (desktop) - 10/260
+2025-07-20 06:32:25,501 - ERROR - Error running Lighthouse for London School of Economics and Political Science (https://www.lse.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:32:25,502 - INFO - Testing University of Birmingham (https://www.birmingham.ac.uk) on mobile
+2025-07-20 06:32:25,519 - WARNING - ❌ Failed London School of Economics and Political Science (mobile) - 11/260
+2025-07-20 06:32:25,919 - ERROR - Error running Lighthouse for London School of Economics and Political Science (https://www.lse.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:32:25,920 - INFO - Testing University of Birmingham (https://www.birmingham.ac.uk) on desktop
+2025-07-20 06:32:25,940 - WARNING - ❌ Failed London School of Economics and Political Science (desktop) - 12/260
+2025-07-20 06:33:02,306 - INFO - Testing University of Leeds (https://www.leeds.ac.uk) on mobile
+2025-07-20 06:33:02,315 - INFO - ✅ Completed University of Edinburgh (mobile) - 13/260
+2025-07-20 06:33:04,315 - INFO - Testing University of Leeds (https://www.leeds.ac.uk) on desktop
+2025-07-20 06:33:04,321 - INFO - ✅ Completed University of Edinburgh (desktop) - 14/260
+2025-07-20 06:33:18,456 - ERROR - Lighthouse failed for University of Manchester (https://www.manchester.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:33:18,456 - INFO - Testing University of Sheffield (https://www.sheffield.ac.uk) on mobile
+2025-07-20 06:33:18,456 - WARNING - ❌ Failed University of Manchester (mobile) - 15/260
+2025-07-20 06:33:19,354 - ERROR - Lighthouse failed for University of Manchester (https://www.manchester.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:33:19,354 - INFO - Testing University of Sheffield (https://www.sheffield.ac.uk) on desktop
+2025-07-20 06:33:19,365 - WARNING - ❌ Failed University of Manchester (desktop) - 16/260
+2025-07-20 06:34:01,584 - INFO - Testing University of Nottingham (https://www.nottingham.ac.uk) on mobile
+2025-07-20 06:34:01,606 - INFO - ✅ Completed University of Glasgow (desktop) - 17/260
+2025-07-20 06:34:02,434 - INFO - Testing University of Nottingham (https://www.nottingham.ac.uk) on desktop
+2025-07-20 06:34:02,435 - INFO - ✅ Completed University of Glasgow (mobile) - 18/260
+2025-07-20 06:34:18,797 - INFO - Testing Queen Mary University of London (https://www.qmul.ac.uk) on mobile
+2025-07-20 06:34:18,808 - INFO - ✅ Completed University of Leeds (mobile) - 19/260
+2025-07-20 06:34:20,790 - INFO - Testing Queen Mary University of London (https://www.qmul.ac.uk) on desktop
+2025-07-20 06:34:20,792 - INFO - ✅ Completed University of Southampton (mobile) - 20/260
+2025-07-20 06:34:21,085 - INFO - Testing Lancaster University (https://www.lancaster.ac.uk) on mobile
+2025-07-20 06:34:21,109 - INFO - ✅ Completed University of Leeds (desktop) - 21/260
+2025-07-20 06:34:26,663 - INFO - Testing Lancaster University (https://www.lancaster.ac.uk) on desktop
+2025-07-20 06:34:26,677 - INFO - ✅ Completed University of Southampton (desktop) - 22/260
+2025-07-20 06:34:31,282 - INFO - Testing University of Exeter (https://www.exeter.ac.uk) on mobile
+2025-07-20 06:34:31,289 - INFO - ✅ Completed University of Birmingham (desktop) - 23/260
+2025-07-20 06:34:33,307 - INFO - Testing University of Exeter (https://www.exeter.ac.uk) on desktop
+2025-07-20 06:34:33,324 - INFO - ✅ Completed University of Birmingham (mobile) - 24/260
+2025-07-20 06:34:38,438 - INFO - Testing University of York (https://www.york.ac.uk) on mobile
+2025-07-20 06:34:38,458 - INFO - ✅ Completed University of Warwick (mobile) - 25/260
+2025-07-20 06:34:42,940 - INFO - Testing University of York (https://www.york.ac.uk) on desktop
+2025-07-20 06:34:42,941 - INFO - ✅ Completed University of Warwick (desktop) - 26/260
+2025-07-20 06:35:12,297 - INFO - Testing University of Bath (https://www.bath.ac.uk) on mobile
+2025-07-20 06:35:12,332 - INFO - ✅ Completed University of Sheffield (mobile) - 27/260
+2025-07-20 06:35:13,632 - INFO - Testing University of Bath (https://www.bath.ac.uk) on desktop
+2025-07-20 06:35:13,654 - INFO - ✅ Completed University of Sheffield (desktop) - 28/260
+2025-07-20 06:35:52,187 - ERROR - Lighthouse failed for Queen Mary University of London (https://www.qmul.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:35:52,187 - INFO - Testing Cardiff University (https://www.cardiff.ac.uk) on mobile
+2025-07-20 06:35:52,200 - WARNING - ❌ Failed Queen Mary University of London (desktop) - 29/260
+2025-07-20 06:35:54,078 - INFO - Testing Cardiff University (https://www.cardiff.ac.uk) on desktop
+2025-07-20 06:35:54,100 - INFO - ✅ Completed Lancaster University (mobile) - 30/260
+2025-07-20 06:35:57,641 - INFO - Testing University of Liverpool (https://www.liverpool.ac.uk) on mobile
+2025-07-20 06:35:57,641 - INFO - ✅ Completed Lancaster University (desktop) - 31/260
+2025-07-20 06:36:26,776 - ERROR - Error running Lighthouse for University of Exeter (https://www.exeter.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:36:26,778 - INFO - Testing University of Liverpool (https://www.liverpool.ac.uk) on desktop
+2025-07-20 06:36:26,778 - WARNING - ❌ Failed University of Exeter (mobile) - 32/260
+2025-07-20 06:36:27,556 - ERROR - Error running Lighthouse for University of Exeter (https://www.exeter.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:36:27,562 - INFO - Testing University of St Andrews (https://www.st-andrews.ac.uk) on mobile
+2025-07-20 06:36:27,579 - WARNING - ❌ Failed University of Exeter (desktop) - 33/260
+2025-07-20 06:36:28,811 - INFO - Testing University of St Andrews (https://www.st-andrews.ac.uk) on desktop
+2025-07-20 06:36:28,832 - INFO - ✅ Completed University of Nottingham (mobile) - 34/260
+2025-07-20 06:36:30,488 - INFO - Testing University of Newcastle (https://www.ncl.ac.uk) on mobile
+2025-07-20 06:36:30,501 - INFO - ✅ Completed University of Nottingham (desktop) - 35/260
+2025-07-20 06:36:50,225 - INFO - Testing University of Newcastle (https://www.ncl.ac.uk) on desktop
+2025-07-20 06:36:50,226 - INFO - ✅ Completed University of Bath (desktop) - 36/260
+2025-07-20 06:36:50,380 - INFO - Testing University of Sussex (https://www.sussex.ac.uk) on mobile
+2025-07-20 06:36:50,397 - INFO - ✅ Completed University of Bath (mobile) - 37/260
+2025-07-20 06:36:52,611 - ERROR - Error running Lighthouse for University of York (https://www.york.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:36:52,612 - INFO - Testing University of Sussex (https://www.sussex.ac.uk) on desktop
+2025-07-20 06:36:52,612 - WARNING - ❌ Failed University of York (mobile) - 38/260
+2025-07-20 06:36:54,177 - ERROR - Error running Lighthouse for University of York (https://www.york.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:36:54,189 - INFO - Testing University of Surrey (https://www.surrey.ac.uk) on mobile
+2025-07-20 06:36:54,219 - WARNING - ❌ Failed University of York (desktop) - 39/260
+2025-07-20 06:37:14,194 - ERROR - Error running Lighthouse for Queen Mary University of London (https://www.qmul.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:37:14,200 - INFO - Testing University of Surrey (https://www.surrey.ac.uk) on desktop
+2025-07-20 06:37:14,201 - WARNING - ❌ Failed Queen Mary University of London (mobile) - 40/260
+2025-07-20 06:37:45,863 - INFO - Testing Queen's University Belfast (https://www.qub.ac.uk) on mobile
+2025-07-20 06:37:45,864 - INFO - ✅ Completed Cardiff University (mobile) - 41/260
+2025-07-20 06:37:47,997 - INFO - Testing Queen's University Belfast (https://www.qub.ac.uk) on desktop
+2025-07-20 06:37:48,010 - INFO - ✅ Completed Cardiff University (desktop) - 42/260
+2025-07-20 06:37:50,036 - INFO - Testing University of Aberdeen (https://www.abdn.ac.uk) on mobile
+2025-07-20 06:37:50,038 - INFO - ✅ Completed University of Liverpool (mobile) - 43/260
+2025-07-20 06:38:08,241 - INFO - Testing University of Aberdeen (https://www.abdn.ac.uk) on desktop
+2025-07-20 06:38:08,243 - INFO - ✅ Completed University of Sussex (desktop) - 44/260
+2025-07-20 06:38:08,872 - INFO - Testing University of Dundee (https://www.dundee.ac.uk) on mobile
+2025-07-20 06:38:08,900 - INFO - ✅ Completed University of Sussex (mobile) - 45/260
+2025-07-20 06:38:29,540 - INFO - Testing University of Dundee (https://www.dundee.ac.uk) on desktop
+2025-07-20 06:38:29,563 - INFO - ✅ Completed University of Liverpool (desktop) - 46/260
+2025-07-20 06:38:38,069 - ERROR - Error running Lighthouse for University of St Andrews (https://www.st-andrews.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:38:38,070 - INFO - Testing Heriot-Watt University (https://www.hw.ac.uk) on mobile
+2025-07-20 06:38:38,102 - WARNING - ❌ Failed University of St Andrews (mobile) - 47/260
+2025-07-20 06:38:39,188 - INFO - Testing Heriot-Watt University (https://www.hw.ac.uk) on desktop
+2025-07-20 06:38:39,191 - INFO - ✅ Completed University of Surrey (mobile) - 48/260
+2025-07-20 06:38:42,545 - ERROR - Error running Lighthouse for University of St Andrews (https://www.st-andrews.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:38:42,551 - INFO - Testing University of Strathclyde (https://www.strath.ac.uk) on mobile
+2025-07-20 06:38:42,551 - WARNING - ❌ Failed University of St Andrews (desktop) - 49/260
+2025-07-20 06:38:58,623 - INFO - Testing University of Strathclyde (https://www.strath.ac.uk) on desktop
+2025-07-20 06:38:58,624 - INFO - ✅ Completed University of Surrey (desktop) - 50/260
+2025-07-20 06:39:20,432 - ERROR - Lighthouse failed for Queen's University Belfast (https://www.qub.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:39:20,434 - INFO - Testing University of Reading (https://www.reading.ac.uk) on mobile
+2025-07-20 06:39:20,435 - WARNING - ❌ Failed Queen's University Belfast (mobile) - 51/260
+2025-07-20 06:39:23,324 - ERROR - Lighthouse failed for Queen's University Belfast (https://www.qub.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:39:23,328 - INFO - Testing University of Reading (https://www.reading.ac.uk) on desktop
+2025-07-20 06:39:23,357 - WARNING - ❌ Failed Queen's University Belfast (desktop) - 52/260
+2025-07-20 06:39:30,953 - ERROR - Lighthouse test timed out for University of Newcastle (https://www.ncl.ac.uk) on mobile
+2025-07-20 06:39:30,954 - INFO - Testing Loughborough University (https://www.lboro.ac.uk) on mobile
+2025-07-20 06:39:30,957 - WARNING - ❌ Failed University of Newcastle (mobile) - 53/260
+2025-07-20 06:39:51,135 - ERROR - Lighthouse test timed out for University of Newcastle (https://www.ncl.ac.uk) on desktop
+2025-07-20 06:39:51,135 - INFO - Testing Loughborough University (https://www.lboro.ac.uk) on desktop
+2025-07-20 06:39:51,165 - WARNING - ❌ Failed University of Newcastle (desktop) - 54/260
+2025-07-20 06:40:01,676 - ERROR - Lighthouse failed for University of Dundee (https://www.dundee.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:40:01,679 - INFO - Testing University of Leicester (https://www.le.ac.uk) on mobile
+2025-07-20 06:40:01,679 - WARNING - ❌ Failed University of Dundee (desktop) - 55/260
+2025-07-20 06:40:22,237 - INFO - Testing University of Leicester (https://www.le.ac.uk) on desktop
+2025-07-20 06:40:22,237 - INFO - ✅ Completed University of Aberdeen (mobile) - 56/260
+2025-07-20 06:40:30,421 - INFO - Testing Swansea University (https://www.swansea.ac.uk) on mobile
+2025-07-20 06:40:30,422 - INFO - ✅ Completed University of Aberdeen (desktop) - 57/260
+2025-07-20 06:40:34,469 - ERROR - Error running Lighthouse for University of Dundee (https://www.dundee.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:40:34,470 - INFO - Testing Swansea University (https://www.swansea.ac.uk) on desktop
+2025-07-20 06:40:34,498 - WARNING - ❌ Failed University of Dundee (mobile) - 58/260
+2025-07-20 06:40:38,707 - INFO - Testing University of East Anglia (https://www.uea.ac.uk) on mobile
+2025-07-20 06:40:38,708 - INFO - ✅ Completed Heriot-Watt University (mobile) - 59/260
+2025-07-20 06:40:39,789 - INFO - Testing University of East Anglia (https://www.uea.ac.uk) on desktop
+2025-07-20 06:40:39,790 - INFO - ✅ Completed University of Strathclyde (mobile) - 60/260
+2025-07-20 06:40:40,901 - INFO - Testing City, University of London (https://www.city.ac.uk) on mobile
+2025-07-20 06:40:40,932 - INFO - ✅ Completed Heriot-Watt University (desktop) - 61/260
+2025-07-20 06:40:49,343 - INFO - Testing City, University of London (https://www.city.ac.uk) on desktop
+2025-07-20 06:40:49,346 - INFO - ✅ Completed University of Strathclyde (desktop) - 62/260
+2025-07-20 06:41:28,780 - INFO - Testing Brunel University London (https://www.brunel.ac.uk) on mobile
+2025-07-20 06:41:28,783 - INFO - ✅ Completed Loughborough University (mobile) - 63/260
+2025-07-20 06:41:49,699 - INFO - Testing Brunel University London (https://www.brunel.ac.uk) on desktop
+2025-07-20 06:41:49,699 - INFO - ✅ Completed Loughborough University (desktop) - 64/260
+2025-07-20 06:42:06,569 - ERROR - Error running Lighthouse for University of Reading (https://www.reading.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:42:06,571 - INFO - Testing Aston University (https://www.aston.ac.uk) on mobile
+2025-07-20 06:42:06,587 - WARNING - ❌ Failed University of Reading (mobile) - 65/260
+2025-07-20 06:42:10,368 - ERROR - Lighthouse failed for Swansea University (https://www.swansea.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:42:10,368 - INFO - Testing Aston University (https://www.aston.ac.uk) on desktop
+2025-07-20 06:42:10,368 - WARNING - ❌ Failed Swansea University (mobile) - 66/260
+2025-07-20 06:42:13,894 - ERROR - Error running Lighthouse for University of Reading (https://www.reading.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:42:13,910 - INFO - Testing University of Kent (https://www.kent.ac.uk) on mobile
+2025-07-20 06:42:13,910 - WARNING - ❌ Failed University of Reading (desktop) - 67/260
+2025-07-20 06:42:15,223 - ERROR - Lighthouse failed for Swansea University (https://www.swansea.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:42:15,226 - INFO - Testing University of Kent (https://www.kent.ac.uk) on desktop
+2025-07-20 06:42:15,236 - WARNING - ❌ Failed Swansea University (desktop) - 68/260
+2025-07-20 06:42:56,715 - INFO - Testing Oxford Brookes University (https://www.brookes.ac.uk) on mobile
+2025-07-20 06:42:56,732 - INFO - ✅ Completed University of Leicester (mobile) - 69/260
+2025-07-20 06:43:09,928 - ERROR - Error running Lighthouse for University of East Anglia (https://www.uea.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:43:09,939 - WARNING - ❌ Failed University of East Anglia (mobile) - 70/260
+2025-07-20 06:43:09,939 - INFO - Testing Oxford Brookes University (https://www.brookes.ac.uk) on desktop
+2025-07-20 06:43:11,189 - ERROR - Error running Lighthouse for University of East Anglia (https://www.uea.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:43:11,191 - INFO - Testing Goldsmiths, University of London (https://www.gold.ac.uk) on mobile
+2025-07-20 06:43:11,220 - WARNING - ❌ Failed University of East Anglia (desktop) - 71/260
+2025-07-20 06:43:12,827 - ERROR - Error running Lighthouse for University of Leicester (https://www.le.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:43:12,840 - INFO - Testing Goldsmiths, University of London (https://www.gold.ac.uk) on desktop
+2025-07-20 06:43:12,855 - WARNING - ❌ Failed University of Leicester (desktop) - 72/260
+2025-07-20 06:43:38,419 - INFO - Testing Royal Holloway, University of London (https://www.rhul.ac.uk) on mobile
+2025-07-20 06:43:38,419 - INFO - ✅ Completed City, University of London (mobile) - 73/260
+2025-07-20 06:43:47,010 - INFO - Testing Royal Holloway, University of London (https://www.rhul.ac.uk) on desktop
+2025-07-20 06:43:47,011 - INFO - ✅ Completed City, University of London (desktop) - 74/260
+2025-07-20 06:44:02,994 - ERROR - Error running Lighthouse for Brunel University London (https://www.brunel.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:44:03,006 - INFO - Testing Birkbeck, University of London (https://www.bbk.ac.uk) on mobile
+2025-07-20 06:44:03,028 - WARNING - ❌ Failed Brunel University London (mobile) - 75/260
+2025-07-20 06:44:25,904 - ERROR - Error running Lighthouse for Brunel University London (https://www.brunel.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:44:25,905 - INFO - Testing Birkbeck, University of London (https://www.bbk.ac.uk) on desktop
+2025-07-20 06:44:25,905 - WARNING - ❌ Failed Brunel University London (desktop) - 76/260
+2025-07-20 06:44:52,998 - ERROR - Error running Lighthouse for Aston University (https://www.aston.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:44:52,999 - INFO - Testing SOAS University of London (https://www.soas.ac.uk) on mobile
+2025-07-20 06:44:52,999 - WARNING - ❌ Failed Aston University (mobile) - 77/260
+2025-07-20 06:44:58,622 - ERROR - Error running Lighthouse for Aston University (https://www.aston.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:44:58,630 - INFO - Testing SOAS University of London (https://www.soas.ac.uk) on desktop
+2025-07-20 06:44:58,652 - WARNING - ❌ Failed Aston University (desktop) - 78/260
+2025-07-20 06:45:03,312 - INFO - Testing University of Essex (https://www.essex.ac.uk) on mobile
+2025-07-20 06:45:03,313 - INFO - ✅ Completed Oxford Brookes University (mobile) - 79/260
+2025-07-20 06:45:03,421 - ERROR - Error running Lighthouse for University of Kent (https://www.kent.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:45:03,425 - INFO - Testing University of Essex (https://www.essex.ac.uk) on desktop
+2025-07-20 06:45:03,446 - WARNING - ❌ Failed University of Kent (desktop) - 80/260
+2025-07-20 06:45:04,508 - ERROR - Error running Lighthouse for University of Kent (https://www.kent.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:45:04,510 - INFO - Testing Bangor University (https://www.bangor.ac.uk) on mobile
+2025-07-20 06:45:04,510 - WARNING - ❌ Failed University of Kent (mobile) - 81/260
+2025-07-20 06:45:17,403 - INFO - Testing Bangor University (https://www.bangor.ac.uk) on desktop
+2025-07-20 06:45:17,414 - INFO - ✅ Completed Oxford Brookes University (desktop) - 82/260
+2025-07-20 06:45:24,300 - INFO - Testing Aberystwyth University (https://www.aber.ac.uk) on mobile
+2025-07-20 06:45:24,300 - INFO - ✅ Completed Goldsmiths, University of London (mobile) - 83/260
+2025-07-20 06:45:25,788 - INFO - Testing Aberystwyth University (https://www.aber.ac.uk) on desktop
+2025-07-20 06:45:25,788 - INFO - ✅ Completed Goldsmiths, University of London (desktop) - 84/260
+2025-07-20 06:45:38,294 - INFO - Testing University of Stirling (https://www.stir.ac.uk) on mobile
+2025-07-20 06:45:38,320 - INFO - ✅ Completed Birkbeck, University of London (mobile) - 85/260
+2025-07-20 06:45:50,804 - INFO - Testing University of Stirling (https://www.stir.ac.uk) on desktop
+2025-07-20 06:45:50,805 - INFO - ✅ Completed Royal Holloway, University of London (mobile) - 86/260
+2025-07-20 06:46:02,490 - INFO - ✅ Completed Royal Holloway, University of London (desktop) - 87/260
+2025-07-20 06:46:02,492 - INFO - Testing Robert Gordon University (https://www.rgu.ac.uk) on mobile
+2025-07-20 06:46:06,218 - INFO - Testing Robert Gordon University (https://www.rgu.ac.uk) on desktop
+2025-07-20 06:46:06,219 - INFO - ✅ Completed Birkbeck, University of London (desktop) - 88/260
+2025-07-20 06:46:50,536 - ERROR - Lighthouse failed for University of Essex (https://www.essex.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:46:50,536 - INFO - Testing Edinburgh Napier University (https://www.napier.ac.uk) on mobile
+2025-07-20 06:46:50,584 - WARNING - ❌ Failed University of Essex (mobile) - 89/260
+2025-07-20 06:46:51,386 - ERROR - Lighthouse failed for Bangor University (https://www.bangor.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:46:51,389 - INFO - Testing Edinburgh Napier University (https://www.napier.ac.uk) on desktop
+2025-07-20 06:46:51,389 - WARNING - ❌ Failed Bangor University (mobile) - 90/260
+2025-07-20 06:46:52,720 - ERROR - Lighthouse failed for University of Essex (https://www.essex.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:46:52,721 - INFO - Testing Glasgow Caledonian University (https://www.gcu.ac.uk) on mobile
+2025-07-20 06:46:52,754 - WARNING - ❌ Failed University of Essex (desktop) - 91/260
+2025-07-20 06:46:53,749 - ERROR - Lighthouse failed for SOAS University of London (https://www.soas.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:46:53,750 - INFO - Testing Glasgow Caledonian University (https://www.gcu.ac.uk) on desktop
+2025-07-20 06:46:53,784 - WARNING - ❌ Failed SOAS University of London (mobile) - 92/260
+2025-07-20 06:46:57,373 - ERROR - Lighthouse failed for SOAS University of London (https://www.soas.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:46:57,376 - INFO - Testing University of the West of Scotland (https://www.uws.ac.uk) on mobile
+2025-07-20 06:46:57,377 - WARNING - ❌ Failed SOAS University of London (desktop) - 93/260
+2025-07-20 06:47:05,401 - ERROR - Lighthouse failed for Bangor University (https://www.bangor.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:47:05,402 - INFO - Testing University of the West of Scotland (https://www.uws.ac.uk) on desktop
+2025-07-20 06:47:05,459 - WARNING - ❌ Failed Bangor University (desktop) - 94/260
+2025-07-20 06:47:40,596 - ERROR - Error running Lighthouse for University of Stirling (https://www.stir.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:47:40,609 - INFO - Testing Northumbria University (https://www.northumbria.ac.uk) on mobile
+2025-07-20 06:47:40,609 - WARNING - ❌ Failed University of Stirling (mobile) - 95/260
+2025-07-20 06:47:46,440 - INFO - Testing Northumbria University (https://www.northumbria.ac.uk) on desktop
+2025-07-20 06:47:46,441 - INFO - ✅ Completed Aberystwyth University (desktop) - 96/260
+2025-07-20 06:47:46,564 - INFO - Testing University of Hull (https://www.hull.ac.uk) on mobile
+2025-07-20 06:47:46,565 - INFO - ✅ Completed Aberystwyth University (mobile) - 97/260
+2025-07-20 06:47:49,593 - INFO - Testing University of Hull (https://www.hull.ac.uk) on desktop
+2025-07-20 06:47:49,597 - INFO - ✅ Completed University of Stirling (desktop) - 98/260
+2025-07-20 06:48:37,710 - ERROR - Lighthouse failed for Glasgow Caledonian University (https://www.gcu.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:48:37,711 - INFO - Testing Keele University (https://www.keele.ac.uk) on mobile
+2025-07-20 06:48:37,751 - WARNING - ❌ Failed Glasgow Caledonian University (desktop) - 99/260
+2025-07-20 06:48:38,481 - ERROR - Error running Lighthouse for Robert Gordon University (https://www.rgu.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:48:38,490 - INFO - Testing Keele University (https://www.keele.ac.uk) on desktop
+2025-07-20 06:48:38,493 - WARNING - ❌ Failed Robert Gordon University (mobile) - 100/260
+2025-07-20 06:48:39,631 - ERROR - Lighthouse failed for Glasgow Caledonian University (https://www.gcu.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:48:39,633 - INFO - Testing University of Bradford (https://www.bradford.ac.uk) on mobile
+2025-07-20 06:48:39,665 - WARNING - ❌ Failed Glasgow Caledonian University (mobile) - 101/260
+2025-07-20 06:48:44,731 - ERROR - Error running Lighthouse for Robert Gordon University (https://www.rgu.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:48:44,736 - INFO - Testing University of Bradford (https://www.bradford.ac.uk) on desktop
+2025-07-20 06:48:44,774 - WARNING - ❌ Failed Robert Gordon University (desktop) - 102/260
+2025-07-20 06:49:03,829 - INFO - Testing University of Salford (https://www.salford.ac.uk) on mobile
+2025-07-20 06:49:03,830 - INFO - ✅ Completed Edinburgh Napier University (desktop) - 103/260
+2025-07-20 06:49:05,087 - INFO - Testing University of Salford (https://www.salford.ac.uk) on desktop
+2025-07-20 06:49:05,090 - INFO - ✅ Completed Edinburgh Napier University (mobile) - 104/260
+2025-07-20 06:49:19,719 - ERROR - Lighthouse failed for University of Hull (https://www.hull.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:49:19,721 - INFO - Testing Manchester Metropolitan University (https://www.mmu.ac.uk) on mobile
+2025-07-20 06:49:19,721 - WARNING - ❌ Failed University of Hull (mobile) - 105/260
+2025-07-20 06:49:25,708 - ERROR - Lighthouse failed for University of Hull (https://www.hull.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:49:25,711 - INFO - Testing Manchester Metropolitan University (https://www.mmu.ac.uk) on desktop
+2025-07-20 06:49:25,740 - WARNING - ❌ Failed University of Hull (desktop) - 106/260
+2025-07-20 06:49:57,840 - ERROR - Lighthouse test timed out for University of the West of Scotland (https://www.uws.ac.uk) on mobile
+2025-07-20 06:49:57,841 - INFO - Testing University of Central Lancashire (https://www.uclan.ac.uk) on mobile
+2025-07-20 06:49:57,876 - WARNING - ❌ Failed University of the West of Scotland (mobile) - 107/260
+2025-07-20 06:50:04,259 - INFO - Testing University of Central Lancashire (https://www.uclan.ac.uk) on desktop
+2025-07-20 06:50:04,260 - INFO - ✅ Completed University of Bradford (mobile) - 108/260
+2025-07-20 06:50:05,875 - ERROR - Lighthouse test timed out for University of the West of Scotland (https://www.uws.ac.uk) on desktop
+2025-07-20 06:50:05,875 - INFO - Testing Liverpool John Moores University (https://www.ljmu.ac.uk) on mobile
+2025-07-20 06:50:05,908 - WARNING - ❌ Failed University of the West of Scotland (desktop) - 109/260
+2025-07-20 06:50:10,878 - INFO - Testing Liverpool John Moores University (https://www.ljmu.ac.uk) on desktop
+2025-07-20 06:50:10,909 - INFO - ✅ Completed University of Bradford (desktop) - 110/260
+2025-07-20 06:50:31,879 - ERROR - Error running Lighthouse for Northumbria University (https://www.northumbria.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:50:31,911 - INFO - Testing Sheffield Hallam University (https://www.shu.ac.uk) on mobile
+2025-07-20 06:50:31,968 - WARNING - ❌ Failed Northumbria University (mobile) - 111/260
+2025-07-20 06:50:43,544 - ERROR - Error running Lighthouse for Northumbria University (https://www.northumbria.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:50:43,553 - INFO - Testing Sheffield Hallam University (https://www.shu.ac.uk) on desktop
+2025-07-20 06:50:43,583 - WARNING - ❌ Failed Northumbria University (desktop) - 112/260
+2025-07-20 06:50:52,447 - ERROR - Lighthouse failed for Manchester Metropolitan University (https://www.mmu.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:50:52,455 - INFO - Testing University of Huddersfield (https://www.hud.ac.uk) on mobile
+2025-07-20 06:50:52,527 - WARNING - ❌ Failed Manchester Metropolitan University (mobile) - 113/260
+2025-07-20 06:50:59,094 - ERROR - Lighthouse failed for Manchester Metropolitan University (https://www.mmu.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:50:59,095 - INFO - Testing University of Huddersfield (https://www.hud.ac.uk) on desktop
+2025-07-20 06:50:59,097 - WARNING - ❌ Failed Manchester Metropolitan University (desktop) - 114/260
+2025-07-20 06:51:15,842 - ERROR - Error running Lighthouse for Keele University (https://www.keele.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:51:15,850 - INFO - Testing Leeds Beckett University (https://www.leedsbeckett.ac.uk) on mobile
+2025-07-20 06:51:15,884 - WARNING - ❌ Failed Keele University (mobile) - 115/260
+2025-07-20 06:51:18,353 - ERROR - Error running Lighthouse for Keele University (https://www.keele.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:51:18,358 - INFO - Testing Leeds Beckett University (https://www.leedsbeckett.ac.uk) on desktop
+2025-07-20 06:51:18,358 - WARNING - ❌ Failed Keele University (desktop) - 116/260
+2025-07-20 06:51:20,820 - ERROR - Lighthouse failed for Liverpool John Moores University (https://www.ljmu.ac.uk) on mobile: Runtime error encountered: The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)
+
+2025-07-20 06:51:20,821 - INFO - Testing Nottingham Trent University (https://www.ntu.ac.uk) on mobile
+2025-07-20 06:51:20,821 - WARNING - ❌ Failed Liverpool John Moores University (mobile) - 117/260
+2025-07-20 06:51:23,203 - ERROR - Lighthouse failed for Liverpool John Moores University (https://www.ljmu.ac.uk) on desktop: Runtime error encountered: The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)
+
+2025-07-20 06:51:23,203 - INFO - Testing Nottingham Trent University (https://www.ntu.ac.uk) on desktop
+2025-07-20 06:51:23,247 - WARNING - ❌ Failed Liverpool John Moores University (desktop) - 118/260
+2025-07-20 06:51:52,354 - ERROR - Error running Lighthouse for University of Salford (https://www.salford.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:51:52,361 - INFO - Testing De Montfort University (https://www.dmu.ac.uk) on mobile
+2025-07-20 06:51:52,364 - WARNING - ❌ Failed University of Salford (mobile) - 119/260
+2025-07-20 06:51:54,111 - ERROR - Error running Lighthouse for University of Salford (https://www.salford.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:51:54,117 - INFO - Testing De Montfort University (https://www.dmu.ac.uk) on desktop
+2025-07-20 06:51:54,117 - WARNING - ❌ Failed University of Salford (desktop) - 120/260
+2025-07-20 06:52:27,573 - INFO - Testing Coventry University (https://www.coventry.ac.uk) on mobile
+2025-07-20 06:52:27,573 - INFO - ✅ Completed University of Central Lancashire (mobile) - 121/260
+2025-07-20 06:52:32,130 - ERROR - Error running Lighthouse for University of Central Lancashire (https://www.uclan.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:52:32,132 - INFO - Testing Coventry University (https://www.coventry.ac.uk) on desktop
+2025-07-20 06:52:32,133 - WARNING - ❌ Failed University of Central Lancashire (desktop) - 122/260
+2025-07-20 06:52:50,463 - ERROR - Lighthouse failed for Nottingham Trent University (https://www.ntu.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:52:50,468 - INFO - Testing Birmingham City University (https://www.bcu.ac.uk) on mobile
+2025-07-20 06:52:50,503 - WARNING - ❌ Failed Nottingham Trent University (mobile) - 123/260
+2025-07-20 06:52:51,333 - INFO - Testing Birmingham City University (https://www.bcu.ac.uk) on desktop
+2025-07-20 06:52:51,336 - INFO - ✅ Completed University of Huddersfield (mobile) - 124/260
+2025-07-20 06:52:59,534 - INFO - Testing University of Wolverhampton (https://www.wlv.ac.uk) on mobile
+2025-07-20 06:52:59,535 - INFO - ✅ Completed University of Huddersfield (desktop) - 125/260
+2025-07-20 06:53:12,316 - ERROR - Error running Lighthouse for Sheffield Hallam University (https://www.shu.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:53:12,340 - INFO - Testing University of Wolverhampton (https://www.wlv.ac.uk) on desktop
+2025-07-20 06:53:12,340 - WARNING - ❌ Failed Sheffield Hallam University (mobile) - 126/260
+2025-07-20 06:53:19,959 - ERROR - Error running Lighthouse for Sheffield Hallam University (https://www.shu.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:53:19,972 - INFO - Testing Staffordshire University (https://www.staffs.ac.uk) on mobile
+2025-07-20 06:53:20,008 - WARNING - ❌ Failed Sheffield Hallam University (desktop) - 127/260
+2025-07-20 06:53:59,502 - ERROR - Error running Lighthouse for Nottingham Trent University (https://www.ntu.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:53:59,504 - INFO - Testing Staffordshire University (https://www.staffs.ac.uk) on desktop
+2025-07-20 06:53:59,507 - WARNING - ❌ Failed Nottingham Trent University (desktop) - 128/260
+2025-07-20 06:54:16,596 - ERROR - Lighthouse test timed out for Leeds Beckett University (https://www.leedsbeckett.ac.uk) on mobile
+2025-07-20 06:54:16,596 - INFO - Testing University of Derby (https://www.derby.ac.uk) on mobile
+2025-07-20 06:54:16,596 - WARNING - ❌ Failed Leeds Beckett University (mobile) - 129/260
+2025-07-20 06:54:19,139 - ERROR - Lighthouse test timed out for Leeds Beckett University (https://www.leedsbeckett.ac.uk) on desktop
+2025-07-20 06:54:19,139 - INFO - Testing University of Derby (https://www.derby.ac.uk) on desktop
+2025-07-20 06:54:19,139 - WARNING - ❌ Failed Leeds Beckett University (desktop) - 130/260
+2025-07-20 06:54:19,813 - INFO - Testing University of Lincoln (https://www.lincoln.ac.uk) on mobile
+2025-07-20 06:54:19,816 - INFO - ✅ Completed De Montfort University (mobile) - 131/260
+2025-07-20 06:54:19,978 - INFO - Testing University of Lincoln (https://www.lincoln.ac.uk) on desktop
+2025-07-20 06:54:19,980 - INFO - ✅ Completed De Montfort University (desktop) - 132/260
+2025-07-20 06:54:21,180 - INFO - Testing Anglia Ruskin University (https://www.anglia.ac.uk) on mobile
+2025-07-20 06:54:21,181 - INFO - ✅ Completed Coventry University (mobile) - 133/260
+2025-07-20 06:54:25,767 - INFO - Testing Anglia Ruskin University (https://www.anglia.ac.uk) on desktop
+2025-07-20 06:54:25,799 - INFO - ✅ Completed Coventry University (desktop) - 134/260
+2025-07-20 06:55:33,600 - INFO - ✅ Completed Staffordshire University (mobile) - 135/260
+2025-07-20 06:55:33,583 - INFO - Testing University of Hertfordshire (https://www.herts.ac.uk) on mobile
+2025-07-20 06:55:36,124 - ERROR - Error running Lighthouse for Birmingham City University (https://www.bcu.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:55:36,131 - INFO - Testing University of Hertfordshire (https://www.herts.ac.uk) on desktop
+2025-07-20 06:55:36,131 - WARNING - ❌ Failed Birmingham City University (mobile) - 136/260
+2025-07-20 06:55:36,517 - ERROR - Error running Lighthouse for Birmingham City University (https://www.bcu.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:55:36,532 - INFO - Testing University of Bedfordshire (https://www.beds.ac.uk) on mobile
+2025-07-20 06:55:36,533 - WARNING - ❌ Failed Birmingham City University (desktop) - 137/260
+2025-07-20 06:56:00,171 - ERROR - Lighthouse test timed out for University of Wolverhampton (https://www.wlv.ac.uk) on mobile
+2025-07-20 06:56:00,175 - INFO - Testing University of Bedfordshire (https://www.beds.ac.uk) on desktop
+2025-07-20 06:56:00,176 - WARNING - ❌ Failed University of Wolverhampton (mobile) - 138/260
+2025-07-20 06:56:13,127 - ERROR - Lighthouse test timed out for University of Wolverhampton (https://www.wlv.ac.uk) on desktop
+2025-07-20 06:56:13,129 - INFO - Testing Middlesex University (https://www.mdx.ac.uk) on mobile
+2025-07-20 06:56:13,190 - WARNING - ❌ Failed University of Wolverhampton (desktop) - 139/260
+2025-07-20 06:56:17,531 - INFO - Testing Middlesex University (https://www.mdx.ac.uk) on desktop
+2025-07-20 06:56:17,534 - INFO - ✅ Completed Anglia Ruskin University (desktop) - 140/260
+2025-07-20 06:56:18,453 - INFO - Testing University of Greenwich (https://www.greenwich.ac.uk) on mobile
+2025-07-20 06:56:18,488 - INFO - ✅ Completed Staffordshire University (desktop) - 141/260
+2025-07-20 06:56:22,162 - INFO - Testing University of Greenwich (https://www.greenwich.ac.uk) on desktop
+2025-07-20 06:56:22,162 - INFO - ✅ Completed Anglia Ruskin University (mobile) - 142/260
+2025-07-20 06:57:08,201 - ERROR - Error running Lighthouse for University of Lincoln (https://www.lincoln.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:57:08,215 - INFO - Testing Kingston University (https://www.kingston.ac.uk) on mobile
+2025-07-20 06:57:08,294 - WARNING - ❌ Failed University of Lincoln (desktop) - 143/260
+2025-07-20 06:57:15,860 - ERROR - Error running Lighthouse for University of Lincoln (https://www.lincoln.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:57:15,868 - INFO - Testing Kingston University (https://www.kingston.ac.uk) on desktop
+2025-07-20 06:57:15,868 - WARNING - ❌ Failed University of Lincoln (mobile) - 144/260
+2025-07-20 06:57:17,152 - ERROR - Lighthouse test timed out for University of Derby (https://www.derby.ac.uk) on mobile
+2025-07-20 06:57:17,152 - INFO - Testing University of Roehampton (https://www.roehampton.ac.uk) on mobile
+2025-07-20 06:57:17,191 - WARNING - ❌ Failed University of Derby (mobile) - 145/260
+2025-07-20 06:57:17,430 - ERROR - Lighthouse failed for University of Bedfordshire (https://www.beds.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:57:17,430 - INFO - Testing University of Roehampton (https://www.roehampton.ac.uk) on desktop
+2025-07-20 06:57:17,433 - WARNING - ❌ Failed University of Bedfordshire (mobile) - 146/260
+2025-07-20 06:57:19,724 - ERROR - Lighthouse test timed out for University of Derby (https://www.derby.ac.uk) on desktop
+2025-07-20 06:57:19,728 - INFO - Testing London South Bank University (https://www.lsbu.ac.uk) on mobile
+2025-07-20 06:57:19,793 - WARNING - ❌ Failed University of Derby (desktop) - 147/260
+2025-07-20 06:57:45,620 - ERROR - Lighthouse failed for University of Bedfordshire (https://www.beds.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:57:45,620 - INFO - Testing London South Bank University (https://www.lsbu.ac.uk) on desktop
+2025-07-20 06:57:45,694 - WARNING - ❌ Failed University of Bedfordshire (desktop) - 148/260
+2025-07-20 06:58:06,204 - ERROR - Lighthouse failed for University of Hertfordshire (https://www.herts.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:58:06,206 - INFO - Testing University of East London (https://www.uel.ac.uk) on mobile
+2025-07-20 06:58:06,238 - WARNING - ❌ Failed University of Hertfordshire (mobile) - 149/260
+2025-07-20 06:58:06,845 - ERROR - Lighthouse failed for University of Hertfordshire (https://www.herts.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:58:06,847 - INFO - Testing University of East London (https://www.uel.ac.uk) on desktop
+2025-07-20 06:58:06,889 - WARNING - ❌ Failed University of Hertfordshire (desktop) - 150/260
+2025-07-20 06:58:37,319 - ERROR - Lighthouse failed for University of Roehampton (https://www.roehampton.ac.uk) on mobile: Runtime error encountered: The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)
+
+2025-07-20 06:58:37,326 - INFO - Testing London Metropolitan University (https://www.londonmet.ac.uk) on mobile
+2025-07-20 06:58:37,381 - WARNING - ❌ Failed University of Roehampton (mobile) - 151/260
+2025-07-20 06:59:06,514 - ERROR - Error running Lighthouse for Middlesex University (https://www.mdx.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:59:06,524 - INFO - Testing London Metropolitan University (https://www.londonmet.ac.uk) on desktop
+2025-07-20 06:59:06,567 - WARNING - ❌ Failed Middlesex University (mobile) - 152/260
+2025-07-20 06:59:07,071 - ERROR - Error running Lighthouse for Middlesex University (https://www.mdx.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:59:07,072 - INFO - Testing University of West London (https://www.uwl.ac.uk) on mobile
+2025-07-20 06:59:07,106 - WARNING - ❌ Failed Middlesex University (desktop) - 153/260
+2025-07-20 06:59:18,158 - INFO - Testing University of West London (https://www.uwl.ac.uk) on desktop
+2025-07-20 06:59:18,183 - INFO - ✅ Completed University of Greenwich (mobile) - 154/260
+2025-07-20 06:59:22,748 - ERROR - Lighthouse test timed out for University of Greenwich (https://www.greenwich.ac.uk) on desktop
+2025-07-20 06:59:22,748 - INFO - Testing Canterbury Christ Church University (https://www.canterbury.ac.uk) on mobile
+2025-07-20 06:59:22,791 - WARNING - ❌ Failed University of Greenwich (desktop) - 155/260
+2025-07-20 06:59:36,515 - ERROR - Lighthouse failed for London South Bank University (https://www.lsbu.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:59:36,519 - INFO - Testing Canterbury Christ Church University (https://www.canterbury.ac.uk) on desktop
+2025-07-20 06:59:36,563 - WARNING - ❌ Failed London South Bank University (desktop) - 156/260
+2025-07-20 06:59:42,440 - ERROR - Lighthouse failed for University of East London (https://www.uel.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:59:42,440 - INFO - Testing University of Brighton (https://www.brighton.ac.uk) on mobile
+2025-07-20 06:59:42,495 - WARNING - ❌ Failed University of East London (mobile) - 157/260
+2025-07-20 06:59:43,639 - ERROR - Lighthouse failed for University of East London (https://www.uel.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 06:59:43,639 - INFO - Testing University of Brighton (https://www.brighton.ac.uk) on desktop
+2025-07-20 06:59:43,640 - WARNING - ❌ Failed University of East London (desktop) - 158/260
+2025-07-20 06:59:59,361 - ERROR - Error running Lighthouse for Kingston University (https://www.kingston.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 06:59:59,368 - INFO - Testing University of Portsmouth (https://www.port.ac.uk) on mobile
+2025-07-20 06:59:59,368 - WARNING - ❌ Failed Kingston University (mobile) - 159/260
+2025-07-20 07:00:09,545 - ERROR - Error running Lighthouse for University of Roehampton (https://www.roehampton.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:00:09,553 - INFO - Testing University of Portsmouth (https://www.port.ac.uk) on desktop
+2025-07-20 07:00:09,554 - WARNING - ❌ Failed University of Roehampton (desktop) - 160/260
+2025-07-20 07:00:13,084 - ERROR - Lighthouse failed for London Metropolitan University (https://www.londonmet.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:00:13,084 - INFO - Testing Bournemouth University (https://www.bournemouth.ac.uk) on mobile
+2025-07-20 07:00:13,085 - WARNING - ❌ Failed London Metropolitan University (mobile) - 161/260
+2025-07-20 07:00:13,296 - ERROR - Error running Lighthouse for Kingston University (https://www.kingston.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:00:13,304 - INFO - Testing Bournemouth University (https://www.bournemouth.ac.uk) on desktop
+2025-07-20 07:00:13,332 - WARNING - ❌ Failed Kingston University (desktop) - 162/260
+2025-07-20 07:00:20,389 - ERROR - Lighthouse test timed out for London South Bank University (https://www.lsbu.ac.uk) on mobile
+2025-07-20 07:00:20,389 - INFO - Testing University of Winchester (https://www.winchester.ac.uk) on mobile
+2025-07-20 07:00:20,449 - WARNING - ❌ Failed London South Bank University (mobile) - 163/260
+2025-07-20 07:01:51,861 - ERROR - Error running Lighthouse for Canterbury Christ Church University (https://www.canterbury.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:01:51,867 - INFO - Testing University of Winchester (https://www.winchester.ac.uk) on desktop
+2025-07-20 07:01:51,902 - WARNING - ❌ Failed Canterbury Christ Church University (mobile) - 164/260
+2025-07-20 07:01:53,955 - INFO - Testing University of Plymouth (https://www.plymouth.ac.uk) on mobile
+2025-07-20 07:01:53,956 - INFO - ✅ Completed University of West London (mobile) - 165/260
+2025-07-20 07:01:55,025 - ERROR - Lighthouse failed for University of Winchester (https://www.winchester.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:01:55,026 - INFO - Testing University of Plymouth (https://www.plymouth.ac.uk) on desktop
+2025-07-20 07:01:55,072 - WARNING - ❌ Failed University of Winchester (mobile) - 166/260
+2025-07-20 07:02:01,254 - INFO - Testing University of the West of England (https://www.uwe.ac.uk) on mobile
+2025-07-20 07:02:01,290 - INFO - ✅ Completed University of Brighton (mobile) - 167/260
+2025-07-20 07:02:01,367 - ERROR - Error running Lighthouse for Canterbury Christ Church University (https://www.canterbury.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:01,371 - INFO - Testing University of the West of England (https://www.uwe.ac.uk) on desktop
+2025-07-20 07:02:01,371 - WARNING - ❌ Failed Canterbury Christ Church University (desktop) - 168/260
+2025-07-20 07:02:02,247 - INFO - Testing Bath Spa University (https://www.bathspa.ac.uk) on mobile
+2025-07-20 07:02:02,285 - INFO - ✅ Completed University of Brighton (desktop) - 169/260
+2025-07-20 07:02:04,936 - INFO - Testing Bath Spa University (https://www.bathspa.ac.uk) on desktop
+2025-07-20 07:02:04,937 - INFO - ✅ Completed University of West London (desktop) - 170/260
+2025-07-20 07:02:06,361 - ERROR - Error running Lighthouse for London Metropolitan University (https://www.londonmet.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:06,378 - INFO - Testing University of Gloucestershire (https://www.glos.ac.uk) on mobile
+2025-07-20 07:02:06,378 - WARNING - ❌ Failed London Metropolitan University (desktop) - 171/260
+2025-07-20 07:02:31,996 - ERROR - Error running Lighthouse for University of Portsmouth (https://www.port.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:32,012 - INFO - Testing University of Gloucestershire (https://www.glos.ac.uk) on desktop
+2025-07-20 07:02:32,062 - WARNING - ❌ Failed University of Portsmouth (mobile) - 172/260
+2025-07-20 07:02:36,647 - ERROR - Error running Lighthouse for University of Portsmouth (https://www.port.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:36,658 - INFO - Testing Cardiff Metropolitan University (https://www.cardiffmet.ac.uk) on mobile
+2025-07-20 07:02:36,664 - WARNING - ❌ Failed University of Portsmouth (desktop) - 173/260
+2025-07-20 07:02:42,727 - ERROR - Error running Lighthouse for Bournemouth University (https://www.bournemouth.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:42,731 - INFO - Testing Cardiff Metropolitan University (https://www.cardiffmet.ac.uk) on desktop
+2025-07-20 07:02:42,738 - WARNING - ❌ Failed Bournemouth University (desktop) - 174/260
+2025-07-20 07:02:45,827 - ERROR - Error running Lighthouse for Bournemouth University (https://www.bournemouth.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:02:45,840 - INFO - Testing University of South Wales (https://www.southwales.ac.uk) on mobile
+2025-07-20 07:02:45,841 - WARNING - ❌ Failed Bournemouth University (mobile) - 175/260
+2025-07-20 07:03:36,997 - ERROR - Lighthouse failed for University of Winchester (https://www.winchester.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:03:36,997 - INFO - Testing University of South Wales (https://www.southwales.ac.uk) on desktop
+2025-07-20 07:03:37,053 - WARNING - ❌ Failed University of Winchester (desktop) - 176/260
+2025-07-20 07:03:54,689 - ERROR - Lighthouse failed for Bath Spa University (https://www.bathspa.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:03:54,689 - INFO - Testing University of Wales Trinity Saint David (https://www.uwtsd.ac.uk) on mobile
+2025-07-20 07:03:54,746 - WARNING - ❌ Failed Bath Spa University (desktop) - 177/260
+2025-07-20 07:04:16,572 - ERROR - Lighthouse failed for Cardiff Metropolitan University (https://www.cardiffmet.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:04:16,576 - INFO - Testing University of Wales Trinity Saint David (https://www.uwtsd.ac.uk) on desktop
+2025-07-20 07:04:16,628 - WARNING - ❌ Failed Cardiff Metropolitan University (mobile) - 178/260
+2025-07-20 07:04:26,856 - ERROR - Lighthouse failed for Cardiff Metropolitan University (https://www.cardiffmet.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:04:26,856 - INFO - Testing Wrexham Glyndwr University (https://www.glyndwr.ac.uk) on mobile
+2025-07-20 07:04:26,913 - WARNING - ❌ Failed Cardiff Metropolitan University (desktop) - 179/260
+2025-07-20 07:04:48,729 - ERROR - Error running Lighthouse for University of Plymouth (https://www.plymouth.ac.uk) on desktop: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:04:48,736 - INFO - Testing Wrexham Glyndwr University (https://www.glyndwr.ac.uk) on desktop
+2025-07-20 07:04:48,742 - WARNING - ❌ Failed University of Plymouth (desktop) - 180/260
+2025-07-20 07:04:50,241 - ERROR - Error running Lighthouse for University of Plymouth (https://www.plymouth.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:04:50,262 - WARNING - ❌ Failed University of Plymouth (mobile) - 181/260
+2025-07-20 07:04:50,264 - INFO - Testing Ulster University (https://www.ulster.ac.uk) on mobile
+2025-07-20 07:05:01,899 - ERROR - Lighthouse test timed out for University of the West of England (https://www.uwe.ac.uk) on mobile
+2025-07-20 07:05:01,899 - INFO - Testing Ulster University (https://www.ulster.ac.uk) on desktop
+2025-07-20 07:05:01,945 - WARNING - ❌ Failed University of the West of England (mobile) - 182/260
+2025-07-20 07:05:01,998 - ERROR - Lighthouse test timed out for University of the West of England (https://www.uwe.ac.uk) on desktop
+2025-07-20 07:05:01,998 - INFO - Testing University of Chester (https://www.chester.ac.uk) on mobile
+2025-07-20 07:05:02,039 - WARNING - ❌ Failed University of the West of England (desktop) - 183/260
+2025-07-20 07:05:03,025 - ERROR - Lighthouse test timed out for Bath Spa University (https://www.bathspa.ac.uk) on mobile
+2025-07-20 07:05:03,027 - INFO - Testing University of Chester (https://www.chester.ac.uk) on desktop
+2025-07-20 07:05:03,030 - WARNING - ❌ Failed Bath Spa University (mobile) - 184/260
+2025-07-20 07:05:07,006 - ERROR - Lighthouse test timed out for University of Gloucestershire (https://www.glos.ac.uk) on mobile
+2025-07-20 07:05:07,007 - INFO - Testing Edge Hill University (https://www.edgehill.ac.uk) on mobile
+2025-07-20 07:05:07,056 - WARNING - ❌ Failed University of Gloucestershire (mobile) - 185/260
+2025-07-20 07:05:32,613 - ERROR - Lighthouse test timed out for University of Gloucestershire (https://www.glos.ac.uk) on desktop
+2025-07-20 07:05:32,613 - INFO - Testing Edge Hill University (https://www.edgehill.ac.uk) on desktop
+2025-07-20 07:05:32,651 - WARNING - ❌ Failed University of Gloucestershire (desktop) - 186/260
+2025-07-20 07:05:41,458 - ERROR - Error running Lighthouse for University of South Wales (https://www.southwales.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:05:41,474 - INFO - Testing University of Cumbria (https://www.cumbria.ac.uk) on mobile
+2025-07-20 07:05:41,481 - WARNING - ❌ Failed University of South Wales (mobile) - 187/260
+2025-07-20 07:05:50,867 - ERROR - Lighthouse failed for University of Wales Trinity Saint David (https://www.uwtsd.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:05:50,873 - INFO - Testing University of Cumbria (https://www.cumbria.ac.uk) on desktop
+2025-07-20 07:05:50,874 - WARNING - ❌ Failed University of Wales Trinity Saint David (mobile) - 188/260
+2025-07-20 07:06:19,573 - ERROR - Lighthouse failed for University of Wales Trinity Saint David (https://www.uwtsd.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:06:19,575 - INFO - Testing York St John University (https://www.yorksj.ac.uk) on mobile
+2025-07-20 07:06:19,577 - WARNING - ❌ Failed University of Wales Trinity Saint David (desktop) - 189/260
+2025-07-20 07:06:23,086 - ERROR - Lighthouse failed for Wrexham Glyndwr University (https://www.glyndwr.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:06:23,088 - INFO - Testing York St John University (https://www.yorksj.ac.uk) on desktop
+2025-07-20 07:06:23,136 - WARNING - ❌ Failed Wrexham Glyndwr University (mobile) - 190/260
+2025-07-20 07:06:37,652 - ERROR - Lighthouse test timed out for University of South Wales (https://www.southwales.ac.uk) on desktop
+2025-07-20 07:06:37,652 - INFO - Testing Leeds Trinity University (https://www.leedstrinity.ac.uk) on mobile
+2025-07-20 07:06:37,656 - WARNING - ❌ Failed University of South Wales (desktop) - 191/260
+2025-07-20 07:06:40,756 - ERROR - Lighthouse failed for University of Chester (https://www.chester.ac.uk) on desktop: Runtime error encountered: The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)
+
+2025-07-20 07:06:40,757 - INFO - Testing Leeds Trinity University (https://www.leedstrinity.ac.uk) on desktop
+2025-07-20 07:06:40,787 - WARNING - ❌ Failed University of Chester (desktop) - 192/260
+2025-07-20 07:06:41,644 - ERROR - Lighthouse failed for Ulster University (https://www.ulster.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:06:41,644 - INFO - Testing University of Northampton (https://www.northampton.ac.uk) on mobile
+2025-07-20 07:06:41,697 - WARNING - ❌ Failed Ulster University (mobile) - 193/260
+2025-07-20 07:06:42,214 - ERROR - Lighthouse failed for University of Chester (https://www.chester.ac.uk) on mobile: Runtime error encountered: The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)
+
+2025-07-20 07:06:42,217 - INFO - Testing University of Northampton (https://www.northampton.ac.uk) on desktop
+2025-07-20 07:06:42,263 - WARNING - ❌ Failed University of Chester (mobile) - 194/260
+2025-07-20 07:06:42,848 - ERROR - Lighthouse failed for Wrexham Glyndwr University (https://www.glyndwr.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:06:42,848 - INFO - Testing University of Chichester (https://www.chi.ac.uk) on mobile
+2025-07-20 07:06:42,897 - WARNING - ❌ Failed Wrexham Glyndwr University (desktop) - 195/260
+2025-07-20 07:06:50,661 - ERROR - Lighthouse failed for Ulster University (https://www.ulster.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:06:50,661 - INFO - Testing University of Chichester (https://www.chi.ac.uk) on desktop
+2025-07-20 07:06:50,731 - WARNING - ❌ Failed Ulster University (desktop) - 196/260
+2025-07-20 07:07:38,693 - ERROR - Lighthouse failed for University of Cumbria (https://www.cumbria.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:07:38,693 - INFO - Testing Solent University (https://www.solent.ac.uk) on mobile
+2025-07-20 07:07:38,732 - WARNING - ❌ Failed University of Cumbria (mobile) - 197/260
+2025-07-20 07:07:48,188 - ERROR - Lighthouse failed for University of Cumbria (https://www.cumbria.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:07:48,195 - INFO - Testing Solent University (https://www.solent.ac.uk) on desktop
+2025-07-20 07:07:48,251 - WARNING - ❌ Failed University of Cumbria (desktop) - 198/260
+2025-07-20 07:07:55,970 - ERROR - Error running Lighthouse for Edge Hill University (https://www.edgehill.ac.uk) on mobile: unsupported operand type(s) for *: 'NoneType' and 'int'
+2025-07-20 07:07:55,972 - INFO - Testing Teesside University (https://www.tees.ac.uk) on mobile
+2025-07-20 07:07:55,972 - WARNING - ❌ Failed Edge Hill University (mobile) - 199/260
+2025-07-20 07:08:29,399 - INFO - Testing Teesside University (https://www.tees.ac.uk) on desktop
+2025-07-20 07:08:29,401 - INFO - ✅ Completed Edge Hill University (desktop) - 200/260
+2025-07-20 07:08:34,465 - ERROR - Lighthouse failed for University of Chichester (https://www.chi.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:08:34,465 - INFO - Testing University of Sunderland (https://www.sunderland.ac.uk) on mobile
+2025-07-20 07:08:34,522 - WARNING - ❌ Failed University of Chichester (desktop) - 201/260
+2025-07-20 07:09:15,083 - ERROR - Lighthouse failed for Solent University (https://www.solent.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:09:15,083 - INFO - Testing University of Sunderland (https://www.sunderland.ac.uk) on desktop
+2025-07-20 07:09:15,133 - WARNING - ❌ Failed Solent University (mobile) - 202/260
+2025-07-20 07:09:20,308 - ERROR - Lighthouse test timed out for York St John University (https://www.yorksj.ac.uk) on mobile
+2025-07-20 07:09:20,308 - INFO - Testing Open University (https://www.open.ac.uk) on mobile
+2025-07-20 07:09:20,309 - WARNING - ❌ Failed York St John University (mobile) - 203/260
+2025-07-20 07:09:23,694 - ERROR - Lighthouse test timed out for York St John University (https://www.yorksj.ac.uk) on desktop
+2025-07-20 07:09:23,695 - INFO - Testing Open University (https://www.open.ac.uk) on desktop
+2025-07-20 07:09:23,735 - WARNING - ❌ Failed York St John University (desktop) - 204/260
+2025-07-20 07:09:26,513 - ERROR - Lighthouse failed for Solent University (https://www.solent.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:09:26,513 - INFO - Testing Buckinghamshire New University (https://www.bnu.ac.uk) on mobile
+2025-07-20 07:09:26,567 - WARNING - ❌ Failed Solent University (desktop) - 205/260
+2025-07-20 07:09:38,303 - ERROR - Lighthouse test timed out for Leeds Trinity University (https://www.leedstrinity.ac.uk) on mobile
+2025-07-20 07:09:38,303 - INFO - Testing Buckinghamshire New University (https://www.bnu.ac.uk) on desktop
+2025-07-20 07:09:38,370 - WARNING - ❌ Failed Leeds Trinity University (mobile) - 206/260
+2025-07-20 07:09:41,274 - ERROR - Lighthouse test timed out for Leeds Trinity University (https://www.leedstrinity.ac.uk) on desktop
+2025-07-20 07:09:41,277 - INFO - Testing University of Bolton (https://www.bolton.ac.uk) on mobile
+2025-07-20 07:09:41,277 - WARNING - ❌ Failed Leeds Trinity University (desktop) - 207/260
+2025-07-20 07:09:42,125 - ERROR - Lighthouse test timed out for University of Northampton (https://www.northampton.ac.uk) on mobile
+2025-07-20 07:09:42,129 - INFO - Testing University of Bolton (https://www.bolton.ac.uk) on desktop
+2025-07-20 07:09:42,165 - WARNING - ❌ Failed University of Northampton (mobile) - 208/260
+2025-07-20 07:09:42,765 - ERROR - Lighthouse test timed out for University of Northampton (https://www.northampton.ac.uk) on desktop
+2025-07-20 07:09:42,765 - INFO - Testing Newman University (https://www.newman.ac.uk) on mobile
+2025-07-20 07:09:42,832 - WARNING - ❌ Failed University of Northampton (desktop) - 209/260
+2025-07-20 07:09:43,766 - ERROR - Lighthouse test timed out for University of Chichester (https://www.chi.ac.uk) on mobile
+2025-07-20 07:09:43,769 - INFO - Testing Newman University (https://www.newman.ac.uk) on desktop
+2025-07-20 07:09:43,769 - WARNING - ❌ Failed University of Chichester (mobile) - 210/260
+2025-07-20 07:10:32,491 - ERROR - Lighthouse failed for University of Sunderland (https://www.sunderland.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:10:32,491 - INFO - Testing Bishop Grosseteste University (https://www.bishopg.ac.uk) on mobile
+2025-07-20 07:10:32,556 - WARNING - ❌ Failed University of Sunderland (mobile) - 211/260
+2025-07-20 07:10:56,626 - ERROR - Lighthouse test timed out for Teesside University (https://www.tees.ac.uk) on mobile
+2025-07-20 07:10:56,633 - INFO - Testing Bishop Grosseteste University (https://www.bishopg.ac.uk) on desktop
+2025-07-20 07:10:56,634 - WARNING - ❌ Failed Teesside University (mobile) - 212/260
+2025-07-20 07:11:16,471 - ERROR - Lighthouse failed for University of Sunderland (https://www.sunderland.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:11:16,477 - INFO - Testing University College Birmingham (https://www.ucb.ac.uk) on mobile
+2025-07-20 07:11:16,560 - WARNING - ❌ Failed University of Sunderland (desktop) - 213/260
+2025-07-20 07:11:27,263 - ERROR - Lighthouse failed for Bishop Grosseteste University (https://www.bishopg.ac.uk) on mobile: Runtime error encountered: The URL you have provided does not have a valid security certificate. net::ERR_CERT_COMMON_NAME_INVALID
+
+2025-07-20 07:11:27,263 - INFO - Testing University College Birmingham (https://www.ucb.ac.uk) on desktop
+2025-07-20 07:11:27,310 - WARNING - ❌ Failed Bishop Grosseteste University (mobile) - 214/260
+2025-07-20 07:11:29,917 - ERROR - Lighthouse test timed out for Teesside University (https://www.tees.ac.uk) on desktop
+2025-07-20 07:11:29,918 - INFO - Testing Falmouth University (https://www.falmouth.ac.uk) on mobile
+2025-07-20 07:11:29,918 - WARNING - ❌ Failed Teesside University (desktop) - 215/260
+2025-07-20 07:11:33,812 - ERROR - Lighthouse failed for Buckinghamshire New University (https://www.bnu.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:11:33,813 - INFO - Testing Falmouth University (https://www.falmouth.ac.uk) on desktop
+2025-07-20 07:11:33,857 - WARNING - ❌ Failed Buckinghamshire New University (mobile) - 216/260
+2025-07-20 07:11:38,012 - ERROR - Lighthouse failed for University of Bolton (https://www.bolton.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:11:38,012 - INFO - Testing Arts University Bournemouth (https://www.aub.ac.uk) on mobile
+2025-07-20 07:11:38,069 - WARNING - ❌ Failed University of Bolton (desktop) - 217/260
+2025-07-20 07:11:40,939 - ERROR - Lighthouse failed for University of Bolton (https://www.bolton.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:11:40,939 - INFO - Testing Arts University Bournemouth (https://www.aub.ac.uk) on desktop
+2025-07-20 07:11:40,984 - WARNING - ❌ Failed University of Bolton (mobile) - 218/260
+2025-07-20 07:11:45,365 - ERROR - Lighthouse failed for Buckinghamshire New University (https://www.bnu.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:11:45,369 - INFO - Testing University for the Creative Arts (https://www.uca.ac.uk) on mobile
+2025-07-20 07:11:45,393 - WARNING - ❌ Failed Buckinghamshire New University (desktop) - 219/260
+2025-07-20 07:11:46,251 - ERROR - Lighthouse failed for Bishop Grosseteste University (https://www.bishopg.ac.uk) on desktop: Runtime error encountered: The URL you have provided does not have a valid security certificate. net::ERR_CERT_COMMON_NAME_INVALID
+
+2025-07-20 07:11:46,254 - INFO - Testing University for the Creative Arts (https://www.uca.ac.uk) on desktop
+2025-07-20 07:11:46,302 - WARNING - ❌ Failed Bishop Grosseteste University (desktop) - 220/260
+2025-07-20 07:12:21,025 - ERROR - Lighthouse test timed out for Open University (https://www.open.ac.uk) on mobile
+2025-07-20 07:12:21,025 - INFO - Testing Norwich University of the Arts (https://www.nua.ac.uk) on mobile
+2025-07-20 07:12:21,119 - WARNING - ❌ Failed Open University (mobile) - 221/260
+2025-07-20 07:12:24,404 - ERROR - Lighthouse test timed out for Open University (https://www.open.ac.uk) on desktop
+2025-07-20 07:12:24,405 - INFO - Testing Norwich University of the Arts (https://www.nua.ac.uk) on desktop
+2025-07-20 07:12:24,488 - WARNING - ❌ Failed Open University (desktop) - 222/260
+2025-07-20 07:12:43,461 - ERROR - Lighthouse test timed out for Newman University (https://www.newman.ac.uk) on mobile
+2025-07-20 07:12:43,462 - INFO - Testing Leeds Arts University (https://www.leeds-art.ac.uk) on mobile
+2025-07-20 07:12:43,515 - WARNING - ❌ Failed Newman University (mobile) - 223/260
+2025-07-20 07:12:44,526 - ERROR - Lighthouse test timed out for Newman University (https://www.newman.ac.uk) on desktop
+2025-07-20 07:12:44,526 - INFO - Testing Leeds Arts University (https://www.leeds-art.ac.uk) on desktop
+2025-07-20 07:12:44,599 - WARNING - ❌ Failed Newman University (desktop) - 224/260
+2025-07-20 07:13:21,802 - ERROR - Lighthouse failed for University College Birmingham (https://www.ucb.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:21,805 - INFO - Testing Rose Bruford College (https://www.bruford.ac.uk) on mobile
+2025-07-20 07:13:21,828 - WARNING - ❌ Failed University College Birmingham (mobile) - 225/260
+2025-07-20 07:13:31,546 - ERROR - Lighthouse failed for University College Birmingham (https://www.ucb.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:31,565 - WARNING - ❌ Failed University College Birmingham (desktop) - 226/260
+2025-07-20 07:13:31,566 - INFO - Testing Rose Bruford College (https://www.bruford.ac.uk) on desktop
+2025-07-20 07:13:41,106 - ERROR - Lighthouse failed for Falmouth University (https://www.falmouth.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:41,122 - WARNING - ❌ Failed Falmouth University (desktop) - 227/260
+2025-07-20 07:13:41,123 - INFO - Testing Royal College of Art (https://www.rca.ac.uk) on mobile
+2025-07-20 07:13:41,529 - ERROR - Lighthouse failed for Falmouth University (https://www.falmouth.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:41,535 - INFO - Testing Royal College of Art (https://www.rca.ac.uk) on desktop
+2025-07-20 07:13:41,539 - WARNING - ❌ Failed Falmouth University (mobile) - 228/260
+2025-07-20 07:13:50,278 - ERROR - Lighthouse failed for Arts University Bournemouth (https://www.aub.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:50,278 - INFO - Testing Ravensbourne University London (https://www.ravensbourne.ac.uk) on mobile
+2025-07-20 07:13:50,323 - WARNING - ❌ Failed Arts University Bournemouth (mobile) - 229/260
+2025-07-20 07:13:51,227 - ERROR - Lighthouse failed for Arts University Bournemouth (https://www.aub.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:51,227 - INFO - Testing Ravensbourne University London (https://www.ravensbourne.ac.uk) on desktop
+2025-07-20 07:13:51,255 - WARNING - ❌ Failed Arts University Bournemouth (desktop) - 230/260
+2025-07-20 07:13:52,954 - ERROR - Lighthouse failed for University for the Creative Arts (https://www.uca.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:52,955 - INFO - Testing Regent's University London (https://www.regents.ac.uk) on mobile
+2025-07-20 07:13:53,020 - WARNING - ❌ Failed University for the Creative Arts (desktop) - 231/260
+2025-07-20 07:13:55,081 - ERROR - Lighthouse failed for University for the Creative Arts (https://www.uca.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:13:55,081 - INFO - Testing Regent's University London (https://www.regents.ac.uk) on desktop
+2025-07-20 07:13:55,123 - WARNING - ❌ Failed University for the Creative Arts (mobile) - 232/260
+2025-07-20 07:15:21,577 - ERROR - Lighthouse test timed out for Norwich University of the Arts (https://www.nua.ac.uk) on mobile
+2025-07-20 07:15:21,578 - INFO - Testing BPP University (https://www.bpp.com) on mobile
+2025-07-20 07:15:21,664 - WARNING - ❌ Failed Norwich University of the Arts (mobile) - 233/260
+2025-07-20 07:15:24,917 - ERROR - Lighthouse test timed out for Norwich University of the Arts (https://www.nua.ac.uk) on desktop
+2025-07-20 07:15:24,922 - INFO - Testing BPP University (https://www.bpp.com) on desktop
+2025-07-20 07:15:25,011 - WARNING - ❌ Failed Norwich University of the Arts (desktop) - 234/260
+2025-07-20 07:15:37,887 - ERROR - Lighthouse failed for Rose Bruford College (https://www.bruford.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:15:37,892 - INFO - Testing University of Law (https://www.law.ac.uk) on mobile
+2025-07-20 07:15:37,899 - WARNING - ❌ Failed Rose Bruford College (mobile) - 235/260
+2025-07-20 07:15:40,086 - ERROR - Lighthouse failed for Rose Bruford College (https://www.bruford.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:15:40,086 - INFO - Testing University of Law (https://www.law.ac.uk) on desktop
+2025-07-20 07:15:40,142 - WARNING - ❌ Failed Rose Bruford College (desktop) - 236/260
+2025-07-20 07:15:43,661 - ERROR - Lighthouse failed for Ravensbourne University London (https://www.ravensbourne.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:15:43,662 - INFO - Testing Arden University (https://www.arden.ac.uk) on mobile
+2025-07-20 07:15:43,708 - WARNING - ❌ Failed Ravensbourne University London (mobile) - 237/260
+2025-07-20 07:15:44,194 - ERROR - Lighthouse test timed out for Leeds Arts University (https://www.leeds-art.ac.uk) on mobile
+2025-07-20 07:15:44,195 - INFO - Testing Arden University (https://www.arden.ac.uk) on desktop
+2025-07-20 07:15:44,255 - WARNING - ❌ Failed Leeds Arts University (mobile) - 238/260
+2025-07-20 07:15:45,234 - ERROR - Lighthouse test timed out for Leeds Arts University (https://www.leeds-art.ac.uk) on desktop
+2025-07-20 07:15:45,234 - INFO - Testing Harper Adams University (https://www.harper-adams.ac.uk) on mobile
+2025-07-20 07:15:45,314 - WARNING - ❌ Failed Leeds Arts University (desktop) - 239/260
+2025-07-20 07:15:56,164 - ERROR - Lighthouse failed for Ravensbourne University London (https://www.ravensbourne.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:15:56,177 - INFO - Testing Harper Adams University (https://www.harper-adams.ac.uk) on desktop
+2025-07-20 07:15:56,235 - WARNING - ❌ Failed Ravensbourne University London (desktop) - 240/260
+2025-07-20 07:16:03,280 - ERROR - Lighthouse failed for Regent's University London (https://www.regents.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:16:03,282 - INFO - Testing Writtle University College (https://www.writtle.ac.uk) on mobile
+2025-07-20 07:16:03,294 - WARNING - ❌ Failed Regent's University London (desktop) - 241/260
+2025-07-20 07:16:41,879 - ERROR - Lighthouse test timed out for Royal College of Art (https://www.rca.ac.uk) on desktop
+2025-07-20 07:16:41,883 - INFO - Testing Writtle University College (https://www.writtle.ac.uk) on desktop
+2025-07-20 07:16:41,919 - WARNING - ❌ Failed Royal College of Art (desktop) - 242/260
+2025-07-20 07:16:41,972 - ERROR - Lighthouse test timed out for Royal College of Art (https://www.rca.ac.uk) on mobile
+2025-07-20 07:16:41,976 - INFO - Testing Royal Agricultural University (https://www.rau.ac.uk) on mobile
+2025-07-20 07:16:41,977 - WARNING - ❌ Failed Royal College of Art (mobile) - 243/260
+2025-07-20 07:16:50,797 - ERROR - Lighthouse failed for BPP University (https://www.bpp.com) on desktop: Unhandled Rejection. Reason: Error: Protocol error (Runtime.evaluate): Protocol error (Runtime.evaluate): Promise was collected
+
+2025-07-20 07:16:50,798 - INFO - Testing Royal Agricultural University (https://www.rau.ac.uk) on desktop
+2025-07-20 07:16:50,840 - WARNING - ❌ Failed BPP University (desktop) - 244/260
+2025-07-20 07:16:53,653 - ERROR - Lighthouse test timed out for Regent's University London (https://www.regents.ac.uk) on mobile
+2025-07-20 07:16:53,653 - INFO - Testing Hartpury University (https://www.hartpury.ac.uk) on mobile
+2025-07-20 07:16:53,719 - WARNING - ❌ Failed Regent's University London (mobile) - 245/260
+2025-07-20 07:16:57,698 - ERROR - Lighthouse failed for Writtle University College (https://www.writtle.ac.uk) on mobile: Runtime error encountered: The URL you have provided does not have a valid security certificate. net::ERR_CERT_COMMON_NAME_INVALID
+
+2025-07-20 07:16:57,698 - INFO - Testing Hartpury University (https://www.hartpury.ac.uk) on desktop
+2025-07-20 07:16:57,746 - WARNING - ❌ Failed Writtle University College (mobile) - 246/260
+2025-07-20 07:17:21,972 - ERROR - Lighthouse failed for BPP University (https://www.bpp.com) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:17:21,973 - INFO - Testing Reaseheath University Centre (https://www.reaseheath.ac.uk) on mobile
+2025-07-20 07:17:21,974 - WARNING - ❌ Failed BPP University (mobile) - 247/260
+2025-07-20 07:17:42,952 - ERROR - Lighthouse failed for Writtle University College (https://www.writtle.ac.uk) on desktop: Runtime error encountered: The URL you have provided does not have a valid security certificate. net::ERR_CERT_COMMON_NAME_INVALID
+
+2025-07-20 07:17:42,953 - INFO - Testing Reaseheath University Centre (https://www.reaseheath.ac.uk) on desktop
+2025-07-20 07:17:43,047 - WARNING - ❌ Failed Writtle University College (desktop) - 248/260
+2025-07-20 07:17:55,856 - ERROR - Lighthouse failed for Arden University (https://www.arden.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:17:55,861 - WARNING - ❌ Failed Arden University (mobile) - 249/260
+2025-07-20 07:17:59,037 - ERROR - Lighthouse failed for Arden University (https://www.arden.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:17:59,040 - WARNING - ❌ Failed Arden University (desktop) - 250/260
+2025-07-20 07:18:01,546 - ERROR - Lighthouse failed for Harper Adams University (https://www.harper-adams.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:18:01,555 - WARNING - ❌ Failed Harper Adams University (mobile) - 251/260
+2025-07-20 07:18:11,782 - ERROR - Lighthouse failed for Harper Adams University (https://www.harper-adams.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the URL you requested because the page stopped responding.
+
+2025-07-20 07:18:11,784 - WARNING - ❌ Failed Harper Adams University (desktop) - 252/260
+2025-07-20 07:18:38,740 - ERROR - Lighthouse test timed out for University of Law (https://www.law.ac.uk) on mobile
+2025-07-20 07:18:38,746 - WARNING - ❌ Failed University of Law (mobile) - 253/260
+2025-07-20 07:18:40,693 - ERROR - Lighthouse test timed out for University of Law (https://www.law.ac.uk) on desktop
+2025-07-20 07:18:40,694 - WARNING - ❌ Failed University of Law (desktop) - 254/260
+2025-07-20 07:19:42,625 - ERROR - Lighthouse test timed out for Royal Agricultural University (https://www.rau.ac.uk) on mobile
+2025-07-20 07:19:42,625 - WARNING - ❌ Failed Royal Agricultural University (mobile) - 255/260
+2025-07-20 07:19:51,489 - ERROR - Lighthouse test timed out for Royal Agricultural University (https://www.rau.ac.uk) on desktop
+2025-07-20 07:19:51,493 - WARNING - ❌ Failed Royal Agricultural University (desktop) - 256/260
+2025-07-20 07:19:54,123 - ERROR - Lighthouse test timed out for Hartpury University (https://www.hartpury.ac.uk) on mobile
+2025-07-20 07:19:54,125 - WARNING - ❌ Failed Hartpury University (mobile) - 257/260
+2025-07-20 07:19:58,206 - ERROR - Lighthouse test timed out for Hartpury University (https://www.hartpury.ac.uk) on desktop
+2025-07-20 07:19:58,206 - WARNING - ❌ Failed Hartpury University (desktop) - 258/260
+2025-07-20 07:20:22,575 - ERROR - Lighthouse test timed out for Reaseheath University Centre (https://www.reaseheath.ac.uk) on mobile
+2025-07-20 07:20:22,577 - WARNING - ❌ Failed Reaseheath University Centre (mobile) - 259/260
+2025-07-20 07:20:43,315 - ERROR - Lighthouse test timed out for Reaseheath University Centre (https://www.reaseheath.ac.uk) on desktop
+2025-07-20 07:20:43,315 - WARNING - ❌ Failed Reaseheath University Centre (desktop) - 260/260
+2025-07-20 07:20:43,321 - INFO - Completed all tests. 81 successful results out of 260 total tests
+2025-07-20 07:20:43,415 - INFO - Results saved to lighthouse_results/lighthouse_results_2025-07-20.json
+2025-07-20 07:20:43,427 - INFO - Generating dashboard...
+2025-07-20 07:20:43,727 - INFO - Dashboard generated at docs/index.html
+2025-07-20 07:20:43,734 - INFO - All tasks completed successfully!
