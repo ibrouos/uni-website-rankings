@@ -6380,6 +6380,1426 @@ window.lighthouseData = [
     }
   },
   {
+    "name": "University College London",
+    "url": "https://www.ucl.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:26:38.844596",
+    "scores": {
+      "performance": 35.0,
+      "accessibility": 100,
+      "best_practices": 89.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5008.997,
+      "largest_contentful_paint": 5008.997,
+      "cumulative_layout_shift": 0.0002076976058170925,
+      "total_blocking_time": 3811.9400000000023,
+      "speed_index": 7408,
+      "interactive": 10566.468
+    }
+  },
+  {
+    "name": "University College London",
+    "url": "https://www.ucl.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:26:39.066683",
+    "scores": {
+      "performance": 41.0,
+      "accessibility": 100,
+      "best_practices": 89.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4190.122,
+      "largest_contentful_paint": 4190.122,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 4911.519000000004,
+      "speed_index": 7296,
+      "interactive": 12733.924
+    }
+  },
+  {
+    "name": "University of Cambridge",
+    "url": "https://www.cam.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:26:43.133477",
+    "scores": {
+      "performance": 33.0,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4249.616,
+      "largest_contentful_paint": 5219.917,
+      "cumulative_layout_shift": 0.0006082597938021458,
+      "total_blocking_time": 7984.616999999995,
+      "speed_index": 11955,
+      "interactive": 19341.379
+    }
+  },
+  {
+    "name": "University of Cambridge",
+    "url": "https://www.cam.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:26:44.193273",
+    "scores": {
+      "performance": 28.000000000000004,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4673.429,
+      "largest_contentful_paint": 7196.792,
+      "cumulative_layout_shift": 0.0006082597938021458,
+      "total_blocking_time": 7580.871000000005,
+      "speed_index": 11873,
+      "interactive": 19122.679
+    }
+  },
+  {
+    "name": "King's College London",
+    "url": "https://www.kcl.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:26:55.597379",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 94.0,
+      "best_practices": 100,
+      "seo": 66.0
+    },
+    "metrics": {
+      "first_contentful_paint": 8352.466,
+      "largest_contentful_paint": 8352.466,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 8504.544000000002,
+      "speed_index": 11365,
+      "interactive": 22096.282
+    }
+  },
+  {
+    "name": "King's College London",
+    "url": "https://www.kcl.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:26:57.309005",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 94.0,
+      "best_practices": 100,
+      "seo": 66.0
+    },
+    "metrics": {
+      "first_contentful_paint": 7959.12,
+      "largest_contentful_paint": 8432.809,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 9214.969999999994,
+      "speed_index": 11334,
+      "interactive": 18612.05
+    }
+  },
+  {
+    "name": "University of Oxford",
+    "url": "https://www.ox.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:27:03.281155",
+    "scores": {
+      "performance": 7.000000000000001,
+      "accessibility": 94.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4631.168,
+      "largest_contentful_paint": 10723.195,
+      "cumulative_layout_shift": 0.4196011096527685,
+      "total_blocking_time": 9488.715000000007,
+      "speed_index": 14476,
+      "interactive": 19711.133
+    }
+  },
+  {
+    "name": "Imperial College London",
+    "url": "https://www.imperial.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:27:04.192521",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 97.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 5201.095,
+      "largest_contentful_paint": 6169.235,
+      "cumulative_layout_shift": 0.1357994277891542,
+      "total_blocking_time": 16960.487000000012,
+      "speed_index": 8339,
+      "interactive": 30008.589
+    }
+  },
+  {
+    "name": "Imperial College London",
+    "url": "https://www.imperial.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:27:04.832309",
+    "scores": {
+      "performance": 27.0,
+      "accessibility": 97.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4889.956,
+      "largest_contentful_paint": 5831.685,
+      "cumulative_layout_shift": 0.1357994277891542,
+      "total_blocking_time": 16944.851,
+      "speed_index": 7944,
+      "interactive": 29381.06
+    }
+  },
+  {
+    "name": "University of Oxford",
+    "url": "https://www.ox.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:27:07.500937",
+    "scores": {
+      "performance": 7.000000000000001,
+      "accessibility": 94.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4954.36,
+      "largest_contentful_paint": 11091.724,
+      "cumulative_layout_shift": 0.4196011096527685,
+      "total_blocking_time": 9052.972000000002,
+      "speed_index": 14918,
+      "interactive": 20150.265
+    }
+  },
+  {
+    "name": "University of Edinburgh",
+    "url": "https://www.ed.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:27:52.603121",
+    "scores": {
+      "performance": 27.0,
+      "accessibility": 98.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 8529.571,
+      "largest_contentful_paint": 8529.571,
+      "cumulative_layout_shift": 0.03815021946498673,
+      "total_blocking_time": 2640.5459999999985,
+      "speed_index": 10332,
+      "interactive": 12359.981
+    }
+  },
+  {
+    "name": "University of Edinburgh",
+    "url": "https://www.ed.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:27:54.156334",
+    "scores": {
+      "performance": 28.999999999999996,
+      "accessibility": 98.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 7780.646,
+      "largest_contentful_paint": 7780.646,
+      "cumulative_layout_shift": 0.03815021946498673,
+      "total_blocking_time": 1903.4579999999996,
+      "speed_index": 9159,
+      "interactive": 10753.357
+    }
+  },
+  {
+    "name": "University of Glasgow",
+    "url": "https://www.gla.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:28:44.252857",
+    "scores": {
+      "performance": 3.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 15529.452,
+      "largest_contentful_paint": 17190.462,
+      "cumulative_layout_shift": 0.7788814307116988,
+      "total_blocking_time": 2316.3410000000003,
+      "speed_index": 15893,
+      "interactive": 19098.614
+    }
+  },
+  {
+    "name": "University of Glasgow",
+    "url": "https://www.gla.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:28:45.628222",
+    "scores": {
+      "performance": 2.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 16425.769,
+      "largest_contentful_paint": 18563.758,
+      "cumulative_layout_shift": 0.7788814307116988,
+      "total_blocking_time": 2527.867000000002,
+      "speed_index": 16897,
+      "interactive": 20129.401
+    }
+  },
+  {
+    "name": "University of Birmingham",
+    "url": "https://www.birmingham.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:28:52.757121",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5737.277,
+      "largest_contentful_paint": 18839.05,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 16770.384999999947,
+      "speed_index": 22408,
+      "interactive": 28519.197999999942
+    }
+  },
+  {
+    "name": "University of Birmingham",
+    "url": "https://www.birmingham.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:28:54.911869",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 7214.755,
+      "largest_contentful_paint": 19756.642,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 15600.954999999996,
+      "speed_index": 22731,
+      "interactive": 28152.624
+    }
+  },
+  {
+    "name": "University of Southampton",
+    "url": "https://www.southampton.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:29:04.129501",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 85.0,
+      "best_practices": 75.0,
+      "seo": 69.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2994.722,
+      "largest_contentful_paint": 13019.808,
+      "cumulative_layout_shift": 0.12393681652490887,
+      "total_blocking_time": 13242.810999999994,
+      "speed_index": 12227,
+      "interactive": 21144.183
+    }
+  },
+  {
+    "name": "University of Warwick",
+    "url": "https://www.warwick.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:29:05.608839",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 9913.338,
+      "largest_contentful_paint": 9913.338,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 13565.359000000002,
+      "speed_index": 13717,
+      "interactive": 32515.198
+    }
+  },
+  {
+    "name": "University of Warwick",
+    "url": "https://www.warwick.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:29:08.740431",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 9299.534,
+      "largest_contentful_paint": 9299.534,
+      "cumulative_layout_shift": 1.7871185686862793e-05,
+      "total_blocking_time": 13685.49599999994,
+      "speed_index": 13178,
+      "interactive": 31853.95299999994
+    }
+  },
+  {
+    "name": "University of Leeds",
+    "url": "https://www.leeds.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:29:09.534414",
+    "scores": {
+      "performance": 34.0,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3287.3,
+      "largest_contentful_paint": 7531.727,
+      "cumulative_layout_shift": 0.0008328061220825887,
+      "total_blocking_time": 4630.598999999997,
+      "speed_index": 6779,
+      "interactive": 9496.083
+    }
+  },
+  {
+    "name": "University of Southampton",
+    "url": "https://www.southampton.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:29:10.052592",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 85.0,
+      "best_practices": 75.0,
+      "seo": 69.0
+    },
+    "metrics": {
+      "first_contentful_paint": 3013.465,
+      "largest_contentful_paint": 12905.579,
+      "cumulative_layout_shift": 0.12393681652490887,
+      "total_blocking_time": 13374.484999999937,
+      "speed_index": 12110,
+      "interactive": 21190.40999999994
+    }
+  },
+  {
+    "name": "University of Leeds",
+    "url": "https://www.leeds.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:29:10.668576",
+    "scores": {
+      "performance": 33.0,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3706.984,
+      "largest_contentful_paint": 7636.767,
+      "cumulative_layout_shift": 0.0003023010701644224,
+      "total_blocking_time": 3865.234999999995,
+      "speed_index": 6262,
+      "interactive": 9615.317
+    }
+  },
+  {
+    "name": "University of Sheffield",
+    "url": "https://www.sheffield.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:29:48.307262",
+    "scores": {
+      "performance": 32.0,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3978.444,
+      "largest_contentful_paint": 7896.831,
+      "cumulative_layout_shift": 0.0029922313167009074,
+      "total_blocking_time": 7378.576999999995,
+      "speed_index": 6357,
+      "interactive": 18552.438
+    }
+  },
+  {
+    "name": "University of Sheffield",
+    "url": "https://www.sheffield.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:29:48.845061",
+    "scores": {
+      "performance": 28.999999999999996,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5169.427,
+      "largest_contentful_paint": 9241.141,
+      "cumulative_layout_shift": 0.0015161741012172786,
+      "total_blocking_time": 5623.401999999994,
+      "speed_index": 6968,
+      "interactive": 19290.184
+    }
+  },
+  {
+    "name": "Lancaster University",
+    "url": "https://www.lancaster.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:30:34.324252",
+    "scores": {
+      "performance": 40.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3104.891,
+      "largest_contentful_paint": 6905.445,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 8526.501999999886,
+      "speed_index": 3784,
+      "interactive": 14227.454999999882
+    }
+  },
+  {
+    "name": "Lancaster University",
+    "url": "https://www.lancaster.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:30:45.035447",
+    "scores": {
+      "performance": 37.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3529.418,
+      "largest_contentful_paint": 8149.689,
+      "cumulative_layout_shift": 0.0009271139506038332,
+      "total_blocking_time": 8222.10499999988,
+      "speed_index": 4216,
+      "interactive": 14447.49399999988
+    }
+  },
+  {
+    "name": "University of Nottingham",
+    "url": "https://www.nottingham.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:30:59.473106",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 88.0,
+      "best_practices": 100,
+      "seo": 75.0
+    },
+    "metrics": {
+      "first_contentful_paint": 19657.303,
+      "largest_contentful_paint": 22014.922,
+      "cumulative_layout_shift": 0.04618730336365341,
+      "total_blocking_time": 10690.146999999997,
+      "speed_index": 23933,
+      "interactive": 33078.201
+    }
+  },
+  {
+    "name": "University of Nottingham",
+    "url": "https://www.nottingham.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:31:00.751138",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 88.0,
+      "best_practices": 100,
+      "seo": 75.0
+    },
+    "metrics": {
+      "first_contentful_paint": 19430.62,
+      "largest_contentful_paint": 21224.155,
+      "cumulative_layout_shift": 0.04618730336365341,
+      "total_blocking_time": 10842.377,
+      "speed_index": 23121,
+      "interactive": 32964.214
+    }
+  },
+  {
+    "name": "University of York",
+    "url": "https://www.york.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:31:17.605179",
+    "scores": {
+      "performance": 51.0,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2490.499,
+      "largest_contentful_paint": 4186.742,
+      "cumulative_layout_shift": 0.002049221901197948,
+      "total_blocking_time": 15969.423000000008,
+      "speed_index": 4300,
+      "interactive": 29232.597
+    }
+  },
+  {
+    "name": "University of York",
+    "url": "https://www.york.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:31:19.926097",
+    "scores": {
+      "performance": 50.0,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2436.184,
+      "largest_contentful_paint": 4332.755,
+      "cumulative_layout_shift": 0.0024335904688342716,
+      "total_blocking_time": 16838.232000000007,
+      "speed_index": 4136,
+      "interactive": 29777.003
+    }
+  },
+  {
+    "name": "University of Bath",
+    "url": "https://www.bath.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:31:37.494233",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 99.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4423.599,
+      "largest_contentful_paint": 14961.629,
+      "cumulative_layout_shift": 0.06804374240583232,
+      "total_blocking_time": 9093.345000000008,
+      "speed_index": 12489,
+      "interactive": 23803.686
+    }
+  },
+  {
+    "name": "University of Bath",
+    "url": "https://www.bath.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:31:38.664043",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 99.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5292.016,
+      "largest_contentful_paint": 14218.408,
+      "cumulative_layout_shift": 0.06804374240583232,
+      "total_blocking_time": 9345.054000000004,
+      "speed_index": 13165,
+      "interactive": 28513.94
+    }
+  },
+  {
+    "name": "Cardiff University",
+    "url": "https://www.cardiff.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:32:37.752906",
+    "scores": {
+      "performance": 35.0,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3008.609,
+      "largest_contentful_paint": 8323.948,
+      "cumulative_layout_shift": 0.04321843164456068,
+      "total_blocking_time": 11034.49499999988,
+      "speed_index": 5859,
+      "interactive": 21029.16599999988
+    }
+  },
+  {
+    "name": "University of Sussex",
+    "url": "https://www.sussex.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:32:41.219895",
+    "scores": {
+      "performance": 39.0,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4257.389,
+      "largest_contentful_paint": 5313.475,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 1987.4759999999987,
+      "speed_index": 5817,
+      "interactive": 7314.005
+    }
+  },
+  {
+    "name": "University of Sussex",
+    "url": "https://www.sussex.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:32:44.086873",
+    "scores": {
+      "performance": 41.0,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4600.341,
+      "largest_contentful_paint": 5067.554,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 1674.4180000000006,
+      "speed_index": 5886,
+      "interactive": 7405.974
+    }
+  },
+  {
+    "name": "Cardiff University",
+    "url": "https://www.cardiff.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:32:44.086942",
+    "scores": {
+      "performance": 33.0,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3466.794,
+      "largest_contentful_paint": 8804.708,
+      "cumulative_layout_shift": 0.04208110449601961,
+      "total_blocking_time": 9838.328000000003,
+      "speed_index": 6166,
+      "interactive": 20395.779
+    }
+  },
+  {
+    "name": "University of Liverpool",
+    "url": "https://www.liverpool.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:32:49.983074",
+    "scores": {
+      "performance": 37.0,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3657.154,
+      "largest_contentful_paint": 4499.053,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 14816.530000000002,
+      "speed_index": 13559,
+      "interactive": 28521.542
+    }
+  },
+  {
+    "name": "University of Liverpool",
+    "url": "https://www.liverpool.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:32:51.714804",
+    "scores": {
+      "performance": 42.0,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3209.407,
+      "largest_contentful_paint": 4020.004,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 14765.238000000001,
+      "speed_index": 12832,
+      "interactive": 24891.104
+    }
+  },
+  {
+    "name": "University of Surrey",
+    "url": "https://www.surrey.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:33:12.751472",
+    "scores": {
+      "performance": 41.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3909.825,
+      "largest_contentful_paint": 4376.331,
+      "cumulative_layout_shift": 0.0031181301848879936,
+      "total_blocking_time": 5367.906000000006,
+      "speed_index": 7052,
+      "interactive": 13519.985
+    }
+  },
+  {
+    "name": "University of Surrey",
+    "url": "https://www.surrey.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:33:13.896343",
+    "scores": {
+      "performance": 39.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3636.206,
+      "largest_contentful_paint": 4607.597,
+      "cumulative_layout_shift": 0.0031181301848879936,
+      "total_blocking_time": 6146.155000000001,
+      "speed_index": 7378,
+      "interactive": 13923.889
+    }
+  },
+  {
+    "name": "University of Aberdeen",
+    "url": "https://www.abdn.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:34:55.641207",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 97.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5876.172,
+      "largest_contentful_paint": 10872.515,
+      "cumulative_layout_shift": 0.047174960395908044,
+      "total_blocking_time": 9670.481,
+      "speed_index": 16546,
+      "interactive": 21506.55
+    }
+  },
+  {
+    "name": "University of Aberdeen",
+    "url": "https://www.abdn.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:34:55.979982",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 97.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5679.022,
+      "largest_contentful_paint": 8316.211,
+      "cumulative_layout_shift": 0.04775112057803519,
+      "total_blocking_time": 10224.974999999977,
+      "speed_index": 18805,
+      "interactive": 29161.995
+    }
+  },
+  {
+    "name": "Heriot-Watt University",
+    "url": "https://www.hw.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:34:56.764414",
+    "scores": {
+      "performance": 31.0,
+      "accessibility": 95.0,
+      "best_practices": 93.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2983.87,
+      "largest_contentful_paint": 14752.859,
+      "cumulative_layout_shift": 0.03450317349471232,
+      "total_blocking_time": 14123.684000000003,
+      "speed_index": 10266,
+      "interactive": 27650.755
+    }
+  },
+  {
+    "name": "University of Strathclyde",
+    "url": "https://www.strath.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:35:02.007594",
+    "scores": {
+      "performance": 27.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5132.105,
+      "largest_contentful_paint": 8063.464,
+      "cumulative_layout_shift": 0.01672857651156233,
+      "total_blocking_time": 12798.086999999876,
+      "speed_index": 10085,
+      "interactive": 31871.50899999988
+    }
+  },
+  {
+    "name": "Heriot-Watt University",
+    "url": "https://www.hw.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:35:03.111961",
+    "scores": {
+      "performance": 33.0,
+      "accessibility": 95.0,
+      "best_practices": 96.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2504.028,
+      "largest_contentful_paint": 14117.644,
+      "cumulative_layout_shift": 0.035749244458749,
+      "total_blocking_time": 13862.131999999998,
+      "speed_index": 9648,
+      "interactive": 26081.201
+    }
+  },
+  {
+    "name": "University of Strathclyde",
+    "url": "https://www.strath.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:35:03.776566",
+    "scores": {
+      "performance": 27.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4701.486,
+      "largest_contentful_paint": 11851.89,
+      "cumulative_layout_shift": 0.01672857651156233,
+      "total_blocking_time": 11791.782,
+      "speed_index": 10491,
+      "interactive": 24919.284
+    }
+  },
+  {
+    "name": "Loughborough University",
+    "url": "https://www.lboro.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:36:02.532607",
+    "scores": {
+      "performance": 28.000000000000004,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3782.95,
+      "largest_contentful_paint": 19547.448,
+      "cumulative_layout_shift": 0.004663424023033249,
+      "total_blocking_time": 11410.98599999988,
+      "speed_index": 16602,
+      "interactive": 23900.314999999882
+    }
+  },
+  {
+    "name": "Loughborough University",
+    "url": "https://www.lboro.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:36:08.031218",
+    "scores": {
+      "performance": 28.000000000000004,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3540.051,
+      "largest_contentful_paint": 20475.691,
+      "cumulative_layout_shift": 0.004663424023033249,
+      "total_blocking_time": 9431.281999999996,
+      "speed_index": 14892,
+      "interactive": 22895.014
+    }
+  },
+  {
+    "name": "University of Leicester",
+    "url": "https://www.le.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:36:50.162996",
+    "scores": {
+      "performance": 21.0,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5394.252,
+      "largest_contentful_paint": 8906.309,
+      "cumulative_layout_shift": 0.1543134872417983,
+      "total_blocking_time": 17737.34600000001,
+      "speed_index": 10417,
+      "interactive": 28682.603
+    }
+  },
+  {
+    "name": "University of Reading",
+    "url": "https://www.reading.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:37:06.421511",
+    "scores": {
+      "performance": 27.0,
+      "accessibility": 95.0,
+      "best_practices": 71.0,
+      "seo": 83.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4845.555,
+      "largest_contentful_paint": 5241.539,
+      "cumulative_layout_shift": 0.17067038322587694,
+      "total_blocking_time": 15950.39200000001,
+      "speed_index": 7549,
+      "interactive": 34288.61
+    }
+  },
+  {
+    "name": "University of Leicester",
+    "url": "https://www.le.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:37:28.268790",
+    "scores": {
+      "performance": 21.0,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4933.232,
+      "largest_contentful_paint": 8584.397,
+      "cumulative_layout_shift": 0.1543134872417983,
+      "total_blocking_time": 20920.613999999998,
+      "speed_index": 10477,
+      "interactive": 35547.774
+    }
+  },
+  {
+    "name": "City, University of London",
+    "url": "https://www.city.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:38:02.624252",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 96.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 8859.433,
+      "largest_contentful_paint": 8859.433,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 10084.703000000005,
+      "speed_index": 12374,
+      "interactive": 22622.20900000012
+    }
+  },
+  {
+    "name": "Oxford Brookes University",
+    "url": "https://www.brookes.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:38:44.980927",
+    "scores": {
+      "performance": 30.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 3322.811,
+      "largest_contentful_paint": 10009.275,
+      "cumulative_layout_shift": 0.04912305356776397,
+      "total_blocking_time": 9977.435999999996,
+      "speed_index": 9189,
+      "interactive": 28815.944
+    }
+  },
+  {
+    "name": "Oxford Brookes University",
+    "url": "https://www.brookes.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:38:56.491524",
+    "scores": {
+      "performance": 30.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 3479.733,
+      "largest_contentful_paint": 9313.209,
+      "cumulative_layout_shift": 0.04912305356776397,
+      "total_blocking_time": 8905.541999999994,
+      "speed_index": 8522,
+      "interactive": 28480.651
+    }
+  },
+  {
+    "name": "Goldsmiths, University of London",
+    "url": "https://www.gold.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:39:38.810708",
+    "scores": {
+      "performance": 30.0,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5374.624,
+      "largest_contentful_paint": 5667.026,
+      "cumulative_layout_shift": 0.00037171277866471713,
+      "total_blocking_time": 22511.42499999999,
+      "speed_index": 29982,
+      "interactive": 39184.556
+    }
+  },
+  {
+    "name": "Birkbeck, University of London",
+    "url": "https://www.bbk.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:39:59.792884",
+    "scores": {
+      "performance": 14.000000000000002,
+      "accessibility": 93.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "metrics": {
+      "first_contentful_paint": 1767.201,
+      "largest_contentful_paint": 11470.768,
+      "cumulative_layout_shift": 0.45267597912471363,
+      "total_blocking_time": 11802.41899999999,
+      "speed_index": 13036,
+      "interactive": 20665.762
+    }
+  },
+  {
+    "name": "Goldsmiths, University of London",
+    "url": "https://www.gold.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:40:03.462987",
+    "scores": {
+      "performance": 30.0,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 5755.637,
+      "largest_contentful_paint": 5755.637,
+      "cumulative_layout_shift": 0.00012583027843576956,
+      "total_blocking_time": 17660.860000000015,
+      "speed_index": 24562,
+      "interactive": 34148.004
+    }
+  },
+  {
+    "name": "Birkbeck, University of London",
+    "url": "https://www.bbk.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:40:10.189528",
+    "scores": {
+      "performance": 13.0,
+      "accessibility": 93.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "metrics": {
+      "first_contentful_paint": 2362.412,
+      "largest_contentful_paint": 11406.103,
+      "cumulative_layout_shift": 0.45267597912471363,
+      "total_blocking_time": 10977.318999999998,
+      "speed_index": 12741,
+      "interactive": 23354.503
+    }
+  },
+  {
+    "name": "Royal Holloway, University of London",
+    "url": "https://www.rhul.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:40:22.093779",
+    "scores": {
+      "performance": 26.0,
+      "accessibility": 96.0,
+      "best_practices": 75.0,
+      "seo": 91.0
+    },
+    "metrics": {
+      "first_contentful_paint": 6802.494,
+      "largest_contentful_paint": 8128.811,
+      "cumulative_layout_shift": 0.012012995161878497,
+      "total_blocking_time": 17073.192999999985,
+      "speed_index": 12411,
+      "interactive": 32958.839
+    }
+  },
+  {
+    "name": "Royal Holloway, University of London",
+    "url": "https://www.rhul.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:40:24.157924",
+    "scores": {
+      "performance": 28.000000000000004,
+      "accessibility": 96.0,
+      "best_practices": 75.0,
+      "seo": 91.0
+    },
+    "metrics": {
+      "first_contentful_paint": 5761.229,
+      "largest_contentful_paint": 6580.166,
+      "cumulative_layout_shift": 0.012012995161878497,
+      "total_blocking_time": 18410.751000000004,
+      "speed_index": 13564,
+      "interactive": 33522.51
+    }
+  },
+  {
+    "name": "University of Stirling",
+    "url": "https://www.stir.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:42:13.967964",
+    "scores": {
+      "performance": 36.0,
+      "accessibility": 96.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 3317.436,
+      "largest_contentful_paint": 9137.215,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 18367.379000000008,
+      "speed_index": 5014,
+      "interactive": 28381.955
+    }
+  },
+  {
+    "name": "Aberystwyth University",
+    "url": "https://www.aber.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:42:14.666052",
+    "scores": {
+      "performance": 2.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 83.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4351.76,
+      "largest_contentful_paint": 9456.51,
+      "cumulative_layout_shift": 1.0757119140033868,
+      "total_blocking_time": 12878.430999999999,
+      "speed_index": 13633,
+      "interactive": 27311.847000000238
+    }
+  },
+  {
+    "name": "University of Stirling",
+    "url": "https://www.stir.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:42:17.570578",
+    "scores": {
+      "performance": 34.0,
+      "accessibility": 96.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "metrics": {
+      "first_contentful_paint": 4071.335,
+      "largest_contentful_paint": 9391.742,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 17426.340000000004,
+      "speed_index": 4988,
+      "interactive": 27784.41
+    }
+  },
+  {
+    "name": "Aberystwyth University",
+    "url": "https://www.aber.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:42:27.907482",
+    "scores": {
+      "performance": 6.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 83.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4538.848,
+      "largest_contentful_paint": 7317.981,
+      "cumulative_layout_shift": 0.5419425973197664,
+      "total_blocking_time": 14004.038999999999,
+      "speed_index": 15311,
+      "interactive": 31548.309
+    }
+  },
+  {
+    "name": "University of Bradford",
+    "url": "https://www.bradford.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:44:05.022588",
+    "scores": {
+      "performance": 38.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4123.156,
+      "largest_contentful_paint": 4577.164,
+      "cumulative_layout_shift": 0.0006185259158378628,
+      "total_blocking_time": 4534.503999999998,
+      "speed_index": 7917,
+      "interactive": 15509.987
+    }
+  },
+  {
+    "name": "University of Bradford",
+    "url": "https://www.bradford.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:44:26.646963",
+    "scores": {
+      "performance": 36.0,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4272.994,
+      "largest_contentful_paint": 4915.285,
+      "cumulative_layout_shift": 0.0004930560555484022,
+      "total_blocking_time": 5512.617999999999,
+      "speed_index": 8637,
+      "interactive": 16935.189
+    }
+  },
+  {
+    "name": "University of Huddersfield",
+    "url": "https://www.hud.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:47:19.241191",
+    "scores": {
+      "performance": 28.000000000000004,
+      "accessibility": 99.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 3850.705,
+      "largest_contentful_paint": 10739.742,
+      "cumulative_layout_shift": 0,
+      "total_blocking_time": 23331.11599999999,
+      "speed_index": 27928,
+      "interactive": 36587.399
+    }
+  },
+  {
+    "name": "University of Huddersfield",
+    "url": "https://www.hud.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:47:20.161581",
+    "scores": {
+      "performance": 10.0,
+      "accessibility": 99.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 4447.244,
+      "largest_contentful_paint": 14087.552,
+      "cumulative_layout_shift": 0.33079480024636176,
+      "total_blocking_time": 25185.969,
+      "speed_index": 27113,
+      "interactive": 39139.266000000236
+    }
+  },
+  {
+    "name": "Coventry University",
+    "url": "https://www.coventry.ac.uk",
+    "device": "mobile",
+    "timestamp": "2025-09-06T06:48:13.895200",
+    "scores": {
+      "performance": 15.0,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 6232.482,
+      "largest_contentful_paint": 6600.462,
+      "cumulative_layout_shift": 0.26115181751906946,
+      "total_blocking_time": 11888.334999999997,
+      "speed_index": 10698,
+      "interactive": 29390.868
+    }
+  },
+  {
+    "name": "Coventry University",
+    "url": "https://www.coventry.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:48:26.606644",
+    "scores": {
+      "performance": 14.000000000000002,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 6040.542,
+      "largest_contentful_paint": 6943.864,
+      "cumulative_layout_shift": 0.26233339911111014,
+      "total_blocking_time": 12867.003999999997,
+      "speed_index": 11186,
+      "interactive": 25709.185
+    }
+  },
+  {
+    "name": "Anglia Ruskin University",
+    "url": "https://www.anglia.ac.uk",
+    "device": "desktop",
+    "timestamp": "2025-09-06T06:51:31.956787",
+    "scores": {
+      "performance": 25.0,
+      "accessibility": 99.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "metrics": {
+      "first_contentful_paint": 6140.109,
+      "largest_contentful_paint": 15844.156,
+      "cumulative_layout_shift": 8.070858052131583e-05,
+      "total_blocking_time": 18693.322000000007,
+      "speed_index": 23102,
+      "interactive": 33258.43100000024
+    }
+  },
+  {
     "name": "University of Cambridge",
     "url": "https://www.cam.ac.uk",
     "device": "mobile",
