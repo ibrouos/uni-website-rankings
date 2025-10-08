@@ -1,0 +1,2708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of York - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of York</h1>
+                <p>https://www.york.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of York",
+  "slug": "university-of-york",
+  "url": "https://www.york.ac.uk",
+  "total_tests": 111,
+  "last_updated": "2025-10-08T06:36:37.355569",
+  "week_averages": {
+    "mobile": {
+      "performance": 52.2,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 55.0,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 9
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 48.18181818181818,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 49.85,
+      "accessibility": 95.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 42
+  },
+  "trend": "down",
+  "results": [
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T22:53:01.210242",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5008.387,
+        "largest_contentful_paint": 5363.719,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 20621.816999999995,
+        "speed_index": 5436,
+        "interactive": 35741.961
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T22:53:04.508808",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4796.496,
+        "largest_contentful_paint": 4796.496,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 20529.288999999928,
+        "speed_index": 5551,
+        "interactive": 35171.54499999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:20:11.789960",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4711.585,
+        "largest_contentful_paint": 5085.234,
+        "cumulative_layout_shift": 0.02793832465463608,
+        "total_blocking_time": 20494.350000000006,
+        "speed_index": 5635,
+        "interactive": 34973.443
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:20:15.335886",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4310.605,
+        "largest_contentful_paint": 4687.189,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 19441.368999999995,
+        "speed_index": 5126,
+        "interactive": 33214.064
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:37:52.428457",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4557.537,
+        "largest_contentful_paint": 4892.742,
+        "cumulative_layout_shift": 0.02793832465463608,
+        "total_blocking_time": 21096.535999999986,
+        "speed_index": 5571,
+        "interactive": 36066.971
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:37:34.259628",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4951.359,
+        "largest_contentful_paint": 5647.264,
+        "cumulative_layout_shift": 0.00015463366263318107,
+        "total_blocking_time": 21036.437000000005,
+        "speed_index": 5980,
+        "interactive": 37853.817
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:37:36.122320",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5493.992,
+        "largest_contentful_paint": 6285.341,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 20261.033000000018,
+        "speed_index": 6304,
+        "interactive": 37140.935
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:37:17.565867",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4786.928,
+        "largest_contentful_paint": 4985.722,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 23693.74099999999,
+        "speed_index": 5238,
+        "interactive": 39766.714
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:37:14.492951",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4438.6,
+        "largest_contentful_paint": 5127.276,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 19989.32699999998,
+        "speed_index": 5378,
+        "interactive": 35024.686
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:37:06.512141",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4919.799,
+        "largest_contentful_paint": 5254.683,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 20127.528999999995,
+        "speed_index": 5385,
+        "interactive": 34677.843
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:34:17.701438",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4745.071,
+        "largest_contentful_paint": 5175.794,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 21956.651999999933,
+        "speed_index": 5636,
+        "interactive": 37620.48599999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:34:17.838528",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4459.367,
+        "largest_contentful_paint": 5177.182,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 22137.425000000025,
+        "speed_index": 5403,
+        "interactive": 37239.333
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:35:24.483256",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4582.765,
+        "largest_contentful_paint": 5525.551,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 21530.384,
+        "speed_index": 5743,
+        "interactive": 37324.94
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:35:34.329926",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4645.251,
+        "largest_contentful_paint": 5451.913,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 21091.697000000015,
+        "speed_index": 5681,
+        "interactive": 35751.031
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:38:39.891232",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5490.048,
+        "largest_contentful_paint": 6324.556,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 21691.434000000012,
+        "speed_index": 6967,
+        "interactive": 37316.859
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:37:41.088500",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4191.385,
+        "largest_contentful_paint": 4818.706,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 20237.39899999999,
+        "speed_index": 5282,
+        "interactive": 34313.452
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:37:48.008454",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4604.53,
+        "largest_contentful_paint": 5008.933,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 19930.734999999993,
+        "speed_index": 5337,
+        "interactive": 34316.036
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:39:17.387524",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4825.597,
+        "largest_contentful_paint": 5937.819,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 22220.39899999999,
+        "speed_index": 5863,
+        "interactive": 38485.49300000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:39:24.591477",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4333.875,
+        "largest_contentful_paint": 4679.295,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 22619.302999999993,
+        "speed_index": 4954,
+        "interactive": 38489.061
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:37:47.396492",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4351.459,
+        "largest_contentful_paint": 5050.8,
+        "cumulative_layout_shift": 0.00030204306071620235,
+        "total_blocking_time": 24272.08199999998,
+        "speed_index": 5280,
+        "interactive": 39465.711
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:38:19.715694",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9350.164,
+        "largest_contentful_paint": 9790.511,
+        "cumulative_layout_shift": 0.10785616646415552,
+        "total_blocking_time": 20796.12099999991,
+        "speed_index": 10287,
+        "interactive": 39777.65999999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:38:21.127473",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6188.229,
+        "largest_contentful_paint": 6948.92,
+        "cumulative_layout_shift": 0.10785616646415552,
+        "total_blocking_time": 20080.804999999993,
+        "speed_index": 7710,
+        "interactive": 35901.833
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:35:42.036064",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5193.988,
+        "largest_contentful_paint": 6123.41,
+        "cumulative_layout_shift": 0.11816352544224719,
+        "total_blocking_time": 23610.70299999997,
+        "speed_index": 8080,
+        "interactive": 39994.12600000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:40:49.116636",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4918.246,
+        "largest_contentful_paint": 5298.566,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 23360.37,
+        "speed_index": 5521,
+        "interactive": 36031.365
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:40:57.313297",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4498.661,
+        "largest_contentful_paint": 5068.94,
+        "cumulative_layout_shift": 0.000250498506505142,
+        "total_blocking_time": 23990.010999999973,
+        "speed_index": 5385,
+        "interactive": 36827.753
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:39:47.526532",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2723.505,
+        "largest_contentful_paint": 3162.178,
+        "cumulative_layout_shift": 0.1652490886998785,
+        "total_blocking_time": 24763.847,
+        "speed_index": 7257,
+        "interactive": 38259.346
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:39:51.888974",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2408.089,
+        "largest_contentful_paint": 2726.919,
+        "cumulative_layout_shift": 0.1652490886998785,
+        "total_blocking_time": 25150.219,
+        "speed_index": 8397,
+        "interactive": 39042.596
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:36:36.625431",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2221.248,
+        "largest_contentful_paint": 2778.853,
+        "cumulative_layout_shift": 0.12139166798908455,
+        "total_blocking_time": 22457.818000000014,
+        "speed_index": 5186,
+        "interactive": 36975.712
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:36:48.433409",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 89.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2604.429,
+        "largest_contentful_paint": 4563.888,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 24260.715999999986,
+        "speed_index": 4785,
+        "interactive": 39915.403
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:38:26.170307",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 89.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3359.425,
+        "largest_contentful_paint": 5293.067,
+        "cumulative_layout_shift": 0.08036903829572606,
+        "total_blocking_time": 21843.248000000007,
+        "speed_index": 5736,
+        "interactive": 37054.148
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:38:35.212993",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2627.141,
+        "largest_contentful_paint": 4157.901,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 24182.369000000024,
+        "speed_index": 4897,
+        "interactive": 39642.998
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:38:45.368846",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2442.973,
+        "largest_contentful_paint": 4213.621,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 23722.090999999935,
+        "speed_index": 4788,
+        "interactive": 39229.69799999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:38:30.300890",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2879.981,
+        "largest_contentful_paint": 4010.583,
+        "cumulative_layout_shift": 0.07823878507822998,
+        "total_blocking_time": 23560.375000000007,
+        "speed_index": 4503,
+        "interactive": 38744.073
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:40:46.010728",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2630.843,
+        "largest_contentful_paint": 4836.313,
+        "cumulative_layout_shift": 0.0010103623116310644,
+        "total_blocking_time": 23585.982999999993,
+        "speed_index": 4367,
+        "interactive": 38650.79
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-18T06:40:48.208873",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2902.781,
+        "largest_contentful_paint": 3401.975,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 23484.064000000006,
+        "speed_index": 3980,
+        "interactive": 38757.219
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:37:05.965646",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2637.684,
+        "largest_contentful_paint": 4445.818,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 21820.656000000003,
+        "speed_index": 4703,
+        "interactive": 35250.86300000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T06:37:06.890309",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2362.856,
+        "largest_contentful_paint": 4132.135,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 23323.156999999996,
+        "speed_index": 4083,
+        "interactive": 37944.74
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:45:41.486581",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3419.999,
+        "largest_contentful_paint": 4130.174,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 20038.848999999987,
+        "speed_index": 4656,
+        "interactive": 35472.987
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T06:45:49.566035",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2557.729,
+        "largest_contentful_paint": 5086.342,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 22858.743000000002,
+        "speed_index": 4360,
+        "interactive": 37965.581
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:36:36.010562",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2641.817,
+        "largest_contentful_paint": 4680.683,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 18622.165999999987,
+        "speed_index": 5574,
+        "interactive": 35223.296
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:36:36.961663",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2383.686,
+        "largest_contentful_paint": 3808.412,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 17628.09699999999,
+        "speed_index": 4023,
+        "interactive": 32430.524
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:34:37.920555",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2310.978,
+        "largest_contentful_paint": 4964.64,
+        "cumulative_layout_shift": 0.002419270496524993,
+        "total_blocking_time": 18074.211000000003,
+        "speed_index": 4168,
+        "interactive": 32563.874
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:34:41.106891",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2712.138,
+        "largest_contentful_paint": 4485.777,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 17057.043,
+        "speed_index": 4723,
+        "interactive": 31544.185
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:38:36.034048",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2552.068,
+        "largest_contentful_paint": 4471.489,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 19211.37300000001,
+        "speed_index": 4554,
+        "interactive": 34908.874
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:38:36.374459",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3346.314,
+        "largest_contentful_paint": 4415.55,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 18271.212999999996,
+        "speed_index": 4980,
+        "interactive": 33401.61200000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:37:19.851833",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2490.885,
+        "largest_contentful_paint": 5283.495,
+        "cumulative_layout_shift": 0.0013390694841948214,
+        "total_blocking_time": 17484.845000000005,
+        "speed_index": 4941,
+        "interactive": 31791.435
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:37:25.745814",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2952.162,
+        "largest_contentful_paint": 4353.637,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 18990.70600000002,
+        "speed_index": 4767,
+        "interactive": 35462.266
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:34:45.430020",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2623.052,
+        "largest_contentful_paint": 4303.146,
+        "cumulative_layout_shift": 0.002419270496524993,
+        "total_blocking_time": 17241.966999999942,
+        "speed_index": 5213,
+        "interactive": 32574.74499999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-27T06:34:53.321133",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2188.778,
+        "largest_contentful_paint": 3418.586,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 18985.295000000013,
+        "speed_index": 4004,
+        "interactive": 33422.974
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:35:40.414356",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2780.208,
+        "largest_contentful_paint": 3940.273,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 16282.80700000001,
+        "speed_index": 4484,
+        "interactive": 29716.07
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:35:44.818801",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3114.105,
+        "largest_contentful_paint": 3659.525,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 15802.695999999987,
+        "speed_index": 4719,
+        "interactive": 31806.71
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-30T06:32:14.416722",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2772.556,
+        "largest_contentful_paint": 5375.438,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 19553.984,
+        "speed_index": 4784,
+        "interactive": 35361.495
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-30T06:32:26.185215",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2393.205,
+        "largest_contentful_paint": 5117.244,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 20550.021999999997,
+        "speed_index": 5418,
+        "interactive": 35179.80200000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:33:25.906147",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3506.228,
+        "largest_contentful_paint": 3821.115,
+        "cumulative_layout_shift": 0.014927136626767562,
+        "total_blocking_time": 16595.42199999994,
+        "speed_index": 4918,
+        "interactive": 32147.23999999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:33:33.843959",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2646.869,
+        "largest_contentful_paint": 4095.803,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 18957.889999999974,
+        "speed_index": 5285,
+        "interactive": 35021.212
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:38:51.354625",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2226.468,
+        "largest_contentful_paint": 4472.281,
+        "cumulative_layout_shift": 0.002419270496524993,
+        "total_blocking_time": 21816.308999999997,
+        "speed_index": 4517,
+        "interactive": 37042.288
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:38:57.074080",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2838.787,
+        "largest_contentful_paint": 5468.927,
+        "cumulative_layout_shift": 0.0022235041479390628,
+        "total_blocking_time": 19652.995000000003,
+        "speed_index": 5726,
+        "interactive": 35722.596
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:34:02.018479",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2433.533,
+        "largest_contentful_paint": 4263.949,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 17624.49099999999,
+        "speed_index": 5513,
+        "interactive": 32275.44
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:34:02.305147",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2629.086,
+        "largest_contentful_paint": 4724.247,
+        "cumulative_layout_shift": 0.0022449882497838775,
+        "total_blocking_time": 18988.525,
+        "speed_index": 5518,
+        "interactive": 34087.269
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:34:17.267547",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2366.332,
+        "largest_contentful_paint": 3846.472,
+        "cumulative_layout_shift": 0.0022449882497838775,
+        "total_blocking_time": 15343.365999999998,
+        "speed_index": 4254,
+        "interactive": 28199.207
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:34:19.245551",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2799.913,
+        "largest_contentful_paint": 4225.929,
+        "cumulative_layout_shift": 0.014395250149262049,
+        "total_blocking_time": 16581.21699999999,
+        "speed_index": 5088,
+        "interactive": 37464.229000000116
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:34:50.946871",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2191.557,
+        "largest_contentful_paint": 3482.977,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 17899.888,
+        "speed_index": 4057,
+        "interactive": 32640.836
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:34:55.845262",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2438.766,
+        "largest_contentful_paint": 5047.265,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 17702.58,
+        "speed_index": 5424,
+        "interactive": 33085.367
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:31:17.605179",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2490.499,
+        "largest_contentful_paint": 4186.742,
+        "cumulative_layout_shift": 0.002049221901197948,
+        "total_blocking_time": 15969.423000000008,
+        "speed_index": 4300,
+        "interactive": 29232.597
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:31:19.926097",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2436.184,
+        "largest_contentful_paint": 4332.755,
+        "cumulative_layout_shift": 0.0024335904688342716,
+        "total_blocking_time": 16838.232000000007,
+        "speed_index": 4136,
+        "interactive": 29777.003
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:31:55.551936",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3082.572,
+        "largest_contentful_paint": 4150.167,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 20676.708000000013,
+        "speed_index": 4702,
+        "interactive": 37168.011
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:31:56.147861",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2412.792,
+        "largest_contentful_paint": 3912.609,
+        "cumulative_layout_shift": 0.002049221901197948,
+        "total_blocking_time": 18949.486999999994,
+        "speed_index": 4167,
+        "interactive": 33175.527
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:36:20.428350",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7368.281,
+        "largest_contentful_paint": 9185.735,
+        "cumulative_layout_shift": 2.5877653360206832e-05,
+        "total_blocking_time": 18335.996999999974,
+        "speed_index": 9705,
+        "interactive": 39292.643
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:36:35.119054",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4169.204,
+        "largest_contentful_paint": 5556.873,
+        "cumulative_layout_shift": 0.002049221901197948,
+        "total_blocking_time": 18590.553000000007,
+        "speed_index": 5870,
+        "interactive": 37270.512
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:35:08.767593",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2725.174,
+        "largest_contentful_paint": 3406.608,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 18430.06299999999,
+        "speed_index": 6206,
+        "interactive": 33818.209
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:35:18.769692",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2758.513,
+        "largest_contentful_paint": 3128.362,
+        "cumulative_layout_shift": 0.11927207490675074,
+        "total_blocking_time": 19422.778999999995,
+        "speed_index": 4489,
+        "interactive": 35389.04
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:35:15.106242",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6382.368,
+        "largest_contentful_paint": 7552.753,
+        "cumulative_layout_shift": 0.11927207490675074,
+        "total_blocking_time": 18860.186000000005,
+        "speed_index": 8275,
+        "interactive": 39327.368
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:35:21.323442",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6217.502,
+        "largest_contentful_paint": 6606.229,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 18691.592,
+        "speed_index": 9454,
+        "interactive": 36593.386
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:34:58.659349",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2747.956,
+        "largest_contentful_paint": 3158.834,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 15943.900000000003,
+        "speed_index": 4578,
+        "interactive": 30969.293
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:35:00.947819",
+      "scores": {
+        "performance": 57.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2406.448,
+        "largest_contentful_paint": 2535.878,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 14591.480999999998,
+        "speed_index": 4213,
+        "interactive": 28169.891
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:31:10.607278",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3298.88,
+        "largest_contentful_paint": 3298.88,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 16263.709000000003,
+        "speed_index": 4734,
+        "interactive": 31133.592
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:31:22.275559",
+      "scores": {
+        "performance": 57.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2336.852,
+        "largest_contentful_paint": 2597.654,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 16321.650999999993,
+        "speed_index": 4451,
+        "interactive": 31331.251
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:32:24.181297",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7362.503,
+        "largest_contentful_paint": 7955.343,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 18754.119000000006,
+        "speed_index": 9298,
+        "interactive": 38847.776
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:32:44.310104",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2280.85,
+        "largest_contentful_paint": 3110.966,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 20240.421000000013,
+        "speed_index": 4533,
+        "interactive": 34701.891
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:37:29.053996",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2567.814,
+        "largest_contentful_paint": 2722.834,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 18532.926999999992,
+        "speed_index": 5339,
+        "interactive": 33686.327
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:37:31.429530",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2473.043,
+        "largest_contentful_paint": 2722.763,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 18507.954999999994,
+        "speed_index": 5094,
+        "interactive": 34474.897
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:35:54.898358",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2707.557,
+        "largest_contentful_paint": 3408.259,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 21442.28299999992,
+        "speed_index": 4795,
+        "interactive": 38427.31699999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:36:14.448945",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3484.185,
+        "largest_contentful_paint": 4201.69,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 20675.78,
+        "speed_index": 7762,
+        "interactive": 39402.091
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:35:05.777387",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2806.985,
+        "largest_contentful_paint": 3369.565,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 19667.920000000006,
+        "speed_index": 4948,
+        "interactive": 35883.964
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:32:38.059357",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2359.113,
+        "largest_contentful_paint": 2432.445,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 17302.005999999998,
+        "speed_index": 4217,
+        "interactive": 31423.136
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:32:39.824759",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2436.321,
+        "largest_contentful_paint": 3091.315,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 16421.125,
+        "speed_index": 4082,
+        "interactive": 30801.996
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:33:52.226336",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3304.884,
+        "largest_contentful_paint": 3529.145,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 16340.622000000007,
+        "speed_index": 4648,
+        "interactive": 32356.219
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:33:57.601926",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2198.217,
+        "largest_contentful_paint": 3047.576,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 18638.209000000003,
+        "speed_index": 5019,
+        "interactive": 33232.526000000056
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:36:39.217551",
+      "scores": {
+        "performance": 57.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2412.237,
+        "largest_contentful_paint": 2529.435,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 17097.975000000006,
+        "speed_index": 4266,
+        "interactive": 31858.647
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:36:41.022650",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2319.482,
+        "largest_contentful_paint": 2611.526,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 17186.445,
+        "speed_index": 5632,
+        "interactive": 31358.30800000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:35:34.394074",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2443.344,
+        "largest_contentful_paint": 3031.904,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 19520.243000000002,
+        "speed_index": 4299,
+        "interactive": 39681.929
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:35:42.359954",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3027.032,
+        "largest_contentful_paint": 3545.29,
+        "cumulative_layout_shift": 0.338383196979879,
+        "total_blocking_time": 18127.044999999882,
+        "speed_index": 4952,
+        "interactive": 34876.54299999988
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:35:44.950619",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2628.567,
+        "largest_contentful_paint": 2738.392,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 18502.293999999947,
+        "speed_index": 5282,
+        "interactive": 31734.13199999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:36:08.490826",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2531.075,
+        "largest_contentful_paint": 2853.23,
+        "cumulative_layout_shift": 0.11927207490675074,
+        "total_blocking_time": 20633.083000000006,
+        "speed_index": 5187,
+        "interactive": 34376.81
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:35:33.057859",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2967.263,
+        "largest_contentful_paint": 3073.096,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 18335.72499999993,
+        "speed_index": 4570,
+        "interactive": 34609.12199999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:35:46.628596",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2687.699,
+        "largest_contentful_paint": 2927.505,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 19120.88399999999,
+        "speed_index": 6298,
+        "interactive": 35135.848
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:31:55.745216",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2390.443,
+        "largest_contentful_paint": 2857.848,
+        "cumulative_layout_shift": 0.11924619725339053,
+        "total_blocking_time": 21484.23299999998,
+        "speed_index": 5854,
+        "interactive": 39101.315
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:31:56.712931",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2849.556,
+        "largest_contentful_paint": 3887.156,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 19439.590999999997,
+        "speed_index": 5824,
+        "interactive": 37071.18
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:34:08.002280",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2784.426,
+        "largest_contentful_paint": 3349.374,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 19196.545999999995,
+        "speed_index": 4770,
+        "interactive": 35104.388
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T06:38:30.733352",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2835.83,
+        "largest_contentful_paint": 2835.83,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 21514.602999999937,
+        "speed_index": 6104,
+        "interactive": 38310.81199999994
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:35:48.403806",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6515.402,
+        "largest_contentful_paint": 6686.265,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 18873.224000000027,
+        "speed_index": 8276,
+        "interactive": 38150.141
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:35:54.975481",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5455.073,
+        "largest_contentful_paint": 5602.512,
+        "cumulative_layout_shift": 0.11921274953115026,
+        "total_blocking_time": 17583.44400000003,
+        "speed_index": 7259,
+        "interactive": 37223.437
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:34:31.992028",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2554.649,
+        "largest_contentful_paint": 2618.364,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 19239.48699999999,
+        "speed_index": 5072,
+        "interactive": 34529.80800000006
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:34:34.172698",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2345.098,
+        "largest_contentful_paint": 2739.985,
+        "cumulative_layout_shift": 0.11924619725339053,
+        "total_blocking_time": 22230.500999999986,
+        "speed_index": 4105,
+        "interactive": 37382.121
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:32:37.406260",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2933.861,
+        "largest_contentful_paint": 3107.262,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 18683.12700000001,
+        "speed_index": 4512,
+        "interactive": 35807.566
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:32:38.983399",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2539.6,
+        "largest_contentful_paint": 2756.046,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 19302.204,
+        "speed_index": 4707,
+        "interactive": 34569.127
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:32:31.080340",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2661,
+        "largest_contentful_paint": 2982.451,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 19001.73099999975,
+        "speed_index": 4489,
+        "interactive": 35471.57199999976
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:32:35.195806",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2293.651,
+        "largest_contentful_paint": 3029.619,
+        "cumulative_layout_shift": 0.11927207490675074,
+        "total_blocking_time": 21949.629000000037,
+        "speed_index": 3873,
+        "interactive": 38768.889
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:36:42.462855",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2428.226,
+        "largest_contentful_paint": 3490.512,
+        "cumulative_layout_shift": 0.11923862718451046,
+        "total_blocking_time": 20537.262000000006,
+        "speed_index": 4551,
+        "interactive": 35738.929
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:36:48.235065",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2614.981,
+        "largest_contentful_paint": 3359.074,
+        "cumulative_layout_shift": 0.11946559879040584,
+        "total_blocking_time": 18961.745999999992,
+        "speed_index": 4696,
+        "interactive": 32681.015
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:36:37.355569",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2685.05,
+        "largest_contentful_paint": 3584.288,
+        "cumulative_layout_shift": 0.12530094831229355,
+        "total_blocking_time": 21850.249999999975,
+        "speed_index": 4528,
+        "interactive": 39509.071
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staffordshire University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Staffordshire University</h1>
+                <p>https://www.staffs.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Staffordshire University",
+  "slug": "staffordshire-university",
+  "url": "https://www.staffs.ac.uk",
+  "total_tests": 102,
+  "last_updated": "2025-10-05T06:50:58.270627",
+  "week_averages": {
+    "mobile": {
+      "performance": 29.5,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 29.666666666666664,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 5
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 28.88888888888889,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 29.5,
+      "accessibility": 93.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 21
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T23:10:40.855308",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4230.917,
+        "largest_contentful_paint": 8082.864,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12296.083000000006,
+        "speed_index": 10028,
+        "interactive": 20393.088
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:10:51.515024",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3817.031,
+        "largest_contentful_paint": 6211.961,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12252.435999999994,
+        "speed_index": 8334,
+        "interactive": 20113.787
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:37:38.985456",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3995.454,
+        "largest_contentful_paint": 6462.759,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 11049.855000000005,
+        "speed_index": 8228,
+        "interactive": 18885.911
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:37:47.746643",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3357.101,
+        "largest_contentful_paint": 6464.236,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 10726.922999999999,
+        "speed_index": 7630,
+        "interactive": 17590.198
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:54:50.255488",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3627.92,
+        "largest_contentful_paint": 7575.831,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 11207.752999999995,
+        "speed_index": 8688,
+        "interactive": 18560.515
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:54:52.863840",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3516.763,
+        "largest_contentful_paint": 7697.289,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13070.402000000002,
+        "speed_index": 8985,
+        "interactive": 20469.76
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:54:17.576116",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3614.834,
+        "largest_contentful_paint": 6597.706,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 9803.375,
+        "speed_index": 7884,
+        "interactive": 17029.289
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:54:18.628813",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3241.061,
+        "largest_contentful_paint": 6409.815,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 10620.749000000002,
+        "speed_index": 7746,
+        "interactive": 17335.068
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:53:41.121092",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4124.27,
+        "largest_contentful_paint": 5988.098,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14418.58600000001,
+        "speed_index": 8735,
+        "interactive": 22304.437
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:53:43.737248",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4121.243,
+        "largest_contentful_paint": 7707.047,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15447.647999999768,
+        "speed_index": 10061,
+        "interactive": 24208.210999999763
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:54:50.233696",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4519.615,
+        "largest_contentful_paint": 8665.318,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14083.922999999995,
+        "speed_index": 11286,
+        "interactive": 23132.504
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:55:01.978825",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3758.978,
+        "largest_contentful_paint": 8173.659,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12392.027999999988,
+        "speed_index": 9339,
+        "interactive": 20047.051
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:57:08.862900",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4101.76,
+        "largest_contentful_paint": 8587.891,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12318.724000000006,
+        "speed_index": 9675,
+        "interactive": 20335.917
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:57:13.230914",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3143.469,
+        "largest_contentful_paint": 6507.719,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12776.838000000002,
+        "speed_index": 8413,
+        "interactive": 19872.14
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:56:06.443198",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4272.674,
+        "largest_contentful_paint": 8705.852,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13094.893000000002,
+        "speed_index": 10498,
+        "interactive": 22034.449
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:57:20.435698",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3663.464,
+        "largest_contentful_paint": 5990.523,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 11684.147999999994,
+        "speed_index": 7468,
+        "interactive": 18592.046
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:56:42.138775",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3301.174,
+        "largest_contentful_paint": 5109.254,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12273.891999999763,
+        "speed_index": 7495,
+        "interactive": 21754.598999999762
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:56:43.591443",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3660.698,
+        "largest_contentful_paint": 7386.093,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14625.175999999738,
+        "speed_index": 8843,
+        "interactive": 25142.156999999763
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:56:58.423782",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4702.122,
+        "largest_contentful_paint": 8215.059,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16393.68900000001,
+        "speed_index": 10688,
+        "interactive": 28161.814
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:57:05.334877",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4388.426,
+        "largest_contentful_paint": 8679.337,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15814.221000000003,
+        "speed_index": 10817,
+        "interactive": 28066.319
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:53:26.551833",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4254.205,
+        "largest_contentful_paint": 8523.29,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14354.182999999757,
+        "speed_index": 10425,
+        "interactive": 25477.77099999976
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:53:33.984353",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3835.225,
+        "largest_contentful_paint": 8021.527,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14044.73899999998,
+        "speed_index": 9124,
+        "interactive": 24652.21
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:59:15.552672",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3829.878,
+        "largest_contentful_paint": 7869.519,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16519.706000000006,
+        "speed_index": 9943,
+        "interactive": 27939.902
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:59:15.743453",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4704.741,
+        "largest_contentful_paint": 8715.611,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16845.977999999748,
+        "speed_index": 11090,
+        "interactive": 33604.345999999765
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:56:55.107896",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3925.718,
+        "largest_contentful_paint": 7778.919,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14281.615000000002,
+        "speed_index": 10052,
+        "interactive": 24144.797
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:57:25.236359",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3710.286,
+        "largest_contentful_paint": 7661.081,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14183.202000000016,
+        "speed_index": 9817,
+        "interactive": 24525.334
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:56:26.539121",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4687.326,
+        "largest_contentful_paint": 9179.687,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18119.640000000003,
+        "speed_index": 12400,
+        "interactive": 31193.468000000237
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:56:38.935532",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4666.071,
+        "largest_contentful_paint": 8983.352,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17545.555000000004,
+        "speed_index": 12074,
+        "interactive": 29958.28300000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:57:24.853764",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4708.81,
+        "largest_contentful_paint": 8528.035,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14019.127000000022,
+        "speed_index": 10625,
+        "interactive": 25635.003
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:57:30.654170",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3992.685,
+        "largest_contentful_paint": 6537.976,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14690.869000000012,
+        "speed_index": 9235,
+        "interactive": 25003.33
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:55:14.932259",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4595.985,
+        "largest_contentful_paint": 7953.918,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16022.534000000025,
+        "speed_index": 10823,
+        "interactive": 27924.612
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:55:17.751431",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4002.252,
+        "largest_contentful_paint": 8954.155,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17459.016,
+        "speed_index": 10955,
+        "interactive": 28251.973
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:54:51.600087",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4173.428,
+        "largest_contentful_paint": 8469.317,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14663.506000000005,
+        "speed_index": 10416,
+        "interactive": 26182.701000000237
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:54:52.262382",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4147.734,
+        "largest_contentful_paint": 8507.192,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15982.832999999762,
+        "speed_index": 10801,
+        "interactive": 26811.402999999762
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:58:45.461790",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3439.068,
+        "largest_contentful_paint": 6871.654,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13092.970000000016,
+        "speed_index": 9251,
+        "interactive": 24837.78300000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:59:11.349358",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3653.839,
+        "largest_contentful_paint": 6138.243,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15305.00400000002,
+        "speed_index": 9093,
+        "interactive": 26453.323
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:58:31.939532",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3940.935,
+        "largest_contentful_paint": 7289.664,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15497.920999999998,
+        "speed_index": 10594,
+        "interactive": 27656.789
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:58:32.744906",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4559.178,
+        "largest_contentful_paint": 7095.789,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14439.79500000001,
+        "speed_index": 10345,
+        "interactive": 25985.56700000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:55:33.631294",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4648.065,
+        "largest_contentful_paint": 7133.412,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15347.506000000005,
+        "speed_index": 10422,
+        "interactive": 26948.523
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:55:47.793085",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3714.598,
+        "largest_contentful_paint": 7319.459,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16131.833,
+        "speed_index": 9832,
+        "interactive": 27363.637
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:55:33.581314",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3656.372,
+        "largest_contentful_paint": 7837.204,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12716.575999999994,
+        "speed_index": 9778,
+        "interactive": 22446.688
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:56:18.437969",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3283.489,
+        "largest_contentful_paint": 6758.712,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15446.872000000005,
+        "speed_index": 9693,
+        "interactive": 26659.773
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:58:40.414654",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4552.509,
+        "largest_contentful_paint": 6771.759,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12622.780000000013,
+        "speed_index": 9569,
+        "interactive": 23574.273
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:59:52.947368",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3948.473,
+        "largest_contentful_paint": 7927.158,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15841.66400000001,
+        "speed_index": 10610,
+        "interactive": 27609.751
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:57:51.503999",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3856.847,
+        "largest_contentful_paint": 10059.976,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 10866.720999999998,
+        "speed_index": 9419,
+        "interactive": 21764.362
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:58:36.252582",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3769.75,
+        "largest_contentful_paint": 8957.741,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17261.071000000004,
+        "speed_index": 11195,
+        "interactive": 29156.76200000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:58:40.499065",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3666.822,
+        "largest_contentful_paint": 6474.123,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12434.676999999994,
+        "speed_index": 8826,
+        "interactive": 25729.333
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:59:00.568899",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3704.675,
+        "largest_contentful_paint": 5092.881,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14917.797999999992,
+        "speed_index": 8539,
+        "interactive": 28136.004
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:59:33.498707",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3328.617,
+        "largest_contentful_paint": 8289.031,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15044.319000000007,
+        "speed_index": 10344,
+        "interactive": 25559.81300000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:59:34.884795",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4036.866,
+        "largest_contentful_paint": 8260.142,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15372.51500000001,
+        "speed_index": 10377,
+        "interactive": 26539.375
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:56:41.703444",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4157.218,
+        "largest_contentful_paint": 9908.221,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 20656.723999999977,
+        "speed_index": 12028,
+        "interactive": 33238.41800000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T07:00:02.186800",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4305.944,
+        "largest_contentful_paint": 7877.411,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13921.98300000001,
+        "speed_index": 10088,
+        "interactive": 24896.276000000238
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T07:00:48.129201",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4208.911,
+        "largest_contentful_paint": 8048.165,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15499.20500000001,
+        "speed_index": 10954,
+        "interactive": 26750.718
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:58:53.745722",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4421.317,
+        "largest_contentful_paint": 9572.684,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13812.640999999992,
+        "speed_index": 11090,
+        "interactive": 25287.035
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:59:23.083341",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3714.278,
+        "largest_contentful_paint": 6938.907,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14735.244999999772,
+        "speed_index": 9424,
+        "interactive": 24869.763999999763
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T07:00:11.125069",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3612.844,
+        "largest_contentful_paint": 5269.415,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 12497.172999999988,
+        "speed_index": 8233,
+        "interactive": 23414.797
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T07:00:11.398007",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3336.966,
+        "largest_contentful_paint": 7608.326,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13089.388999999977,
+        "speed_index": 9419,
+        "interactive": 23239.136
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:58:46.873583",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4202.704,
+        "largest_contentful_paint": 8198.171,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13547.527000000002,
+        "speed_index": 10309,
+        "interactive": 24193.796
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:59:06.007897",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3575.629,
+        "largest_contentful_paint": 7954.157,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 13630.843000000013,
+        "speed_index": 9776,
+        "interactive": 23789.843
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T06:54:56.203824",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3956.591,
+        "largest_contentful_paint": 5677.652,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 14823.656999999755,
+        "speed_index": 9170,
+        "interactive": 26070.85799999976
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:55:13.242439",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3664.053,
+        "largest_contentful_paint": 7331.002,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18063.75900000004,
+        "speed_index": 10374,
+        "interactive": 28408.267
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:56:23.645753",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3485.385,
+        "largest_contentful_paint": 8031.02,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16596.880999999772,
+        "speed_index": 10278,
+        "interactive": 27209.44699999976
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:56:25.401370",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3700.648,
+        "largest_contentful_paint": 8321.248,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16690.69800000001,
+        "speed_index": 10597,
+        "interactive": 27948.683
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T07:04:38.959434",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4232.737,
+        "largest_contentful_paint": 6444.63,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16285.133999999993,
+        "speed_index": 10332,
+        "interactive": 27717.217
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T07:05:02.070009",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3820.896,
+        "largest_contentful_paint": 8204,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16111.988999999989,
+        "speed_index": 10443,
+        "interactive": 28882.334
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T07:00:55.190629",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4315.835,
+        "largest_contentful_paint": 7868.853,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16642.966999999997,
+        "speed_index": 10475,
+        "interactive": 28349.571
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T07:01:01.955949",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4158.755,
+        "largest_contentful_paint": 5934.316,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15355.301000000003,
+        "speed_index": 9042,
+        "interactive": 26498.404
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:59:43.965239",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3873.694,
+        "largest_contentful_paint": 8211.996,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15742.300999999998,
+        "speed_index": 10455,
+        "interactive": 26224.868
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T07:00:10.585176",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3891.464,
+        "largest_contentful_paint": 8163.444,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16267.944000000009,
+        "speed_index": 10577,
+        "interactive": 26740.655
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T07:00:07.113580",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3672.389,
+        "largest_contentful_paint": 6679.935,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18849.34999999998,
+        "speed_index": 9650,
+        "interactive": 31868.735
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T07:00:19.495815",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3897.006,
+        "largest_contentful_paint": 7112.896,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19145.847000000005,
+        "speed_index": 10245,
+        "interactive": 36575.386
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:53:49.922933",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3850.71,
+        "largest_contentful_paint": 7609.219,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17304.372999999767,
+        "speed_index": 8805,
+        "interactive": 31362.73799999976
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:54:20.903039",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3584.789,
+        "largest_contentful_paint": 8317.127,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19641.769999999986,
+        "speed_index": 10940,
+        "interactive": 38463.456
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T07:04:44.469677",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4283.988,
+        "largest_contentful_paint": 7593.613,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 20501.660000000007,
+        "speed_index": 10293,
+        "interactive": 33956.067
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T07:04:49.115732",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3625.248,
+        "largest_contentful_paint": 8694.37,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 21565.902000000024,
+        "speed_index": 11255,
+        "interactive": 34933.60000000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:55:57.392299",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4642.411,
+        "largest_contentful_paint": 9315.476,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16808.887999999988,
+        "speed_index": 10969,
+        "interactive": 31173.593
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:52:46.649230",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3753.294,
+        "largest_contentful_paint": 8120.493,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 20225.19599999999,
+        "speed_index": 10704,
+        "interactive": 34415.893
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:57:18.618349",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3589.582,
+        "largest_contentful_paint": 7839.191,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19596.324999999997,
+        "speed_index": 10409,
+        "interactive": 34071.431
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:57:20.061032",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3754.995,
+        "largest_contentful_paint": 7475.951,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19456.45099999977,
+        "speed_index": 10381,
+        "interactive": 37530.824999999764
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:52:34.593708",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4095.659,
+        "largest_contentful_paint": 7265.727,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17864.970999999765,
+        "speed_index": 9988,
+        "interactive": 30981.55899999976
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:50:40.732234",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3416.944,
+        "largest_contentful_paint": 7388.829,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18991.751999999993,
+        "speed_index": 9847,
+        "interactive": 31544.489
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:55:02.917923",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4117.67,
+        "largest_contentful_paint": 8287.41,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 17607.006000000012,
+        "speed_index": 10511,
+        "interactive": 33673.12700000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:55:28.098527",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4053.352,
+        "largest_contentful_paint": 6948.032,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 22207.295000000024,
+        "speed_index": 10376,
+        "interactive": 36327.325
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:50:48.183134",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3776.067,
+        "largest_contentful_paint": 7743.081,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19695.963999999993,
+        "speed_index": 10172,
+        "interactive": 34816.855
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:50:54.969411",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3282.952,
+        "largest_contentful_paint": 5880.161,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 20330.76199999999,
+        "speed_index": 9413,
+        "interactive": 34842.21
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:52:03.810577",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4135.94,
+        "largest_contentful_paint": 7969.336,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 23531.267999999996,
+        "speed_index": 11123,
+        "interactive": 37563.065
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:56:42.647613",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3879.193,
+        "largest_contentful_paint": 7538.107,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16634.037999999997,
+        "speed_index": 8840,
+        "interactive": 32703.704
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:55:12.014586",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4172.159,
+        "largest_contentful_paint": 7437.494,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18508.842999999983,
+        "speed_index": 10005,
+        "interactive": 32528.375
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:54:30.973285",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3659.606,
+        "largest_contentful_paint": 8448.417,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 22081.10699999999,
+        "speed_index": 10994,
+        "interactive": 37711.434
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:55:41.461574",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3658.46,
+        "largest_contentful_paint": 7162.424,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18118.561000000012,
+        "speed_index": 9443,
+        "interactive": 33652.952
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:55:52.475636",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3915.153,
+        "largest_contentful_paint": 7885.627,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19288.299999999985,
+        "speed_index": 9602,
+        "interactive": 32847.415
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:55:04.183593",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3619.874,
+        "largest_contentful_paint": 9088.669,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19917.277,
+        "speed_index": 10998,
+        "interactive": 33927.328
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:55:13.849408",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3537.545,
+        "largest_contentful_paint": 7884.315,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19330.668999999998,
+        "speed_index": 10471,
+        "interactive": 36189.322
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:52:36.647358",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4302.823,
+        "largest_contentful_paint": 10200.745,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 21214.557000000015,
+        "speed_index": 12907,
+        "interactive": 39856.691
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:52:39.820579",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4363.453,
+        "largest_contentful_paint": 10195.891,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 21271.66299999998,
+        "speed_index": 12594,
+        "interactive": 37346.431
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:57:34.544318",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4557.924,
+        "largest_contentful_paint": 8483.739,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 21713.05799999998,
+        "speed_index": 11882,
+        "interactive": 39155.431
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:54:45.520637",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3511.392,
+        "largest_contentful_paint": 7247.806,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 16738.256,
+        "speed_index": 8933,
+        "interactive": 28484.683
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:54:18.729147",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4305.405,
+        "largest_contentful_paint": 6910.938,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 15081.454000000003,
+        "speed_index": 8691,
+        "interactive": 29632.93
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:54:46.619255",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3378.754,
+        "largest_contentful_paint": 7946.303,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 18208.45799999999,
+        "speed_index": 10089,
+        "interactive": 32715.114
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:53:48.032903",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3459.314,
+        "largest_contentful_paint": 7468.881,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 19002.01500000001,
+        "speed_index": 10670,
+        "interactive": 32144.38700000024
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:53:50.048810",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3956.474,
+        "largest_contentful_paint": 7703.718,
+        "cumulative_layout_shift": 0.040968273911201204,
+        "total_blocking_time": 17998.826999999983,
+        "speed_index": 10421,
+        "interactive": 31449.664
+      }
+    },
+    {
+      "name": "Staffordshire University",
+      "url": "https://www.staffs.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:50:58.270627",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4081.478,
+        "largest_contentful_paint": 6767.427,
+        "cumulative_layout_shift": 0.04618730336365341,
+        "total_blocking_time": 20852.296999999966,
+        "speed_index": 10462,
+        "interactive": 35073.252
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

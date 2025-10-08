@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birmingham City University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Birmingham City University</h1>
+                <p>https://www.bcu.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Birmingham City University",
+  "slug": "birmingham-city-university",
+  "url": "https://www.bcu.ac.uk",
+  "total_tests": 49,
+  "last_updated": "2025-10-08T06:55:14.430069",
+  "week_averages": {
+    "mobile": {
+      "performance": 25.0,
+      "accessibility": 91.0,
+      "best_practices": 100,
+      "seo": 85.0
+    },
+    "desktop": {
+      "performance": 25.0,
+      "accessibility": 91.0,
+      "best_practices": 100,
+      "seo": 85.0
+    },
+    "total_tests": 11
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 25.0,
+      "accessibility": 91.0,
+      "best_practices": 100,
+      "seo": 85.0
+    },
+    "desktop": {
+      "performance": 25.0,
+      "accessibility": 91.0,
+      "best_practices": 100,
+      "seo": 85.0
+    },
+    "total_tests": 26
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:54:42.924781",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5864.175,
+        "largest_contentful_paint": 17335.681,
+        "cumulative_layout_shift": 0.3024404823894433,
+        "total_blocking_time": 7844.537999999763,
+        "speed_index": 7075,
+        "interactive": 18757.264999999763
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:55:28.569236",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6067.997,
+        "largest_contentful_paint": 10544.383,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9200.063999999998,
+        "speed_index": 12066,
+        "interactive": 19094.938
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:55:47.578313",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6790.026,
+        "largest_contentful_paint": 9898.941,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12333.813999999995,
+        "speed_index": 13829,
+        "interactive": 23160.025
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:55:43.929182",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5868.269,
+        "largest_contentful_paint": 8968.846,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9561.666999999994,
+        "speed_index": 11939,
+        "interactive": 19900.669
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:55:44.101202",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5792.221,
+        "largest_contentful_paint": 11619.256,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10433.660000000003,
+        "speed_index": 12040,
+        "interactive": 20177.094
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:56:42.777341",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6511.283,
+        "largest_contentful_paint": 9948.13,
+        "cumulative_layout_shift": 0.0010807693274125134,
+        "total_blocking_time": 13377.015999999998,
+        "speed_index": 13971,
+        "interactive": 24830.946
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:52:45.393241",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5882.945,
+        "largest_contentful_paint": 10149.666,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11609.940999999993,
+        "speed_index": 13079,
+        "interactive": 21849.528
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:52:45.823631",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6231.413,
+        "largest_contentful_paint": 11110.605,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11542.920999999744,
+        "speed_index": 13297,
+        "interactive": 22374.45399999976
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:54:36.552667",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6515.828,
+        "largest_contentful_paint": 11328.98,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11178.781999999997,
+        "speed_index": 13520,
+        "interactive": 22075.05000000024
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:54:37.770775",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5984.904,
+        "largest_contentful_paint": 18668.008,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 10509.866999999998,
+        "speed_index": 12486,
+        "interactive": 20863.039000000237
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:58:07.765438",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7041.875,
+        "largest_contentful_paint": 10757.578,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12791.701000000001,
+        "speed_index": 14649,
+        "interactive": 28771.564
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:58:18.270096",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6730.558,
+        "largest_contentful_paint": 10622.572,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12366.68499999976,
+        "speed_index": 14054,
+        "interactive": 28328.730999999763
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:55:50.386386",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6461.285,
+        "largest_contentful_paint": 20113.747,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 9999.556,
+        "speed_index": 13233,
+        "interactive": 21749.47
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:55:52.791605",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5640.476,
+        "largest_contentful_paint": 10042.557,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10500.039999999997,
+        "speed_index": 12249,
+        "interactive": 20886.331
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:56:14.705781",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6271.224,
+        "largest_contentful_paint": 12266.723,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 14582.903000000002,
+        "speed_index": 14383,
+        "interactive": 30804.72
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:56:34.842921",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7044.194,
+        "largest_contentful_paint": 11049.208,
+        "cumulative_layout_shift": 0.0001644648976497303,
+        "total_blocking_time": 11070.351999999999,
+        "speed_index": 13578,
+        "interactive": 22427.493
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:56:51.955203",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6423.77,
+        "largest_contentful_paint": 10964.459,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 10173.783000000001,
+        "speed_index": 13008,
+        "interactive": 21216.793
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:53:47.837233",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6704.719,
+        "largest_contentful_paint": 20732.664,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 12199.08400000001,
+        "speed_index": 13945,
+        "interactive": 23147.456
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:54:31.912042",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6542.382,
+        "largest_contentful_paint": 20088.251,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 11839.50299999999,
+        "speed_index": 13557,
+        "interactive": 28449.339
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:54:15.325208",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6212.667,
+        "largest_contentful_paint": 11261.068,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10895.143999999778,
+        "speed_index": 13267,
+        "interactive": 23173.547999999762
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:54:20.563735",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6190.652,
+        "largest_contentful_paint": 20263.663,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 11435.471000000001,
+        "speed_index": 13276,
+        "interactive": 22404.683
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:58:12.838306",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6259.717,
+        "largest_contentful_paint": 10209.306,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 9741.514999999994,
+        "speed_index": 12727,
+        "interactive": 20425.152
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:58:14.954544",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9599.053,
+        "largest_contentful_paint": 19906.967,
+        "cumulative_layout_shift": 0.013485551836413066,
+        "total_blocking_time": 8278.931000000006,
+        "speed_index": 15042,
+        "interactive": 21696.391
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:53:50.501307",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6676.308,
+        "largest_contentful_paint": 23481.245,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13330.662000000015,
+        "speed_index": 16542,
+        "interactive": 28494.469
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:54:11.362296",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6849.453,
+        "largest_contentful_paint": 24321.906,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13939.328000000007,
+        "speed_index": 16684,
+        "interactive": 25544.3
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:53:29.080332",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6585.093,
+        "largest_contentful_paint": 23102.682,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13355.468000000008,
+        "speed_index": 16071,
+        "interactive": 28856.49200000024
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:54:03.345698",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6655.59,
+        "largest_contentful_paint": 25892.225,
+        "cumulative_layout_shift": 0.00025115248878708853,
+        "total_blocking_time": 15150.381000000005,
+        "speed_index": 17075,
+        "interactive": 32738.312
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:54:15.851139",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7026.445,
+        "largest_contentful_paint": 23817.207,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12853.859999999997,
+        "speed_index": 16100,
+        "interactive": 28645.72500000024
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:53:56.444781",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7606.511,
+        "largest_contentful_paint": 24166.192,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13300.114000000009,
+        "speed_index": 16616,
+        "interactive": 25392.152
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:50:09.317741",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7084.409,
+        "largest_contentful_paint": 26444.389,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15710.12600000001,
+        "speed_index": 17815,
+        "interactive": 27913.115
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:50:14.938755",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7728.313,
+        "largest_contentful_paint": 26162.386,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14649.894000000004,
+        "speed_index": 18185,
+        "interactive": 27710.293000000238
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:51:58.180287",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6757.469,
+        "largest_contentful_paint": 22013.41,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11782.152999999995,
+        "speed_index": 14963,
+        "interactive": 22979.144
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:52:02.701258",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7013.272,
+        "largest_contentful_paint": 22462.141,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12538.710999999763,
+        "speed_index": 15611,
+        "interactive": 29243.601999999762
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:56:41.256452",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6387.811,
+        "largest_contentful_paint": 23752.368,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13696.551999999989,
+        "speed_index": 16043,
+        "interactive": 28367.744
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T06:57:01.204345",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7684.285,
+        "largest_contentful_paint": 9240.118,
+        "cumulative_layout_shift": 0.0003701877905284932,
+        "total_blocking_time": 15669.217000000002,
+        "speed_index": 17233,
+        "interactive": 28814.597
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:54:29.267396",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6745.034,
+        "largest_contentful_paint": 23368.53,
+        "cumulative_layout_shift": 0.01138596299704463,
+        "total_blocking_time": 13055.099000000002,
+        "speed_index": 16332,
+        "interactive": 25069.351
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:54:50.379240",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7520.418,
+        "largest_contentful_paint": 12637.595,
+        "cumulative_layout_shift": 0.0003701877905284932,
+        "total_blocking_time": 15442.624,
+        "speed_index": 17268,
+        "interactive": 38040.824
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:53:32.614588",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6470.219,
+        "largest_contentful_paint": 21599.408,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11136.612,
+        "speed_index": 15127,
+        "interactive": 22738.05
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:52:31.278752",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6540.445,
+        "largest_contentful_paint": 21004.411,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10364.981999999995,
+        "speed_index": 14767,
+        "interactive": 22315.206
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:52:33.471694",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6222.086,
+        "largest_contentful_paint": 20786.354,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10722.315000000013,
+        "speed_index": 14547,
+        "interactive": 22413.651
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:51:53.658349",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6384.525,
+        "largest_contentful_paint": 21026.93,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10601.074999999997,
+        "speed_index": 14699,
+        "interactive": 22403.765
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:51:32.233479",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6701.139,
+        "largest_contentful_paint": 25355.829,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15084.586000000016,
+        "speed_index": 16927,
+        "interactive": 26401.536
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:48:21.607008",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6145.668,
+        "largest_contentful_paint": 20461.651,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10755.17400000001,
+        "speed_index": 14123,
+        "interactive": 21687.907
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:48:46.203854",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6120.663,
+        "largest_contentful_paint": 21032.539,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11704.763000000003,
+        "speed_index": 14519,
+        "interactive": 22159.862
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:56:19.218034",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7242.703,
+        "largest_contentful_paint": 12519.266,
+        "cumulative_layout_shift": 0.0004246136742112117,
+        "total_blocking_time": 14694.333999999997,
+        "speed_index": 16875,
+        "interactive": 26700.207
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:54:35.177674",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6554.059,
+        "largest_contentful_paint": 23804.816,
+        "cumulative_layout_shift": 0.0010993632531075411,
+        "total_blocking_time": 14144.346000000003,
+        "speed_index": 16945,
+        "interactive": 30574.558
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T06:54:39.132441",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 10257.198,
+        "largest_contentful_paint": 10677.015,
+        "cumulative_layout_shift": 0.00070863414786295,
+        "total_blocking_time": 14024.316999999992,
+        "speed_index": 20196,
+        "interactive": 29283.537
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:55:01.479251",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6596.374,
+        "largest_contentful_paint": 23719.319,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13819.155000000006,
+        "speed_index": 17367,
+        "interactive": 30262.078
+      }
+    },
+    {
+      "name": "Birmingham City University",
+      "url": "https://www.bcu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-08T06:55:14.430069",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7305.397,
+        "largest_contentful_paint": 11530.162,
+        "cumulative_layout_shift": 0.0008410648880575124,
+        "total_blocking_time": 13923.361000000006,
+        "speed_index": 17518,
+        "interactive": 31211.718000000237
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

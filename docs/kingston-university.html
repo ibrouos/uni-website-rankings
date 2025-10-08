@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingston University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Kingston University</h1>
+                <p>https://www.kingston.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Kingston University",
+  "slug": "kingston-university",
+  "url": "https://www.kingston.ac.uk",
+  "total_tests": 38,
+  "last_updated": "2025-10-07T06:59:19.250915",
+  "week_averages": {
+    "mobile": {
+      "performance": 46.0,
+      "accessibility": 92.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 41.0,
+      "accessibility": 95.33333333333333,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 4
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 39.733333333333334,
+      "accessibility": 91.13333333333334,
+      "best_practices": 79.2,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 41.07142857142857,
+      "accessibility": 92.0,
+      "best_practices": 79.0,
+      "seo": 92.0
+    },
+    "total_tests": 29
+  },
+  "trend": "down",
+  "results": [
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:14:48.516853",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2997.276,
+        "largest_contentful_paint": 5320.023,
+        "cumulative_layout_shift": 0.16586580295041545,
+        "total_blocking_time": 21832.88599999999,
+        "speed_index": 14296,
+        "interactive": 36434.509
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:41:00.213701",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2579.621,
+        "largest_contentful_paint": 3808.341,
+        "cumulative_layout_shift": 0.17727502375227813,
+        "total_blocking_time": 18776.37499999998,
+        "speed_index": 11407,
+        "interactive": 37914.058
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:57:27.417236",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2492.956,
+        "largest_contentful_paint": 3865.071,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 23109.82199999998,
+        "speed_index": 13016,
+        "interactive": 38594.509
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T07:01:19.129990",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2668.966,
+        "largest_contentful_paint": 4212.371,
+        "cumulative_layout_shift": 0.17419502879722287,
+        "total_blocking_time": 20986.51800000002,
+        "speed_index": 13124,
+        "interactive": 39143.888
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:59:59.982156",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2599.54,
+        "largest_contentful_paint": 3055.467,
+        "cumulative_layout_shift": 0.17805338808905402,
+        "total_blocking_time": 20622.634999999773,
+        "speed_index": 11585,
+        "interactive": 37923.004999999765
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:57:17.668929",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2832.343,
+        "largest_contentful_paint": 5618.804,
+        "cumulative_layout_shift": 0.17977306406301496,
+        "total_blocking_time": 20559.237,
+        "speed_index": 13173,
+        "interactive": 37922.532
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T07:00:30.106219",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2731.906,
+        "largest_contentful_paint": 4203.967,
+        "cumulative_layout_shift": 0.1750592314440357,
+        "total_blocking_time": 19470.016999999993,
+        "speed_index": 11861,
+        "interactive": 36763.17
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:57:14.472028",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2420.768,
+        "largest_contentful_paint": 4272.972,
+        "cumulative_layout_shift": 0.17805338808905402,
+        "total_blocking_time": 17843.43500000001,
+        "speed_index": 11563,
+        "interactive": 28701.254000000477
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:58:14.071604",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2878.214,
+        "largest_contentful_paint": 4686.934,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 16746.716999999993,
+        "speed_index": 11712,
+        "interactive": 26082.647000000237
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:57:07.125755",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3598.956,
+        "largest_contentful_paint": 3598.956,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 21324.389000000006,
+        "speed_index": 14225,
+        "interactive": 36586.548
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:57:08.983721",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3295.625,
+        "largest_contentful_paint": 3295.625,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 21552.12699999999,
+        "speed_index": 14161,
+        "interactive": 35677.69
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:57:20.412141",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3247.085,
+        "largest_contentful_paint": 3247.085,
+        "cumulative_layout_shift": 0.16988419976943417,
+        "total_blocking_time": 15960.080999999998,
+        "speed_index": 11461,
+        "interactive": 25067.74
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:57:43.531119",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2941.021,
+        "largest_contentful_paint": 3413.496,
+        "cumulative_layout_shift": 0.1769534938112922,
+        "total_blocking_time": 15000.095999999994,
+        "speed_index": 11586,
+        "interactive": 25573.376
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:54:41.182332",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2763.137,
+        "largest_contentful_paint": 2763.137,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 14010.224000000006,
+        "speed_index": 10328,
+        "interactive": 22929.788
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:55:18.163779",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2973.1,
+        "largest_contentful_paint": 2973.1,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 17625.659,
+        "speed_index": 12354,
+        "interactive": 27439.702
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:58:36.974304",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3439.198,
+        "largest_contentful_paint": 3439.198,
+        "cumulative_layout_shift": 0.14710794987742185,
+        "total_blocking_time": 13407.183999999997,
+        "speed_index": 11122,
+        "interactive": 23016.125
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:58:04.233191",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3393.704,
+        "largest_contentful_paint": 3808.352,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 17202.125999999997,
+        "speed_index": 12662,
+        "interactive": 26930.258
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:56:56.394182",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3238.76,
+        "largest_contentful_paint": 3238.76,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 19896.342000000004,
+        "speed_index": 13623,
+        "interactive": 29949.935
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:55:23.021534",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2802.919,
+        "largest_contentful_paint": 2802.919,
+        "cumulative_layout_shift": 0.18033574459527182,
+        "total_blocking_time": 17183.588999999996,
+        "speed_index": 10922,
+        "interactive": 26842.894
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:55:33.524401",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3697.799,
+        "largest_contentful_paint": 3697.799,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 17187.422999999526,
+        "speed_index": 11996,
+        "interactive": 26731.328999999525
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:57:04.200529",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3653.069,
+        "largest_contentful_paint": 3653.069,
+        "cumulative_layout_shift": 0.18033574459527182,
+        "total_blocking_time": 16228.081999999993,
+        "speed_index": 11574,
+        "interactive": 26456.064
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:57:05.435968",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2918.592,
+        "largest_contentful_paint": 2918.592,
+        "cumulative_layout_shift": 0.18033574459527182,
+        "total_blocking_time": 15284.311,
+        "speed_index": 10145,
+        "interactive": 24344.775
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:58:32.817140",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3240.805,
+        "largest_contentful_paint": 3240.805,
+        "cumulative_layout_shift": 0.1762551482381101,
+        "total_blocking_time": 15059.101000000002,
+        "speed_index": 10228,
+        "interactive": 29172.758
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:58:36.698368",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3401.108,
+        "largest_contentful_paint": 3401.108,
+        "cumulative_layout_shift": 0.16694241904240453,
+        "total_blocking_time": 14680.600999999988,
+        "speed_index": 10713,
+        "interactive": 25176.56
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:58:28.069239",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2814.912,
+        "largest_contentful_paint": 2814.912,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 14762.766999999987,
+        "speed_index": 9630,
+        "interactive": 28944.621
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:58:32.154682",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2812.473,
+        "largest_contentful_paint": 2812.473,
+        "cumulative_layout_shift": 0.17117468419321025,
+        "total_blocking_time": 15028.917000000007,
+        "speed_index": 9453,
+        "interactive": 29214.551
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:58:15.069765",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3160.403,
+        "largest_contentful_paint": 3160.403,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 17138.985,
+        "speed_index": 11035,
+        "interactive": 31709.335
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:58:16.986756",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3648.049,
+        "largest_contentful_paint": 3648.049,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 17117.465999999993,
+        "speed_index": 12051,
+        "interactive": 27887.29600000024
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:54:36.395107",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2757.773,
+        "largest_contentful_paint": 2757.773,
+        "cumulative_layout_shift": 0.18010768798349805,
+        "total_blocking_time": 19717.21000000001,
+        "speed_index": 11490,
+        "interactive": 34461.456
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:56:06.099550",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3844.421,
+        "largest_contentful_paint": 3844.421,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 19369.33299999976,
+        "speed_index": 12488,
+        "interactive": 30438.581999999762
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T07:00:56.474867",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 92.0,
+        "best_practices": 82.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2774.527,
+        "largest_contentful_paint": 2774.527,
+        "cumulative_layout_shift": 0.16755347141893887,
+        "total_blocking_time": 17058.19500000001,
+        "speed_index": 10299,
+        "interactive": 31918.755
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:58:25.057394",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3516.441,
+        "largest_contentful_paint": 3516.441,
+        "cumulative_layout_shift": 0.1767003435410137,
+        "total_blocking_time": 15878.737000000016,
+        "speed_index": 11637,
+        "interactive": 26954.702
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:58:27.902326",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 91.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2711.217,
+        "largest_contentful_paint": 2711.217,
+        "cumulative_layout_shift": 0.17907908314966525,
+        "total_blocking_time": 14202.034000000001,
+        "speed_index": 9813,
+        "interactive": 23118.033
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:58:06.877656",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2669.539,
+        "largest_contentful_paint": 2669.539,
+        "cumulative_layout_shift": 0.17196032296304015,
+        "total_blocking_time": 14723.013999999985,
+        "speed_index": 8719,
+        "interactive": 31654.901
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:56:59.231401",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2797.732,
+        "largest_contentful_paint": 2797.732,
+        "cumulative_layout_shift": 0.16995257944014155,
+        "total_blocking_time": 14775.377999999999,
+        "speed_index": 8580,
+        "interactive": 30876.565
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:56:59.949550",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2710.87,
+        "largest_contentful_paint": 2710.87,
+        "cumulative_layout_shift": 0.14676750641049557,
+        "total_blocking_time": 15252.422999999997,
+        "speed_index": 8349,
+        "interactive": 35032.156
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:56:48.291254",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3387.398,
+        "largest_contentful_paint": 3387.398,
+        "cumulative_layout_shift": 0.17907908314966525,
+        "total_blocking_time": 17351.22299999977,
+        "speed_index": 9457,
+        "interactive": 39936.65999999976
+      }
+    },
+    {
+      "name": "Kingston University",
+      "url": "https://www.kingston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:59:19.250915",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3711.46,
+        "largest_contentful_paint": 3711.46,
+        "cumulative_layout_shift": 0.18113920259055247,
+        "total_blocking_time": 18437.534999999993,
+        "speed_index": 8660,
+        "interactive": 39521.69800000024
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

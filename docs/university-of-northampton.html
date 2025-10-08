@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Northampton - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Northampton</h1>
+                <p>https://www.northampton.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Northampton",
+  "slug": "university-of-northampton",
+  "url": "https://www.northampton.ac.uk",
+  "total_tests": 37,
+  "last_updated": "2025-10-02T07:07:12.483371",
+  "week_averages": {
+    "mobile": {},
+    "desktop": {
+      "performance": 27.0,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "total_tests": 1
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 26.166666666666668,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 27.400000000000002,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "total_tests": 11
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:49:40.455939",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4578.698,
+        "largest_contentful_paint": 13168.579,
+        "cumulative_layout_shift": 0.13327427744919876,
+        "total_blocking_time": 17969.767,
+        "speed_index": 12818,
+        "interactive": 34033.636
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:49:41.341870",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4166.703,
+        "largest_contentful_paint": 13125.63,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 16462.01,
+        "speed_index": 11383,
+        "interactive": 31533.878
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T07:07:57.602657",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4361.385,
+        "largest_contentful_paint": 15088.32,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 22719.973,
+        "speed_index": 13835,
+        "interactive": 38049.16300000047
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T07:08:32.464003",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4077.372,
+        "largest_contentful_paint": 13815.761,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 19678.468999999997,
+        "speed_index": 12080,
+        "interactive": 36909.913
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T07:06:01.192264",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5632.577,
+        "largest_contentful_paint": 17676.865,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 19728.774999999987,
+        "speed_index": 13052,
+        "interactive": 36563.225
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T07:06:14.679384",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3862.919,
+        "largest_contentful_paint": 14303.023,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 20408.568,
+        "speed_index": 12420,
+        "interactive": 34951.196
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T07:06:22.707759",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4283.284,
+        "largest_contentful_paint": 12844.833,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 18292.495999999526,
+        "speed_index": 12916,
+        "interactive": 33328.83399999952
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T07:06:14.523761",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4435.852,
+        "largest_contentful_paint": 13416.453,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 19240.260000000002,
+        "speed_index": 12917,
+        "interactive": 35949.611
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T07:06:22.236638",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4073.668,
+        "largest_contentful_paint": 13794.758,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 20325.190000000006,
+        "speed_index": 12902,
+        "interactive": 35384.941
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T07:09:38.924214",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4192.755,
+        "largest_contentful_paint": 16048.785,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 23545.02700000002,
+        "speed_index": 14227,
+        "interactive": 39914.628
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T07:09:36.335479",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4218.695,
+        "largest_contentful_paint": 12361.277,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 19807.433999999987,
+        "speed_index": 12779,
+        "interactive": 34058.193
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T07:09:46.406268",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4096.876,
+        "largest_contentful_paint": 15359.636,
+        "cumulative_layout_shift": 0.017946388498056336,
+        "total_blocking_time": 20260.563000000006,
+        "speed_index": 13324,
+        "interactive": 34294.038
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T07:12:27.689120",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3936.421,
+        "largest_contentful_paint": 25689.311,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23007.67800000001,
+        "speed_index": 13438,
+        "interactive": 38424.455000000475
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T07:11:43.708767",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4226.923,
+        "largest_contentful_paint": 24669.074,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23476.171000000013,
+        "speed_index": 13175,
+        "interactive": 38850.973
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T07:11:48.688215",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4214.618,
+        "largest_contentful_paint": 23840.039,
+        "cumulative_layout_shift": 0.027207653767503417,
+        "total_blocking_time": 21797.230000000003,
+        "speed_index": 13253,
+        "interactive": 37577.972
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T07:10:38.092069",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4255.613,
+        "largest_contentful_paint": 17554.779,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23266.68400000002,
+        "speed_index": 15202,
+        "interactive": 37957.633
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T07:11:37.591894",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5130.188,
+        "largest_contentful_paint": 23698.057,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20656.63699999999,
+        "speed_index": 14481,
+        "interactive": 37061.693
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T07:12:37.140109",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4174.481,
+        "largest_contentful_paint": 25302.017,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24065.58100000001,
+        "speed_index": 15203,
+        "interactive": 39762.364
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T07:12:43.311572",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3843.528,
+        "largest_contentful_paint": 17698.319,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24230.033000000007,
+        "speed_index": 15453,
+        "interactive": 39574.622
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T07:08:48.608929",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4431.386,
+        "largest_contentful_paint": 21235.351,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19519.329000000005,
+        "speed_index": 12392,
+        "interactive": 36123.599
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T07:09:28.879310",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3902.246,
+        "largest_contentful_paint": 16768.117,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21944.862999999998,
+        "speed_index": 13360,
+        "interactive": 36427.611
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T07:13:07.372127",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4165.845,
+        "largest_contentful_paint": 15654.656,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22397.37099999999,
+        "speed_index": 14232,
+        "interactive": 37820.597
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T07:15:03.731534",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4011.76,
+        "largest_contentful_paint": 16441.261,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19893.854000000007,
+        "speed_index": 12805,
+        "interactive": 34050.507
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T07:13:16.613317",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3750.251,
+        "largest_contentful_paint": 15595.309,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22623.18000000001,
+        "speed_index": 13600,
+        "interactive": 37318.619
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T07:17:47.201131",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3738.811,
+        "largest_contentful_paint": 15120.305,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23540.934000000016,
+        "speed_index": 13755,
+        "interactive": 38834.826
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T07:06:36.260054",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4156.251,
+        "largest_contentful_paint": 16932.054,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23630.913999999997,
+        "speed_index": 14270,
+        "interactive": 39395.085
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T07:08:26.986995",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4356.582,
+        "largest_contentful_paint": 24355.749,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21662.739999999994,
+        "speed_index": 13413,
+        "interactive": 38226.832
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T07:03:57.199551",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4470.315,
+        "largest_contentful_paint": 25605.019,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 22449.518999999986,
+        "speed_index": 13347,
+        "interactive": 38663.00100000048
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T07:03:59.503202",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3928.449,
+        "largest_contentful_paint": 16266.623,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21605.059999999517,
+        "speed_index": 13936,
+        "interactive": 35905.41099999952
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T07:08:37.446243",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4553.523,
+        "largest_contentful_paint": 19905.158,
+        "cumulative_layout_shift": 0.1332544799273451,
+        "total_blocking_time": 24492.020000000004,
+        "speed_index": 14384,
+        "interactive": 39222.903
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T07:08:40.866552",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4046.505,
+        "largest_contentful_paint": 24093.173,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 22052.472999999973,
+        "speed_index": 13259,
+        "interactive": 37557.528
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T07:07:25.315080",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5792.096,
+        "largest_contentful_paint": 24453.563,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21290.395000000004,
+        "speed_index": 15182,
+        "interactive": 39093.315
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T07:08:36.704161",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3869.978,
+        "largest_contentful_paint": 13133.339,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 20404.137000000017,
+        "speed_index": 12545,
+        "interactive": 35891.754000000474
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T07:08:00.469869",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4373.632,
+        "largest_contentful_paint": 23919.035,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21262.27400000001,
+        "speed_index": 12913,
+        "interactive": 37414.829
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T07:07:41.674833",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3873.455,
+        "largest_contentful_paint": 15772.514,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21872.277999999988,
+        "speed_index": 14253,
+        "interactive": 37101.77
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T07:07:45.709038",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4307.077,
+        "largest_contentful_paint": 22800.099,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 21196.241999999995,
+        "speed_index": 12304,
+        "interactive": 37009
+      }
+    },
+    {
+      "name": "University of Northampton",
+      "url": "https://www.northampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T07:07:12.483371",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4355.29,
+        "largest_contentful_paint": 25140.073,
+        "cumulative_layout_shift": 0.013016061987601298,
+        "total_blocking_time": 23117.766000000007,
+        "speed_index": 13726,
+        "interactive": 38359.962
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

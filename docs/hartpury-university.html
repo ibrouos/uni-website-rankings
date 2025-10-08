@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hartpury University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Hartpury University</h1>
+                <p>https://www.hartpury.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Hartpury University",
+  "slug": "hartpury-university",
+  "url": "https://www.hartpury.ac.uk",
+  "total_tests": 12,
+  "last_updated": "2025-10-05T07:14:08.365578",
+  "week_averages": {
+    "mobile": {
+      "performance": 26.0,
+      "accessibility": 100,
+      "best_practices": 71.0,
+      "seo": 82.0
+    },
+    "desktop": {
+      "performance": 28.999999999999996,
+      "accessibility": 100,
+      "best_practices": 71.0,
+      "seo": 82.0
+    },
+    "total_tests": 2
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 25.666666666666668,
+      "accessibility": 100,
+      "best_practices": 72.33333333333333,
+      "seo": 85.0
+    },
+    "desktop": {
+      "performance": 28.999999999999996,
+      "accessibility": 100,
+      "best_practices": 71.0,
+      "seo": 82.0
+    },
+    "total_tests": 4
+  },
+  "trend": "up",
+  "results": [
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:59:18.672175",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4404.822,
+        "largest_contentful_paint": 22611.543,
+        "cumulative_layout_shift": 0.0009047531317581006,
+        "total_blocking_time": 12115.748000000001,
+        "speed_index": 22263,
+        "interactive": 25277.841
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:59:22.609055",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3525.206,
+        "largest_contentful_paint": 25828.39,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 12624.606000000009,
+        "speed_index": 24684,
+        "interactive": 26295.877
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T07:16:48.912495",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4273.002,
+        "largest_contentful_paint": 28462.534,
+        "cumulative_layout_shift": 0.0009047531317581006,
+        "total_blocking_time": 15291.485000000002,
+        "speed_index": 26551,
+        "interactive": 24788.99
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T07:16:50.643406",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3866.792,
+        "largest_contentful_paint": 28115.103,
+        "cumulative_layout_shift": 0.0009047531317581006,
+        "total_blocking_time": 15226.594999999515,
+        "speed_index": 27873,
+        "interactive": 24447.518999999524
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T07:16:26.805130",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4025.214,
+        "largest_contentful_paint": 23379.932,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 12043.938000000002,
+        "speed_index": 24120,
+        "interactive": 23736.017
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T07:16:26.938253",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3523.432,
+        "largest_contentful_paint": 23785.958,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 12086.174,
+        "speed_index": 23584,
+        "interactive": 28214.905
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T07:16:14.350317",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3832.498,
+        "largest_contentful_paint": 31924.572,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 18955.555999999997,
+        "speed_index": 28699,
+        "interactive": 28575.349
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T07:16:22.633922",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3532.205,
+        "largest_contentful_paint": 20232.117,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 10790.282999999992,
+        "speed_index": 21486,
+        "interactive": 20826.367
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T07:17:00.753582",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4756.418,
+        "largest_contentful_paint": 34982.203,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 20762.388999999992,
+        "speed_index": 28240,
+        "interactive": 35494.758
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T07:13:28.787378",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5827.128,
+        "largest_contentful_paint": 36329.55,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 19645.427999999516,
+        "speed_index": 28516,
+        "interactive": 31865.70599999952
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T07:14:04.037880",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4622.826,
+        "largest_contentful_paint": 25293.478,
+        "cumulative_layout_shift": 0.0001752995027426906,
+        "total_blocking_time": 11705.291000000001,
+        "speed_index": 22537,
+        "interactive": 26257.899
+      }
+    },
+    {
+      "name": "Hartpury University",
+      "url": "https://www.hartpury.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T07:14:08.365578",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3347.674,
+        "largest_contentful_paint": 28673.36,
+        "cumulative_layout_shift": 0.0002924107079826561,
+        "total_blocking_time": 15511.236,
+        "speed_index": 24585,
+        "interactive": 24683.684
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

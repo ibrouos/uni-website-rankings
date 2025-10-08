@@ -43,18 +43,21 @@ class UniversityDashboard:
             }
     
     def calculate_averages(self, results: List[Dict[str, Any]], days: int) -> Optional[Dict[str, float]]:
-        """Calculate averages for the last N days"""
+        """Calculate averages for the last N days (or most recent if none in range)"""
         if not results:
             return None
         
         cutoff_date = datetime.now() - timedelta(days=days)
         recent_results = [
             result for result in results 
-            if datetime.fromisoformat(result.get('timestamp', '').replace('Z', '')) >= cutoff_date
+            if datetime.fromisoformat(result.get('timestamp', '').replace('Z', '').split('+')[0]) >= cutoff_date
         ]
         
+        # If no results in the time range, use the most recent results instead
         if not recent_results:
-            return None
+            # Sort by timestamp descending and take last 4 results (2 devices * 2 tests)
+            sorted_results = sorted(results, key=lambda x: x.get('timestamp', ''), reverse=True)
+            recent_results = sorted_results[:min(4, len(sorted_results))]
         
         # Group by device type and calculate averages
         mobile_results = [r for r in recent_results if r.get('device') == 'mobile']
@@ -84,7 +87,7 @@ class UniversityDashboard:
         cutoff_date = datetime.now() - timedelta(days=days)
         recent_results = sorted([
             r for r in results 
-            if datetime.fromisoformat(r.get('timestamp', '').replace('Z', '')) >= cutoff_date
+            if datetime.fromisoformat(r.get('timestamp', '').replace('Z', '').split('+')[0]) >= cutoff_date
         ], key=lambda x: x.get('timestamp', ''))
         
         if len(recent_results) < 2:
@@ -649,6 +652,7 @@ class UniversityDashboard:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{university['name']} - Performance Dashboard</title>
     <script src="{chart_js_cdn}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         

@@ -1,0 +1,2968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Birmingham - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Birmingham</h1>
+                <p>https://www.birmingham.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Birmingham",
+  "slug": "university-of-birmingham",
+  "url": "https://www.birmingham.ac.uk",
+  "total_tests": 124,
+  "last_updated": "2025-10-06T06:33:55.129263",
+  "week_averages": {
+    "mobile": {
+      "performance": 25.0,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 25.6,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 98.4
+    },
+    "total_tests": 10
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 25.05263157894737,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 25.347826086956523,
+      "accessibility": 100,
+      "best_practices": 96.0,
+      "seo": 99.65217391304348
+    },
+    "total_tests": 42
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T22:50:50.247633",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6730.31,
+        "largest_contentful_paint": 28109.979,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25653.045000000002,
+        "speed_index": 32481,
+        "interactive": 39951.207
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:35:46.332949",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6603.069,
+        "largest_contentful_paint": 26468.025,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23927.897999999943,
+        "speed_index": 30834,
+        "interactive": 36262.51199999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:35:48.717531",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6503.656,
+        "largest_contentful_paint": 27164.472,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24230.037000000008,
+        "speed_index": 31244,
+        "interactive": 39759.344
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:35:01.953329",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7231.455,
+        "largest_contentful_paint": 26399.688,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23519.601999999995,
+        "speed_index": 31151,
+        "interactive": 36267.27
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:35:06.601619",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6947.559,
+        "largest_contentful_paint": 29652.447,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 26689.758999999995,
+        "speed_index": 34146,
+        "interactive": 39633.766
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:32:01.326984",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6962.274,
+        "largest_contentful_paint": 23963.115,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22819.714999999986,
+        "speed_index": 30149,
+        "interactive": 35825.737
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:33:17.439655",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7126.562,
+        "largest_contentful_paint": 25653.458,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23908.005000000016,
+        "speed_index": 31482,
+        "interactive": 39847.355
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:33:18.443341",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6177.769,
+        "largest_contentful_paint": 25400.037,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23291.256999999983,
+        "speed_index": 29793,
+        "interactive": 37766.504
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:36:16.179414",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7477.693,
+        "largest_contentful_paint": 21561.596,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19666.16600000001,
+        "speed_index": 26278,
+        "interactive": 32034.921
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:35:15.860595",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5376.123,
+        "largest_contentful_paint": 23905.615,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23347.322999999935,
+        "speed_index": 29663,
+        "interactive": 34321.045999999944
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:35:24.770127",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6321.623,
+        "largest_contentful_paint": 24180.566,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23852.22099999999,
+        "speed_index": 31634,
+        "interactive": 35846.389
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:35:27.683539",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5446.826,
+        "largest_contentful_paint": 25487.289,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25050.432999999965,
+        "speed_index": 31877,
+        "interactive": 36467.793
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:36:56.239029",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5700.002,
+        "largest_contentful_paint": 24637.087,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24209.548999999966,
+        "speed_index": 31520,
+        "interactive": 38485.66600000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:35:24.457766",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6389.222,
+        "largest_contentful_paint": 26191.867,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25205.305000000015,
+        "speed_index": 32522,
+        "interactive": 39794.461
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:35:28.084385",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5770.357,
+        "largest_contentful_paint": 25465.092,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 27786.888999999992,
+        "speed_index": 34797,
+        "interactive": 39476.492
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:35:20.340098",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6214.366,
+        "largest_contentful_paint": 23455.553,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20680.796,
+        "speed_index": 27872,
+        "interactive": 31950.772
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:35:55.151167",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5082.223,
+        "largest_contentful_paint": 22332.034,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21097.432999999994,
+        "speed_index": 26012,
+        "interactive": 32333.42300000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:35:58.371720",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5793.772,
+        "largest_contentful_paint": 22918.114,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22137.308,
+        "speed_index": 27320,
+        "interactive": 33281.815
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:33:04.595157",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6231.027,
+        "largest_contentful_paint": 23165.544,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20613.78899999997,
+        "speed_index": 26924,
+        "interactive": 35942.437
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:34:03.372799",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5879.831,
+        "largest_contentful_paint": 24575.035,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25146.07899999999,
+        "speed_index": 30069,
+        "interactive": 37391.598
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:36:58.063885",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7068.306,
+        "largest_contentful_paint": 24974.018,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25039.429000000026,
+        "speed_index": 30283,
+        "interactive": 37993.391
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:37:13.008252",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5551.508,
+        "largest_contentful_paint": 26451.234,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 27493.01499999998,
+        "speed_index": 31737,
+        "interactive": 39515.87100000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:36:36.514997",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6222.302,
+        "largest_contentful_paint": 23317.762,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23520.729999999996,
+        "speed_index": 28920,
+        "interactive": 36083.287
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:34:31.276874",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5669.867,
+        "largest_contentful_paint": 23204.43,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22742.788999999997,
+        "speed_index": 29375,
+        "interactive": 37691.345
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:34:33.296294",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6322.656,
+        "largest_contentful_paint": 23581.335,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22804.570999999996,
+        "speed_index": 30114,
+        "interactive": 38591.58500000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:36:56.141036",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5791.508,
+        "largest_contentful_paint": 19051.872,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16430.74900000001,
+        "speed_index": 23365,
+        "interactive": 27476.747
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:37:20.553390",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6052.876,
+        "largest_contentful_paint": 24116.698,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22425.064000000006,
+        "speed_index": 28772,
+        "interactive": 36466.557
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:36:25.422502",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5449.278,
+        "largest_contentful_paint": 19993.642,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17079.196999999982,
+        "speed_index": 24010,
+        "interactive": 31111.62
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:36:51.675180",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6105.289,
+        "largest_contentful_paint": 21217.069,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16991.891000000018,
+        "speed_index": 24549,
+        "interactive": 28391.809
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:36:53.000106",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5848.896,
+        "largest_contentful_paint": 20078.603,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15822.258999999945,
+        "speed_index": 23368,
+        "interactive": 26486.11899999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:37:17.654815",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5972.33,
+        "largest_contentful_paint": 19475.153,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16967.862999999994,
+        "speed_index": 23936,
+        "interactive": 30984.26
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:37:22.159111",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5502.205,
+        "largest_contentful_paint": 20358.755,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18763.312999999962,
+        "speed_index": 25192,
+        "interactive": 29324.82199999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:34:32.292729",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6108.108,
+        "largest_contentful_paint": 23314.375,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21091.69399999995,
+        "speed_index": 29264,
+        "interactive": 37059.45199999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:34:35.422549",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6420.448,
+        "largest_contentful_paint": 24722.9,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21594.988999999998,
+        "speed_index": 30023,
+        "interactive": 34061.31900000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:38:59.749194",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5742.201,
+        "largest_contentful_paint": 20656.613,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16947.002000000004,
+        "speed_index": 24882,
+        "interactive": 27924.419
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:37:43.771983",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5884.376,
+        "largest_contentful_paint": 19102.368,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16184.94500000001,
+        "speed_index": 23819,
+        "interactive": 27496.703
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:37:48.676261",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6776.128,
+        "largest_contentful_paint": 21714.326,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17334.367999999973,
+        "speed_index": 26021,
+        "interactive": 29332.67199999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:38:54.576125",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6253.708,
+        "largest_contentful_paint": 21739.825,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18743.64699999999,
+        "speed_index": 26939,
+        "interactive": 30810.43800000024
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:39:18.915153",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5632.187,
+        "largest_contentful_paint": 23287.435,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23896.60399999999,
+        "speed_index": 30822,
+        "interactive": 35614.02600000024
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:37:47.208589",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5835.702,
+        "largest_contentful_paint": 23833.042,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24036.060999999983,
+        "speed_index": 29614,
+        "interactive": 38676.097
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:38:52.054564",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6202.876,
+        "largest_contentful_paint": 23921.756,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23665.709000000006,
+        "speed_index": 29161,
+        "interactive": 37907.394
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:38:54.110954",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5976.269,
+        "largest_contentful_paint": 25274.692,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24027.42799999998,
+        "speed_index": 29555,
+        "interactive": 38456.29
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:34:11.767243",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5694.592,
+        "largest_contentful_paint": 21928.173,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21952.67199999996,
+        "speed_index": 27078,
+        "interactive": 32956.82099999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:34:14.675297",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6368.044,
+        "largest_contentful_paint": 23331.165,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21845.077999999965,
+        "speed_index": 28260,
+        "interactive": 36991.00699999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:43:05.216587",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5497.634,
+        "largest_contentful_paint": 22216.18,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21824.21499999999,
+        "speed_index": 27248,
+        "interactive": 33543.128
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:39:13.663095",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5944.909,
+        "largest_contentful_paint": 22715.565,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21646.521000000015,
+        "speed_index": 27397,
+        "interactive": 32887.66
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:39:22.449355",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5930.964,
+        "largest_contentful_paint": 24306.727,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23973.15199999998,
+        "speed_index": 29355,
+        "interactive": 35305.686
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:39:29.350982",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6700.191,
+        "largest_contentful_paint": 26439.178,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23809.175000000003,
+        "speed_index": 30478,
+        "interactive": 36820.853
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-08T06:38:21.624244",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5685.299,
+        "largest_contentful_paint": 20619.332,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19457.434999999998,
+        "speed_index": 24971,
+        "interactive": 30497.066
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:38:22.386078",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6109.173,
+        "largest_contentful_paint": 21673.175,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20212.903,
+        "speed_index": 25770,
+        "interactive": 31827.229
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:33:55.563180",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5730.497,
+        "largest_contentful_paint": 20263.88,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17329.808999999997,
+        "speed_index": 23354,
+        "interactive": 31213.334
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:34:28.654562",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6430.14,
+        "largest_contentful_paint": 25048.016,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21826.913999999993,
+        "speed_index": 28347,
+        "interactive": 33933.024
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:35:43.898659",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5788.055,
+        "largest_contentful_paint": 19341.284,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15403.893999999991,
+        "speed_index": 22039,
+        "interactive": 29702.817
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:36:13.324949",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6192.339,
+        "largest_contentful_paint": 25346.185,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22631.693999999985,
+        "speed_index": 29039,
+        "interactive": 34549.544
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-14T06:36:14.014212",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6180.561,
+        "largest_contentful_paint": 22912.947,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21488.640999999996,
+        "speed_index": 27715,
+        "interactive": 33689.002
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-17T06:33:21.090822",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6387.506,
+        "largest_contentful_paint": 19606.184,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16923.52000000002,
+        "speed_index": 23603,
+        "interactive": 28761.98700000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-17T06:33:22.258280",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6072.504,
+        "largest_contentful_paint": 20016.162,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17953.852999999985,
+        "speed_index": 24100,
+        "interactive": 29165.929
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-18T06:38:07.770419",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5596.497,
+        "largest_contentful_paint": 21698.68,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20859.47499999998,
+        "speed_index": 26154,
+        "interactive": 31664.27400000003
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:35:15.104853",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5852.541,
+        "largest_contentful_paint": 20042.028,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18204.573,
+        "speed_index": 24313,
+        "interactive": 30002.982
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:35:15.951361",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6505.657,
+        "largest_contentful_paint": 22749.297,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19922.760999999966,
+        "speed_index": 26953,
+        "interactive": 32556.51199999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:43:06.301405",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6455.833,
+        "largest_contentful_paint": 20695.418,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19384.38799999999,
+        "speed_index": 25541,
+        "interactive": 31146.678000000058
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:34:40.474370",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6760.955,
+        "largest_contentful_paint": 20019.727,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14784.666999999985,
+        "speed_index": 22371,
+        "interactive": 30388.136
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:34:42.602675",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5828.47,
+        "largest_contentful_paint": 18953.572,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15745.946000000007,
+        "speed_index": 22143,
+        "interactive": 31285.161
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:32:10.400815",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5780.946,
+        "largest_contentful_paint": 19997.444,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15743.418000000003,
+        "speed_index": 22154,
+        "interactive": 26427.52
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:33:02.318615",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5900.05,
+        "largest_contentful_paint": 19717.171,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14863.468999999994,
+        "speed_index": 21134,
+        "interactive": 29340.271
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:33:03.992894",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6030.022,
+        "largest_contentful_paint": 18084.149,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13802.619000000006,
+        "speed_index": 20916,
+        "interactive": 25056.132
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:31:11.767812",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6498.548,
+        "largest_contentful_paint": 26552.498,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24060.769000000022,
+        "speed_index": 30095,
+        "interactive": 39357.831
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:31:12.694688",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5647.17,
+        "largest_contentful_paint": 25436.246,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 24570.227,
+        "speed_index": 29133,
+        "interactive": 37652.657
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:36:30.167004",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6240.227,
+        "largest_contentful_paint": 26597.924,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 26290.07200000001,
+        "speed_index": 31728,
+        "interactive": 39087.647
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:36:32.121425",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5960.711,
+        "largest_contentful_paint": 26790.664,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 25216.90100000001,
+        "speed_index": 30957,
+        "interactive": 37568.58000000003
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T06:34:12.073563",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5297.94,
+        "largest_contentful_paint": 21432.392,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18819.470999999994,
+        "speed_index": 24221,
+        "interactive": 29628.144
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T06:34:16.996699",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6069.55,
+        "largest_contentful_paint": 23232.967,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19031.679999999997,
+        "speed_index": 25544,
+        "interactive": 30939.713
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:31:34.276867",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6111.823,
+        "largest_contentful_paint": 22234.594,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19912.28099999999,
+        "speed_index": 25791,
+        "interactive": 31631.563
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:31:39.202084",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5712.504,
+        "largest_contentful_paint": 23239.497,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21659.627999999986,
+        "speed_index": 27419,
+        "interactive": 33816.363
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:31:50.586044",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5877.365,
+        "largest_contentful_paint": 18798.2,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14757.911,
+        "speed_index": 20856,
+        "interactive": 25626.051
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:32:22.480818",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6362.159,
+        "largest_contentful_paint": 20138.942,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15943.948000000011,
+        "speed_index": 22692,
+        "interactive": 27665.945
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:32:45.932030",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5643.108,
+        "largest_contentful_paint": 23409.794,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20368.298999999995,
+        "speed_index": 25965,
+        "interactive": 31485.082
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:28:52.757121",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5737.277,
+        "largest_contentful_paint": 18839.05,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16770.384999999947,
+        "speed_index": 22408,
+        "interactive": 28519.197999999942
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:28:54.911869",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7214.755,
+        "largest_contentful_paint": 19756.642,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15600.954999999996,
+        "speed_index": 22731,
+        "interactive": 28152.624
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:29:02.557790",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6402.035,
+        "largest_contentful_paint": 19905.059,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16323.889000000006,
+        "speed_index": 22774,
+        "interactive": 28072.227
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:29:12.144364",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6458.667,
+        "largest_contentful_paint": 21466.67,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19367.925999999992,
+        "speed_index": 25273,
+        "interactive": 30891.836
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:34:00.693655",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5609.096,
+        "largest_contentful_paint": 20030.827,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17365.85800000001,
+        "speed_index": 23574,
+        "interactive": 28352.56900000006
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:33:19.649207",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6503.286,
+        "largest_contentful_paint": 20352.02,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17873.3,
+        "speed_index": 24357,
+        "interactive": 29817.29200000003
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:33:20.368040",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6614.158,
+        "largest_contentful_paint": 21640.275,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17142.009999999984,
+        "speed_index": 23787,
+        "interactive": 28258.619
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:32:25.181472",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6676.655,
+        "largest_contentful_paint": 20059.283,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15003.614999999994,
+        "speed_index": 22337,
+        "interactive": 27136.738
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:32:26.376640",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6139.914,
+        "largest_contentful_paint": 19643.671,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14767.932999999994,
+        "speed_index": 21677,
+        "interactive": 29501.59
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:32:23.241585",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5512.435,
+        "largest_contentful_paint": 18507.87,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13901.382999999998,
+        "speed_index": 20714,
+        "interactive": 25007.58
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:28:44.124744",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5983.113,
+        "largest_contentful_paint": 19134.131,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13568.427000000007,
+        "speed_index": 20926,
+        "interactive": 24529.202000000118
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:28:45.951825",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5424.906,
+        "largest_contentful_paint": 18316.459,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14294.21999999999,
+        "speed_index": 20659,
+        "interactive": 25150.192
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:29:56.988842",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6549.336,
+        "largest_contentful_paint": 19442.761,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16155.837999999996,
+        "speed_index": 22857,
+        "interactive": 27567.034
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:30:27.465735",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6294.689,
+        "largest_contentful_paint": 23277.739,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19694.313999999995,
+        "speed_index": 25651,
+        "interactive": 31406.58800000003
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:34:49.512805",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6264.748,
+        "largest_contentful_paint": 19089.514,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14056.41599999998,
+        "speed_index": 21068,
+        "interactive": 24860.81299999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:34:52.236126",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6102.866,
+        "largest_contentful_paint": 18336.586,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13488.965999999979,
+        "speed_index": 20559,
+        "interactive": 28168.47099999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:33:16.268854",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6074.923,
+        "largest_contentful_paint": 19741.49,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16459.484999999997,
+        "speed_index": 22927,
+        "interactive": 27865.483
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:33:33.867443",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6471.42,
+        "largest_contentful_paint": 20721.265,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18410.668000000012,
+        "speed_index": 24687,
+        "interactive": 32791.15
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:33:34.702125",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6660.921,
+        "largest_contentful_paint": 21542.511,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18713.32699999994,
+        "speed_index": 25330,
+        "interactive": 31238.34499999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:32:26.868796",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5967.684,
+        "largest_contentful_paint": 20492.356,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15001.718999999994,
+        "speed_index": 22299,
+        "interactive": 26499.185
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:33:14.423180",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6181.998,
+        "largest_contentful_paint": 22526.371,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18802.83499999999,
+        "speed_index": 24915,
+        "interactive": 30172.749
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:29:54.738957",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6265.3,
+        "largest_contentful_paint": 20752.925,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16980.850000000006,
+        "speed_index": 24660,
+        "interactive": 28190.295
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:29:58.103291",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5442.392,
+        "largest_contentful_paint": 21149.659,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16848.153000000013,
+        "speed_index": 24124,
+        "interactive": 27359.126
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:34:04.193290",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5556.134,
+        "largest_contentful_paint": 17622.447,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13304.25599999995,
+        "speed_index": 20360,
+        "interactive": 23359.56599999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:33:06.063821",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6245.3,
+        "largest_contentful_paint": 20072.934,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13891.334999999992,
+        "speed_index": 22557,
+        "interactive": 25297.623000000058
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:33:06.987753",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5928.406,
+        "largest_contentful_paint": 19831.111,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14692.790999999994,
+        "speed_index": 22846,
+        "interactive": 25638.305
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:33:00.282538",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5826.699,
+        "largest_contentful_paint": 19994.114,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15189.602,
+        "speed_index": 23007,
+        "interactive": 25670.238
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:33:40.601927",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5820.015,
+        "largest_contentful_paint": 24442.471,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20860.902999999995,
+        "speed_index": 28508,
+        "interactive": 32461.398
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:33:41.501330",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6429.218,
+        "largest_contentful_paint": 21470.856,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16062.993000000008,
+        "speed_index": 24502,
+        "interactive": 28306.566
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:34:17.981624",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6588.479,
+        "largest_contentful_paint": 24526.961,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21634.460000000006,
+        "speed_index": 29298,
+        "interactive": 36220.328
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:33:06.963151",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6267.361,
+        "largest_contentful_paint": 19624.039,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14618.432,
+        "speed_index": 22891,
+        "interactive": 26347.561
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:33:11.126100",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5685.525,
+        "largest_contentful_paint": 20747.067,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17342.210000000003,
+        "speed_index": 24411,
+        "interactive": 28208.673
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:29:07.442472",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5941.874,
+        "largest_contentful_paint": 20851.474,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20332.810999999994,
+        "speed_index": 26772,
+        "interactive": 31809.82
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:31:22.018243",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6733.919,
+        "largest_contentful_paint": 25323.934,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22538.06500000005,
+        "speed_index": 30243,
+        "interactive": 37912.766
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:32:05.807915",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5990.778,
+        "largest_contentful_paint": 26207.961,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22441.64099999998,
+        "speed_index": 30028,
+        "interactive": 34161.306
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:33:19.442132",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6443.508,
+        "largest_contentful_paint": 23773.24,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20192.390999999992,
+        "speed_index": 28159,
+        "interactive": 35059.611
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:33:20.219298",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5698.304,
+        "largest_contentful_paint": 21645.661,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19407.928999999964,
+        "speed_index": 26126,
+        "interactive": 30578.35699999997
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:32:31.310870",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5970.239,
+        "largest_contentful_paint": 22465.202,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20542.405999999944,
+        "speed_index": 27613,
+        "interactive": 32150.34399999994
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:32:31.618364",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7100.79,
+        "largest_contentful_paint": 23368.272,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19866.178,
+        "speed_index": 28015,
+        "interactive": 35368.919
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:32:02.103346",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5888.145,
+        "largest_contentful_paint": 20442.615,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18282.793999999998,
+        "speed_index": 25477,
+        "interactive": 32104.394
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:32:02.830694",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6241.417,
+        "largest_contentful_paint": 21686.768,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 19000.546000000002,
+        "speed_index": 26921,
+        "interactive": 33721.366
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:29:51.402099",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5563.636,
+        "largest_contentful_paint": 18944.012,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16941.235999999986,
+        "speed_index": 24096,
+        "interactive": 28096.37
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:29:51.592265",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6706.095,
+        "largest_contentful_paint": 20387.211,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16676.889000000003,
+        "speed_index": 25531,
+        "interactive": 29461.888
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:29:48.321408",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6101.612,
+        "largest_contentful_paint": 19941.026,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16671.328,
+        "speed_index": 24184,
+        "interactive": 30690.11
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:29:48.577659",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5750.758,
+        "largest_contentful_paint": 20255.287,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17254.02200000001,
+        "speed_index": 24629,
+        "interactive": 31373.891
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:33:53.092965",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5569.492,
+        "largest_contentful_paint": 17641.274,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14036.111999999997,
+        "speed_index": 21580,
+        "interactive": 24640.516
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:33:55.129263",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6631.067,
+        "largest_contentful_paint": 20340.868,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16364.622000000016,
+        "speed_index": 24166,
+        "interactive": 31127.326
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

@@ -1,0 +1,3868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Brighton - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Brighton</h1>
+                <p>https://www.brighton.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Brighton",
+  "slug": "university-of-brighton",
+  "url": "https://www.brighton.ac.uk",
+  "total_tests": 169,
+  "last_updated": "2025-10-07T07:01:22.521076",
+  "week_averages": {
+    "mobile": {
+      "performance": 25.75,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 25.75,
+      "accessibility": 100,
+      "best_practices": 79.0,
+      "seo": 100
+    },
+    "total_tests": 8
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 25.695652173913043,
+      "accessibility": 100,
+      "best_practices": 71.82608695652173,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 25.708333333333332,
+      "accessibility": 100,
+      "best_practices": 73.0,
+      "seo": 100
+    },
+    "total_tests": 47
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T23:16:59.309709",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5705.59,
+        "largest_contentful_paint": 16432.007,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 15619.800000000003,
+        "speed_index": 21691,
+        "interactive": 25449.645
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:17:03.777674",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6690.34,
+        "largest_contentful_paint": 16582.945,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 12886.140999999758,
+        "speed_index": 20144,
+        "interactive": 23644.62899999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:42:33.244824",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4542.105,
+        "largest_contentful_paint": 13602.24,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 10735.031000000003,
+        "speed_index": 18211,
+        "interactive": 22771.716
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:42:51.148579",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4101.967,
+        "largest_contentful_paint": 13914.645,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 10733.828999999765,
+        "speed_index": 17929,
+        "interactive": 21309.246999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T07:00:48.033454",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4387.069,
+        "largest_contentful_paint": 18700.32,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 13734.951999999997,
+        "speed_index": 20295,
+        "interactive": 23940.533
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T07:00:49.180789",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4270.51,
+        "largest_contentful_paint": 15661.879,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 14939.57499999999,
+        "speed_index": 19687,
+        "interactive": 23452.053
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T07:00:56.941806",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4884.001,
+        "largest_contentful_paint": 16884.108,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 15056.444999999994,
+        "speed_index": 21282,
+        "interactive": 30367.926
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:59:20.307407",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5004.325,
+        "largest_contentful_paint": 16804.942,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 13412.393999999997,
+        "speed_index": 20395,
+        "interactive": 24064.401
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:59:24.469462",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4195.07,
+        "largest_contentful_paint": 15424.884,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 12514.652,
+        "speed_index": 19172,
+        "interactive": 22896.215000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:59:00.787197",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4589.997,
+        "largest_contentful_paint": 13933.784,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 14035.92599999976,
+        "speed_index": 20367,
+        "interactive": 24174.098999999762
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:59:10.479514",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5724.197,
+        "largest_contentful_paint": 15465.364,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 12256.25,
+        "speed_index": 18946,
+        "interactive": 22025.722
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:59:12.035946",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4480.245,
+        "largest_contentful_paint": 16079.965,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 15703.685999999996,
+        "speed_index": 20965,
+        "interactive": 25948.284
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:59:12.896914",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4472.557,
+        "largest_contentful_paint": 16252.069,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 17077.167999999754,
+        "speed_index": 21178,
+        "interactive": 25214.98799999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:59:45.721664",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4644.954,
+        "largest_contentful_paint": 15836.717,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 15712.119000000006,
+        "speed_index": 20905,
+        "interactive": 30734.317
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:59:53.441261",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4726.643,
+        "largest_contentful_paint": 16269.047,
+        "cumulative_layout_shift": 0.00144869080057422,
+        "total_blocking_time": 16592.766000000007,
+        "speed_index": 21202,
+        "interactive": 30623.362
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T07:01:34.263150",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4871.081,
+        "largest_contentful_paint": 22572.328,
+        "cumulative_layout_shift": 0.001142506150694403,
+        "total_blocking_time": 18991.541,
+        "speed_index": 24470,
+        "interactive": 28862.50900000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T07:02:07.711404",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4978.067,
+        "largest_contentful_paint": 16364.821,
+        "cumulative_layout_shift": 0.001142506150694403,
+        "total_blocking_time": 16453.493000000002,
+        "speed_index": 21069,
+        "interactive": 25086.798
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T07:03:50.109541",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5027.8,
+        "largest_contentful_paint": 15690.343,
+        "cumulative_layout_shift": 0.001142506150694403,
+        "total_blocking_time": 13668.864999999996,
+        "speed_index": 19643,
+        "interactive": 22936.647
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T07:03:50.736200",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6312.17,
+        "largest_contentful_paint": 19983.231,
+        "cumulative_layout_shift": 0.001142506150694403,
+        "total_blocking_time": 15338.669999999996,
+        "speed_index": 21698,
+        "interactive": 25189.755
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T07:02:13.925982",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5501.675,
+        "largest_contentful_paint": 16126.928,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14183.567,
+        "speed_index": 20629,
+        "interactive": 24864.564
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T07:01:56.994864",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5222.936,
+        "largest_contentful_paint": 16899.359,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13855.385999999999,
+        "speed_index": 19936,
+        "interactive": 23599.933
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T07:02:00.865692",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4896.846,
+        "largest_contentful_paint": 17238.784,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14915.769000000008,
+        "speed_index": 20763,
+        "interactive": 24512.357
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T07:02:50.734268",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5351.159,
+        "largest_contentful_paint": 16874.454,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15117.276999999773,
+        "speed_index": 21300,
+        "interactive": 25398.564999999762
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:59:34.952477",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5642.724,
+        "largest_contentful_paint": 17704.359,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14860.535,
+        "speed_index": 21700,
+        "interactive": 25681.504
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:59:51.218816",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5070.468,
+        "largest_contentful_paint": 17280.661,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14129.97800000001,
+        "speed_index": 21360,
+        "interactive": 25331.891
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T07:00:33.818202",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7007.765,
+        "largest_contentful_paint": 17557.968,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14051.484,
+        "speed_index": 21721,
+        "interactive": 25643.034
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T07:00:47.236264",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5247.921,
+        "largest_contentful_paint": 16547.229,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14362.572999999993,
+        "speed_index": 20993,
+        "interactive": 24779.373000000476
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T07:04:51.694436",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5708.918,
+        "largest_contentful_paint": 19736.003,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16711.566000000003,
+        "speed_index": 23211,
+        "interactive": 27941.099
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T07:04:54.813658",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5175.491,
+        "largest_contentful_paint": 16541.775,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15899.512,
+        "speed_index": 21532,
+        "interactive": 26040.415
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T07:02:23.993875",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5739.3,
+        "largest_contentful_paint": 16933.146,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13566.150000000001,
+        "speed_index": 20553,
+        "interactive": 24399.83
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T07:02:38.225996",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5166.201,
+        "largest_contentful_paint": 18753.448,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 18069.765,
+        "speed_index": 23453,
+        "interactive": 28485.49200000048
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T07:02:23.598724",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5348.349,
+        "largest_contentful_paint": 16546.821,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13268.351000000002,
+        "speed_index": 20620,
+        "interactive": 24509.218
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T07:02:35.807074",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6966.811,
+        "largest_contentful_paint": 17709.446,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14768.329999999994,
+        "speed_index": 21705,
+        "interactive": 28908.376
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T07:03:12.795289",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6174.299,
+        "largest_contentful_paint": 17628.733,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15774.177,
+        "speed_index": 21607,
+        "interactive": 25304.540000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T07:04:00.174948",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5811.019,
+        "largest_contentful_paint": 18185.694,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 17158.608000000004,
+        "speed_index": 22992,
+        "interactive": 27438.648
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T07:01:12.279759",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7376.327,
+        "largest_contentful_paint": 19443.883,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16116.279999999992,
+        "speed_index": 23431,
+        "interactive": 27493.55
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T07:01:15.603958",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6588.404,
+        "largest_contentful_paint": 19240.868,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 17015.694999999767,
+        "speed_index": 23597,
+        "interactive": 27894.23799999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T07:00:20.497881",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5549.27,
+        "largest_contentful_paint": 16213.683,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13134.873999999996,
+        "speed_index": 20051,
+        "interactive": 23908.622
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T07:00:21.733654",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5208.968,
+        "largest_contentful_paint": 16286.441,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12395.683999999994,
+        "speed_index": 18932,
+        "interactive": 22478.681
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T07:04:23.090681",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4972.121,
+        "largest_contentful_paint": 16973.609,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14529.830999999998,
+        "speed_index": 21318,
+        "interactive": 25695.590000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T07:04:24.350815",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4593.086,
+        "largest_contentful_paint": 16415.429,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14056.704000000009,
+        "speed_index": 20240,
+        "interactive": 24296.272
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T07:04:25.469754",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4580.887,
+        "largest_contentful_paint": 16542.347,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14206.674000000003,
+        "speed_index": 20400,
+        "interactive": 25012.978000000476
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T07:03:27.861817",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5819.442,
+        "largest_contentful_paint": 16131.261,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12677.701000000001,
+        "speed_index": 19801,
+        "interactive": 23252.077000000238
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T07:03:29.021094",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5165.206,
+        "largest_contentful_paint": 15989.625,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15049.369999999997,
+        "speed_index": 20925,
+        "interactive": 24512.546
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T07:04:24.668902",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6132.742,
+        "largest_contentful_paint": 18590.788,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 17197.238999999994,
+        "speed_index": 23241,
+        "interactive": 28179.615
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T07:04:36.734708",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6093.411,
+        "largest_contentful_paint": 18018.473,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 18027.790000000008,
+        "speed_index": 25869,
+        "interactive": 36615.972
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T07:00:54.975736",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5707.43,
+        "largest_contentful_paint": 17321.39,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14482.043999999994,
+        "speed_index": 20961,
+        "interactive": 24448.797
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T07:00:59.711358",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5529.477,
+        "largest_contentful_paint": 16563.997,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13226.616999999766,
+        "speed_index": 19768,
+        "interactive": 22794.922999999762
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T07:02:01.251046",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5070.17,
+        "largest_contentful_paint": 19775.471,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14483.174999999992,
+        "speed_index": 21184,
+        "interactive": 30060.669
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T07:02:02.227292",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4909.623,
+        "largest_contentful_paint": 16029.585,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13398.236000000004,
+        "speed_index": 20034,
+        "interactive": 23799.412
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T07:04:47.206318",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6271.819,
+        "largest_contentful_paint": 20985.092,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14167.427000000001,
+        "speed_index": 22230,
+        "interactive": 25876.688
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T07:04:48.609336",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5619.453,
+        "largest_contentful_paint": 16541.605,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14320.171000000002,
+        "speed_index": 20636,
+        "interactive": 24011.405
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T07:03:55.143371",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5234.537,
+        "largest_contentful_paint": 20042.118,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14575.408000000003,
+        "speed_index": 21586,
+        "interactive": 25461.87
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T07:04:10.029916",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5454.362,
+        "largest_contentful_paint": 23710.493,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13576.701000000001,
+        "speed_index": 20648,
+        "interactive": 23950.235000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T07:04:15.810307",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4951.191,
+        "largest_contentful_paint": 15229.442,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12688.423999999995,
+        "speed_index": 18599,
+        "interactive": 21775.267
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T07:04:21.923594",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4938.145,
+        "largest_contentful_paint": 22263.908,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12086.290999999994,
+        "speed_index": 19336,
+        "interactive": 22368.579
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T07:05:06.122623",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4978.609,
+        "largest_contentful_paint": 22524.334,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 11778.097999999996,
+        "speed_index": 19452,
+        "interactive": 22759.625
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T07:05:07.451592",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5134.213,
+        "largest_contentful_paint": 22301.149,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12226.035000000007,
+        "speed_index": 19300,
+        "interactive": 22680.357
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T07:04:40.306456",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5337.179,
+        "largest_contentful_paint": 16583.366,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16246.084000000003,
+        "speed_index": 21714,
+        "interactive": 25818.983
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T07:04:44.582276",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5056.198,
+        "largest_contentful_paint": 17552.083,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16492.612999999998,
+        "speed_index": 22245,
+        "interactive": 26517.784
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T07:03:03.848947",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6287.232,
+        "largest_contentful_paint": 22965.082,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 20001.096999999765,
+        "speed_index": 25925,
+        "interactive": 30962.585999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T07:01:40.297959",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5638.516,
+        "largest_contentful_paint": 16024.053,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 10885.600999999991,
+        "speed_index": 18322,
+        "interactive": 21116.426
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T07:01:48.930541",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6055.042,
+        "largest_contentful_paint": 16653.484,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12420.116000000007,
+        "speed_index": 19776,
+        "interactive": 23453.857
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T07:06:20.736297",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5854.855,
+        "largest_contentful_paint": 18332.23,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12854.146999999997,
+        "speed_index": 20735,
+        "interactive": 24050.187
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T07:06:29.877527",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5525.359,
+        "largest_contentful_paint": 24512.75,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13908.745000000004,
+        "speed_index": 21356,
+        "interactive": 24608.043000000238
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T07:05:23.047485",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6596.414,
+        "largest_contentful_paint": 19565.496,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 17166.025,
+        "speed_index": 23703,
+        "interactive": 28246.03
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T07:05:31.691535",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4944.49,
+        "largest_contentful_paint": 15179.54,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12231.728,
+        "speed_index": 18399,
+        "interactive": 21390.636
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T07:05:49.046451",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5480.737,
+        "largest_contentful_paint": 25509.384,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14491.117999999988,
+        "speed_index": 22053,
+        "interactive": 25892.546000000475
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T07:05:50.354869",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5179.913,
+        "largest_contentful_paint": 20758.618,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14376.779999999997,
+        "speed_index": 21763,
+        "interactive": 25517.371
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T07:05:09.692536",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5420.493,
+        "largest_contentful_paint": 18010.134,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13902.131999999998,
+        "speed_index": 20694,
+        "interactive": 24086.866
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T07:05:11.459276",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6542.357,
+        "largest_contentful_paint": 25427.433,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14035.165,
+        "speed_index": 22191,
+        "interactive": 30413.533
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T07:06:39.881562",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5416.317,
+        "largest_contentful_paint": 26171.781,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15604.717000000004,
+        "speed_index": 22797,
+        "interactive": 26864.95500000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T07:06:44.513389",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5287.95,
+        "largest_contentful_paint": 21157.721,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16084.611999999996,
+        "speed_index": 22679,
+        "interactive": 26633.433
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T07:00:32.330929",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5060.852,
+        "largest_contentful_paint": 21887.25,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16090.107000000004,
+        "speed_index": 22881,
+        "interactive": 27097.476
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T07:01:16.363938",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4480.064,
+        "largest_contentful_paint": 20287.645,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15190.201000000003,
+        "speed_index": 21754,
+        "interactive": 25506.910000000476
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T07:03:13.835558",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5917.482,
+        "largest_contentful_paint": 22003.041,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 21394.602,
+        "speed_index": 27382,
+        "interactive": 32026.962
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T07:06:45.618064",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5502.225,
+        "largest_contentful_paint": 15476.744,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13798.705999999998,
+        "speed_index": 19511,
+        "interactive": 23371.003
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T07:06:46.824099",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5088.733,
+        "largest_contentful_paint": 15703.149,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14953.028000000002,
+        "speed_index": 20239,
+        "interactive": 24001.649
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T07:05:55.531951",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6439.881,
+        "largest_contentful_paint": 18038.985,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15961.316999999995,
+        "speed_index": 22711,
+        "interactive": 26948.058
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T07:05:57.583522",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5218.669,
+        "largest_contentful_paint": 17694.108,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15518.195999999767,
+        "speed_index": 21514,
+        "interactive": 25712.226999999762
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-10T07:01:31.054536",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5525.406,
+        "largest_contentful_paint": 18315.209,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14738.967,
+        "speed_index": 21879,
+        "interactive": 25724.028
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T07:01:35.093305",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5318.785,
+        "largest_contentful_paint": 22111.476,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15295.322000000002,
+        "speed_index": 22887,
+        "interactive": 26561.949000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T07:05:05.656947",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5785.545,
+        "largest_contentful_paint": 17429.171,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12183.723999999998,
+        "speed_index": 19656,
+        "interactive": 23148.023
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T07:05:08.039813",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5630.015,
+        "largest_contentful_paint": 17948.124,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 11713.687000000002,
+        "speed_index": 20258,
+        "interactive": 23903.424
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-14T07:04:54.149101",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7066.119,
+        "largest_contentful_paint": 20442.853,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 18808.80199999953,
+        "speed_index": 25955,
+        "interactive": 31160.774999999525
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T07:05:10.949165",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5840.766,
+        "largest_contentful_paint": 24413.015,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 18241.955000000005,
+        "speed_index": 25135,
+        "interactive": 29440.186
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T07:02:14.060259",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5267.474,
+        "largest_contentful_paint": 24632.367,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12576.739000000001,
+        "speed_index": 21285,
+        "interactive": 29440.389
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T07:02:28.728108",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5295.119,
+        "largest_contentful_paint": 25451.662,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13897.861999999766,
+        "speed_index": 22194,
+        "interactive": 29086.459999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:58:51.635234",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4974.747,
+        "largest_contentful_paint": 18588.136,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 14984.291999999998,
+        "speed_index": 22358,
+        "interactive": 27130.892
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:59:00.245006",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4771.183,
+        "largest_contentful_paint": 20878.68,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13640.015999999752,
+        "speed_index": 21474,
+        "interactive": 25467.84199999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T07:02:42.579506",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6976.808,
+        "largest_contentful_paint": 22944.152,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16009.174000000003,
+        "speed_index": 24240,
+        "interactive": 28418.002000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T07:02:45.101910",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5050.958,
+        "largest_contentful_paint": 22530.284,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 17098.713999999978,
+        "speed_index": 24109,
+        "interactive": 28745.719000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T07:02:09.506944",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5719.174,
+        "largest_contentful_paint": 22404.49,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 16355.345000000003,
+        "speed_index": 23677,
+        "interactive": 28433.788
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T07:02:34.010488",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5753.511,
+        "largest_contentful_paint": 22659.301,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 18841.572,
+        "speed_index": 25697,
+        "interactive": 30604.847
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T07:09:55.415990",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5298.9,
+        "largest_contentful_paint": 21501.16,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13498.202999999994,
+        "speed_index": 22042,
+        "interactive": 25983.795
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T07:09:59.116800",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5019.261,
+        "largest_contentful_paint": 19438.014,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 12801.844000000003,
+        "speed_index": 20784,
+        "interactive": 24542.397
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T07:01:06.265435",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5526.845,
+        "largest_contentful_paint": 19128.115,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 15881.720000000003,
+        "speed_index": 22672,
+        "interactive": 28110.189
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T07:01:12.227557",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6277.342,
+        "largest_contentful_paint": 18097.153,
+        "cumulative_layout_shift": 0.0009981619586082035,
+        "total_blocking_time": 13917.268999999997,
+        "speed_index": 21324,
+        "interactive": 25383.37000000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T06:59:16.544535",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6991.633,
+        "largest_contentful_paint": 19173.658,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 21957.607999999516,
+        "speed_index": 28738,
+        "interactive": 35066.188999999526
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-23T06:59:17.189011",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6750.626,
+        "largest_contentful_paint": 19377.685,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22563.369,
+        "speed_index": 28980,
+        "interactive": 35372.939
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:58:28.535066",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6054.391,
+        "largest_contentful_paint": 16288.234,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19949.656999999992,
+        "speed_index": 25913,
+        "interactive": 31077.219
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:58:38.982552",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5482.873,
+        "largest_contentful_paint": 15376.772,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19162.528,
+        "speed_index": 24655,
+        "interactive": 29684.759
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T07:02:32.847778",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4999.478,
+        "largest_contentful_paint": 18724.519,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 13326.576999999997,
+        "speed_index": 20507,
+        "interactive": 24286.592
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T07:02:33.593937",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5309.898,
+        "largest_contentful_paint": 16519.42,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 12774.690000000006,
+        "speed_index": 19930,
+        "interactive": 23862.711
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T07:01:41.517740",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5381.006,
+        "largest_contentful_paint": 14732.216,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16014.70600000001,
+        "speed_index": 22316,
+        "interactive": 27048.236
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T07:02:05.657546",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5567.439,
+        "largest_contentful_paint": 20882.062,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 18808.306,
+        "speed_index": 25179,
+        "interactive": 31042.81
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T07:00:51.900047",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6273.866,
+        "largest_contentful_paint": 15243.79,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16180.604,
+        "speed_index": 22327,
+        "interactive": 37219.867
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-29T07:00:30.725706",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6011.299,
+        "largest_contentful_paint": 21821.789,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19595.307000000008,
+        "speed_index": 26620,
+        "interactive": 31691.091
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-29T07:00:32.803201",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6334.569,
+        "largest_contentful_paint": 21256.114,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19275.906999999992,
+        "speed_index": 26231,
+        "interactive": 31424.898
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:57:52.207482",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5822.034,
+        "largest_contentful_paint": 16241.755,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 14859.838999999756,
+        "speed_index": 22031,
+        "interactive": 25745.79199999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:57:57.733321",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5164.602,
+        "largest_contentful_paint": 16679.854,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 12696.412999999999,
+        "speed_index": 19621,
+        "interactive": 23426.682
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T07:02:35.258094",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5981.092,
+        "largest_contentful_paint": 16054.52,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16847.629,
+        "speed_index": 23411,
+        "interactive": 27244.126
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T07:02:42.327544",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5441.333,
+        "largest_contentful_paint": 19900.684,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16172.44899999999,
+        "speed_index": 23040,
+        "interactive": 27120.457
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T07:01:33.061746",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5242.39,
+        "largest_contentful_paint": 18708.137,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 13963.314000000006,
+        "speed_index": 21674,
+        "interactive": 25985.27900000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T07:01:35.645781",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4947.344,
+        "largest_contentful_paint": 18469.447,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 14715.530999999999,
+        "speed_index": 21706,
+        "interactive": 25854.682
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:58:10.241213",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6322.575,
+        "largest_contentful_paint": 17068.451,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 18637.463999999996,
+        "speed_index": 25123,
+        "interactive": 30403.899
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:58:14.514590",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6600.323,
+        "largest_contentful_paint": 16262.527,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16446.111999999997,
+        "speed_index": 23408,
+        "interactive": 27766.457
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T07:00:13.081263",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6111.842,
+        "largest_contentful_paint": 17165.827,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 21381.635,
+        "speed_index": 27403,
+        "interactive": 33012.362000000474
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T07:00:47.600067",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5543.661,
+        "largest_contentful_paint": 19938.728,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16294.782999999987,
+        "speed_index": 23559,
+        "interactive": 27689.55000000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T07:00:58.010389",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5725.348,
+        "largest_contentful_paint": 19775.829,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19171.730999999992,
+        "speed_index": 25473,
+        "interactive": 36457.533
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:56:29.460917",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5728.637,
+        "largest_contentful_paint": 16668.967,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17418.603000000006,
+        "speed_index": 23577,
+        "interactive": 27820.266
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:56:40.192807",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5469.96,
+        "largest_contentful_paint": 21173.796,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17830.244999999766,
+        "speed_index": 24398,
+        "interactive": 28838.993999999762
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T07:00:31.015895",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6422.064,
+        "largest_contentful_paint": 16929.251,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16499.90099999976,
+        "speed_index": 23596,
+        "interactive": 27503.71399999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T07:00:35.268948",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6970.445,
+        "largest_contentful_paint": 20812.198,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17656.041999999994,
+        "speed_index": 24257,
+        "interactive": 28866.131
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:59:32.094453",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5705.628,
+        "largest_contentful_paint": 15500.517,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17643.158999999996,
+        "speed_index": 23266,
+        "interactive": 27531.65
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:59:38.762487",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6149.153,
+        "largest_contentful_paint": 19949.429,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17161.079,
+        "speed_index": 24223,
+        "interactive": 29139.8
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T07:00:00.338725",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5947.501,
+        "largest_contentful_paint": 17351.736,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 19158.48499999999,
+        "speed_index": 25475,
+        "interactive": 30284.311
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T07:00:06.461364",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6053.743,
+        "largest_contentful_paint": 16431.464,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 18110.00399999976,
+        "speed_index": 23954,
+        "interactive": 28550.54399999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:59:59.536981",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5701.389,
+        "largest_contentful_paint": 14599.457,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 14742.615000000002,
+        "speed_index": 20494,
+        "interactive": 24077.235000000237
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T07:00:10.240995",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5494.227,
+        "largest_contentful_paint": 15043.986,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 13513.816999999997,
+        "speed_index": 20560,
+        "interactive": 24468.034
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:55:56.288689",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5333.168,
+        "largest_contentful_paint": 19169.99,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 15755.724000000006,
+        "speed_index": 22954,
+        "interactive": 27633.933
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:55:57.397118",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5227.4,
+        "largest_contentful_paint": 18722.001,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 13078.855000000007,
+        "speed_index": 20708,
+        "interactive": 24598.296000000475
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:57:37.598516",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5055.66,
+        "largest_contentful_paint": 19241.036,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 15550.516999999982,
+        "speed_index": 22668,
+        "interactive": 27707.281
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:57:43.154271",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4989.832,
+        "largest_contentful_paint": 20152.312,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 18149.370000000003,
+        "speed_index": 24252,
+        "interactive": 29055.292
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T07:02:07.412406",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5256.557,
+        "largest_contentful_paint": 18199.592,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 17207.929000000015,
+        "speed_index": 23376,
+        "interactive": 28099.791
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T07:02:18.637017",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5741.286,
+        "largest_contentful_paint": 19054.781,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 20173.80700000001,
+        "speed_index": 25801,
+        "interactive": 31442.861
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T07:00:54.241245",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5472.867,
+        "largest_contentful_paint": 19903.577,
+        "cumulative_layout_shift": 0.0013349650734760024,
+        "total_blocking_time": 16217.998,
+        "speed_index": 23113,
+        "interactive": 27676.247
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T07:00:33.765824",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4910.598,
+        "largest_contentful_paint": 29799.914,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 17530.493999999995,
+        "speed_index": 26169,
+        "interactive": 29754.57000000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T07:00:34.732652",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5149.353,
+        "largest_contentful_paint": 29870.56,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16160.280999999755,
+        "speed_index": 26053,
+        "interactive": 28901.852999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:59:21.278756",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5736.57,
+        "largest_contentful_paint": 25923.623,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 14342.884,
+        "speed_index": 22760,
+        "interactive": 31413.94100000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:59:50.488357",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4824.614,
+        "largest_contentful_paint": 30477.265,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 17820.860999999997,
+        "speed_index": 26288,
+        "interactive": 30887.509
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:59:38.769053",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5813.819,
+        "largest_contentful_paint": 31438.049,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 18225.419,
+        "speed_index": 27498,
+        "interactive": 31614.104
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:59:42.883120",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5517.372,
+        "largest_contentful_paint": 24612.562,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 19313.951999999997,
+        "speed_index": 26678,
+        "interactive": 31122.561
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T07:00:46.552698",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5039.633,
+        "largest_contentful_paint": 22809.424,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 11858.535000000005,
+        "speed_index": 19828,
+        "interactive": 22747.506
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T07:00:47.277493",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5096.981,
+        "largest_contentful_paint": 23409.736,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 12679.262999999995,
+        "speed_index": 20489,
+        "interactive": 23440.448
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T07:00:58.514149",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5731.686,
+        "largest_contentful_paint": 26637.887,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 12917.664999999986,
+        "speed_index": 23583,
+        "interactive": 31593.584
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T07:01:05.690274",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5656.55,
+        "largest_contentful_paint": 29681.7,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16459.82200000001,
+        "speed_index": 26009,
+        "interactive": 29390.755
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T07:00:42.997201",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6851.215,
+        "largest_contentful_paint": 23652.195,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 18852.996999999992,
+        "speed_index": 26894,
+        "interactive": 31421.099
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T07:01:10.563083",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6030.485,
+        "largest_contentful_paint": 23926.165,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 20574.540000000008,
+        "speed_index": 27551,
+        "interactive": 32343.386
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T07:01:11.376810",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6252.133,
+        "largest_contentful_paint": 24924.743,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 19814.389000000003,
+        "speed_index": 27100,
+        "interactive": 31637.486
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T07:00:20.212006",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5319.879,
+        "largest_contentful_paint": 27045.554,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 13134.468999999996,
+        "speed_index": 23810,
+        "interactive": 26294.929
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T07:00:42.155029",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4770.819,
+        "largest_contentful_paint": 29379.482,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16965.475000000002,
+        "speed_index": 25753,
+        "interactive": 28523.747
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:56:51.604460",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5610.24,
+        "largest_contentful_paint": 30063.977,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 17145.49799999977,
+        "speed_index": 26533,
+        "interactive": 29785.727999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:56:57.818414",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6182.607,
+        "largest_contentful_paint": 30121.861,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 18244.951999999994,
+        "speed_index": 26640,
+        "interactive": 29665.24200000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:58:16.886127",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5214.984,
+        "largest_contentful_paint": 31268.742,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 17848.37499999999,
+        "speed_index": 27165,
+        "interactive": 30951.924
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:58:17.895181",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4838.452,
+        "largest_contentful_paint": 28554.614,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16268.934000000005,
+        "speed_index": 24976,
+        "interactive": 28517.734
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T07:03:36.079520",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6153.287,
+        "largest_contentful_paint": 24717.829,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 21696.408999999752,
+        "speed_index": 28137,
+        "interactive": 32805.43399999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T07:00:49.699492",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6472.44,
+        "largest_contentful_paint": 26854.286,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 13981.819999999758,
+        "speed_index": 23977,
+        "interactive": 26060.280999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T07:00:51.415188",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5704.738,
+        "largest_contentful_paint": 20841.386,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 14540.003,
+        "speed_index": 22035,
+        "interactive": 25445.546
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T07:00:16.920980",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5152.245,
+        "largest_contentful_paint": 27993.103,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 15102.737000000006,
+        "speed_index": 24596,
+        "interactive": 27435.636
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T07:00:16.952249",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5085.12,
+        "largest_contentful_paint": 27968.163,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 14873.802000000007,
+        "speed_index": 24504,
+        "interactive": 33474.98900000024
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:59:05.938023",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5029.574,
+        "largest_contentful_paint": 21115.775,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 12294.049999999992,
+        "speed_index": 21082,
+        "interactive": 24287.134
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:59:08.020617",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4875.82,
+        "largest_contentful_paint": 25597.433,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 11627.484999999764,
+        "speed_index": 22544,
+        "interactive": 24697.710999999763
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:59:27.717080",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5825.415,
+        "largest_contentful_paint": 27411.392,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 15552.741999999758,
+        "speed_index": 24018,
+        "interactive": 33148.39599999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:59:28.910234",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6763.533,
+        "largest_contentful_paint": 29186.112,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16520.87699999976,
+        "speed_index": 25672,
+        "interactive": 29095.71699999976
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:55:55.132092",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5683.508,
+        "largest_contentful_paint": 28296.486,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 15889.773999999996,
+        "speed_index": 24997,
+        "interactive": 29671.665
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:55:59.300182",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5774.216,
+        "largest_contentful_paint": 29464.445,
+        "cumulative_layout_shift": 0.0011818727485360938,
+        "total_blocking_time": 16766.591999999993,
+        "speed_index": 25996,
+        "interactive": 28535.575
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T07:01:18.247835",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5741.179,
+        "largest_contentful_paint": 26310.063,
+        "cumulative_layout_shift": 0.0003126814711245788,
+        "total_blocking_time": 13289.501999999995,
+        "speed_index": 23017,
+        "interactive": 26012.063
+      }
+    },
+    {
+      "name": "University of Brighton",
+      "url": "https://www.brighton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T07:01:22.521076",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5126.446,
+        "largest_contentful_paint": 21166.877,
+        "cumulative_layout_shift": 0.0003126814711245788,
+        "total_blocking_time": 14503.252999999999,
+        "speed_index": 22468,
+        "interactive": 30932.693
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

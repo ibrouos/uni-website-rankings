@@ -1,0 +1,4728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Leeds - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Leeds</h1>
+                <p>https://www.leeds.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Leeds",
+  "slug": "university-of-leeds",
+  "url": "https://www.leeds.ac.uk",
+  "total_tests": 212,
+  "last_updated": "2025-10-08T06:33:55.173959",
+  "week_averages": {
+    "mobile": {
+      "performance": 31.714285714285715,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 32.42857142857143,
+      "accessibility": 99.0,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "total_tests": 14
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 32.10344827586207,
+      "accessibility": 99.27586206896552,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 32.86206896551724,
+      "accessibility": 99.27586206896552,
+      "best_practices": 96.0,
+      "seo": 100
+    },
+    "total_tests": 58
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T22:50:33.582337",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3509.843,
+        "largest_contentful_paint": 6651.077,
+        "cumulative_layout_shift": 0.41485114025734754,
+        "total_blocking_time": 2892.7639999999997,
+        "speed_index": 5685,
+        "interactive": 7596.867000000059
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T22:50:35.121129",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4162.101,
+        "largest_contentful_paint": 8583.664,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3819.846999999939,
+        "speed_index": 6583,
+        "interactive": 8886.84999999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:17:43.348206",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3722.497,
+        "largest_contentful_paint": 6629.457,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2950.1479999999983,
+        "speed_index": 5674,
+        "interactive": 7788.389000000059
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:17:43.909710",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3084.623,
+        "largest_contentful_paint": 6978.449,
+        "cumulative_layout_shift": 0.40154835396010174,
+        "total_blocking_time": 3249.9560000000006,
+        "speed_index": 5358,
+        "interactive": 9487.446
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:35:25.900626",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3611.322,
+        "largest_contentful_paint": 6825.634,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3589.218,
+        "speed_index": 6008,
+        "interactive": 8210.986
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:35:33.564100",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3240.02,
+        "largest_contentful_paint": 7343.045,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4069.7839999999396,
+        "speed_index": 5654,
+        "interactive": 8636.94699999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:34:58.588974",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4090.075,
+        "largest_contentful_paint": 7065.26,
+        "cumulative_layout_shift": 0.40154835396010174,
+        "total_blocking_time": 3221.735999999997,
+        "speed_index": 5770,
+        "interactive": 8336.909
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:35:11.966000",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4562.709,
+        "largest_contentful_paint": 8331.95,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4461.340000000002,
+        "speed_index": 6565,
+        "interactive": 10894.126
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:34:45.523534",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3506.81,
+        "largest_contentful_paint": 7216.427,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3717.9489999999996,
+        "speed_index": 5644,
+        "interactive": 8559.202
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:34:46.171711",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3352.521,
+        "largest_contentful_paint": 6334.109,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3738.3919999999994,
+        "speed_index": 5281,
+        "interactive": 8474.41600000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:34:40.901867",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4106.953,
+        "largest_contentful_paint": 6741.124,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 1646.217999999998,
+        "speed_index": 5427,
+        "interactive": 7618.04
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:34:47.631347",
+      "scores": {
+        "performance": 20.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3264.496,
+        "largest_contentful_paint": 6524.201,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3106.039000000001,
+        "speed_index": 5103,
+        "interactive": 7993.27000000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:34:31.442966",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3916.729,
+        "largest_contentful_paint": 6797.222,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2915.0430000000006,
+        "speed_index": 5964,
+        "interactive": 7738.225
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:34:40.244808",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4230.148,
+        "largest_contentful_paint": 6997.073,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2830.2110000000002,
+        "speed_index": 5691,
+        "interactive": 7954.492
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:31:44.701423",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3737.426,
+        "largest_contentful_paint": 6731.809,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 2902.875000000001,
+        "speed_index": 5465,
+        "interactive": 7600.794
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:31:50.247645",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4689.503,
+        "largest_contentful_paint": 7120.735,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3377.335,
+        "speed_index": 6272,
+        "interactive": 9084.13
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:33:01.666260",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3456.071,
+        "largest_contentful_paint": 7114.628,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3924.494,
+        "speed_index": 5722,
+        "interactive": 9144.292
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:33:01.917515",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3433.196,
+        "largest_contentful_paint": 7341.977,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3797.676,
+        "speed_index": 5678,
+        "interactive": 9040.31
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:36:05.763931",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4254.685,
+        "largest_contentful_paint": 7177.314,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3363.582000000003,
+        "speed_index": 5879,
+        "interactive": 9297.873
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:36:05.923288",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3774.955,
+        "largest_contentful_paint": 7457.264,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3526.879,
+        "speed_index": 5943,
+        "interactive": 8577.823
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:35:15.802382",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3732.08,
+        "largest_contentful_paint": 7118.268,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3127.8199999999997,
+        "speed_index": 5446,
+        "interactive": 8191.071
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:35:32.126736",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3372.86,
+        "largest_contentful_paint": 7912.564,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4947.285000000002,
+        "speed_index": 6291,
+        "interactive": 9624.779
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:34:59.578609",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3172.184,
+        "largest_contentful_paint": 7254.863,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3756.4129999999977,
+        "speed_index": 5707,
+        "interactive": 8639.25
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:35:03.340602",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3827.286,
+        "largest_contentful_paint": 5527.252,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4177.907999999999,
+        "speed_index": 5606,
+        "interactive": 9122.071
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:35:09.842837",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5668.323,
+        "largest_contentful_paint": 7899.873,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2911.7969999999987,
+        "speed_index": 7124,
+        "interactive": 10117.857
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:35:14.864623",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4244.894,
+        "largest_contentful_paint": 7000.16,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3019.394000000001,
+        "speed_index": 5605,
+        "interactive": 8165.448
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:32:27.225086",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4996.459,
+        "largest_contentful_paint": 7952.417,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3077.795999999995,
+        "speed_index": 6639,
+        "interactive": 9226.75600000012
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:32:28.294869",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3796.89,
+        "largest_contentful_paint": 8458.657,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4965.448999999999,
+        "speed_index": 6937,
+        "interactive": 10569.49600000012
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:33:17.958880",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3674.676,
+        "largest_contentful_paint": 7950.859,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4712.869999999997,
+        "speed_index": 6302,
+        "interactive": 10302.749
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:33:25.050852",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3839.887,
+        "largest_contentful_paint": 6062.812,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4739.955,
+        "speed_index": 6238,
+        "interactive": 10174.822
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:36:39.977121",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3878.714,
+        "largest_contentful_paint": 7713.943,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4270.961000000001,
+        "speed_index": 6389,
+        "interactive": 9175.41
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:36:45.154148",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5304.042,
+        "largest_contentful_paint": 7805.302,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3088.2429999999977,
+        "speed_index": 6895,
+        "interactive": 9072.537
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:35:05.913701",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4424.058,
+        "largest_contentful_paint": 7527.922,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3246.7129999999997,
+        "speed_index": 6023,
+        "interactive": 8817.021
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:35:14.055366",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3765.094,
+        "largest_contentful_paint": 6798.208,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3771.6520000000005,
+        "speed_index": 5427,
+        "interactive": 8937.22
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:35:30.158895",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3991.556,
+        "largest_contentful_paint": 8658.785,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 5308.071,
+        "speed_index": 7530,
+        "interactive": 10892.212
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:35:32.969843",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4670.576,
+        "largest_contentful_paint": 7707.743,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3113.7369999999983,
+        "speed_index": 6285,
+        "interactive": 8960.814
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:35:42.727667",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3976.662,
+        "largest_contentful_paint": 8468.965,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4805.826999999999,
+        "speed_index": 6780,
+        "interactive": 10412.479
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:35:43.319039",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4430.198,
+        "largest_contentful_paint": 8298.217,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3947.3520000000008,
+        "speed_index": 6410,
+        "interactive": 9632.468
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:33:05.563434",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3306.899,
+        "largest_contentful_paint": 7677.171,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4552.702000000001,
+        "speed_index": 6309,
+        "interactive": 9876.057
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:33:11.714075",
+      "scores": {
+        "performance": 9.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7552.666,
+        "largest_contentful_paint": 10715.36,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3339.634000000001,
+        "speed_index": 9263,
+        "interactive": 12628.309
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:33:59.728024",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4067.907,
+        "largest_contentful_paint": 8300.826,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4487.111999999997,
+        "speed_index": 6313,
+        "interactive": 9813.139
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:34:02.132176",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4499.879,
+        "largest_contentful_paint": 9015.512,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4801.868000000001,
+        "speed_index": 7111,
+        "interactive": 10683.196
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:38:03.973671",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3872.991,
+        "largest_contentful_paint": 6112.229,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3527.452999999998,
+        "speed_index": 5805,
+        "interactive": 8711.196
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:38:11.664474",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3812.065,
+        "largest_contentful_paint": 7653.277,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4268.963000000001,
+        "speed_index": 5967,
+        "interactive": 9417.569
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-15T06:38:34.870157",
+      "scores": {
+        "performance": 9.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6281.298,
+        "largest_contentful_paint": 9859.184,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 5189.874999999998,
+        "speed_index": 8367,
+        "interactive": 12308.369
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-15T06:38:35.610498",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4266.031,
+        "largest_contentful_paint": 10217.273,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 7472.565999999998,
+        "speed_index": 7835,
+        "interactive": 13307.205
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:36:57.495996",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4030.041,
+        "largest_contentful_paint": 7396.333,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 2558.2809999999995,
+        "speed_index": 5437,
+        "interactive": 8178.792
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:37:07.656013",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3810.17,
+        "largest_contentful_paint": 8790.843,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4775.744999999999,
+        "speed_index": 6609,
+        "interactive": 9921.863
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:36:38.061813",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4230.035,
+        "largest_contentful_paint": 8145.611,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3634.2650000000012,
+        "speed_index": 6536,
+        "interactive": 9151.378
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:36:40.280178",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4928.648,
+        "largest_contentful_paint": 8776.562,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4035.6320000000014,
+        "speed_index": 6860,
+        "interactive": 9998.567
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T06:36:07.428827",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3748.454,
+        "largest_contentful_paint": 7284.514,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3755.2060000000038,
+        "speed_index": 6278,
+        "interactive": 8703.048
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T06:36:14.160189",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3212.959,
+        "largest_contentful_paint": 7140.754,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4118.292000000001,
+        "speed_index": 5805,
+        "interactive": 8422.303
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:33:56.953074",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3793.051,
+        "largest_contentful_paint": 7665.432,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4101.733000000002,
+        "speed_index": 6355,
+        "interactive": 10117.081
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:33:58.064935",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4390.44,
+        "largest_contentful_paint": 7203.424,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2995.9119999999984,
+        "speed_index": 6100,
+        "interactive": 8893.35800000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:34:18.796523",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3521.935,
+        "largest_contentful_paint": 6791.389,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 2303.662999999942,
+        "speed_index": 5187,
+        "interactive": 6929.72899999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:34:21.080236",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3118.349,
+        "largest_contentful_paint": 7265.667,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3149.3599999999974,
+        "speed_index": 5645,
+        "interactive": 8650.268
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:36:57.119337",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3368.319,
+        "largest_contentful_paint": 6869.704,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3487.1569999999992,
+        "speed_index": 5526,
+        "interactive": 7905.861
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:37:04.938993",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3564.211,
+        "largest_contentful_paint": 7163.439,
+        "cumulative_layout_shift": 0.6288081106079911,
+        "total_blocking_time": 2830.6200000000003,
+        "speed_index": 5553,
+        "interactive": 7330.242
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:36:32.987900",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3817.484,
+        "largest_contentful_paint": 7339.661,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3781.796000000001,
+        "speed_index": 5793,
+        "interactive": 8731.827
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:36:33.593482",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5091.349,
+        "largest_contentful_paint": 7813.157,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 2865.920000000002,
+        "speed_index": 6631,
+        "interactive": 9032.27
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:36:57.304893",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3450.17,
+        "largest_contentful_paint": 7200.707,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3540.0700000000015,
+        "speed_index": 5970,
+        "interactive": 8475.296
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:37:01.744074",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3948.004,
+        "largest_contentful_paint": 7229.828,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 2622.8559999999998,
+        "speed_index": 5516,
+        "interactive": 8716.402
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:37:23.594557",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3905.112,
+        "largest_contentful_paint": 7953.592,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3947.176000000003,
+        "speed_index": 6128,
+        "interactive": 9241.883
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:37:24.107107",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4551.778,
+        "largest_contentful_paint": 8038.061,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3323.583999999999,
+        "speed_index": 6245,
+        "interactive": 9226.283
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:37:40.599914",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3435.229,
+        "largest_contentful_paint": 11289.243,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 8168.584999999883,
+        "speed_index": 6917,
+        "interactive": 12785.65599999988
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:37:41.244422",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4274.693,
+        "largest_contentful_paint": 11375.365,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 7167.161000000002,
+        "speed_index": 7340,
+        "interactive": 12761.79
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:34:36.532672",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3388.949,
+        "largest_contentful_paint": 7801.166,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 4417.49,
+        "speed_index": 6322,
+        "interactive": 8959.46600000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:34:36.669182",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4172.6,
+        "largest_contentful_paint": 6720.191,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3864.1330000000007,
+        "speed_index": 6151,
+        "interactive": 9817.28700000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:34:36.591537",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3599.258,
+        "largest_contentful_paint": 7096.224,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3378.496000000001,
+        "speed_index": 5816,
+        "interactive": 8265.058
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:34:42.058245",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3562.613,
+        "largest_contentful_paint": 6931.57,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 3178.948,
+        "speed_index": 5569,
+        "interactive": 7833.866000000119
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:39:02.145208",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3537.36,
+        "largest_contentful_paint": 7931.601,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4479.36599999994,
+        "speed_index": 6227,
+        "interactive": 9274.89399999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:39:08.483571",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3339.802,
+        "largest_contentful_paint": 6989.098,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 3215.248,
+        "speed_index": 5390,
+        "interactive": 8094.669
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:37:52.192274",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4265.489,
+        "largest_contentful_paint": 7181.857,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 2988.7059999999983,
+        "speed_index": 5817,
+        "interactive": 8267.606
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:37:52.436362",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4870.912,
+        "largest_contentful_paint": 7869.328,
+        "cumulative_layout_shift": 0.4014442061618691,
+        "total_blocking_time": 2971.9439999999413,
+        "speed_index": 6387,
+        "interactive": 9001.879999999941
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:38:56.760364",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3468.394,
+        "largest_contentful_paint": 6712.546,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 3518.7680000000014,
+        "speed_index": 5889,
+        "interactive": 8074.05
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:39:00.634169",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3232.91,
+        "largest_contentful_paint": 7223.626,
+        "cumulative_layout_shift": 0.41474699245911484,
+        "total_blocking_time": 2888.378,
+        "speed_index": 5163,
+        "interactive": 7337.465
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:37:44.709979",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3824.805,
+        "largest_contentful_paint": 7997.103,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4669.032999999999,
+        "speed_index": 6850,
+        "interactive": 9525.867
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:37:44.981437",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5424.708,
+        "largest_contentful_paint": 8870.696,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 4175.1259999999975,
+        "speed_index": 7619,
+        "interactive": 10529.354
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:38:56.525164",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3519.746,
+        "largest_contentful_paint": 9474.833,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6297.137999999999,
+        "speed_index": 7786,
+        "interactive": 11963.746
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:38:56.623818",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5666.394,
+        "largest_contentful_paint": 9523.42,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4900.7170000000015,
+        "speed_index": 8421,
+        "interactive": 12512.701
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T06:34:05.276751",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6362.795,
+        "largest_contentful_paint": 11526.76,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 5601.597999999999,
+        "speed_index": 9762,
+        "interactive": 14953.379
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:34:06.613790",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3957.153,
+        "largest_contentful_paint": 10681.742,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6746.349,
+        "speed_index": 8606,
+        "interactive": 13039.126000000118
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:34:15.282760",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3462.087,
+        "largest_contentful_paint": 9791.717,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6028.432999999999,
+        "speed_index": 8097,
+        "interactive": 12892.367
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:34:16.288722",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3604.424,
+        "largest_contentful_paint": 9697.034,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6104.069999999998,
+        "speed_index": 7860,
+        "interactive": 12263.055
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T06:43:07.450426",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5091.568,
+        "largest_contentful_paint": 9334.564,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 4038.16999999997,
+        "speed_index": 7899,
+        "interactive": 11653.11799999997
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:43:11.988863",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4142.469,
+        "largest_contentful_paint": 9763.151,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 5915.150000000004,
+        "speed_index": 7861,
+        "interactive": 12770.903
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:39:13.885514",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3510.429,
+        "largest_contentful_paint": 8900.279,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 5119.242999999999,
+        "speed_index": 7386,
+        "interactive": 11114.99200000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:39:17.316956",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3277.244,
+        "largest_contentful_paint": 9037.899,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5801.757999999998,
+        "speed_index": 7392,
+        "interactive": 11332.305
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:39:28.255421",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6065.373,
+        "largest_contentful_paint": 10197.552,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4768.866999999999,
+        "speed_index": 9019,
+        "interactive": 12787.697
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:39:32.953126",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3910.512,
+        "largest_contentful_paint": 10061.131,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6640.041,
+        "speed_index": 8402,
+        "interactive": 12885.79
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-07T06:39:13.584289",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4117.186,
+        "largest_contentful_paint": 9971.681,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 6196.100000000002,
+        "speed_index": 8108,
+        "interactive": 13228.674
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-07T06:39:16.436374",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3651.974,
+        "largest_contentful_paint": 9640.514,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6692.375999999886,
+        "speed_index": 8367,
+        "interactive": 12065.53599999988
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:38:38.887295",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4190.443,
+        "largest_contentful_paint": 8708.652,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4220.213000000005,
+        "speed_index": 6995,
+        "interactive": 11161.889
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-08T06:38:41.101729",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5752.797,
+        "largest_contentful_paint": 8655.649,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2978.9860000000026,
+        "speed_index": 7538,
+        "interactive": 10720.68900000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:34:00.300641",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5609.677,
+        "largest_contentful_paint": 8985.331,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3785.4680000000008,
+        "speed_index": 7710,
+        "interactive": 11327.233
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:34:19.147933",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3922.524,
+        "largest_contentful_paint": 8954.973,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5057.743999999999,
+        "speed_index": 7590,
+        "interactive": 17191.629
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T06:34:04.126972",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4429.182,
+        "largest_contentful_paint": 9671.956,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5304.127999999996,
+        "speed_index": 8132,
+        "interactive": 12874.612
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-10T06:34:04.274953",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4636.583,
+        "largest_contentful_paint": 7979.13,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5646.068999999998,
+        "speed_index": 8018,
+        "interactive": 12456.027
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:38:34.836266",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6040.457,
+        "largest_contentful_paint": 9383.841,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4090.012999999998,
+        "speed_index": 8124,
+        "interactive": 12565.987
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T06:38:35.178994",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4388.971,
+        "largest_contentful_paint": 8840.588,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4841.237000000004,
+        "speed_index": 7604,
+        "interactive": 10530.982
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-12T06:36:07.317719",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4512.014,
+        "largest_contentful_paint": 8531.134,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 4061.2239999999993,
+        "speed_index": 6927,
+        "interactive": 11837.217
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:36:09.898257",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3614.453,
+        "largest_contentful_paint": 8297.974,
+        "cumulative_layout_shift": 0.0008328061220825887,
+        "total_blocking_time": 4814.323000000002,
+        "speed_index": 7106,
+        "interactive": 10471.848
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:36:01.738296",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3622.413,
+        "largest_contentful_paint": 8691.842,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5398.2800000000025,
+        "speed_index": 7118,
+        "interactive": 11069.179
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:36:06.094788",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4107.889,
+        "largest_contentful_paint": 7977.526,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 3812.4349999999677,
+        "speed_index": 6501,
+        "interactive": 10687.31499999997
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T06:36:29.156762",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5430.804,
+        "largest_contentful_paint": 8314.584,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3500.758,
+        "speed_index": 7336,
+        "interactive": 10645.573
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-14T06:36:31.165194",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3398.232,
+        "largest_contentful_paint": 9095.302,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5852.669,
+        "speed_index": 7519,
+        "interactive": 12225.596
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:35:57.522818",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3629.426,
+        "largest_contentful_paint": 8763.419,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5331.914000000001,
+        "speed_index": 7421,
+        "interactive": 10900.851
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T06:36:08.465984",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 93.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3397.718,
+        "largest_contentful_paint": 11904.425,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5021.980000000002,
+        "speed_index": 4983,
+        "interactive": 11971.116
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:32:45.709169",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5699.229,
+        "largest_contentful_paint": 9228.244,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4060.738000000001,
+        "speed_index": 7798,
+        "interactive": 11489.946
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:32:49.586350",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3652.38,
+        "largest_contentful_paint": 6883.237,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5911.628999999997,
+        "speed_index": 7469,
+        "interactive": 11786.664
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-17T06:33:35.540391",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4789.55,
+        "largest_contentful_paint": 8124.8,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 2807.169,
+        "speed_index": 6704,
+        "interactive": 10626.792
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-17T06:33:42.767546",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3953.789,
+        "largest_contentful_paint": 8906.468,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5096.5380000000005,
+        "speed_index": 6875,
+        "interactive": 11809.83
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:38:20.029629",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3673.712,
+        "largest_contentful_paint": 6183.161,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4548.541000000001,
+        "speed_index": 6739,
+        "interactive": 11375.39
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-18T06:38:21.228509",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5121.494,
+        "largest_contentful_paint": 8973.842,
+        "cumulative_layout_shift": 0.00045015123438815286,
+        "total_blocking_time": 3125.000000000002,
+        "speed_index": 7541,
+        "interactive": 12209.134
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:35:26.939551",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3650.186,
+        "largest_contentful_paint": 7492.516,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 4227.907,
+        "speed_index": 6720,
+        "interactive": 9995.42200000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:35:27.284780",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3917.915,
+        "largest_contentful_paint": 8113.699,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4258.496999999999,
+        "speed_index": 6716,
+        "interactive": 10837.55200000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:34:46.178902",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3686.434,
+        "largest_contentful_paint": 8978.534,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 5597.270000000004,
+        "speed_index": 7350,
+        "interactive": 11235.393
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T06:34:47.881977",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3763.063,
+        "largest_contentful_paint": 9559.46,
+        "cumulative_layout_shift": 0.0008328061220825887,
+        "total_blocking_time": 6140.994000000002,
+        "speed_index": 7723,
+        "interactive": 11771.371
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:43:20.103671",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3598.441,
+        "largest_contentful_paint": 7755.551,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4225.708999999999,
+        "speed_index": 6849,
+        "interactive": 10232.950000000059
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T06:43:23.089275",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5230.178,
+        "largest_contentful_paint": 8722.19,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3859.2829999999394,
+        "speed_index": 7494,
+        "interactive": 10905.16499999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:34:16.577171",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5534.373,
+        "largest_contentful_paint": 8787.291,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3342.9499999999443,
+        "speed_index": 7514,
+        "interactive": 11829.72399999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:34:22.309285",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3530.364,
+        "largest_contentful_paint": 9167.2,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 5528.555999999997,
+        "speed_index": 7684,
+        "interactive": 11895.383
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-23T06:31:25.436650",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4005.474,
+        "largest_contentful_paint": 7275.623,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 7743.7840000000015,
+        "speed_index": 8214,
+        "interactive": 13898.056000000239
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T06:31:27.121598",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4479.513,
+        "largest_contentful_paint": 9972.977,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6197.615999999759,
+        "speed_index": 7889,
+        "interactive": 12898.051999999761
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:32:22.273186",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3994.302,
+        "largest_contentful_paint": 8074.159,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4084.721999999999,
+        "speed_index": 6666,
+        "interactive": 10465.343
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:32:24.655831",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3427.492,
+        "largest_contentful_paint": 8230.131,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 4486.6709999999985,
+        "speed_index": 6747,
+        "interactive": 10628.88200000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:36:25.463181",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4604.203,
+        "largest_contentful_paint": 8570.915,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3933.005000000002,
+        "speed_index": 7035,
+        "interactive": 10982.093
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:36:25.567742",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3583.925,
+        "largest_contentful_paint": 8906.732,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 5695.8150000000005,
+        "speed_index": 7564,
+        "interactive": 11322.938
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:34:56.155615",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3667.995,
+        "largest_contentful_paint": 7844.76,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4658.956000000002,
+        "speed_index": 6834,
+        "interactive": 10354.735
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:35:02.977726",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3723.74,
+        "largest_contentful_paint": 8337.453,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4749.713000000003,
+        "speed_index": 7255,
+        "interactive": 10882.052
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-27T06:32:23.653952",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5359.617,
+        "largest_contentful_paint": 8159.928,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2909.324999999999,
+        "speed_index": 7155,
+        "interactive": 10780.45500000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:32:26.890281",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5595.525,
+        "largest_contentful_paint": 8648.664,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2853.712999999935,
+        "speed_index": 7444,
+        "interactive": 11084.60599999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:33:26.429092",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3450.452,
+        "largest_contentful_paint": 7669.546,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4314.6759999999995,
+        "speed_index": 6656,
+        "interactive": 9945.541
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:33:27.434577",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4027.932,
+        "largest_contentful_paint": 8460.283,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4351.163999999998,
+        "speed_index": 6809,
+        "interactive": 10809.019
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-30T06:29:35.257542",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4050.885,
+        "largest_contentful_paint": 8500.75,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4445.415999999995,
+        "speed_index": 6823,
+        "interactive": 10119.854
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-30T06:29:56.391080",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3550.925,
+        "largest_contentful_paint": 8043.103,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4306.869000000001,
+        "speed_index": 6930,
+        "interactive": 10520.5
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:31:13.678630",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5408.7,
+        "largest_contentful_paint": 9579.448,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4740.26999999994,
+        "speed_index": 8154,
+        "interactive": 11665.10899999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:31:15.213447",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3996.875,
+        "largest_contentful_paint": 10269.117,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6703.362999999941,
+        "speed_index": 8150,
+        "interactive": 12497.03499999994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:36:29.126651",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3961.045,
+        "largest_contentful_paint": 7213.437,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6072.237000000003,
+        "speed_index": 7590,
+        "interactive": 12672.385
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:36:30.129351",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3653.883,
+        "largest_contentful_paint": 6940.089,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5804.257000000003,
+        "speed_index": 7215,
+        "interactive": 11681.183
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T06:34:20.171450",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3697.674,
+        "largest_contentful_paint": 8308.793,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4858.163999999997,
+        "speed_index": 6928,
+        "interactive": 11023.686
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T06:34:21.850957",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3634.477,
+        "largest_contentful_paint": 8289.441,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4619.240999999996,
+        "speed_index": 7087,
+        "interactive": 10103.326
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:31:36.947286",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3917.295,
+        "largest_contentful_paint": 8443.868,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5311.887000000001,
+        "speed_index": 7421,
+        "interactive": 10506.714
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:31:44.120938",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3611.535,
+        "largest_contentful_paint": 8578.074,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 5307.886999999999,
+        "speed_index": 7037,
+        "interactive": 10499.198
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:32:07.706150",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4991.386,
+        "largest_contentful_paint": 8208.709,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2894.455,
+        "speed_index": 7100,
+        "interactive": 9940.797
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:32:12.119025",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3522.174,
+        "largest_contentful_paint": 7500.422,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3215.9140000000016,
+        "speed_index": 6247,
+        "interactive": 9457.422000000119
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:32:35.974413",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4263.286,
+        "largest_contentful_paint": 8033.342,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3820.550000000003,
+        "speed_index": 6644,
+        "interactive": 10540.927
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:32:36.305563",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3843.593,
+        "largest_contentful_paint": 7996.907,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3658.272000000004,
+        "speed_index": 6572,
+        "interactive": 9886.803000000029
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:29:09.534414",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3287.3,
+        "largest_contentful_paint": 7531.727,
+        "cumulative_layout_shift": 0.0008328061220825887,
+        "total_blocking_time": 4630.598999999997,
+        "speed_index": 6779,
+        "interactive": 9496.083
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:29:10.668576",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3706.984,
+        "largest_contentful_paint": 7636.767,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3865.234999999995,
+        "speed_index": 6262,
+        "interactive": 9615.317
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:29:23.118712",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3324.86,
+        "largest_contentful_paint": 7716.826,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4444.620999999998,
+        "speed_index": 6762,
+        "interactive": 9560.418
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:29:24.195051",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4989.124,
+        "largest_contentful_paint": 8202.305,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3018.0199999999995,
+        "speed_index": 7015,
+        "interactive": 10132.739
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:34:12.991589",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4111.79,
+        "largest_contentful_paint": 8163.372,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4231.153000000001,
+        "speed_index": 6769,
+        "interactive": 10541.163
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:34:14.537201",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3335.58,
+        "largest_contentful_paint": 7397.041,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 4195.086999999998,
+        "speed_index": 6191,
+        "interactive": 9946.374
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:33:36.532951",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6275.704,
+        "largest_contentful_paint": 9517.319,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3750.332999999998,
+        "speed_index": 8333,
+        "interactive": 12184.393
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:33:38.256030",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5860.954,
+        "largest_contentful_paint": 9740.985,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4331.295000000004,
+        "speed_index": 8739,
+        "interactive": 12336.512
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:32:44.697652",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5446.34,
+        "largest_contentful_paint": 8167.706,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2917.3009999999986,
+        "speed_index": 7156,
+        "interactive": 9927.652
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:32:51.660955",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4326.502,
+        "largest_contentful_paint": 8048.882,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3582.540000000002,
+        "speed_index": 6591,
+        "interactive": 9887.699
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:33:03.264162",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3728.591,
+        "largest_contentful_paint": 7715.55,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3519.224000000002,
+        "speed_index": 6686,
+        "interactive": 10404.685
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:33:04.184709",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3518.475,
+        "largest_contentful_paint": 7994.511,
+        "cumulative_layout_shift": 0.0008879858771218249,
+        "total_blocking_time": 4660.437,
+        "speed_index": 6902,
+        "interactive": 9630.796
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:32:47.348132",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3340.918,
+        "largest_contentful_paint": 7804.506,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3548.4140000000034,
+        "speed_index": 6479,
+        "interactive": 9831.75200000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:32:48.093003",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3199.081,
+        "largest_contentful_paint": 6928.404,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3314.9419999999973,
+        "speed_index": 5913,
+        "interactive": 8736.935
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:29:02.631741",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3534.872,
+        "largest_contentful_paint": 8279.688,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4939.626000000002,
+        "speed_index": 6799,
+        "interactive": 9898.641
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:29:04.213912",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3344.512,
+        "largest_contentful_paint": 7929.035,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4373.808999999999,
+        "speed_index": 6764,
+        "interactive": 9638.702
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:30:10.142257",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5034.803,
+        "largest_contentful_paint": 8091.778,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3054.1720000000014,
+        "speed_index": 7189,
+        "interactive": 9952.37700000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:30:11.662630",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3200.055,
+        "largest_contentful_paint": 8218.569,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 4583.736999999997,
+        "speed_index": 6660,
+        "interactive": 10105.57200000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:35:10.900243",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3732.951,
+        "largest_contentful_paint": 8155.27,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4459.2670000000035,
+        "speed_index": 6630,
+        "interactive": 10627.147
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:35:13.399234",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3150.828,
+        "largest_contentful_paint": 7679.798,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 4728.621000000001,
+        "speed_index": 6844,
+        "interactive": 9358.511
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:33:37.573651",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4403.036,
+        "largest_contentful_paint": 9102.11,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4934.252999999997,
+        "speed_index": 7862,
+        "interactive": 10528.859
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:33:40.094284",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 10396.473,
+        "largest_contentful_paint": 12602.993,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2777.9309999999987,
+        "speed_index": 11786,
+        "interactive": 14341.333
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:33:44.557447",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3478.723,
+        "largest_contentful_paint": 7632.602,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4378.024999999996,
+        "speed_index": 6240,
+        "interactive": 9458.45500000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:33:47.353264",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4371.497,
+        "largest_contentful_paint": 5975.847,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3875.1699999999364,
+        "speed_index": 6416,
+        "interactive": 9737.451999999941
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:32:43.959397",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3982.392,
+        "largest_contentful_paint": 8169.96,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4551.558999999998,
+        "speed_index": 6449,
+        "interactive": 9721.188
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:32:46.237010",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3900.563,
+        "largest_contentful_paint": 7717.571,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4385.8359999999975,
+        "speed_index": 6996,
+        "interactive": 9452.29900000003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:30:23.843062",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3203.714,
+        "largest_contentful_paint": 7133.634,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4303.600999999765,
+        "speed_index": 6151,
+        "interactive": 8824.578999999761
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:30:25.735756",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2927.412,
+        "largest_contentful_paint": 7242.526,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4289.803999999759,
+        "speed_index": 5845,
+        "interactive": 8633.85299999976
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:31:43.658041",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3669.987,
+        "largest_contentful_paint": 7862.635,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4366.049999999999,
+        "speed_index": 6607,
+        "interactive": 9205.039
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:31:47.263912",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3450.139,
+        "largest_contentful_paint": 7279.201,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 3912.9809999999993,
+        "speed_index": 5886,
+        "interactive": 8596.934
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:34:19.132015",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3846.074,
+        "largest_contentful_paint": 7681.89,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4520.692000000003,
+        "speed_index": 6442,
+        "interactive": 9874.77600000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:34:21.962077",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4981.827,
+        "largest_contentful_paint": 5632.367,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3259.197,
+        "speed_index": 6547,
+        "interactive": 9565.685
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:33:19.219305",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3323.182,
+        "largest_contentful_paint": 7077.933,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 4372.328999999999,
+        "speed_index": 6235,
+        "interactive": 8781.576
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:33:25.224062",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3435.651,
+        "largest_contentful_paint": 6486.833,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3437.4570000000012,
+        "speed_index": 5802,
+        "interactive": 8711.218
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:33:18.516361",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4604.444,
+        "largest_contentful_paint": 7725.328,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3549.323999999998,
+        "speed_index": 6462,
+        "interactive": 9405.656
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:33:19.807056",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3327.538,
+        "largest_contentful_paint": 7863.671,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4435.33,
+        "speed_index": 6353,
+        "interactive": 8982.547
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:33:53.889554",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3124.365,
+        "largest_contentful_paint": 8024.442,
+        "cumulative_layout_shift": 0.0008328061220825887,
+        "total_blocking_time": 5118.853999999999,
+        "speed_index": 6573,
+        "interactive": 9534.994
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:33:59.576423",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3429.717,
+        "largest_contentful_paint": 8659.307,
+        "cumulative_layout_shift": 0.001923170175850783,
+        "total_blocking_time": 5573.834999999999,
+        "speed_index": 6877,
+        "interactive": 10328.593
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:33:20.061276",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3308.099,
+        "largest_contentful_paint": 7074.686,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4428.727,
+        "speed_index": 5921,
+        "interactive": 8716.669
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:33:26.159149",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3266.707,
+        "largest_contentful_paint": 7609.302,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4476.6330000000025,
+        "speed_index": 6095,
+        "interactive": 9052.728
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:29:18.614189",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5350.579,
+        "largest_contentful_paint": 5862.652,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3485.075,
+        "speed_index": 6863,
+        "interactive": 9748.003
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:29:19.906421",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3375.737,
+        "largest_contentful_paint": 8229.327,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5114.983000000002,
+        "speed_index": 6842,
+        "interactive": 9820.272
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:31:31.526063",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3386.173,
+        "largest_contentful_paint": 7728.041,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4804.973999999998,
+        "speed_index": 6704,
+        "interactive": 9308.597
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:31:36.529014",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3349.484,
+        "largest_contentful_paint": 8798.316,
+        "cumulative_layout_shift": 0.0022158335180848207,
+        "total_blocking_time": 6274.785999999998,
+        "speed_index": 6940,
+        "interactive": 11104.477
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T06:35:55.574029",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5637.543,
+        "largest_contentful_paint": 5763.889,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3810.4489999999987,
+        "speed_index": 7086,
+        "interactive": 10588.68
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:35:57.472059",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4619.37,
+        "largest_contentful_paint": 6463.932,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5835.749000000002,
+        "speed_index": 7272,
+        "interactive": 11784.656000000059
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:34:25.810792",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5527.106,
+        "largest_contentful_paint": 6418.802,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4626.800999999999,
+        "speed_index": 7464,
+        "interactive": 11521.438
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:34:29.298361",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4067.269,
+        "largest_contentful_paint": 6686.563,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 6426.844000000003,
+        "speed_index": 7867,
+        "interactive": 11814.964
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:33:40.841389",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3423.512,
+        "largest_contentful_paint": 7759.473,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5039.985000000004,
+        "speed_index": 6613,
+        "interactive": 9593.503
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:33:42.143680",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3707.699,
+        "largest_contentful_paint": 7445.778,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4337.672999999999,
+        "speed_index": 6374,
+        "interactive": 8888.609
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:32:50.642466",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3828.721,
+        "largest_contentful_paint": 8248.312,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5070.616,
+        "speed_index": 7020,
+        "interactive": 9992.56300000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:32:54.435725",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3529.285,
+        "largest_contentful_paint": 8465.074,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5008.930999999999,
+        "speed_index": 6740,
+        "interactive": 10116.581
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:32:01.779866",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5183.697,
+        "largest_contentful_paint": 8006.274,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3214.0030000000006,
+        "speed_index": 6909,
+        "interactive": 9697.272
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:32:02.963382",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3358.026,
+        "largest_contentful_paint": 8025.68,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5501.441999999999,
+        "speed_index": 6751,
+        "interactive": 9889.461
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:29:45.460123",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5529.313,
+        "largest_contentful_paint": 8440.145,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3853.3039999998846,
+        "speed_index": 7198,
+        "interactive": 10318.22699999988
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:30:06.391283",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4754.789,
+        "largest_contentful_paint": 7588.269,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3657.83,
+        "speed_index": 6503,
+        "interactive": 9441.118
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:30:08.677453",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3577.097,
+        "largest_contentful_paint": 7768.376,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4751.658999999998,
+        "speed_index": 5956,
+        "interactive": 9224.073
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:30:09.595838",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4972.006,
+        "largest_contentful_paint": 7732.765,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3411.655999999999,
+        "speed_index": 6519,
+        "interactive": 9242.458
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:34:16.570147",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3164.398,
+        "largest_contentful_paint": 7719.21,
+        "cumulative_layout_shift": 0.0003023010701644224,
+        "total_blocking_time": 4897.7199999999975,
+        "speed_index": 6067,
+        "interactive": 9195.933
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:34:17.129778",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4140.407,
+        "largest_contentful_paint": 7833.354,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4333.039000000002,
+        "speed_index": 6655,
+        "interactive": 9496.42
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T06:33:20.685356",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4072.496,
+        "largest_contentful_paint": 8885.852,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5712.9190000000035,
+        "speed_index": 7465,
+        "interactive": 10747.27000000006
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:33:23.550017",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3520.939,
+        "largest_contentful_paint": 6404.04,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5467.869999999997,
+        "speed_index": 6656,
+        "interactive": 10424.33
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:33:39.375584",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3832.949,
+        "largest_contentful_paint": 6575.853,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6177.512000000002,
+        "speed_index": 7297,
+        "interactive": 11704.393
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-08T06:33:55.173959",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3311.901,
+        "largest_contentful_paint": 8027.555,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5194.198999999971,
+        "speed_index": 6686,
+        "interactive": 15766.91799999997
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

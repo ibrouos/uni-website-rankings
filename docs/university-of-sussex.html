@@ -1,0 +1,4728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Sussex - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Sussex</h1>
+                <p>https://www.sussex.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Sussex",
+  "slug": "university-of-sussex",
+  "url": "https://www.sussex.ac.uk",
+  "total_tests": 212,
+  "last_updated": "2025-10-08T06:37:58.402720",
+  "week_averages": {
+    "mobile": {
+      "performance": 41.0,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 37.42857142857143,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "total_tests": 14
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 38.793103448275865,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 99.72413793103448
+    },
+    "desktop": {
+      "performance": 39.89655172413793,
+      "accessibility": 97.0,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "total_tests": 58
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T22:54:12.557597",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5071.917,
+        "largest_contentful_paint": 6564.389,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1010.7169999999996,
+        "speed_index": 6219,
+        "interactive": 7048.849
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T22:54:18.852334",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4745.281,
+        "largest_contentful_paint": 6441.416,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1616.326,
+        "speed_index": 6255,
+        "interactive": 7539.427000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:21:33.480016",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5310.151,
+        "largest_contentful_paint": 7552.386,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1935.5079999999998,
+        "speed_index": 6878,
+        "interactive": 8414.596
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:21:34.303422",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5401.671,
+        "largest_contentful_paint": 6567.995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2206.404999999998,
+        "speed_index": 7399,
+        "interactive": 8997.466
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:38:59.829723",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4182.454,
+        "largest_contentful_paint": 6115.036,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1621.2949999999391,
+        "speed_index": 6052,
+        "interactive": 6920.50899999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:38:59.832158",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4749.746,
+        "largest_contentful_paint": 6803.87,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1552.8430000000008,
+        "speed_index": 6167,
+        "interactive": 7518.778000000059
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:39:01.070889",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5810.452,
+        "largest_contentful_paint": 6730.564,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2093.2699999999977,
+        "speed_index": 7538,
+        "interactive": 9903.721
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:39:02.260069",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5032.944,
+        "largest_contentful_paint": 6975.366,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1699.2699999999986,
+        "speed_index": 6392,
+        "interactive": 7942.182000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:38:19.802234",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4743.869,
+        "largest_contentful_paint": 6959.848,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2023.3639999999996,
+        "speed_index": 6233,
+        "interactive": 7897.826
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:38:26.152542",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4406.004,
+        "largest_contentful_paint": 6303.458,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1391.8110000000006,
+        "speed_index": 6311,
+        "interactive": 6980.126000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:38:38.511734",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5527.516,
+        "largest_contentful_paint": 7248.44,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1552.312,
+        "speed_index": 6725,
+        "interactive": 8038.102
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:38:48.442189",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5422.304,
+        "largest_contentful_paint": 6085.008,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1948.5199999999404,
+        "speed_index": 6901,
+        "interactive": 8470.17799999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:38:22.998916",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5223.789,
+        "largest_contentful_paint": 7699.216,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1881.1009999999997,
+        "speed_index": 6858,
+        "interactive": 8992.326
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:38:30.858692",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5180.934,
+        "largest_contentful_paint": 5924.51,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1804.0860000000002,
+        "speed_index": 6498,
+        "interactive": 7884.116
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:35:43.772293",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4916.602,
+        "largest_contentful_paint": 6943.162,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1876.5639999999994,
+        "speed_index": 6575,
+        "interactive": 7753.865
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:35:47.774365",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4885.609,
+        "largest_contentful_paint": 5955.544,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1339.0919999998814,
+        "speed_index": 6308,
+        "interactive": 7647.606999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:36:58.873282",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5204.263,
+        "largest_contentful_paint": 6321.474,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2144.2669999998816,
+        "speed_index": 6970,
+        "interactive": 9532.890999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:37:14.142345",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4666.034,
+        "largest_contentful_paint": 6330.562,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1430.0860000000011,
+        "speed_index": 6257,
+        "interactive": 7071.214000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:40:21.601936",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5017.804,
+        "largest_contentful_paint": 6659.479,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1588.798999999999,
+        "speed_index": 6239,
+        "interactive": 7598.799
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:40:24.716719",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4650.232,
+        "largest_contentful_paint": 6501.547,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1464.9920000000002,
+        "speed_index": 6430,
+        "interactive": 7415.265
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:39:34.440926",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5085.659,
+        "largest_contentful_paint": 7063.84,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1680.6290000000017,
+        "speed_index": 6437,
+        "interactive": 7819.469000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:39:42.548457",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4215.12,
+        "largest_contentful_paint": 6452.038,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2009.6979999998803,
+        "speed_index": 6378,
+        "interactive": 7370.5159999998805
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:39:25.610662",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5324.938,
+        "largest_contentful_paint": 5602.658,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2230.0370000000003,
+        "speed_index": 6707,
+        "interactive": 8486.172
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:39:26.233106",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5150.971,
+        "largest_contentful_paint": 5388.962,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1944.5340000000006,
+        "speed_index": 6457,
+        "interactive": 8177.201
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:39:08.804992",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4050.791,
+        "largest_contentful_paint": 4332.383,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1611.20299999988,
+        "speed_index": 5518,
+        "interactive": 6868.36399999988
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:39:17.227869",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4344.001,
+        "largest_contentful_paint": 4599.934,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1647.8989999998812,
+        "speed_index": 5488,
+        "interactive": 7616.420999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:36:31.788424",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4821.277,
+        "largest_contentful_paint": 5055.187,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2257.652,
+        "speed_index": 6272,
+        "interactive": 8195.77500000012
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:36:31.902880",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4791.648,
+        "largest_contentful_paint": 5128.639,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1707.5329999999994,
+        "speed_index": 5822,
+        "interactive": 7358.329
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:37:40.530934",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5598.627,
+        "largest_contentful_paint": 5598.627,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2252.795,
+        "speed_index": 6855,
+        "interactive": 8796.126000000118
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:37:43.500652",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5116.662,
+        "largest_contentful_paint": 5116.662,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2219.368999999997,
+        "speed_index": 6517,
+        "interactive": 8375.312
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:40:55.510854",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5609.09,
+        "largest_contentful_paint": 5767.14,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2090.6090000000004,
+        "speed_index": 6780,
+        "interactive": 8630.036
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:41:00.592104",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5372.192,
+        "largest_contentful_paint": 5372.192,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2045.147,
+        "speed_index": 6777,
+        "interactive": 8700.744
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:39:07.556093",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5097.668,
+        "largest_contentful_paint": 5478.746,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1729.5979999998826,
+        "speed_index": 6217,
+        "interactive": 7799.768999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:39:17.004011",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4947.85,
+        "largest_contentful_paint": 5140.625,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1424.4849999999997,
+        "speed_index": 5911,
+        "interactive": 7246.784
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:39:22.792351",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5101.182,
+        "largest_contentful_paint": 5537.352,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1930.6489999999994,
+        "speed_index": 6484,
+        "interactive": 8267.079
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:39:39.111424",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4641.762,
+        "largest_contentful_paint": 4918.419,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1801.3940000000002,
+        "speed_index": 5956,
+        "interactive": 7431.604
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:39:45.363186",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5742.698,
+        "largest_contentful_paint": 5742.698,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1482.9300000000012,
+        "speed_index": 6785,
+        "interactive": 7915.725
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:40:01.155744",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5048.652,
+        "largest_contentful_paint": 5048.652,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1803.7949999999992,
+        "speed_index": 6100,
+        "interactive": 7554.129
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:37:00.700942",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5068.408,
+        "largest_contentful_paint": 5381.095,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1516.1280000000006,
+        "speed_index": 6176,
+        "interactive": 7629.738
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:37:03.498154",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4882.654,
+        "largest_contentful_paint": 5186.999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1494.4579999999996,
+        "speed_index": 5989,
+        "interactive": 7259.922
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:37:46.190792",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5230.365,
+        "largest_contentful_paint": 5442.062,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1669.911000000001,
+        "speed_index": 6303,
+        "interactive": 7884.463
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:37:49.770287",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4875.156,
+        "largest_contentful_paint": 5072.392,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1765.7780000000002,
+        "speed_index": 6097,
+        "interactive": 8277.238
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:42:15.708602",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5605.205,
+        "largest_contentful_paint": 5605.205,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1860.2219999999998,
+        "speed_index": 6829,
+        "interactive": 8348.699
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:42:18.120915",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4801.003,
+        "largest_contentful_paint": 4801.003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1129.6670000000004,
+        "speed_index": 5747,
+        "interactive": 6786.476
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-15T06:43:31.929999",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6430.755,
+        "largest_contentful_paint": 6951.056,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3092.697000000002,
+        "speed_index": 8106,
+        "interactive": 10477.495
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-15T06:43:31.946568",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7110.188,
+        "largest_contentful_paint": 7110.188,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3506.5590000000047,
+        "speed_index": 9054,
+        "interactive": 12120.093
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:41:10.587047",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4825.264,
+        "largest_contentful_paint": 4942.692,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1832.4169999998821,
+        "speed_index": 6029,
+        "interactive": 8299.719999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:41:11.528242",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4457.627,
+        "largest_contentful_paint": 4734.79,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1151.579999999999,
+        "speed_index": 5310,
+        "interactive": 6451.704
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:40:33.850820",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5342.996,
+        "largest_contentful_paint": 5683.229,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2010.072000000001,
+        "speed_index": 6721,
+        "interactive": 8517.022
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:40:34.143834",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4911.91,
+        "largest_contentful_paint": 5638.144,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1938.2200000000003,
+        "speed_index": 6655,
+        "interactive": 8116.916000000059
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T06:40:33.045087",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5275.978,
+        "largest_contentful_paint": 5275.978,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1550.67899999988,
+        "speed_index": 6388,
+        "interactive": 7851.096999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T06:40:38.856214",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5144.944,
+        "largest_contentful_paint": 5144.944,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1908.6309999999994,
+        "speed_index": 6468,
+        "interactive": 8871.608
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:37:56.176971",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4788.942,
+        "largest_contentful_paint": 5039.934,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1542.148000000001,
+        "speed_index": 5902,
+        "interactive": 7217.117
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:38:10.637753",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4600.465,
+        "largest_contentful_paint": 4829.515,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1483.3069999999989,
+        "speed_index": 5621,
+        "interactive": 7072.413
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:38:08.238219",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4122.197,
+        "largest_contentful_paint": 4352.658,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 993.8380000000006,
+        "speed_index": 4937,
+        "interactive": 6056.537
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:38:08.867923",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4459.244,
+        "largest_contentful_paint": 4609.408,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1659.6810000000005,
+        "speed_index": 5534,
+        "interactive": 6855.302000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:41:06.367555",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5355.361,
+        "largest_contentful_paint": 5535.03,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1785.7609999999404,
+        "speed_index": 6502,
+        "interactive": 8094.26899999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:41:11.547715",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4525.008,
+        "largest_contentful_paint": 4666.063,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2169.4209999999975,
+        "speed_index": 5898,
+        "interactive": 8443.71
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:40:21.045520",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5604.355,
+        "largest_contentful_paint": 5898.791,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2168.1009999999987,
+        "speed_index": 7014,
+        "interactive": 9559.132
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:40:49.393629",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4498.8,
+        "largest_contentful_paint": 4764.591,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1659.366000000001,
+        "speed_index": 5704,
+        "interactive": 7019.477
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:41:12.434617",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4496.731,
+        "largest_contentful_paint": 4589.957,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1623.8280000000004,
+        "speed_index": 5594,
+        "interactive": 6989.782
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:41:17.489161",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4662.32,
+        "largest_contentful_paint": 4923.019,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1543.4849999999997,
+        "speed_index": 5781,
+        "interactive": 7145.4
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:41:29.095486",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4763.418,
+        "largest_contentful_paint": 5021.688,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1212.5159999999996,
+        "speed_index": 5643,
+        "interactive": 6745.524
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:41:34.029064",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4681.873,
+        "largest_contentful_paint": 5031.596,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1812.5840000000007,
+        "speed_index": 5924,
+        "interactive": 7434.3
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:41:14.023429",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5453.791,
+        "largest_contentful_paint": 5453.791,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2219.2180000000017,
+        "speed_index": 6895,
+        "interactive": 9370.9
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:41:45.550662",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5312.909,
+        "largest_contentful_paint": 5312.909,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1722.4330000000018,
+        "speed_index": 6526,
+        "interactive": 8146.27
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:38:41.577969",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4901.729,
+        "largest_contentful_paint": 5086.004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1779.8429999998798,
+        "speed_index": 6087,
+        "interactive": 7531.28799999988
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:38:45.784272",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5027.82,
+        "largest_contentful_paint": 5419.899,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1897.683000000001,
+        "speed_index": 6350,
+        "interactive": 7919.018
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:38:38.651714",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5870.814,
+        "largest_contentful_paint": 5870.814,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1766.0510000000022,
+        "speed_index": 6978,
+        "interactive": 8639.367
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:38:43.134578",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5304.727,
+        "largest_contentful_paint": 5304.727,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1712.232,
+        "speed_index": 6387,
+        "interactive": 7713.196
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:43:20.974678",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5410.741,
+        "largest_contentful_paint": 5410.741,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2296.1230000000005,
+        "speed_index": 6735,
+        "interactive": 9354.801
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:43:29.797685",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4470.662,
+        "largest_contentful_paint": 4781.067,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1442.4680000000008,
+        "speed_index": 5474,
+        "interactive": 6913.159
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:41:59.648202",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5161.267,
+        "largest_contentful_paint": 5364.349,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1193.2399999999407,
+        "speed_index": 5987,
+        "interactive": 7207.09499999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:42:16.106316",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 11244.619,
+        "largest_contentful_paint": 11244.619,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1982.188000000002,
+        "speed_index": 12526,
+        "interactive": 14154.778
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:42:58.447710",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4623.251,
+        "largest_contentful_paint": 4819.712,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1577.2140000000009,
+        "speed_index": 5543,
+        "interactive": 6981.929
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:42:58.684030",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4037.094,
+        "largest_contentful_paint": 4124.88,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1362.5480000000002,
+        "speed_index": 4970,
+        "interactive": 7051.937
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:41:14.846090",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5343.196,
+        "largest_contentful_paint": 5542.023,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1337.4499999995232,
+        "speed_index": 6301,
+        "interactive": 7532.731999999523
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:41:23.108989",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4841.369,
+        "largest_contentful_paint": 4984.497,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2148.7080000000005,
+        "speed_index": 6108,
+        "interactive": 7836.613
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:42:18.763824",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5183.55,
+        "largest_contentful_paint": 5652.032,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2019.7509999999993,
+        "speed_index": 6586,
+        "interactive": 8358.028
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:42:35.949500",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4069.239,
+        "largest_contentful_paint": 4367.718,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1995.344,
+        "speed_index": 5634,
+        "interactive": 7320.077
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T06:37:54.469348",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5647.848,
+        "largest_contentful_paint": 6137.638,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1563.2220000000007,
+        "speed_index": 6783,
+        "interactive": 8376.016
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:37:58.903106",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4989.771,
+        "largest_contentful_paint": 4989.771,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1195.1980000000003,
+        "speed_index": 5861,
+        "interactive": 6782.118
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:38:22.668177",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5476.509,
+        "largest_contentful_paint": 5903.11,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2148.1339999999973,
+        "speed_index": 6920,
+        "interactive": 8657.55
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:38:29.083500",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4854.484,
+        "largest_contentful_paint": 4985.221,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1379.8149999999996,
+        "speed_index": 5735,
+        "interactive": 7043.743
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T06:46:46.340803",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5024.962,
+        "largest_contentful_paint": 5391.789,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2168.3639999999996,
+        "speed_index": 6315,
+        "interactive": 8137.946
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:46:47.086925",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4561.629,
+        "largest_contentful_paint": 5076.371,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1692.02699999994,
+        "speed_index": 5928,
+        "interactive": 7306.59999999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:42:53.161484",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4980.64,
+        "largest_contentful_paint": 5207.234,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2091.40999999994,
+        "speed_index": 6145,
+        "interactive": 7950.24699999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:42:57.606555",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4628.448,
+        "largest_contentful_paint": 5039.134,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1312.4409999999998,
+        "speed_index": 5718,
+        "interactive": 7056.654
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:43:07.426225",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5543.78,
+        "largest_contentful_paint": 5962.546,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2315.773000000001,
+        "speed_index": 7066,
+        "interactive": 9195.421
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-07T06:42:59.143029",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5118.519,
+        "largest_contentful_paint": 5374.25,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1793.3249999999998,
+        "speed_index": 6251,
+        "interactive": 7955.755
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-07T06:43:03.964555",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4941.45,
+        "largest_contentful_paint": 5116.745,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2042.4060000000009,
+        "speed_index": 6264,
+        "interactive": 8021.868
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:42:28.023742",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3928.79,
+        "largest_contentful_paint": 4207.557,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1801.879,
+        "speed_index": 5209,
+        "interactive": 6760.685
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-08T06:42:29.740622",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4260.694,
+        "largest_contentful_paint": 4260.694,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1847.08,
+        "speed_index": 5489,
+        "interactive": 7703.893
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:38:17.052743",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4542.09,
+        "largest_contentful_paint": 4840.759,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1813.5510000000013,
+        "speed_index": 5886,
+        "interactive": 7540.576
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:38:18.395603",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4790.919,
+        "largest_contentful_paint": 4972.835,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1500.5969999999988,
+        "speed_index": 5741,
+        "interactive": 7027.861
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T06:38:10.246210",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4468.212,
+        "largest_contentful_paint": 4468.212,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1487.731999999999,
+        "speed_index": 5542,
+        "interactive": 7666.375
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-10T06:38:11.743320",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5155.711,
+        "largest_contentful_paint": 5155.711,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1260.4609999999993,
+        "speed_index": 6028,
+        "interactive": 7178.419
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T06:42:28.449169",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4832.194,
+        "largest_contentful_paint": 5079.875,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1759.9920000000002,
+        "speed_index": 5916,
+        "interactive": 7503.079
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:42:29.990346",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5006.292,
+        "largest_contentful_paint": 5415.18,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1381.1350000000011,
+        "speed_index": 6040,
+        "interactive": 7344.907
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-12T06:39:57.441729",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4828.161,
+        "largest_contentful_paint": 4828.161,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1305.5200000000004,
+        "speed_index": 5704,
+        "interactive": 6855.26100000012
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:39:58.888230",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4506.082,
+        "largest_contentful_paint": 4506.082,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1240.8729999999996,
+        "speed_index": 5477,
+        "interactive": 6713.833
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:40:06.382235",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5061.452,
+        "largest_contentful_paint": 5410.234,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1845.099000000002,
+        "speed_index": 6338,
+        "interactive": 7779.854
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:40:19.421971",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4871.311,
+        "largest_contentful_paint": 5108.675,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2176.126,
+        "speed_index": 6264,
+        "interactive": 8272.967
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-14T06:40:16.488119",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4865.396,
+        "largest_contentful_paint": 5169.649,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1542.200999999999,
+        "speed_index": 5953,
+        "interactive": 7301.825
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T06:40:20.784029",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4444.399,
+        "largest_contentful_paint": 4683.497,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1331.9399999999996,
+        "speed_index": 5415,
+        "interactive": 6577.914
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:39:44.732203",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5914.158,
+        "largest_contentful_paint": 5914.158,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1985.374999999999,
+        "speed_index": 7111,
+        "interactive": 8478.505
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T06:39:45.501315",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5202.595,
+        "largest_contentful_paint": 5202.595,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1608.9109999999991,
+        "speed_index": 6207,
+        "interactive": 7762.109
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:36:33.229049",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4952.083,
+        "largest_contentful_paint": 5254.314,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1793.7140000000009,
+        "speed_index": 6265,
+        "interactive": 7840.979000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:36:40.473852",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3922.277,
+        "largest_contentful_paint": 3965.719,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1524.8189999999995,
+        "speed_index": 5059,
+        "interactive": 6488.726
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-17T06:37:19.921445",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4432.341,
+        "largest_contentful_paint": 4584.782,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1346.4660000000003,
+        "speed_index": 5503,
+        "interactive": 6710.83
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-17T06:37:22.001314",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3956.394,
+        "largest_contentful_paint": 4217.361,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1144.8109999999992,
+        "speed_index": 5080,
+        "interactive": 6267.217
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:42:15.164317",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5112.663,
+        "largest_contentful_paint": 5341.453,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1418.866,
+        "speed_index": 6148,
+        "interactive": 7464.51
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-18T06:42:23.280755",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4711.616,
+        "largest_contentful_paint": 4992.264,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1874.9719999999998,
+        "speed_index": 5905,
+        "interactive": 7553.327
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:39:08.108934",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4820.56,
+        "largest_contentful_paint": 4953.053,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1721.9650000000001,
+        "speed_index": 5990,
+        "interactive": 7426.413
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:39:11.747660",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4934.304,
+        "largest_contentful_paint": 5174.662,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1943.9039999999386,
+        "speed_index": 6217,
+        "interactive": 7895.37599999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:38:19.938462",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4556.935,
+        "largest_contentful_paint": 4767.264,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1265.897,
+        "speed_index": 5381,
+        "interactive": 6594.449
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T06:38:33.411827",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4297.34,
+        "largest_contentful_paint": 4398.311,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1450.3069999999989,
+        "speed_index": 5303,
+        "interactive": 6364.285
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:47:04.786786",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5272.329,
+        "largest_contentful_paint": 5545.622,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2013.5420000000013,
+        "speed_index": 6448,
+        "interactive": 8184.229000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T06:47:16.091629",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4098.773,
+        "largest_contentful_paint": 4357.43,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1788.7019999998802,
+        "speed_index": 5347,
+        "interactive": 6981.991999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:37:47.118517",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4464.935,
+        "largest_contentful_paint": 4464.935,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1431.04,
+        "speed_index": 5474,
+        "interactive": 6664.780000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:37:50.020672",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5282.695,
+        "largest_contentful_paint": 5282.695,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1581.8179999998802,
+        "speed_index": 6251,
+        "interactive": 7594.123999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T06:35:37.618770",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5423.101,
+        "largest_contentful_paint": 5785.429,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3507.836999999763,
+        "speed_index": 7383,
+        "interactive": 10765.324999999762
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:36:09.858267",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5646.357,
+        "largest_contentful_paint": 5646.357,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2079.942000000001,
+        "speed_index": 6881,
+        "interactive": 8767.782
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:36:11.971105",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4838.851,
+        "largest_contentful_paint": 5042.997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1222.9529999999995,
+        "speed_index": 5635,
+        "interactive": 6799.142
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:39:49.365833",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5251.352,
+        "largest_contentful_paint": 5251.353,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1618.0239999999403,
+        "speed_index": 6292,
+        "interactive": 7572.17099999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:40:23.013443",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5301.965,
+        "largest_contentful_paint": 5301.965,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1859.793999999999,
+        "speed_index": 6489,
+        "interactive": 7927.44
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:38:41.941790",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5255.035,
+        "largest_contentful_paint": 5500.478,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2266.2610000000013,
+        "speed_index": 6559,
+        "interactive": 8419.298
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:38:45.707222",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6512.542,
+        "largest_contentful_paint": 6642.93,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1605.0600000000004,
+        "speed_index": 7482,
+        "interactive": 8690.582
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:36:32.241127",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4724.185,
+        "largest_contentful_paint": 5105.017,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1956.8369999999977,
+        "speed_index": 6076,
+        "interactive": 7650.316
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-27T06:36:41.901639",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5155.693,
+        "largest_contentful_paint": 5420.275,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2156.2620000000006,
+        "speed_index": 6555,
+        "interactive": 8342.553
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:37:14.621050",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5019.213,
+        "largest_contentful_paint": 5225.321,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1513.1190000000006,
+        "speed_index": 6083,
+        "interactive": 7385.038
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:37:14.976163",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4445.12,
+        "largest_contentful_paint": 4887.334,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1534.3900000000003,
+        "speed_index": 5580,
+        "interactive": 6965.629
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-29T06:37:20.982515",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5208.774,
+        "largest_contentful_paint": 5208.774,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1743.0400000000009,
+        "speed_index": 6294,
+        "interactive": 7929.965000000059
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-29T06:37:25.315686",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5156.303,
+        "largest_contentful_paint": 5440.548,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1682.588999999999,
+        "speed_index": 6235,
+        "interactive": 7693.179
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-30T06:33:42.119099",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6219.391,
+        "largest_contentful_paint": 6219.391,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1661.1259999999993,
+        "speed_index": 7246,
+        "interactive": 8691.016
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-30T06:33:44.757963",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5161.915,
+        "largest_contentful_paint": 5161.915,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1679.513,
+        "speed_index": 6248,
+        "interactive": 7715.829000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:34:51.746426",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5016.919,
+        "largest_contentful_paint": 5252.827,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1444.2780000000012,
+        "speed_index": 6030,
+        "interactive": 7230.653
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:35:12.298103",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5027.074,
+        "largest_contentful_paint": 5320.867,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1798.034999999999,
+        "speed_index": 6315,
+        "interactive": 7892.641
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:40:13.167181",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4727.039,
+        "largest_contentful_paint": 4965.289,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1587.0149999999994,
+        "speed_index": 5823,
+        "interactive": 7265.554
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:40:19.020815",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4715.04,
+        "largest_contentful_paint": 4898.019,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2164.0389999999406,
+        "speed_index": 6026,
+        "interactive": 7757.72899999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T06:38:04.275387",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5816.254,
+        "largest_contentful_paint": 5816.254,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2519.5429999999997,
+        "speed_index": 7236,
+        "interactive": 9339.491
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T06:38:05.971158",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5165.435,
+        "largest_contentful_paint": 5469.898,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2207.5839999999434,
+        "speed_index": 6587,
+        "interactive": 9286.26199999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:35:17.879261",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4958.455,
+        "largest_contentful_paint": 5247.506,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1048.8699999999399,
+        "speed_index": 5872,
+        "interactive": 6862.114999999941
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:35:18.030090",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4525.687,
+        "largest_contentful_paint": 4525.687,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1595.2050000000017,
+        "speed_index": 5685,
+        "interactive": 7237.12
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:35:46.215843",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4961.821,
+        "largest_contentful_paint": 5051.416,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1251.0369999999994,
+        "speed_index": 5820,
+        "interactive": 6934.37
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:35:52.801476",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4628.249,
+        "largest_contentful_paint": 4812.704,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1700.6070000000009,
+        "speed_index": 5718,
+        "interactive": 7237.904
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:36:11.779066",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4798.05,
+        "largest_contentful_paint": 5054.778,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1869.7109999999993,
+        "speed_index": 6047,
+        "interactive": 7647.238
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:36:12.066068",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4937.247,
+        "largest_contentful_paint": 5145.4,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2036.726999999998,
+        "speed_index": 6290,
+        "interactive": 7935.074
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:32:41.219895",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4257.389,
+        "largest_contentful_paint": 5313.475,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1987.4759999999987,
+        "speed_index": 5817,
+        "interactive": 7314.005
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:32:44.086873",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4600.341,
+        "largest_contentful_paint": 5067.554,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1674.4180000000006,
+        "speed_index": 5886,
+        "interactive": 7405.974
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:33:13.663435",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4364.956,
+        "largest_contentful_paint": 5147.766,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1563.0309999999981,
+        "speed_index": 5623,
+        "interactive": 6956.374
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:33:14.395115",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4463.445,
+        "largest_contentful_paint": 5507.567,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1654.7260000000006,
+        "speed_index": 6030,
+        "interactive": 7139.44
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:37:50.424513",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4846.315,
+        "largest_contentful_paint": 5037.163,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1383.735999999999,
+        "speed_index": 5810,
+        "interactive": 7147.973
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:37:54.507915",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4285.088,
+        "largest_contentful_paint": 4971.339,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1453.4679999998807,
+        "speed_index": 5479,
+        "interactive": 6750.817999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:37:04.091960",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4727.565,
+        "largest_contentful_paint": 5041.164,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1751.0949999999993,
+        "speed_index": 5894,
+        "interactive": 7540.60700000006
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:37:12.893758",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4665.944,
+        "largest_contentful_paint": 5146.951,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1979.8640000000005,
+        "speed_index": 6163,
+        "interactive": 7710.912
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:36:32.792199",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4826.973,
+        "largest_contentful_paint": 5311.979,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1753.800999999762,
+        "speed_index": 6192,
+        "interactive": 7637.352999999762
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:36:34.816981",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4507.578,
+        "largest_contentful_paint": 4785.431,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1832.3430000000008,
+        "speed_index": 5784,
+        "interactive": 7279.296000000239
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:36:46.527563",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5813.523,
+        "largest_contentful_paint": 6307.97,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2439.829999999997,
+        "speed_index": 7359,
+        "interactive": 9358.366
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:36:50.570102",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5554.164,
+        "largest_contentful_paint": 6010.879,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2194.158999999998,
+        "speed_index": 7094,
+        "interactive": 8962.74
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:36:14.686662",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4693.428,
+        "largest_contentful_paint": 5462.598,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1708.3969999999408,
+        "speed_index": 5967,
+        "interactive": 7429.41999999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:36:16.102421",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4412.413,
+        "largest_contentful_paint": 5204.957,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1613.4340000000002,
+        "speed_index": 5777,
+        "interactive": 7029.024
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:32:50.929224",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4971.865,
+        "largest_contentful_paint": 5446.211,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1964.7779999999993,
+        "speed_index": 6431,
+        "interactive": 8120.565
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:32:52.512730",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4470.588,
+        "largest_contentful_paint": 4915.559,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1903.7859999999991,
+        "speed_index": 5879,
+        "interactive": 7321.622
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:33:51.536851",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4651.089,
+        "largest_contentful_paint": 4996.324,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1639.3360000000002,
+        "speed_index": 5886,
+        "interactive": 7329.385
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:33:58.032759",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4184.36,
+        "largest_contentful_paint": 4783.437,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 970.7429999999395,
+        "speed_index": 5152,
+        "interactive": 6147.29599999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:38:49.399915",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5038.259,
+        "largest_contentful_paint": 5541.554,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2153.969,
+        "speed_index": 6624,
+        "interactive": 8539.949
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:38:52.932055",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4583.017,
+        "largest_contentful_paint": 4892.119,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1521.630000000001,
+        "speed_index": 5831,
+        "interactive": 7181.353
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:37:16.994114",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4747.83,
+        "largest_contentful_paint": 5292.647,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1544.9779999999419,
+        "speed_index": 6133,
+        "interactive": 7597.46999999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:37:19.003812",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4628.869,
+        "largest_contentful_paint": 5058.775,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1798.289999999999,
+        "speed_index": 5954,
+        "interactive": 7357.444
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:37:31.339438",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4488.889,
+        "largest_contentful_paint": 5382.253,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1583.1899999998805,
+        "speed_index": 5867,
+        "interactive": 7360.971999999881
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:37:33.059095",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4697.992,
+        "largest_contentful_paint": 5114.867,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1906.205,
+        "speed_index": 6226,
+        "interactive": 7720.479000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:36:34.123426",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4957.502,
+        "largest_contentful_paint": 5229.057,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1450.9070000000002,
+        "speed_index": 5968,
+        "interactive": 7193.886
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:36:42.617748",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4850.806,
+        "largest_contentful_paint": 5023.588,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1413.4379999999992,
+        "speed_index": 5868,
+        "interactive": 7082.917
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:33:54.238061",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4704.654,
+        "largest_contentful_paint": 5018.426,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1508.405999999999,
+        "speed_index": 5882,
+        "interactive": 7134.423
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:33:55.650400",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4378.767,
+        "largest_contentful_paint": 4552.621,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1596.0829999997623,
+        "speed_index": 5415,
+        "interactive": 6647.568999999761
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:35:36.127751",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5428.437,
+        "largest_contentful_paint": 5836.729,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2366.014000000001,
+        "speed_index": 7135,
+        "interactive": 9102.432
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:35:38.090874",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4718.722,
+        "largest_contentful_paint": 5422.994,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2012.3829999999998,
+        "speed_index": 6527,
+        "interactive": 8115.968
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:38:10.680438",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4876.503,
+        "largest_contentful_paint": 5312.613,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1951.2560000000003,
+        "speed_index": 6282,
+        "interactive": 7855.897
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:38:16.346324",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4699.478,
+        "largest_contentful_paint": 5136.13,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1622.9819999998817,
+        "speed_index": 5948,
+        "interactive": 7222.0429999998805
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:37:03.303403",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4702.088,
+        "largest_contentful_paint": 5300.622,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1700.9169999999995,
+        "speed_index": 6194,
+        "interactive": 7764.034
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:37:18.158917",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3938.906,
+        "largest_contentful_paint": 4756.396,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1459.550999999999,
+        "speed_index": 5367,
+        "interactive": 6393.294
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:37:08.357707",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5168.047,
+        "largest_contentful_paint": 5751.401,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2024.6809999999987,
+        "speed_index": 6672,
+        "interactive": 8314.998
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:37:24.543147",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4724.336,
+        "largest_contentful_paint": 5318.749,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2139.9079999999994,
+        "speed_index": 6287,
+        "interactive": 7957.971
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:37:40.348182",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5218.769,
+        "largest_contentful_paint": 6122.292,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2264.2530000000006,
+        "speed_index": 6872,
+        "interactive": 8741.823
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:37:50.574503",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4456.341,
+        "largest_contentful_paint": 5039.793,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1774.536,
+        "speed_index": 5896,
+        "interactive": 7571.18
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:37:09.931900",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4961.978,
+        "largest_contentful_paint": 5364.906,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1403.5949999999975,
+        "speed_index": 6128,
+        "interactive": 7401.42
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:37:12.023847",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4190.286,
+        "largest_contentful_paint": 4941.713,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1409.9559999999992,
+        "speed_index": 5406,
+        "interactive": 6455.938
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:33:17.116964",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4356.348,
+        "largest_contentful_paint": 5250.937,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1706.1229999999996,
+        "speed_index": 5798,
+        "interactive": 7231.907
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:33:17.117077",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4800.782,
+        "largest_contentful_paint": 5184.309,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1691.1950000000015,
+        "speed_index": 6208,
+        "interactive": 7757.284
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:35:29.113801",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4854.637,
+        "largest_contentful_paint": 5731.678,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1575.0899999999992,
+        "speed_index": 6273,
+        "interactive": 7517.033
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:35:29.295120",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4353.432,
+        "largest_contentful_paint": 5156.094,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1589.5639999999994,
+        "speed_index": 5643,
+        "interactive": 6917.017
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:39:40.907039",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5869.392,
+        "largest_contentful_paint": 6316.906,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1928.6910000000025,
+        "speed_index": 7120,
+        "interactive": 8736.299
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T06:39:54.148704",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5046.49,
+        "largest_contentful_paint": 5641.281,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1889.8640000000014,
+        "speed_index": 6553,
+        "interactive": 8742.36800000006
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:38:31.344564",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4824.338,
+        "largest_contentful_paint": 5500.775,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2046.4640000000009,
+        "speed_index": 6496,
+        "interactive": 9143.964
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:38:32.654032",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4950.734,
+        "largest_contentful_paint": 5409.175,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2439.719000000001,
+        "speed_index": 6593,
+        "interactive": 8554.326
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:37:15.007243",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4562.713,
+        "largest_contentful_paint": 5276.822,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1687.031999999941,
+        "speed_index": 5882,
+        "interactive": 7081.17599999994
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:37:17.496837",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4542.452,
+        "largest_contentful_paint": 5229.322,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1476.9030000000012,
+        "speed_index": 5774,
+        "interactive": 7025.999
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:36:32.397762",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4482.778,
+        "largest_contentful_paint": 5321.261,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1849.4709999999977,
+        "speed_index": 5833,
+        "interactive": 7295.432000000119
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:36:32.456751",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4757.751,
+        "largest_contentful_paint": 5613.581,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1861.897999999881,
+        "speed_index": 6403,
+        "interactive": 7753.2169999998805
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:35:51.183166",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4767.714,
+        "largest_contentful_paint": 5398.584,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1724.5629999999974,
+        "speed_index": 6157,
+        "interactive": 7716.98
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:35:53.519890",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4548.862,
+        "largest_contentful_paint": 4953.928,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1569.0909999999412,
+        "speed_index": 5702,
+        "interactive": 7120.387999999941
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:33:51.474628",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4041.815,
+        "largest_contentful_paint": 4717.877,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1300.1309999999994,
+        "speed_index": 5144,
+        "interactive": 6204.748
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:34:03.630736",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 11722.81,
+        "largest_contentful_paint": 11722.81,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1410.8600000000006,
+        "speed_index": 12583,
+        "interactive": 13728.891
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:33:41.995927",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4666.711,
+        "largest_contentful_paint": 5155.462,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1340.688,
+        "speed_index": 5768,
+        "interactive": 7594.965
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:33:45.288485",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4107.789,
+        "largest_contentful_paint": 4720.747,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1858.1719999997613,
+        "speed_index": 5389,
+        "interactive": 6808.544999999762
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:38:07.721302",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4775.668,
+        "largest_contentful_paint": 5108.815,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1870.1769999998805,
+        "speed_index": 6003,
+        "interactive": 7568.8419999998805
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:38:07.724220",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3975.191,
+        "largest_contentful_paint": 6666.726,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2041.567000000001,
+        "speed_index": 5901,
+        "interactive": 7202.92
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T06:37:25.812728",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5073.559,
+        "largest_contentful_paint": 5329.275,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1808.0840000000007,
+        "speed_index": 6341,
+        "interactive": 7740.74
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:37:27.667008",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4988.872,
+        "largest_contentful_paint": 5443.835,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2189.197000000002,
+        "speed_index": 6490,
+        "interactive": 8316.342
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:37:57.159174",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4176.928,
+        "largest_contentful_paint": 5081.761,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1540.0099999999984,
+        "speed_index": 5714,
+        "interactive": 6873.101
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-08T06:37:58.402720",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5045.832,
+        "largest_contentful_paint": 5357.557,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2002.089999999941,
+        "speed_index": 6312,
+        "interactive": 8000.262999999941
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

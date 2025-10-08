@@ -1,0 +1,3468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edinburgh Napier University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Edinburgh Napier University</h1>
+                <p>https://www.napier.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Edinburgh Napier University",
+  "slug": "edinburgh-napier-university",
+  "url": "https://www.napier.ac.uk",
+  "total_tests": 149,
+  "last_updated": "2025-10-08T06:48:03.340775",
+  "week_averages": {
+    "mobile": {
+      "performance": 25.0,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 25.0,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "total_tests": 12
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 25.0,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 25.0,
+      "accessibility": 96.0,
+      "best_practices": 100,
+      "seo": 92.0
+    },
+    "total_tests": 38
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:48:07.691376",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8113.451,
+        "largest_contentful_paint": 23641.973,
+        "cumulative_layout_shift": 0.0014295762646687868,
+        "total_blocking_time": 11332.093999999875,
+        "speed_index": 13851,
+        "interactive": 32754.14099999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:48:09.665155",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7903.933,
+        "largest_contentful_paint": 23200.747,
+        "cumulative_layout_shift": 0.0008895789510846624,
+        "total_blocking_time": 11805.016,
+        "speed_index": 13258,
+        "interactive": 32479.58700000012
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:49:04.456645",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8841.844,
+        "largest_contentful_paint": 23810.079,
+        "cumulative_layout_shift": 0.002428812422770068,
+        "total_blocking_time": 10762.282000000007,
+        "speed_index": 14119,
+        "interactive": 34871.52300000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:49:06.517691",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8156.958,
+        "largest_contentful_paint": 24445.904,
+        "cumulative_layout_shift": 0.002428812422770068,
+        "total_blocking_time": 10960.700999999985,
+        "speed_index": 12715,
+        "interactive": 32726.16100000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:48:13.003144",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8002.174,
+        "largest_contentful_paint": 22299.646,
+        "cumulative_layout_shift": 0.0014295762646687868,
+        "total_blocking_time": 9955.162999999999,
+        "speed_index": 11910,
+        "interactive": 32907.005
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:48:18.223878",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7321.521,
+        "largest_contentful_paint": 20224.417,
+        "cumulative_layout_shift": 0.002428812422770068,
+        "total_blocking_time": 9809.814999999764,
+        "speed_index": 12043,
+        "interactive": 33805.87899999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:48:15.879638",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7772.657,
+        "largest_contentful_paint": 22110.674,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 7721.993000000007,
+        "speed_index": 11814,
+        "interactive": 32846.692
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:48:18.713108",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8437.625,
+        "largest_contentful_paint": 23222.514,
+        "cumulative_layout_shift": 0.002222668640780569,
+        "total_blocking_time": 9555.197999999991,
+        "speed_index": 13648,
+        "interactive": 32790.87500000012
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:47:52.397089",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8208.858,
+        "largest_contentful_paint": 22633.421,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 9874.586999999998,
+        "speed_index": 12925,
+        "interactive": 33674.933
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:47:52.791677",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8764.834,
+        "largest_contentful_paint": 24171.614,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 11414.840999999993,
+        "speed_index": 13548,
+        "interactive": 37099.747
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:46:17.885391",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8252.04,
+        "largest_contentful_paint": 23697.076,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 11230.668999999989,
+        "speed_index": 12400,
+        "interactive": 34476.136
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:46:26.381707",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7424.461,
+        "largest_contentful_paint": 23564.529,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 10385.91399999999,
+        "speed_index": 11674,
+        "interactive": 32413.13400000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:47:40.763626",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7351.825,
+        "largest_contentful_paint": 24197.471,
+        "cumulative_layout_shift": 0.0014295762646687868,
+        "total_blocking_time": 11671.94499999999,
+        "speed_index": 12219,
+        "interactive": 32288.057
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:47:44.375668",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7770.674,
+        "largest_contentful_paint": 21386.706,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 9996.243000000006,
+        "speed_index": 11798,
+        "interactive": 33569.148
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:50:33.805806",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7772.286,
+        "largest_contentful_paint": 23365.267,
+        "cumulative_layout_shift": 0.0014295762646687868,
+        "total_blocking_time": 10071.248999999996,
+        "speed_index": 13126,
+        "interactive": 32764.893
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:50:41.406586",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7257.415,
+        "largest_contentful_paint": 22534.904,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 10792.071999999995,
+        "speed_index": 11632,
+        "interactive": 33672.895
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:49:47.136305",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8061.413,
+        "largest_contentful_paint": 23077.459,
+        "cumulative_layout_shift": 0.0028086873258498938,
+        "total_blocking_time": 9139.425999999985,
+        "speed_index": 12471,
+        "interactive": 32873.66400000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:49:49.469079",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8317.2,
+        "largest_contentful_paint": 23769.598,
+        "cumulative_layout_shift": 0.002428812422770068,
+        "total_blocking_time": 9403.951000000005,
+        "speed_index": 13064,
+        "interactive": 32594.364
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:49:43.885379",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7907.372,
+        "largest_contentful_paint": 23790.287,
+        "cumulative_layout_shift": 0.003101225078849479,
+        "total_blocking_time": 10373.153999999762,
+        "speed_index": 12203,
+        "interactive": 30618.87899999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:49:53.789983",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7969.078,
+        "largest_contentful_paint": 20934.31,
+        "cumulative_layout_shift": 0.003101225078849479,
+        "total_blocking_time": 9203.974999999999,
+        "speed_index": 11767,
+        "interactive": 29418.01
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:46:45.233822",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7601.28,
+        "largest_contentful_paint": 23772.403,
+        "cumulative_layout_shift": 0.003101225078849479,
+        "total_blocking_time": 10922.635000000006,
+        "speed_index": 12181,
+        "interactive": 35439.855
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:46:46.710186",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8082.805,
+        "largest_contentful_paint": 24976.878,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 11853.582999999764,
+        "speed_index": 12761,
+        "interactive": 36218.19699999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:47:54.059779",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9158.842,
+        "largest_contentful_paint": 24989.28,
+        "cumulative_layout_shift": 0.002333007657921097,
+        "total_blocking_time": 11061.535000000002,
+        "speed_index": 13806,
+        "interactive": 31821.15
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:47:55.067315",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8412.546,
+        "largest_contentful_paint": 26043.051,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 12161.419000000004,
+        "speed_index": 13206,
+        "interactive": 32088.186
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:49:29.178703",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8117.219,
+        "largest_contentful_paint": 22416.254,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 8259.810999999998,
+        "speed_index": 13396,
+        "interactive": 29500.238
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:49:32.694964",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8080.173,
+        "largest_contentful_paint": 19640.516,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 9951.423999999999,
+        "speed_index": 11820,
+        "interactive": 31743.625
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:49:28.279455",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8085.998,
+        "largest_contentful_paint": 22780.922,
+        "cumulative_layout_shift": 0.001573650353113881,
+        "total_blocking_time": 8498.477000000004,
+        "speed_index": 13451,
+        "interactive": 28892.448
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:49:35.543722",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8212.074,
+        "largest_contentful_paint": 23895.224,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 10884.81,
+        "speed_index": 13079,
+        "interactive": 35883.578
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:47:37.968761",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7930.171,
+        "largest_contentful_paint": 23127.908,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10511.140000000009,
+        "speed_index": 12699,
+        "interactive": 30270.113
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:47:41.830716",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8475.765,
+        "largest_contentful_paint": 25526.879,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 11345.909999999769,
+        "speed_index": 13852,
+        "interactive": 31121.709999999763
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:52:02.470969",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8923.326,
+        "largest_contentful_paint": 23852.407,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9867.307999999994,
+        "speed_index": 13008,
+        "interactive": 30311.996
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:52:07.747728",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8263.255,
+        "largest_contentful_paint": 22839.52,
+        "cumulative_layout_shift": 0.002333007657921097,
+        "total_blocking_time": 8248.652999999766,
+        "speed_index": 13507,
+        "interactive": 29208.04499999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:51:09.232977",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8951.534,
+        "largest_contentful_paint": 23998.417,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10358.865999999762,
+        "speed_index": 14421,
+        "interactive": 30190.60899999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:51:13.363166",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8375.018,
+        "largest_contentful_paint": 24034.532,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9847.174999999996,
+        "speed_index": 13684,
+        "interactive": 30192.789
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:50:34.977284",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9238.848,
+        "largest_contentful_paint": 24888.091,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 10355.244000000006,
+        "speed_index": 15488,
+        "interactive": 30207.26
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:50:41.624710",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7709.767,
+        "largest_contentful_paint": 24408.939,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10720.345000000008,
+        "speed_index": 12300,
+        "interactive": 31004.501
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T06:50:45.120081",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9007.358,
+        "largest_contentful_paint": 24006.534,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 10077.795999999997,
+        "speed_index": 14037,
+        "interactive": 34779.744
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T06:50:53.804001",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9090.475,
+        "largest_contentful_paint": 23372.821,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9327.564,
+        "speed_index": 14406,
+        "interactive": 30037.422
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:48:00.318090",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8275.49,
+        "largest_contentful_paint": 22026.311,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 8021.962000000003,
+        "speed_index": 12574,
+        "interactive": 28542.246
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:48:04.214312",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8553.348,
+        "largest_contentful_paint": 23709.63,
+        "cumulative_layout_shift": 0.002333007657921097,
+        "total_blocking_time": 8080.876999999991,
+        "speed_index": 14025,
+        "interactive": 29027.379
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:49:03.815044",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7723.549,
+        "largest_contentful_paint": 23799.581,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10010.504999999994,
+        "speed_index": 12510,
+        "interactive": 29346.432000000237
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:49:05.085461",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7773.353,
+        "largest_contentful_paint": 24381.208,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 10481.72299999999,
+        "speed_index": 13424,
+        "interactive": 29552.69
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:51:27.867751",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8036.654,
+        "largest_contentful_paint": 23027.805,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 8987.087000000009,
+        "speed_index": 13455,
+        "interactive": 29386.014
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:51:32.678395",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8682.29,
+        "largest_contentful_paint": 23203.904,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9775.83699999999,
+        "speed_index": 13397,
+        "interactive": 33919.831
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:50:37.204316",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7973.307,
+        "largest_contentful_paint": 23050.703,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10407.376,
+        "speed_index": 12851,
+        "interactive": 29525.517
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:51:10.533436",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8359.845,
+        "largest_contentful_paint": 19503.561,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 8289.928000000005,
+        "speed_index": 12208,
+        "interactive": 28253.971
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:52:01.530214",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7089.862,
+        "largest_contentful_paint": 18554.058,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 8651.023000000001,
+        "speed_index": 11078,
+        "interactive": 28238.824000000237
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:52:03.162777",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7374.715,
+        "largest_contentful_paint": 15807.172,
+        "cumulative_layout_shift": 0.00316471572807464,
+        "total_blocking_time": 9685.057000000004,
+        "speed_index": 11033,
+        "interactive": 29980.19100000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:51:34.719185",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9024.38,
+        "largest_contentful_paint": 19511.121,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 11667.487000000008,
+        "speed_index": 13176,
+        "interactive": 35562.851
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:51:55.056477",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9428.036,
+        "largest_contentful_paint": 20571.813,
+        "cumulative_layout_shift": 0.0014536395651296617,
+        "total_blocking_time": 12410.169000000002,
+        "speed_index": 13609,
+        "interactive": 32019.216
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:49:24.690403",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8452.042,
+        "largest_contentful_paint": 21573.624,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 14439.088,
+        "speed_index": 13583,
+        "interactive": 32182.958
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:49:27.220587",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9029.728,
+        "largest_contentful_paint": 20232.028,
+        "cumulative_layout_shift": 0.00316471572807464,
+        "total_blocking_time": 11431.945999999749,
+        "speed_index": 12973,
+        "interactive": 35056.33499999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:49:23.735623",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8560.65,
+        "largest_contentful_paint": 20357.413,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 9549.706999999997,
+        "speed_index": 12212,
+        "interactive": 29611.28
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:49:25.555470",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8346.291,
+        "largest_contentful_paint": 19409.077,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9238.767000000014,
+        "speed_index": 11933,
+        "interactive": 29698.46
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:52:55.576915",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8970.25,
+        "largest_contentful_paint": 22895.132,
+        "cumulative_layout_shift": 0.003754123474750271,
+        "total_blocking_time": 9671.058000000005,
+        "speed_index": 13056,
+        "interactive": 28724.453
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:53:12.929412",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8038.859,
+        "largest_contentful_paint": 18822.493,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9809.073000000008,
+        "speed_index": 11756,
+        "interactive": 28899.398
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:52:58.496996",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7683.726,
+        "largest_contentful_paint": 18998.872,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9602.180000000004,
+        "speed_index": 11450,
+        "interactive": 30317.523
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:53:00.895163",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8382.054,
+        "largest_contentful_paint": 19476.065,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 8597.989999999998,
+        "speed_index": 11925,
+        "interactive": 28374.614
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:51:58.654579",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7956.982,
+        "largest_contentful_paint": 19346.823,
+        "cumulative_layout_shift": 0.002333007657921097,
+        "total_blocking_time": 10038.438999999988,
+        "speed_index": 11867,
+        "interactive": 29369.409
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:53:14.179024",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9048.769,
+        "largest_contentful_paint": 19758.794,
+        "cumulative_layout_shift": 0.0031268619121930206,
+        "total_blocking_time": 11145.769999999997,
+        "speed_index": 13058,
+        "interactive": 29957.226
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:53:17.607102",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7862.431,
+        "largest_contentful_paint": 19513.767,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 11472.439000000002,
+        "speed_index": 11885,
+        "interactive": 34621.051
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:47:45.765725",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8107.503,
+        "largest_contentful_paint": 19698.785,
+        "cumulative_layout_shift": 0.0014536395651296617,
+        "total_blocking_time": 11175.374999999996,
+        "speed_index": 12718,
+        "interactive": 33893.06600000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:48:45.586702",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8458.666,
+        "largest_contentful_paint": 19044.342,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9874.758999999995,
+        "speed_index": 11677,
+        "interactive": 28936.915000000237
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T06:57:25.947601",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7936.128,
+        "largest_contentful_paint": 16867.387,
+        "cumulative_layout_shift": 0.09476494073446776,
+        "total_blocking_time": 12182.869,
+        "speed_index": 13917,
+        "interactive": 30198.127
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:57:40.821955",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8196.773,
+        "largest_contentful_paint": 23029.763,
+        "cumulative_layout_shift": 0.09454966786044933,
+        "total_blocking_time": 12227.233,
+        "speed_index": 13474,
+        "interactive": 29767.776
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:53:04.999534",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7716.672,
+        "largest_contentful_paint": 19205.999,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10581.043999999889,
+        "speed_index": 11858,
+        "interactive": 29758.39299999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:53:10.115615",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8318.85,
+        "largest_contentful_paint": 19612.738,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 12114.028999999991,
+        "speed_index": 12695,
+        "interactive": 34892.11
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:52:42.254626",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8721.694,
+        "largest_contentful_paint": 17034.865,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10300.208999999999,
+        "speed_index": 12249,
+        "interactive": 28925.458
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:52:46.188321",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9199.472,
+        "largest_contentful_paint": 19882.559,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9233.774999999998,
+        "speed_index": 12543,
+        "interactive": 29232.348
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-07T06:53:49.500459",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8708.66,
+        "largest_contentful_paint": 20441.092,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 13249.934000000005,
+        "speed_index": 12920,
+        "interactive": 31605.209
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:52:41.816101",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8503.883,
+        "largest_contentful_paint": 21171.193,
+        "cumulative_layout_shift": 0.00316471572807464,
+        "total_blocking_time": 12542.732000000009,
+        "speed_index": 13452,
+        "interactive": 30977.664
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:48:25.889077",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7838.931,
+        "largest_contentful_paint": 20077.331,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 10494.683000000005,
+        "speed_index": 12723,
+        "interactive": 29301.56600000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:48:29.056774",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8484.425,
+        "largest_contentful_paint": 18136.003,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 7351.7080000000005,
+        "speed_index": 12167,
+        "interactive": 27947.131
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T06:48:51.624395",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8916.77,
+        "largest_contentful_paint": 20634.204,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 11332.511999999986,
+        "speed_index": 12698,
+        "interactive": 36375.64
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:52:27.918031",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8758.16,
+        "largest_contentful_paint": 19935.139,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 9042.447999999997,
+        "speed_index": 12408,
+        "interactive": 29458.94
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T06:52:33.076466",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7604.002,
+        "largest_contentful_paint": 19340.757,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9026.190999999762,
+        "speed_index": 11598,
+        "interactive": 28759.30899999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:50:51.127519",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9727.178,
+        "largest_contentful_paint": 24915.206,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 11518.922999999988,
+        "speed_index": 13524,
+        "interactive": 35604.185
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:51:28.155732",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8582.569,
+        "largest_contentful_paint": 18043.119,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 3435.276999999998,
+        "speed_index": 12347,
+        "interactive": 28379.323
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:51:44.986760",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9442.679,
+        "largest_contentful_paint": 20808.939,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 4592.741,
+        "speed_index": 13903,
+        "interactive": 27639.728
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:48:58.361288",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8873.448,
+        "largest_contentful_paint": 20592.958,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 8279.101999999999,
+        "speed_index": 12811,
+        "interactive": 28296.437
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:46:11.815681",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8550.485,
+        "largest_contentful_paint": 16265.848,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 7217.532999999999,
+        "speed_index": 11692,
+        "interactive": 28713.533
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:46:14.614080",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7937.22,
+        "largest_contentful_paint": 19522.974,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 9885.758,
+        "speed_index": 11961,
+        "interactive": 29955.353
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:52:27.546897",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9266.314,
+        "largest_contentful_paint": 19639.267,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 9597.661999999998,
+        "speed_index": 13230,
+        "interactive": 29608.381
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:49:03.772789",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8310.516,
+        "largest_contentful_paint": 20463.538,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9767.979999999894,
+        "speed_index": 12989,
+        "interactive": 30586.19399999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:49:06.811457",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9162.829,
+        "largest_contentful_paint": 20560.916,
+        "cumulative_layout_shift": 0.0031268619121930206,
+        "total_blocking_time": 9984.93499999999,
+        "speed_index": 13682,
+        "interactive": 30387.715
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:48:26.759403",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7838.551,
+        "largest_contentful_paint": 18067.129,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10476.839,
+        "speed_index": 11936,
+        "interactive": 30917.044
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T06:56:54.149946",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7774.037,
+        "largest_contentful_paint": 18731.142,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9574.165999999763,
+        "speed_index": 11409,
+        "interactive": 29030.442999999763
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:56:54.517084",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8068.961,
+        "largest_contentful_paint": 18498.741,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 9218.396,
+        "speed_index": 11853,
+        "interactive": 28440.655
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:47:56.093763",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8718.353,
+        "largest_contentful_paint": 20020.787,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 11522.980000000007,
+        "speed_index": 12841,
+        "interactive": 30675.496
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:47:57.076123",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9239.729,
+        "largest_contentful_paint": 20347.581,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 11721.036999999991,
+        "speed_index": 12663,
+        "interactive": 31513.631
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T06:46:02.458576",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8735.91,
+        "largest_contentful_paint": 21172.374,
+        "cumulative_layout_shift": 0.002432579651870575,
+        "total_blocking_time": 15070.339000000005,
+        "speed_index": 13332,
+        "interactive": 36526.64900000048
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-23T06:46:05.613771",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8458.068,
+        "largest_contentful_paint": 27059.633,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 15125.737999999985,
+        "speed_index": 14713,
+        "interactive": 37459.783
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:45:25.526409",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8637.558,
+        "largest_contentful_paint": 18589.029,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 8323.235999999886,
+        "speed_index": 12133,
+        "interactive": 29510.40899999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:45:31.343492",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8783.567,
+        "largest_contentful_paint": 18409.325,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 9599.204000000005,
+        "speed_index": 12251,
+        "interactive": 29018.377
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:49:52.492373",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9345.652,
+        "largest_contentful_paint": 24490.102,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10598.429000000006,
+        "speed_index": 13897,
+        "interactive": 30122.78
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:49:53.485109",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8826.459,
+        "largest_contentful_paint": 19991.047,
+        "cumulative_layout_shift": 0.0031268619121930206,
+        "total_blocking_time": 9358.976999999993,
+        "speed_index": 13462,
+        "interactive": 28455.122
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:48:21.621895",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8046.103,
+        "largest_contentful_paint": 19658.843,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 8435.280000000002,
+        "speed_index": 12131,
+        "interactive": 28801.02
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:48:22.769136",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8583.254,
+        "largest_contentful_paint": 19922.295,
+        "cumulative_layout_shift": 0.0032555100255878006,
+        "total_blocking_time": 9714.774,
+        "speed_index": 12745,
+        "interactive": 29688.376
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:46:46.359371",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8797.067,
+        "largest_contentful_paint": 22286.265,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 9846.713999999994,
+        "speed_index": 12902,
+        "interactive": 29483.88400000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-27T06:46:49.785782",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 8084.036,
+        "largest_contentful_paint": 19466.517,
+        "cumulative_layout_shift": 0.003964788189221894,
+        "total_blocking_time": 10232.843999999757,
+        "speed_index": 11916,
+        "interactive": 29708.747999999763
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:47:19.685105",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7888.816,
+        "largest_contentful_paint": 19265.322,
+        "cumulative_layout_shift": 0.0030272899182435427,
+        "total_blocking_time": 9557.53799999999,
+        "speed_index": 11773,
+        "interactive": 29399.59400000012
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:45:13.111225",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 12717.681,
+        "largest_contentful_paint": 24180.269,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 9113.271000000008,
+        "speed_index": 16832,
+        "interactive": 34051.973
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:49:44.232146",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7680.73,
+        "largest_contentful_paint": 16483.837,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 7806.365000000009,
+        "speed_index": 11420,
+        "interactive": 29415.673
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:45:25.621641",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9995.793,
+        "largest_contentful_paint": 23469.936,
+        "cumulative_layout_shift": 0.0014536395651296617,
+        "total_blocking_time": 10753.587000000001,
+        "speed_index": 15232,
+        "interactive": 38648.728
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:45:26.112692",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 9215.245,
+        "largest_contentful_paint": 23722.449,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 11686.243,
+        "speed_index": 14869,
+        "interactive": 34485.879
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:46:18.386347",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8338.035,
+        "largest_contentful_paint": 20583.728,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 13122.231999999989,
+        "speed_index": 13682,
+        "interactive": 35335.565
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:46:32.985661",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8835.777,
+        "largest_contentful_paint": 20681.304,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 13479.539999999994,
+        "speed_index": 14430,
+        "interactive": 35313.274
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:46:44.158064",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8137.279,
+        "largest_contentful_paint": 19871.087,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 14057.89399999999,
+        "speed_index": 13509,
+        "interactive": 35165.462
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:43:20.039885",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8087.127,
+        "largest_contentful_paint": 20001.658,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 12440.445999999984,
+        "speed_index": 13395,
+        "interactive": 36824.456
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:48:23.394193",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8392.947,
+        "largest_contentful_paint": 20534.921,
+        "cumulative_layout_shift": 0.003281146858931342,
+        "total_blocking_time": 14155.786999999997,
+        "speed_index": 14544,
+        "interactive": 34785.954
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:48:36.027013",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7660.595,
+        "largest_contentful_paint": 19426.456,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 12692.188999999755,
+        "speed_index": 12965,
+        "interactive": 34422.23699999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:47:11.165541",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8708.466,
+        "largest_contentful_paint": 23794.412,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 11257.539,
+        "speed_index": 14240,
+        "interactive": 34098.676
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:47:04.551322",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9081.304,
+        "largest_contentful_paint": 23402.417,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 10524.807999999997,
+        "speed_index": 14922,
+        "interactive": 34546.809
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:47:05.347602",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8478.32,
+        "largest_contentful_paint": 18657.996,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 11092.166999999992,
+        "speed_index": 13855,
+        "interactive": 34257.65100000024
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:46:59.340306",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9208.299,
+        "largest_contentful_paint": 23544.939,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 11995.457999999871,
+        "speed_index": 14603,
+        "interactive": 35857.196999999884
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:47:00.797005",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8437.512,
+        "largest_contentful_paint": 19651.327,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 13446.676999999989,
+        "speed_index": 13980,
+        "interactive": 36882.645
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:42:46.972144",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8735.086,
+        "largest_contentful_paint": 21934.622,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 10822.965000000004,
+        "speed_index": 14547,
+        "interactive": 33369.445
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:49:13.791377",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8394.869,
+        "largest_contentful_paint": 19359.306,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 11365.146999999886,
+        "speed_index": 14033,
+        "interactive": 37899.81699999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:49:16.418602",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8179.683,
+        "largest_contentful_paint": 20451.056,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 11049.857999999998,
+        "speed_index": 13900,
+        "interactive": 37460.483
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:47:54.415902",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7717.195,
+        "largest_contentful_paint": 17967.383,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 10579.434999999996,
+        "speed_index": 13152,
+        "interactive": 35555.21
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:47:49.064441",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7689.377,
+        "largest_contentful_paint": 19012.454,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 10671.835999999987,
+        "speed_index": 13502,
+        "interactive": 33969.262000000235
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:47:56.141470",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8185.943,
+        "largest_contentful_paint": 22893.846,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 11542.039999999994,
+        "speed_index": 14662,
+        "interactive": 38155.672
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:46:42.614678",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9333.926,
+        "largest_contentful_paint": 18943.397,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 10229.196999999882,
+        "speed_index": 14623,
+        "interactive": 34175.24199999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:43:52.898386",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8264.733,
+        "largest_contentful_paint": 23480.39,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 10057.696999999986,
+        "speed_index": 14462,
+        "interactive": 38588.138
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:45:56.190994",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9384.933,
+        "largest_contentful_paint": 23356.363,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 10294.922999999892,
+        "speed_index": 14997,
+        "interactive": 35171.54099999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:45:56.743800",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9612.91,
+        "largest_contentful_paint": 24756.03,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 12540.43999999988,
+        "speed_index": 15523,
+        "interactive": 34937.95199999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:47:36.540726",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8306.349,
+        "largest_contentful_paint": 23683.047,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 11615.803999999765,
+        "speed_index": 14619,
+        "interactive": 33763.095999999765
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:47:47.153313",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8274.222,
+        "largest_contentful_paint": 24729.285,
+        "cumulative_layout_shift": 0.003281146858931342,
+        "total_blocking_time": 12958.548999999766,
+        "speed_index": 15633,
+        "interactive": 34305.771999999764
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:47:53.938408",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8487.691,
+        "largest_contentful_paint": 22360.894,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 9497.865000000007,
+        "speed_index": 14334,
+        "interactive": 33765.188
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:47:27.507449",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8661.33,
+        "largest_contentful_paint": 22558.916,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 9667.658000000007,
+        "speed_index": 14395,
+        "interactive": 34035.925
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:47:30.780468",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7956.618,
+        "largest_contentful_paint": 23759.177,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 12780.876000000011,
+        "speed_index": 14333,
+        "interactive": 34194.977
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:44:04.900486",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7763.921,
+        "largest_contentful_paint": 25120.837,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 14376.930999999768,
+        "speed_index": 13792,
+        "interactive": 38711.737999999765
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:50:27.798651",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7921.35,
+        "largest_contentful_paint": 23331.862,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 12723.374000000003,
+        "speed_index": 14712,
+        "interactive": 36834.209
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:48:46.403127",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9806.145,
+        "largest_contentful_paint": 25815.187,
+        "cumulative_layout_shift": 0.003281146858931342,
+        "total_blocking_time": 12472.773000000001,
+        "speed_index": 16109,
+        "interactive": 35831.514
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:48:51.840849",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8674.008,
+        "largest_contentful_paint": 24182.274,
+        "cumulative_layout_shift": 0.0015532115590791394,
+        "total_blocking_time": 12734.20299999975,
+        "speed_index": 15529,
+        "interactive": 38258.87899999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:47:37.136772",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8135.028,
+        "largest_contentful_paint": 22578.516,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 10304.085000000006,
+        "speed_index": 14362,
+        "interactive": 34023.06100000012
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:47:40.063031",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8513.549,
+        "largest_contentful_paint": 22119.866,
+        "cumulative_layout_shift": 0.0014536395651296617,
+        "total_blocking_time": 9770.60199999999,
+        "speed_index": 14151,
+        "interactive": 33104.928000000116
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:46:28.618534",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8578.54,
+        "largest_contentful_paint": 17377.144,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 11702.75800000001,
+        "speed_index": 13643,
+        "interactive": 35886.8
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:46:30.145191",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8145.377,
+        "largest_contentful_paint": 18196.115,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 12682.835999999998,
+        "speed_index": 13487,
+        "interactive": 37552.742
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:45:34.587413",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8521.574,
+        "largest_contentful_paint": 22574.336,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 10038.437999999993,
+        "speed_index": 14930,
+        "interactive": 37164.718
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:45:43.708019",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8139.671,
+        "largest_contentful_paint": 23420.645,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 11002.18299999988,
+        "speed_index": 14444,
+        "interactive": 38267.40099999988
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:44:29.031847",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8374.311,
+        "largest_contentful_paint": 24529.396,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 15083.224999999771,
+        "speed_index": 15196,
+        "interactive": 34384.73099999976
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:42:53.399418",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8728.486,
+        "largest_contentful_paint": 23783.424,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 12215.43200000001,
+        "speed_index": 16290,
+        "interactive": 36902.938
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:42:55.818924",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8850.084,
+        "largest_contentful_paint": 23663.931,
+        "cumulative_layout_shift": 0.0034097949723261214,
+        "total_blocking_time": 10866.848000000002,
+        "speed_index": 14636,
+        "interactive": 34396.29
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:49:14.306464",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7938.138,
+        "largest_contentful_paint": 18058.752,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 12299.083999999999,
+        "speed_index": 13340,
+        "interactive": 37133.025
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-06T06:49:22.954472",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8177.549,
+        "largest_contentful_paint": 24627.659,
+        "cumulative_layout_shift": 0.003181574864981864,
+        "total_blocking_time": 15343.75,
+        "speed_index": 15188,
+        "interactive": 35602.03
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T06:48:06.462063",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9948.581,
+        "largest_contentful_paint": 25623.569,
+        "cumulative_layout_shift": 0.0017279352998522022,
+        "total_blocking_time": 12572.124999999995,
+        "speed_index": 15985,
+        "interactive": 35990.209
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:47:51.823258",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7501.219,
+        "largest_contentful_paint": 24167.861,
+        "cumulative_layout_shift": 0.004201296850090218,
+        "total_blocking_time": 13570.100999999986,
+        "speed_index": 13783,
+        "interactive": 34537.521
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-08T06:48:03.340775",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8139.047,
+        "largest_contentful_paint": 23315.702,
+        "cumulative_layout_shift": 0.0016818596724739194,
+        "total_blocking_time": 11050.930000000006,
+        "speed_index": 14191,
+        "interactive": 34240.721
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Montfort University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>De Montfort University</h1>
+                <p>https://www.dmu.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "De Montfort University",
+  "slug": "de-montfort-university",
+  "url": "https://www.dmu.ac.uk",
+  "total_tests": 82,
+  "last_updated": "2025-10-03T06:51:37.228694",
+  "week_averages": {
+    "mobile": {
+      "performance": 13.5,
+      "accessibility": 100,
+      "best_practices": 61.0,
+      "seo": 92.0
+    },
+    "desktop": {},
+    "total_tests": 2
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 12.0,
+      "accessibility": 100,
+      "best_practices": 61.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 12.0,
+      "accessibility": 100,
+      "best_practices": 61.0,
+      "seo": 92.0
+    },
+    "total_tests": 9
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T23:09:25.090321",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5239.681,
+        "largest_contentful_paint": 5494.867,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 24009.87500000002,
+        "speed_index": 14152,
+        "interactive": 37513.196
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:09:52.467594",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4637.509,
+        "largest_contentful_paint": 6130.8,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 26159.109000000008,
+        "speed_index": 18706,
+        "interactive": 37994.915
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:36:33.941806",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5271.094,
+        "largest_contentful_paint": 5813.89,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 21299.605999999992,
+        "speed_index": 9646,
+        "interactive": 33204.474
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:36:35.845951",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4770.921,
+        "largest_contentful_paint": 5212.66,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 19003.441000000003,
+        "speed_index": 14240,
+        "interactive": 29230.868
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:54:01.678848",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5128.752,
+        "largest_contentful_paint": 5982.981,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 25879.793000000005,
+        "speed_index": 20759,
+        "interactive": 38275.687
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:52:47.028177",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5262.874,
+        "largest_contentful_paint": 5631.616,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 18548.81799999976,
+        "speed_index": 11616,
+        "interactive": 30708.31199999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:52:48.947312",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4246.174,
+        "largest_contentful_paint": 4705.081,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 17629.354000000007,
+        "speed_index": 9725,
+        "interactive": 28415.491
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:52:48.574670",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4747.564,
+        "largest_contentful_paint": 5188.364,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 20995.904999999995,
+        "speed_index": 9829,
+        "interactive": 33346.438
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:52:59.125269",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4244.643,
+        "largest_contentful_paint": 4594.427,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 20833.249999999756,
+        "speed_index": 8058,
+        "interactive": 31926.534999999763
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:52:39.655475",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4975.158,
+        "largest_contentful_paint": 5282.925,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 20914.179000000007,
+        "speed_index": 15197,
+        "interactive": 32630.086
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:52:47.550629",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5093.635,
+        "largest_contentful_paint": 5093.635,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 19920.833000000013,
+        "speed_index": 17089,
+        "interactive": 32283.664
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:52:12.844340",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4883.68,
+        "largest_contentful_paint": 5952.799,
+        "cumulative_layout_shift": 0.42680188100928196,
+        "total_blocking_time": 26361.412999999982,
+        "speed_index": 17005,
+        "interactive": 39505.828
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-29T06:53:26.357304",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4910.323,
+        "largest_contentful_paint": 25270.946,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 26866.884999999995,
+        "speed_index": 19323,
+        "interactive": 39314.453
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:55:43.095534",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5062.957,
+        "largest_contentful_paint": 15456.175,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22994.32600000001,
+        "speed_index": 12283,
+        "interactive": 35654.048
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:55:45.313263",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4899.168,
+        "largest_contentful_paint": 15624.998,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23722.910999999996,
+        "speed_index": 16773,
+        "interactive": 36525.2
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:55:29.949126",
+      "scores": {
+        "performance": 8.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4550.273,
+        "largest_contentful_paint": 16259.011,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22763.09500000001,
+        "speed_index": 9012,
+        "interactive": 33809.167
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:55:33.905143",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4535.066,
+        "largest_contentful_paint": 19531.962,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22764.303999999986,
+        "speed_index": 11703,
+        "interactive": 37126.621
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:54:53.876244",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5529.764,
+        "largest_contentful_paint": 26398.189,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21969.75799999997,
+        "speed_index": 18870,
+        "interactive": 34525.419
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:54:55.790928",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5083.329,
+        "largest_contentful_paint": 22804.04,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21849.656000000006,
+        "speed_index": 17341,
+        "interactive": 34188.06000000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:55:41.814911",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5060.825,
+        "largest_contentful_paint": 23985.352,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25285.41299999999,
+        "speed_index": 18496,
+        "interactive": 37821.524
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:55:41.817711",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4864.246,
+        "largest_contentful_paint": 27056.647,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 26360.88700000002,
+        "speed_index": 20597,
+        "interactive": 39311.27200000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:52:01.691951",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4556.057,
+        "largest_contentful_paint": 14261.35,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24562.218000000008,
+        "speed_index": 14805,
+        "interactive": 36458.361
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:52:07.096737",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4403.737,
+        "largest_contentful_paint": 26159.889,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 26189.02699999998,
+        "speed_index": 21281,
+        "interactive": 38850.436
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:53:27.092982",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5433.316,
+        "largest_contentful_paint": 15938.562,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25087.226999999977,
+        "speed_index": 14946,
+        "interactive": 38390.214
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:55:36.744720",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4867.849,
+        "largest_contentful_paint": 22782.172,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22397.783,
+        "speed_index": 17895,
+        "interactive": 34511.818
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:55:39.312780",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4473.673,
+        "largest_contentful_paint": 16897.624,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21458.038999999986,
+        "speed_index": 16389,
+        "interactive": 33274.811
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:55:38.092972",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5057.94,
+        "largest_contentful_paint": 27471.986,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25321.73499999998,
+        "speed_index": 21021,
+        "interactive": 37873.285
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:55:44.622490",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5240.562,
+        "largest_contentful_paint": 28556.388,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22936.559999999998,
+        "speed_index": 20074,
+        "interactive": 35724.255
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:55:41.723044",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5378.143,
+        "largest_contentful_paint": 27531.776,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24777.34399999998,
+        "speed_index": 20733,
+        "interactive": 37743.31
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:53:08.373214",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4817.018,
+        "largest_contentful_paint": 21546.633,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24766.270999999997,
+        "speed_index": 18042,
+        "interactive": 37152.585
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:53:08.595024",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4437.037,
+        "largest_contentful_paint": 25348.966,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23961.604000000003,
+        "speed_index": 18731,
+        "interactive": 36129.654000000235
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:57:22.964367",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5704.348,
+        "largest_contentful_paint": 20393.584,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21201.084999999995,
+        "speed_index": 17578,
+        "interactive": 34427.01900000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:57:26.125979",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5478.442,
+        "largest_contentful_paint": 26834.696,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22741.16,
+        "speed_index": 20783,
+        "interactive": 35288.335
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:56:42.828860",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4828.048,
+        "largest_contentful_paint": 26398.29,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23433.962,
+        "speed_index": 18185,
+        "interactive": 36075.158
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:56:45.065869",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4992.215,
+        "largest_contentful_paint": 28178.356,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24333.276,
+        "speed_index": 20515,
+        "interactive": 37775.74
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:55:54.608996",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5924.059,
+        "largest_contentful_paint": 27901.239,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22765.872,
+        "speed_index": 21065,
+        "interactive": 35955.44500000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:56:04.497404",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4377.357,
+        "largest_contentful_paint": 14987.597,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21821.476000000006,
+        "speed_index": 11505,
+        "interactive": 37728.168
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:53:22.853170",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4451.145,
+        "largest_contentful_paint": 15537.109,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21352.542999999998,
+        "speed_index": 10697,
+        "interactive": 33326.691
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:53:26.706623",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4467.994,
+        "largest_contentful_paint": 20194.685,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23087.504999999994,
+        "speed_index": 16136,
+        "interactive": 38925.68
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:54:19.804301",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4687.354,
+        "largest_contentful_paint": 15995.391,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22082.062000000005,
+        "speed_index": 11897,
+        "interactive": 34818.534
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:54:19.971813",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4236.767,
+        "largest_contentful_paint": 14205.866,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21288.39500000002,
+        "speed_index": 10654,
+        "interactive": 37266.07
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:57:15.973225",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5197.552,
+        "largest_contentful_paint": 15342.576,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21421.062999999758,
+        "speed_index": 11745,
+        "interactive": 33958.14999999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:57:25.979974",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4517.377,
+        "largest_contentful_paint": 16890.8,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23265.809999999747,
+        "speed_index": 16587,
+        "interactive": 35253.28199999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:56:21.144676",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4714.655,
+        "largest_contentful_paint": 15178.798,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 23487.732000000015,
+        "speed_index": 17122,
+        "interactive": 36386.974
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:57:23.140057",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4595.98,
+        "largest_contentful_paint": 21305.383,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24236.187,
+        "speed_index": 18048,
+        "interactive": 36857.759
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:57:25.777551",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4297.072,
+        "largest_contentful_paint": 14475.609,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22551.81800000002,
+        "speed_index": 11167,
+        "interactive": 34618.923
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:57:34.012132",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4554.22,
+        "largest_contentful_paint": 16291.877,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22391.716000000008,
+        "speed_index": 11104,
+        "interactive": 34493.015
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:57:47.341090",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4444.162,
+        "largest_contentful_paint": 26482.774,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22521.198000000008,
+        "speed_index": 19210,
+        "interactive": 36521.842
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:57:09.057276",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5619.96,
+        "largest_contentful_paint": 23406.99,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24094.346000000005,
+        "speed_index": 22552,
+        "interactive": 37688.363
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:54:33.240998",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5150.823,
+        "largest_contentful_paint": 13729.044,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21393.090000000004,
+        "speed_index": 8712,
+        "interactive": 33978.28
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:54:37.932103",
+      "scores": {
+        "performance": 8.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4318.906,
+        "largest_contentful_paint": 12380.119,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22855.349000000002,
+        "speed_index": 9431,
+        "interactive": 33915.211
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:59:07.602036",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5078.141,
+        "largest_contentful_paint": 14611.654,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 22697.878999999983,
+        "speed_index": 11763,
+        "interactive": 35664.176
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:59:23.972787",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4380.601,
+        "largest_contentful_paint": 14228.329,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21920.15599999977,
+        "speed_index": 16119,
+        "interactive": 37159.33199999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:57:33.361007",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5002.616,
+        "largest_contentful_paint": 28225.123,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24816.064999999777,
+        "speed_index": 19866,
+        "interactive": 37241.453999999765
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:57:42.946758",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4807.663,
+        "largest_contentful_paint": 23735.559,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24219.145999999993,
+        "speed_index": 18300,
+        "interactive": 36986.877
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:58:20.158960",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4981.012,
+        "largest_contentful_paint": 15520.561,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24704.80899999999,
+        "speed_index": 12149,
+        "interactive": 37343.13200000048
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:58:45.102146",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4369.929,
+        "largest_contentful_paint": 14826.975,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24657.53800000001,
+        "speed_index": 12699,
+        "interactive": 37376.81
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:57:56.691714",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4779.943,
+        "largest_contentful_paint": 29906.361,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25634.03799999999,
+        "speed_index": 20782,
+        "interactive": 37335.724
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:54:40.268400",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5827.994,
+        "largest_contentful_paint": 30188.432,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25686.27500000003,
+        "speed_index": 22561,
+        "interactive": 39664.9
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T07:03:07.115869",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5679.401,
+        "largest_contentful_paint": 31555.744,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24499.483000000022,
+        "speed_index": 21455,
+        "interactive": 37846.62100000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:59:49.436678",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5214.753,
+        "largest_contentful_paint": 23647.779,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25961.557999999994,
+        "speed_index": 22563,
+        "interactive": 38642.116
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:59:18.228054",
+      "scores": {
+        "performance": 8.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4226.047,
+        "largest_contentful_paint": 15147.784,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 25223.240000000005,
+        "speed_index": 8958,
+        "interactive": 37110.67
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:53:44.049192",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5153.385,
+        "largest_contentful_paint": 27841.65,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 24170.218000000015,
+        "speed_index": 19057,
+        "interactive": 36826.07400000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:54:15.740830",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4527.114,
+        "largest_contentful_paint": 25868.993,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 27075.477999999985,
+        "speed_index": 20608,
+        "interactive": 39154.808
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:57:35.554734",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5002.908,
+        "largest_contentful_paint": 15924.627,
+        "cumulative_layout_shift": 0.4581858471520567,
+        "total_blocking_time": 21234.644999999986,
+        "speed_index": 12337,
+        "interactive": 33680.57700000024
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:53:23.844318",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5541.354,
+        "largest_contentful_paint": 24236.309,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 22543.12300000001,
+        "speed_index": 23768,
+        "interactive": 37772.771
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:50:55.422533",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6044.796,
+        "largest_contentful_paint": 21255.997,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 22279.28499999999,
+        "speed_index": 23782,
+        "interactive": 39100.421000000235
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:50:58.094442",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5216.01,
+        "largest_contentful_paint": 16192.256,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 22486.389000000003,
+        "speed_index": 19780,
+        "interactive": 38431.564
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:55:15.648694",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5130.38,
+        "largest_contentful_paint": 15133.116,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 21963.84699999977,
+        "speed_index": 21783,
+        "interactive": 35909.237999999765
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:50:13.576026",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5241.227,
+        "largest_contentful_paint": 23278.756,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 24863.09000000002,
+        "speed_index": 25190,
+        "interactive": 38869.611
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:54:49.903085",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4575.094,
+        "largest_contentful_paint": 14906.622,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 22499.950999999994,
+        "speed_index": 19704,
+        "interactive": 38990.78
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:50:32.039503",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5598.072,
+        "largest_contentful_paint": 26497.327,
+        "cumulative_layout_shift": 0.2656155731925539,
+        "total_blocking_time": 25047.282000000017,
+        "speed_index": 25758,
+        "interactive": 39493.672
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:48:38.506614",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4637.835,
+        "largest_contentful_paint": 5167.189,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 26438.560999999994,
+        "speed_index": 7138,
+        "interactive": 39650.743
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:53:19.150659",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5211.682,
+        "largest_contentful_paint": 5796.174,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 21906.851999999973,
+        "speed_index": 10607,
+        "interactive": 39316.094
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:53:25.279432",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4709.059,
+        "largest_contentful_paint": 5104.521,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 22168.930000000004,
+        "speed_index": 7895,
+        "interactive": 34530.399
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:48:39.464031",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5599.245,
+        "largest_contentful_paint": 5599.245,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 20932.147000000004,
+        "speed_index": 10835,
+        "interactive": 37357.202
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:53:55.960734",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4990.052,
+        "largest_contentful_paint": 5395.991,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 22365.88200000002,
+        "speed_index": 11144,
+        "interactive": 37339.896
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:54:05.923865",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5341.909,
+        "largest_contentful_paint": 5609.925,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 19881.652,
+        "speed_index": 15413,
+        "interactive": 36108.566
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:53:46.622928",
+      "scores": {
+        "performance": 11.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5743.468,
+        "largest_contentful_paint": 5743.468,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 23147.05799999977,
+        "speed_index": 9413,
+        "interactive": 39153.78799999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:52:48.848542",
+      "scores": {
+        "performance": 9.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4991.506,
+        "largest_contentful_paint": 6718.36,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 23409.721999999983,
+        "speed_index": 19912,
+        "interactive": 39611.219
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:52:02.490350",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4843.378,
+        "largest_contentful_paint": 5336.632,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 21595.26899999975,
+        "speed_index": 8941,
+        "interactive": 36953.63599999976
+      }
+    },
+    {
+      "name": "De Montfort University",
+      "url": "https://www.dmu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:51:37.228694",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4768.588,
+        "largest_contentful_paint": 5406.248,
+        "cumulative_layout_shift": 0.4169273068444696,
+        "total_blocking_time": 23380.468999999994,
+        "speed_index": 8990,
+        "interactive": 38607.948
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

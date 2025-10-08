@@ -1,0 +1,4488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Bath - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of Bath</h1>
+                <p>https://www.bath.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of Bath",
+  "slug": "university-of-bath",
+  "url": "https://www.bath.ac.uk",
+  "total_tests": 200,
+  "last_updated": "2025-10-08T06:36:51.168497",
+  "week_averages": {
+    "mobile": {
+      "performance": 26.0,
+      "accessibility": 99.28571428571429,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 26.0,
+      "accessibility": 99.33333333333333,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "total_tests": 13
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 26.24137931034483,
+      "accessibility": 99.17241379310344,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 26.346153846153847,
+      "accessibility": 99.1923076923077,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "total_tests": 55
+  },
+  "trend": "up",
+  "results": [
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T22:53:05.350178",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4325.653,
+        "largest_contentful_paint": 15472.151,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8674.031999999997,
+        "speed_index": 13536,
+        "interactive": 18171.405
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T22:53:13.932719",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4587.27,
+        "largest_contentful_paint": 15701.323,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8421.656000000003,
+        "speed_index": 13377,
+        "interactive": 22362.157
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:21:13.873450",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5130.984,
+        "largest_contentful_paint": 18131.016,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6487.133999999999,
+        "speed_index": 13047,
+        "interactive": 33220.58
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:37:54.637906",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4690.153,
+        "largest_contentful_paint": 16588.198,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9079.030000000006,
+        "speed_index": 14237,
+        "interactive": 18607.346
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:37:54.760580",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5035.261,
+        "largest_contentful_paint": 15499.239,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8789.100000000002,
+        "speed_index": 14014,
+        "interactive": 19005.567
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:38:49.620970",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5127.736,
+        "largest_contentful_paint": 20635.214,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5894.367000000001,
+        "speed_index": 12487,
+        "interactive": 29036.282
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:39:00.607637",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4325.068,
+        "largest_contentful_paint": 19078.139,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7348.126000000001,
+        "speed_index": 13284,
+        "interactive": 28863.272
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:36:43.673085",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5420.263,
+        "largest_contentful_paint": 10523.179,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6836.516999999942,
+        "speed_index": 11760,
+        "interactive": 14579.40299999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:36:54.069813",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4859.862,
+        "largest_contentful_paint": 8939.554,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7216.524000000003,
+        "speed_index": 12123,
+        "interactive": 14670.064
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:38:17.252911",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5241.446,
+        "largest_contentful_paint": 17207.589,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8288.827999999996,
+        "speed_index": 14258,
+        "interactive": 18631.09600000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:38:42.272816",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5068.163,
+        "largest_contentful_paint": 16473.802,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7348.296999999998,
+        "speed_index": 13523,
+        "interactive": 28741.729
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:37:26.310243",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5004.467,
+        "largest_contentful_paint": 17310.088,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9160.402999999995,
+        "speed_index": 14063,
+        "interactive": 29394.692
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:37:47.031862",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5090.594,
+        "largest_contentful_paint": 16307.465,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8334.128999999994,
+        "speed_index": 13597,
+        "interactive": 21964.77
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:34:24.364308",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5239.69,
+        "largest_contentful_paint": 16240.042,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8682.616000000004,
+        "speed_index": 14735,
+        "interactive": 19304.432
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:34:24.917152",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4771.872,
+        "largest_contentful_paint": 16190.911,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10038.585000000006,
+        "speed_index": 15013,
+        "interactive": 21860.18200000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-29T06:37:08.182034",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4893.495,
+        "largest_contentful_paint": 20267.059,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6139.881999999994,
+        "speed_index": 12551,
+        "interactive": 28831.285
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:39:22.129021",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5568.22,
+        "largest_contentful_paint": 7759.358,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4787.452999999993,
+        "speed_index": 11072,
+        "interactive": 12688.684
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:39:27.685167",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4488.859,
+        "largest_contentful_paint": 7205.845,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5140.144,
+        "speed_index": 10084,
+        "interactive": 11683.655
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:38:13.956798",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4957.508,
+        "largest_contentful_paint": 16214.062,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9133.924000000003,
+        "speed_index": 14536,
+        "interactive": 28978.544
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:39:05.813422",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5416.18,
+        "largest_contentful_paint": 15773.825,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7301.090999999879,
+        "speed_index": 12907,
+        "interactive": 23292.01399999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:39:08.554255",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4964.673,
+        "largest_contentful_paint": 20852.547,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5829.174999999995,
+        "speed_index": 12627,
+        "interactive": 23005.157
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:39:19.362810",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5014.134,
+        "largest_contentful_paint": 20522.223,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6172.6990000000005,
+        "speed_index": 12507,
+        "interactive": 29304.265
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:38:01.120796",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4898.422,
+        "largest_contentful_paint": 17368.234,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8237.261999999944,
+        "speed_index": 13927,
+        "interactive": 20515.12199999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:35:10.630080",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4900.112,
+        "largest_contentful_paint": 16219.137,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9982.191999999875,
+        "speed_index": 13520,
+        "interactive": 28494.44499999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T06:35:12.362799",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5117.077,
+        "largest_contentful_paint": 17123.405,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11287.640000000014,
+        "speed_index": 14362,
+        "interactive": 29098.491
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:37:08.745815",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5140.525,
+        "largest_contentful_paint": 15518.047,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7550.279999999877,
+        "speed_index": 13334,
+        "interactive": 28542.51899999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:37:13.680834",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4603.722,
+        "largest_contentful_paint": 15451.631,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7825.743999999879,
+        "speed_index": 13073,
+        "interactive": 31834.84199999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:40:41.636067",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4211.876,
+        "largest_contentful_paint": 20093.537,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5760.429999999998,
+        "speed_index": 12152,
+        "interactive": 22174.00800000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-07T06:40:45.745707",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4138.302,
+        "largest_contentful_paint": 18057.092,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6749.643000000004,
+        "speed_index": 12333,
+        "interactive": 21947.906
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:38:22.486175",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4289.73,
+        "largest_contentful_paint": 7728.653,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 3686.905999999879,
+        "speed_index": 9570,
+        "interactive": 12589.25899999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:38:23.972165",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4543.394,
+        "largest_contentful_paint": 7880.385,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4976.482999999995,
+        "speed_index": 10749,
+        "interactive": 12918.117
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:37:42.399437",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4638.198,
+        "largest_contentful_paint": 8129.624,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7162.638999999998,
+        "speed_index": 11927,
+        "interactive": 14424.06000000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:38:34.890858",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4818.051,
+        "largest_contentful_paint": 8884.847,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4883.807999999999,
+        "speed_index": 11004,
+        "interactive": 12951.177
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:39:31.806663",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4784.238,
+        "largest_contentful_paint": 15184.298,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7582.5080000000025,
+        "speed_index": 12575,
+        "interactive": 16581.289
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:39:33.754423",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4988.433,
+        "largest_contentful_paint": 15693.292,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7364.190999999996,
+        "speed_index": 12628,
+        "interactive": 16656.319
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:35:45.651828",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4486.219,
+        "largest_contentful_paint": 15817.942,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9462.117999999868,
+        "speed_index": 13411,
+        "interactive": 25053.71999999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:35:46.216381",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4743.053,
+        "largest_contentful_paint": 15927.465,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10358.480999999996,
+        "speed_index": 13651,
+        "interactive": 29777.484
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:36:29.333055",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4460.3,
+        "largest_contentful_paint": 16368.101,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9881.114000000001,
+        "speed_index": 14583,
+        "interactive": 28557.13
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:36:32.349201",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4502.984,
+        "largest_contentful_paint": 15780.296,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10410.282000000007,
+        "speed_index": 14503,
+        "interactive": 24864.693
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:41:09.019074",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5330.737,
+        "largest_contentful_paint": 15561.706,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7885.589000000002,
+        "speed_index": 13422,
+        "interactive": 29196.424
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:41:31.856058",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4892.168,
+        "largest_contentful_paint": 15312.456,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8772.590000000011,
+        "speed_index": 13725,
+        "interactive": 28055.519
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:39:57.860158",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5100.31,
+        "largest_contentful_paint": 19145.723,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10691.188999999995,
+        "speed_index": 15649,
+        "interactive": 29141.071
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:40:07.589281",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4081.286,
+        "largest_contentful_paint": 18983.418,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11256.691999999992,
+        "speed_index": 16690,
+        "interactive": 28741.19700000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:39:07.060752",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5460.381,
+        "largest_contentful_paint": 10900.082,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7806.614,
+        "speed_index": 12847,
+        "interactive": 15429.27500000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:39:08.108172",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5309.745,
+        "largest_contentful_paint": 11551.461,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 8486.602999999997,
+        "speed_index": 13541,
+        "interactive": 16453.409
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T06:40:00.548786",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4673.58,
+        "largest_contentful_paint": 23767.803,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8704.604,
+        "speed_index": 14890,
+        "interactive": 28429.6
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T06:40:04.966602",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4509.758,
+        "largest_contentful_paint": 25958.193,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7551.671000000005,
+        "speed_index": 13847,
+        "interactive": 28303.773
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:36:53.604341",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4726.761,
+        "largest_contentful_paint": 19534.571,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10547.29699999999,
+        "speed_index": 15006,
+        "interactive": 29476.207
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:37:03.015533",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5004.889,
+        "largest_contentful_paint": 19651.64,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8943.147000000008,
+        "speed_index": 15306,
+        "interactive": 29204.322
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:36:50.221030",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4774.049,
+        "largest_contentful_paint": 15712.055,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6815.024,
+        "speed_index": 12602,
+        "interactive": 16038.407
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:36:50.377447",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4656.147,
+        "largest_contentful_paint": 15580.271,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6881.9909999999345,
+        "speed_index": 12158,
+        "interactive": 16068.17899999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:40:54.457453",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4481.227,
+        "largest_contentful_paint": 23313.204,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8510.228,
+        "speed_index": 14659,
+        "interactive": 29398.366
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:39:56.659002",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4687.481,
+        "largest_contentful_paint": 14851.767,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8300.680999999999,
+        "speed_index": 13317,
+        "interactive": 18148.891000000058
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:40:07.845804",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4616.852,
+        "largest_contentful_paint": 14557.898,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8038.754000000003,
+        "speed_index": 12276,
+        "interactive": 18976.71500000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:40:30.870214",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5082.145,
+        "largest_contentful_paint": 14315.343,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7508.2000000000035,
+        "speed_index": 12773,
+        "interactive": 16937.663
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:40:34.151804",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4547.898,
+        "largest_contentful_paint": 14344.083,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7392.589999999995,
+        "speed_index": 12492,
+        "interactive": 16637.857000000058
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:40:26.794273",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5199.499,
+        "largest_contentful_paint": 10052.712,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4835.168000000001,
+        "speed_index": 11191,
+        "interactive": 13109.683
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:40:30.236520",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4109.415,
+        "largest_contentful_paint": 9164.137,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5238.99099999994,
+        "speed_index": 10166,
+        "interactive": 11684.13199999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:40:24.276033",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4610.316,
+        "largest_contentful_paint": 10940.505,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6772.088000000003,
+        "speed_index": 12451,
+        "interactive": 15187.993000000119
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:40:56.260281",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4570.39,
+        "largest_contentful_paint": 10678.161,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5591.281000000005,
+        "speed_index": 11717,
+        "interactive": 15086.878
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:37:13.374761",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4887.62,
+        "largest_contentful_paint": 14121.851,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9836.797999999999,
+        "speed_index": 12964,
+        "interactive": 29637.21200000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:37:19.690285",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5062.355,
+        "largest_contentful_paint": 15025.301,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10001.901999999878,
+        "speed_index": 14414,
+        "interactive": 20048.52099999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:37:44.028365",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4196.719,
+        "largest_contentful_paint": 10054.507,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5459.417000000002,
+        "speed_index": 10710,
+        "interactive": 12587.125
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:37:45.925858",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4914.047,
+        "largest_contentful_paint": 10858.246,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5636.0560000000005,
+        "speed_index": 11588,
+        "interactive": 13491.256
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:42:56.423535",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3938.466,
+        "largest_contentful_paint": 14328.355,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7920.606000000003,
+        "speed_index": 13018,
+        "interactive": 21884.40600000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:42:58.041167",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4186.646,
+        "largest_contentful_paint": 14097.217,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6526.041999999997,
+        "speed_index": 12137,
+        "interactive": 18122.77600000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:41:05.052308",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4622.386,
+        "largest_contentful_paint": 10237.405,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5043.109999999999,
+        "speed_index": 10972,
+        "interactive": 12787.836
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:41:05.174256",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4432.084,
+        "largest_contentful_paint": 9945.097,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5302.307999999999,
+        "speed_index": 10674,
+        "interactive": 12548.237
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:42:23.313469",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5573.203,
+        "largest_contentful_paint": 14527.407,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7060.863999999998,
+        "speed_index": 12499,
+        "interactive": 16501.624
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:39:57.734323",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5366.048,
+        "largest_contentful_paint": 10760.931,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7647.332999999998,
+        "speed_index": 13317,
+        "interactive": 15981.277
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:40:00.734357",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5092.512,
+        "largest_contentful_paint": 11077.881,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7018.211,
+        "speed_index": 12528,
+        "interactive": 14678.676
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:41:17.981643",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4521.871,
+        "largest_contentful_paint": 14183.188,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8737.428,
+        "speed_index": 12153,
+        "interactive": 18580.228
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:42:22.765858",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4411.544,
+        "largest_contentful_paint": 14144.26,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7093.746999999881,
+        "speed_index": 12590,
+        "interactive": 25767.94999999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:36:35.697279",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4276.543,
+        "largest_contentful_paint": 14233.911,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10840.311999999994,
+        "speed_index": 14785,
+        "interactive": 29140.96000000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T06:36:37.390759",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4573.651,
+        "largest_contentful_paint": 13832.552,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10083.666999999998,
+        "speed_index": 13244,
+        "interactive": 23642.925
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-03T06:37:03.141345",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4778.179,
+        "largest_contentful_paint": 14522.019,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8307.319999999998,
+        "speed_index": 12810,
+        "interactive": 28841.491
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:37:46.523978",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4448.729,
+        "largest_contentful_paint": 15693.112,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7164.398999999994,
+        "speed_index": 13040,
+        "interactive": 17177.904
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T06:45:27.201161",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4525.152,
+        "largest_contentful_paint": 14700.052,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8281.23,
+        "speed_index": 12388,
+        "interactive": 21303.18200000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:45:33.510001",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4983.701,
+        "largest_contentful_paint": 14779.409,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8665.675000000003,
+        "speed_index": 12337,
+        "interactive": 28435.552000000058
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:41:52.232789",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4936.927,
+        "largest_contentful_paint": 13917.446,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8637.277999999991,
+        "speed_index": 12669,
+        "interactive": 20154.114
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:41:52.744271",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4355.119,
+        "largest_contentful_paint": 14982.864,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8436.739,
+        "speed_index": 13155,
+        "interactive": 21795.196
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:42:04.160421",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4951.757,
+        "largest_contentful_paint": 14196.709,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 12322.326999999994,
+        "speed_index": 14054,
+        "interactive": 29701.635
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:42:04.327767",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4793.362,
+        "largest_contentful_paint": 14115.92,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10714.563999999948,
+        "speed_index": 13134,
+        "interactive": 28201.06699999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-07T06:41:39.100492",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4109.864,
+        "largest_contentful_paint": 14046.632,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10572.71,
+        "speed_index": 14370,
+        "interactive": 22627.958
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-07T06:41:44.509921",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4656.783,
+        "largest_contentful_paint": 13927.663,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11091.588999999998,
+        "speed_index": 13486,
+        "interactive": 28818.825
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:41:50.836757",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4819.925,
+        "largest_contentful_paint": 13922.591,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6076.763999999998,
+        "speed_index": 11933,
+        "interactive": 22513.281
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-08T06:41:51.209992",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4778.012,
+        "largest_contentful_paint": 14345.953,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7138.068999999941,
+        "speed_index": 12117,
+        "interactive": 16018.30699999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:37:58.964264",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4792.132,
+        "largest_contentful_paint": 15817.314,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6105.689000000002,
+        "speed_index": 11549,
+        "interactive": 30890.973
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:37:59.322964",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4521.467,
+        "largest_contentful_paint": 15605.725,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6608.0819999999985,
+        "speed_index": 12071,
+        "interactive": 28702.278
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-10T06:37:11.858425",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4167.114,
+        "largest_contentful_paint": 8284.427,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4639.470000000002,
+        "speed_index": 10425,
+        "interactive": 11962.623
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T06:37:16.575523",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4889.496,
+        "largest_contentful_paint": 9124.822,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5381.365999999995,
+        "speed_index": 11312,
+        "interactive": 12857.685
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T06:41:54.191063",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4553.293,
+        "largest_contentful_paint": 13863.675,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7356.47299999999,
+        "speed_index": 12088,
+        "interactive": 16757.189
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:42:11.703536",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4417.475,
+        "largest_contentful_paint": 13953.638,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6788.987999999945,
+        "speed_index": 12397,
+        "interactive": 21335.22899999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:39:01.148499",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4008.882,
+        "largest_contentful_paint": 5964.794,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5187.781000000001,
+        "speed_index": 10397,
+        "interactive": 11512.82700000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-12T06:39:04.540682",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4707.135,
+        "largest_contentful_paint": 7257.216,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5006.086999999881,
+        "speed_index": 10333,
+        "interactive": 11796.140999999881
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:39:29.260920",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4799.804,
+        "largest_contentful_paint": 14331.072,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7359.031000000006,
+        "speed_index": 12660,
+        "interactive": 21047.10100000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-13T06:39:59.017177",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4413.178,
+        "largest_contentful_paint": 14906.663,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6833.873000000003,
+        "speed_index": 12147,
+        "interactive": 21184.95
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T06:38:54.532547",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4805.73,
+        "largest_contentful_paint": 15175.654,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8366.382999999998,
+        "speed_index": 12337,
+        "interactive": 28559.56700000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:38:34.441796",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5615.247,
+        "largest_contentful_paint": 11057.913,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7968.934999999997,
+        "speed_index": 12284,
+        "interactive": 24775.227
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T06:38:35.699290",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5785.498,
+        "largest_contentful_paint": 10382.428,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8337.45199999995,
+        "speed_index": 12268,
+        "interactive": 28104.83799999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:36:22.352490",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5176.75,
+        "largest_contentful_paint": 11116.601,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5844.506000000002,
+        "speed_index": 11651,
+        "interactive": 20232.323
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-17T06:36:27.439475",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5380.051,
+        "largest_contentful_paint": 13180.943,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4573.1649999998845,
+        "speed_index": 11227,
+        "interactive": 13375.62899999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-17T06:36:32.603689",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5645.022,
+        "largest_contentful_paint": 13665.152,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5121.688000000001,
+        "speed_index": 12285,
+        "interactive": 13910.681
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-18T06:41:41.175662",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5107.526,
+        "largest_contentful_paint": 12014.945,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6760.9900000000025,
+        "speed_index": 12367,
+        "interactive": 17254.625
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:41:55.894565",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4165.496,
+        "largest_contentful_paint": 12982.76,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6780.312999999996,
+        "speed_index": 12123,
+        "interactive": 30623.308
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:37:52.597292",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5708.486,
+        "largest_contentful_paint": 14737.473,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9778.877999999999,
+        "speed_index": 13628,
+        "interactive": 29484.692
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:37:56.629099",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5917.765,
+        "largest_contentful_paint": 14932.287,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9868.567999999992,
+        "speed_index": 14095,
+        "interactive": 28647.248
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T06:37:06.910671",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5050.584,
+        "largest_contentful_paint": 16418.99,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10117.864000000012,
+        "speed_index": 15192,
+        "interactive": 21872.981
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:37:16.658335",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4892.241,
+        "largest_contentful_paint": 14574.055,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9854.965000000007,
+        "speed_index": 14704,
+        "interactive": 22433.11700000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T06:46:36.492787",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4975.72,
+        "largest_contentful_paint": 15459.194,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7418.265999999876,
+        "speed_index": 13185,
+        "interactive": 21400.32299999988
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T06:46:53.065745",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4945.66,
+        "largest_contentful_paint": 16031.27,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6915.9709999999895,
+        "speed_index": 13052,
+        "interactive": 17080.047
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:36:33.176429",
+      "scores": {
+        "performance": 20.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5648.926,
+        "largest_contentful_paint": 16420.017,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6270.512999999997,
+        "speed_index": 13142,
+        "interactive": 19709.883
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:37:23.191359",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5277.429,
+        "largest_contentful_paint": 15942.571,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5540.242,
+        "speed_index": 12751,
+        "interactive": 19114.009
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T06:34:25.086743",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4987.817,
+        "largest_contentful_paint": 15565.039,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 16195.004,
+        "speed_index": 17355,
+        "interactive": 36932.526
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:34:53.267009",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5391.316,
+        "largest_contentful_paint": 14776.261,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10941.925000000005,
+        "speed_index": 13817,
+        "interactive": 30645.975
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:35:21.129600",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5423.336,
+        "largest_contentful_paint": 15181.597,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11184.569,
+        "speed_index": 14690,
+        "interactive": 29350.869
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:39:25.297181",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5099.969,
+        "largest_contentful_paint": 7268.906,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5392.102000000003,
+        "speed_index": 11750,
+        "interactive": 14068.388
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:39:28.277638",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4992.306,
+        "largest_contentful_paint": 8302.47,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4825.402000000004,
+        "speed_index": 10845,
+        "interactive": 12299.91
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:37:19.633432",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5733.449,
+        "largest_contentful_paint": 8074.47,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7215.839999999998,
+        "speed_index": 13527,
+        "interactive": 16714.294
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:37:21.359847",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6149.531,
+        "largest_contentful_paint": 8503.681,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6878.369000000002,
+        "speed_index": 13596,
+        "interactive": 16192.467
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:35:48.732413",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5200.771,
+        "largest_contentful_paint": 15384.114,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6684.886999999999,
+        "speed_index": 13024,
+        "interactive": 17096.761
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-27T06:36:32.986343",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4491.117,
+        "largest_contentful_paint": 15663.063,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7180.556999999995,
+        "speed_index": 12755,
+        "interactive": 22055.616
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:36:01.008321",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4937.544,
+        "largest_contentful_paint": 15857.228,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8794.118999999999,
+        "speed_index": 14026,
+        "interactive": 18426.596
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:36:18.942749",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5272.603,
+        "largest_contentful_paint": 16684.539,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9231.339999999935,
+        "speed_index": 13481,
+        "interactive": 29333.018999999942
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-29T06:36:06.371764",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4659.68,
+        "largest_contentful_paint": 15168.166,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9256.306,
+        "speed_index": 13716,
+        "interactive": 24696.05
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-29T06:36:23.575216",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4937.558,
+        "largest_contentful_paint": 14933.808,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8435.126000000002,
+        "speed_index": 13497,
+        "interactive": 18336.39500000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-30T06:32:47.391309",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4984.92,
+        "largest_contentful_paint": 12488.127,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5379.634999999998,
+        "speed_index": 11820,
+        "interactive": 13360.933
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-30T06:32:52.670803",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4522.432,
+        "largest_contentful_paint": 11883.744,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5063.436000000003,
+        "speed_index": 10986,
+        "interactive": 12450.683
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:33:13.363605",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4549.088,
+        "largest_contentful_paint": 11901.715,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4984.016000000001,
+        "speed_index": 5778,
+        "interactive": 12078.626
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:34:16.316486",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5189.933,
+        "largest_contentful_paint": 12561.175,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4991.825000000004,
+        "speed_index": 6535,
+        "interactive": 12969.432
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:39:01.725829",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4240.174,
+        "largest_contentful_paint": 14694.861,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9541.245000000003,
+        "speed_index": 9042,
+        "interactive": 19159.453
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T06:37:47.257401",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5077.266,
+        "largest_contentful_paint": 15044.734,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9899.578000000009,
+        "speed_index": 14605,
+        "interactive": 28977.993
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T06:38:05.255966",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5771.195,
+        "largest_contentful_paint": 13491.235,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9572.953000000001,
+        "speed_index": 14543,
+        "interactive": 29475.642
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:34:37.122666",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3949.41,
+        "largest_contentful_paint": 5364.233,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5011.176999999943,
+        "speed_index": 10377,
+        "interactive": 11608.968999999941
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:34:41.348652",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4660.011,
+        "largest_contentful_paint": 6751.54,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6155.430000000006,
+        "speed_index": 11986,
+        "interactive": 13356.349
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:34:43.505682",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3998.804,
+        "largest_contentful_paint": 13918.327,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8358.860000000006,
+        "speed_index": 12981,
+        "interactive": 24130.39
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:35:41.489589",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4937.8,
+        "largest_contentful_paint": 14395.789,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6095.182000000005,
+        "speed_index": 11674,
+        "interactive": 15666.718
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:34:47.924872",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4523.955,
+        "largest_contentful_paint": 11943.554,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6440.9029999999375,
+        "speed_index": 11606,
+        "interactive": 13479.25699999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:35:41.437127",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5109.004,
+        "largest_contentful_paint": 12154.185,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4770.419999999997,
+        "speed_index": 11590,
+        "interactive": 12983.942
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:31:37.494233",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4423.599,
+        "largest_contentful_paint": 14961.629,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9093.345000000008,
+        "speed_index": 12489,
+        "interactive": 23803.686
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:31:38.664043",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5292.016,
+        "largest_contentful_paint": 14218.408,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9345.054000000004,
+        "speed_index": 13165,
+        "interactive": 28513.94
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:32:30.401239",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4768.842,
+        "largest_contentful_paint": 13991.874,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10271.296999999999,
+        "speed_index": 12981,
+        "interactive": 28679.25
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:32:36.214565",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4493.29,
+        "largest_contentful_paint": 14055.435,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10772.131000000005,
+        "speed_index": 13207,
+        "interactive": 28881.354
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:37:13.347214",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3728.739,
+        "largest_contentful_paint": 6613.198,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5168.242999999941,
+        "speed_index": 10039,
+        "interactive": 11634.603999999941
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:37:13.685227",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4206.271,
+        "largest_contentful_paint": 6781.088,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4327.385000000001,
+        "speed_index": 9840,
+        "interactive": 11373.419
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:35:40.795581",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4699.718,
+        "largest_contentful_paint": 8140.808,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 7627.971000000004,
+        "speed_index": 12061,
+        "interactive": 14566.751
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:36:24.771383",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4786.442,
+        "largest_contentful_paint": 8316.163,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 4826.349999999997,
+        "speed_index": 10428,
+        "interactive": 17236.625
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:35:49.797524",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4333.302,
+        "largest_contentful_paint": 14356.46,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7658.589999999762,
+        "speed_index": 12755,
+        "interactive": 30181.80899999976
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:36:23.787604",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4275.288,
+        "largest_contentful_paint": 14133.796,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8027.940000000002,
+        "speed_index": 12704,
+        "interactive": 33650.476
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:36:51.630755",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5380.881,
+        "largest_contentful_paint": 14496.027,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7627.228000000008,
+        "speed_index": 12004,
+        "interactive": 20855.102
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:37:07.962561",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4336.173,
+        "largest_contentful_paint": 14816.033,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7485.476999999997,
+        "speed_index": 12887,
+        "interactive": 17326.437
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:35:11.220840",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5042.345,
+        "largest_contentful_paint": 14137.877,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7934.168000000002,
+        "speed_index": 12772,
+        "interactive": 17640.592
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:35:53.054574",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4198.658,
+        "largest_contentful_paint": 13853.212,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6990.4839999999995,
+        "speed_index": 12507,
+        "interactive": 21084.18
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:32:21.452758",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4416.074,
+        "largest_contentful_paint": 14026.444,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6608.4980000000005,
+        "speed_index": 12166,
+        "interactive": 16090.526000000238
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:32:46.073707",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4359.112,
+        "largest_contentful_paint": 14062.387,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6432.771999999996,
+        "speed_index": 12413,
+        "interactive": 21231.374
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:33:20.930307",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4559.82,
+        "largest_contentful_paint": 14658.505,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8060.912999999994,
+        "speed_index": 12834,
+        "interactive": 19271.57
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:33:21.871557",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4472.205,
+        "largest_contentful_paint": 14183.513,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6378.469999999993,
+        "speed_index": 11805,
+        "interactive": 17747.191
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:38:27.875250",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4559.907,
+        "largest_contentful_paint": 14658.848,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8081.464000000001,
+        "speed_index": 12841,
+        "interactive": 22117.403
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:38:38.754476",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3983.318,
+        "largest_contentful_paint": 14923.496,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6666.796000000004,
+        "speed_index": 12002,
+        "interactive": 19904.184
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:36:31.371012",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4744.57,
+        "largest_contentful_paint": 9241.045,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5875.070999999939,
+        "speed_index": 11646,
+        "interactive": 16083.76199999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:36:37.037014",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5208.792,
+        "largest_contentful_paint": 10101.545,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5582.035999999998,
+        "speed_index": 11688,
+        "interactive": 16391.072
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:36:24.649888",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4954.677,
+        "largest_contentful_paint": 14009.426,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 12219.711999999989,
+        "speed_index": 14463,
+        "interactive": 32098.67
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:36:25.319125",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5514.872,
+        "largest_contentful_paint": 14813.849,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10054.33600000001,
+        "speed_index": 14018,
+        "interactive": 28755.163
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:35:52.039766",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5244.922,
+        "largest_contentful_paint": 19338.341,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6319.578000000004,
+        "speed_index": 12793,
+        "interactive": 19835.046
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:36:02.963734",
+      "scores": {
+        "performance": 20.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5029.536,
+        "largest_contentful_paint": 20881.463,
+        "cumulative_layout_shift": 0.15216526026194238,
+        "total_blocking_time": 5358.515000000001,
+        "speed_index": 11612,
+        "interactive": 12918.699
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-20T06:32:49.538456",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5166.308,
+        "largest_contentful_paint": 6054.54,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7641.014999999996,
+        "speed_index": 11494,
+        "interactive": 17059.431
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:33:07.331122",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4990.818,
+        "largest_contentful_paint": 6116.273,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7050.057000000009,
+        "speed_index": 10889,
+        "interactive": 20104.008
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:35:27.811233",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4610.44,
+        "largest_contentful_paint": 6020.253,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6976.980999999996,
+        "speed_index": 10489,
+        "interactive": 20363.45
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:35:30.088323",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4815.633,
+        "largest_contentful_paint": 5973.741,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6105.056999999938,
+        "speed_index": 10201,
+        "interactive": 19324.31099999994
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:37:51.477078",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4449.259,
+        "largest_contentful_paint": 6981.965,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6063.261000000002,
+        "speed_index": 10174,
+        "interactive": 28395.527
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:38:11.561835",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4637.984,
+        "largest_contentful_paint": 5674.691,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5409.996000000005,
+        "speed_index": 9704,
+        "interactive": 13788.947
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-23T06:36:28.262135",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4586.411,
+        "largest_contentful_paint": 5809.836,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6769.096000000004,
+        "speed_index": 10524,
+        "interactive": 15468.331
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:37:07.273805",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4455.164,
+        "largest_contentful_paint": 6846.119,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6602.577999999998,
+        "speed_index": 10580,
+        "interactive": 20814.35400000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:36:58.711446",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4375.738,
+        "largest_contentful_paint": 6853.28,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7957.485000000001,
+        "speed_index": 10988,
+        "interactive": 16453.404
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:37:07.094817",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3998.783,
+        "largest_contentful_paint": 6912.737,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8036.018000000002,
+        "speed_index": 10297,
+        "interactive": 28625.26
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-25T06:36:17.378973",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4067.526,
+        "largest_contentful_paint": 7783.213,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8690.13900000001,
+        "speed_index": 11788,
+        "interactive": 17625.223
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:36:37.867603",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4717.876,
+        "largest_contentful_paint": 6107.421,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6233.401000000004,
+        "speed_index": 10293,
+        "interactive": 14944.723
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:37:15.212139",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4305.655,
+        "largest_contentful_paint": 6772.642,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5983.086000000001,
+        "speed_index": 10278,
+        "interactive": 21650.82
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:32:02.021971",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4679.165,
+        "largest_contentful_paint": 7288.656,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11761.361,
+        "speed_index": 13748,
+        "interactive": 23554.40000000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:32:07.132842",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4465.16,
+        "largest_contentful_paint": 6233.126,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 12210.934000000003,
+        "speed_index": 12318,
+        "interactive": 31104.792
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:34:06.947446",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5799.849,
+        "largest_contentful_paint": 7027.563,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10463.108999999993,
+        "speed_index": 13555,
+        "interactive": 24811.912
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:34:38.463495",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5240.39,
+        "largest_contentful_paint": 7390.757,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8995.519,
+        "speed_index": 12073,
+        "interactive": 28498.36900000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:38:17.434801",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4516.201,
+        "largest_contentful_paint": 7338.153,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9100.019000000004,
+        "speed_index": 11955,
+        "interactive": 20991.253
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:37:24.543814",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5753.815,
+        "largest_contentful_paint": 7169.291,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11295.936999999998,
+        "speed_index": 13785,
+        "interactive": 31164.549
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T06:37:40.155426",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4326.139,
+        "largest_contentful_paint": 7240.622,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 11635.773000000003,
+        "speed_index": 11849,
+        "interactive": 29650.69900000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:36:50.804210",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5032.334,
+        "largest_contentful_paint": 6252.87,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 6244.380000000003,
+        "speed_index": 10487,
+        "interactive": 15120.761
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:37:26.550210",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4361.746,
+        "largest_contentful_paint": 5985.042,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 5089.303000000003,
+        "speed_index": 9747,
+        "interactive": 13821.985
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:35:12.877396",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5054.184,
+        "largest_contentful_paint": 8476.39,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5996.800999999996,
+        "speed_index": 11279,
+        "interactive": 13288.319
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:35:36.708045",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4814.481,
+        "largest_contentful_paint": 8519.927,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 6511.469,
+        "speed_index": 12040,
+        "interactive": 14061.894
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:34:25.912521",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5378.779,
+        "largest_contentful_paint": 7448.624,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5986.777000000001,
+        "speed_index": 11931,
+        "interactive": 13752.433
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:35:09.695269",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4662.004,
+        "largest_contentful_paint": 6845.066,
+        "cumulative_layout_shift": 0.137226609963548,
+        "total_blocking_time": 5045.053999999997,
+        "speed_index": 10558,
+        "interactive": 11973.473
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:32:52.257189",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5354.942,
+        "largest_contentful_paint": 6557.005,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8647.525000000005,
+        "speed_index": 11364,
+        "interactive": 22587.63
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:33:02.452392",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5536.979,
+        "largest_contentful_paint": 6522.136,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8741.330999999991,
+        "speed_index": 12297,
+        "interactive": 28707.69200000012
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-05T06:32:25.829386",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4122.22,
+        "largest_contentful_paint": 7070.511,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8555.829000000009,
+        "speed_index": 10301,
+        "interactive": 17536.592
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:32:46.046794",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3981.473,
+        "largest_contentful_paint": 6492.286,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 7424.761999999997,
+        "speed_index": 10298,
+        "interactive": 18100.689
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-06T06:37:17.416979",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4418.718,
+        "largest_contentful_paint": 6740.887,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 8386.512000000002,
+        "speed_index": 11461,
+        "interactive": 20825.773
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-07T06:36:24.298552",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4874.585,
+        "largest_contentful_paint": 6295.903,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10075.793999999998,
+        "speed_index": 12001,
+        "interactive": 19790.901
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:36:34.799487",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4971.262,
+        "largest_contentful_paint": 6364.005,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9371.400000000005,
+        "speed_index": 11035,
+        "interactive": 25455.79100000006
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-08T06:36:38.010101",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5305.917,
+        "largest_contentful_paint": 6450.778,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 10641.811000000018,
+        "speed_index": 11513,
+        "interactive": 29087.065
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-08T06:36:51.168497",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5578.494,
+        "largest_contentful_paint": 7290.128,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 9281.467000000008,
+        "speed_index": 12931,
+        "interactive": 28231.996
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>
