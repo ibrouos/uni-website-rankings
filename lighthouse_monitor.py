@@ -38,7 +38,7 @@ def slugify(text: str) -> str:
 
 
 class LighthouseMonitor:
-    def __init__(self, sites: List[Dict[str, str]], output_dir: str = "lighthouse_results", max_workers: int = 8):
+    def __init__(self, sites: List[Dict[str, str]], output_dir: str = "lighthouse_results", max_workers: int = 16, runs_per_test: int = 2):
         self.sites = sites
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
@@ -46,13 +46,14 @@ class LighthouseMonitor:
         self.results_dir.mkdir(exist_ok=True)
         self.today = date.today().isoformat()
         self.max_workers = max_workers  # Number of concurrent tests
+        self.runs_per_test = runs_per_test  # Number of runs per site/device for consistency
         
-    def run_lighthouse_test(self, site: Dict[str, str], device: str) -> Dict[str, Any]:
+    def run_lighthouse_test(self, site: Dict[str, str], device: str, run_number: int = 1) -> Dict[str, Any]:
         """Run Lighthouse test for a single site and device type"""
         url = site['url']
         name = site['name']
         
-        logger.info(f"Testing {name} ({url}) on {device}")
+        logger.info(f"Testing {name} ({url}) on {device} - Run {run_number}")
         
         # Lighthouse CLI command matching PageSpeed Insights settings
         cmd = [
@@ -94,7 +95,7 @@ class LighthouseMonitor:
                     cmd + [f"--output-path={tmp_file.name}"],
                     capture_output=True,
                     text=True,
-                    timeout=180  # 3 minute timeout per test
+                    timeout=90  # 90 second timeout per test
                 )
                 
                 if result.returncode != 0:
@@ -117,6 +118,7 @@ class LighthouseMonitor:
                     'timestamp': datetime.now().isoformat(),
                     'lighthouse_version': lighthouse_data.get('lighthouseVersion', 'unknown'),
                     'test_type': 'lab',  # Lab data (simulated)
+                    'run_number': run_number,  # Track which run this was
                     'scores': {
                         'performance': categories.get('performance', {}).get('score', 0) * 100,
                         'accessibility': categories.get('accessibility', {}).get('score', 0) * 100,
@@ -151,41 +153,59 @@ class LighthouseMonitor:
     
     def run_all_tests(self) -> List[Dict[str, Any]]:
         """Run Lighthouse tests for all sites on both mobile and desktop concurrently"""
-        # Create list of all test tasks
+        # Create list of all test tasks (including multiple runs)
         test_tasks = []
         for site in self.sites:
             for device in ['mobile', 'desktop']:
-                test_tasks.append((site, device))
+                for run in range(1, self.runs_per_test + 1):
+                    test_tasks.append((site, device, run))
         
-        logger.info(f"Running {len(test_tasks)} tests with {self.max_workers} concurrent workers")
+        total_tests = len(test_tasks)
+        logger.info(f"Running {total_tests} tests ({len(self.sites)} sites × 2 devices × {self.runs_per_test} runs) with {self.max_workers} concurrent workers")
+        logger.info(f"Estimated time: {(total_tests * 60) / self.max_workers / 60:.1f} minutes")
         
         # Run tests concurrently using ThreadPoolExecutor
         all_results = []
         completed = 0
+        failed = 0
+        start_time = datetime.now()
         
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             # Submit all tasks
             future_to_task = {
-                executor.submit(self.run_lighthouse_test, site, device): (site, device)
-                for site, device in test_tasks
+                executor.submit(self.run_lighthouse_test, site, device, run): (site, device, run)
+                for site, device, run in test_tasks
             }
             
             # Process completed tests
             for future in concurrent.futures.as_completed(future_to_task):
-                site, device = future_to_task[future]
+                site, device, run = future_to_task[future]
                 completed += 1
+                
+                # Calculate progress stats
+                elapsed = (datetime.now() - start_time).total_seconds()
+                avg_time_per_test = elapsed / completed
+                remaining = total_tests - completed
+                eta_seconds = avg_time_per_test * remaining
+                eta_minutes = eta_seconds / 60
                 
                 try:
                     result = future.result()
                     if result:
                         all_results.append(result)
-                        logger.info(f"✅ Completed {site['name']} ({device}) - {completed}/{len(test_tasks)}")
+                        logger.info(f"✅ [{completed}/{total_tests}] {site['name']} ({device}) Run {run} - ETA: {eta_minutes:.1f}m")
                     else:
-                        logger.warning(f"❌ Failed {site['name']} ({device}) - {completed}/{len(test_tasks)}")
+                        failed += 1
+                        logger.warning(f"❌ [{completed}/{total_tests}] {site['name']} ({device}) Run {run} FAILED")
                 except Exception as e:
-                    logger.error(f"❌ Exception for {site['name']} ({device}): {str(e)} - {completed}/{len(test_tasks)}")
+                    failed += 1
+                    logger.error(f"❌ [{completed}/{total_tests}] {site['name']} ({device}) Run {run}: {str(e)}")
         
-        logger.info(f"Completed all tests. {len(all_results)} successful results out of {len(test_tasks)} total tests")
+        total_time = (datetime.now() - start_time).total_seconds() / 60
+        logger.info(f"\n{'='*60}")
+        logger.info(f"Completed all tests in {total_time:.1f} minutes")
+        logger.info(f"✅ Successful: {len(all_results)} | ❌ Failed: {failed} | Total: {total_tests}")
+        logger.info(f"{'='*60}\n")
         return all_results
     
     def save_results(self, results: List[Dict[str, Any]]):
@@ -541,18 +561,21 @@ def main():
         return
     
     # Determine optimal number of workers based on site count
-    # Use fewer workers for smaller batches, more for larger
+    # More workers for larger batches to reduce total time
     if len(sites_to_test) <= 10:
-        max_workers = 4
-    elif len(sites_to_test) <= 50:
         max_workers = 8
+    elif len(sites_to_test) <= 50:
+        max_workers = 16
     else:
-        max_workers = 12
+        max_workers = 20  # Aggressive parallelism for large batches
     
-    logger.info(f"Using {max_workers} concurrent workers for {len(sites_to_test)} sites")
+    # Number of runs per test for consistency (2 is good balance)
+    runs_per_test = 2
+    
+    logger.info(f"Using {max_workers} concurrent workers for {len(sites_to_test)} sites ({runs_per_test} runs each)")
     
     # Initialize monitor
-    monitor = LighthouseMonitor(sites_to_test, max_workers=max_workers)
+    monitor = LighthouseMonitor(sites_to_test, max_workers=max_workers, runs_per_test=runs_per_test)
     
     # Run tests
     logger.info("Starting Lighthouse tests...")
