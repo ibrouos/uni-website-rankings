@@ -54,26 +54,37 @@ class LighthouseMonitor:
         
         logger.info(f"Testing {name} ({url}) on {device}")
         
-        # Lighthouse CLI command - build based on device type
+        # Lighthouse CLI command matching PageSpeed Insights settings
         cmd = [
             "lighthouse",
             url,
             "--output=json",
             "--quiet",
-            "--chrome-flags=--headless",
-            "--only-categories=performance,accessibility,best-practices,seo"
+            "--chrome-flags=--headless --no-sandbox",
+            "--only-categories=performance,accessibility,best-practices,seo",
+            "--throttling-method=simulate",  # More accurate simulation
         ]
         
-        # Add device-specific flags
+        # Add device-specific flags matching PageSpeed Insights
         if device == "mobile":
             cmd.extend([
                 "--emulated-form-factor=mobile",
-                "--throttling-method=devtools"
+                "--throttling.rttMs=150",
+                "--throttling.throughputKbps=1638.4",
+                "--throttling.requestLatencyMs=150",
+                "--throttling.downloadThroughputKbps=1638.4",
+                "--throttling.uploadThroughputKbps=675",
+                "--throttling.cpuSlowdownMultiplier=4"
             ])
         else:  # desktop
             cmd.extend([
                 "--emulated-form-factor=desktop",
-                "--throttling-method=devtools"
+                "--throttling.rttMs=40",
+                "--throttling.throughputKbps=10240",
+                "--throttling.requestLatencyMs=0",
+                "--throttling.downloadThroughputKbps=10240",
+                "--throttling.uploadThroughputKbps=10240",
+                "--throttling.cpuSlowdownMultiplier=1"
             ])
         
         try:
@@ -104,6 +115,8 @@ class LighthouseMonitor:
                     'url': url,
                     'device': device,
                     'timestamp': datetime.now().isoformat(),
+                    'lighthouse_version': lighthouse_data.get('lighthouseVersion', 'unknown'),
+                    'test_type': 'lab',  # Lab data (simulated)
                     'scores': {
                         'performance': categories.get('performance', {}).get('score', 0) * 100,
                         'accessibility': categories.get('accessibility', {}).get('score', 0) * 100,
@@ -117,6 +130,10 @@ class LighthouseMonitor:
                         'total_blocking_time': audits.get('total-blocking-time', {}).get('numericValue', 0),
                         'speed_index': audits.get('speed-index', {}).get('numericValue', 0),
                         'interactive': audits.get('interactive', {}).get('numericValue', 0)
+                    },
+                    'throttling_config': {
+                        'method': 'simulate',
+                        'device': device
                     }
                 }
                 

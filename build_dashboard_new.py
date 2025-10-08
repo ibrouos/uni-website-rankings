@@ -465,6 +465,29 @@ class UniversityDashboard:
             }});
         }}
         
+        function getDataAgeBadge(dateString) {{
+            const now = new Date();
+            const testDate = new Date(dateString);
+            const daysOld = Math.floor((now - testDate) / (1000 * 60 * 60 * 24));
+            
+            if (daysOld > 60) {{
+                return '<span class="data-age-badge badge-error">60+ days old</span>';
+            }} else if (daysOld > 30) {{
+                return '<span class="data-age-badge badge-warning">30+ days old</span>';
+            }}
+            return '';
+        }}
+        
+        function getLastUpdatedClass(dateString) {{
+            const now = new Date();
+            const testDate = new Date(dateString);
+            const daysOld = Math.floor((now - testDate) / (1000 * 60 * 60 * 24));
+            
+            if (daysOld > 60) return 'last-updated very-old-data';
+            if (daysOld > 30) return 'last-updated old-data';
+            return 'last-updated';
+        }}
+        
         function renderUniversityCard(uni) {{
             const period = currentPeriod === 'week' ? 'week_averages' : 'month_averages';
             const averages = uni[period];
