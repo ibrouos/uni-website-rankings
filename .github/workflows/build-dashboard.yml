@@ -26,7 +26,7 @@ jobs:
         python-version: '3.9'
         
     - name: Create dashboard only
-      run: python build_dashboard.py
+      run: python build_dashboard_new.py
       
     - name: Setup Pages
       uses: actions/configure-pages@v4

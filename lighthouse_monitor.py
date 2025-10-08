@@ -15,6 +15,8 @@ import tempfile
 import asyncio
 import concurrent.futures
 from functools import partial
+import re
+from collections import defaultdict
 
 # Configure logging
 logging.basicConfig(
@@ -27,11 +29,21 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def slugify(text: str) -> str:
+    """Convert university name to URL-safe slug"""
+    text = text.lower()
+    text = re.sub(r'[^\w\s-]', '', text)
+    text = re.sub(r'[-\s]+', '-', text)
+    return text.strip('-')
+
+
 class LighthouseMonitor:
     def __init__(self, sites: List[Dict[str, str]], output_dir: str = "lighthouse_results", max_workers: int = 8):
         self.sites = sites
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
+        self.results_dir = Path("results")
+        self.results_dir.mkdir(exist_ok=True)
         self.today = date.today().isoformat()
         self.max_workers = max_workers  # Number of concurrent tests
         
@@ -160,22 +172,99 @@ class LighthouseMonitor:
         return all_results
     
     def save_results(self, results: List[Dict[str, Any]]):
-        """Save results to JSON file"""
+        """Save results to JSON file (both old format and new per-university format)"""
+        # Save in old format (for backward compatibility)
         results_file = self.output_dir / f"lighthouse_results_{self.today}.json"
-        
         with open(results_file, 'w') as f:
             json.dump(results, f, indent=2)
-        
         logger.info(f"Results saved to {results_file}")
         
         # Also update the latest results file
         latest_file = self.output_dir / "lighthouse_results_latest.json"
         with open(latest_file, 'w') as f:
             json.dump(results, f, indent=2)
+        
+        # Save in new per-university format
+        self.save_per_university_results(results)
+    
+    def save_per_university_results(self, new_results: List[Dict[str, Any]]):
+        """Save results to per-university files"""
+        # Group new results by university
+        university_results = defaultdict(list)
+        for result in new_results:
+            uni_name = result.get('name')
+            if uni_name:
+                university_results[uni_name].append(result)
+        
+        # Update each university's file
+        for uni_name, results in university_results.items():
+            slug = slugify(uni_name)
+            uni_file = self.results_dir / f"{slug}.json"
+            
+            # Load existing data if file exists
+            existing_data = {'results': []}
+            if uni_file.exists():
+                try:
+                    with open(uni_file, 'r') as f:
+                        existing_data = json.load(f)
+                except Exception as e:
+                    logger.warning(f"Could not load existing data for {uni_name}: {e}")
+            
+            # Append new results
+            all_results = existing_data.get('results', []) + results
+            
+            # Sort by timestamp
+            all_results.sort(key=lambda x: x.get('timestamp', ''))
+            
+            # Update metadata
+            uni_data = {
+                'name': uni_name,
+                'slug': slug,
+                'url': results[0].get('url', '') if results else existing_data.get('url', ''),
+                'last_updated': all_results[-1].get('timestamp', '') if all_results else '',
+                'total_tests': len(all_results),
+                'results': all_results
+            }
+            
+            # Save updated file
+            with open(uni_file, 'w') as f:
+                json.dump(uni_data, f, indent=2)
+            
+            logger.info(f"Updated {slug}.json ({len(results)} new results, {len(all_results)} total)")
+        
+        # Update index file
+        self.update_index_file()
+    
+    def update_index_file(self):
+        """Update the index file with all universities"""
+        index_data = []
+        
+        for uni_file in sorted(self.results_dir.glob("*.json")):
+            if uni_file.name == "index.json":
+                continue
+            
+            try:
+                with open(uni_file, 'r') as f:
+                    uni_data = json.load(f)
+                    index_data.append({
+                        'name': uni_data.get('name'),
+                        'slug': uni_data.get('slug'),
+                        'url': uni_data.get('url'),
+                        'total_tests': uni_data.get('total_tests', 0),
+                        'last_updated': uni_data.get('last_updated')
+                    })
+            except Exception as e:
+                logger.warning(f"Error reading {uni_file.name}: {e}")
+        
+        index_file = self.results_dir / "index.json"
+        with open(index_file, 'w') as f:
+            json.dump(index_data, f, indent=2)
+        
+        logger.info(f"Updated index.json with {len(index_data)} universities")
     
     def generate_dashboard(self):
         """Generate HTML dashboard for GitHub Pages"""
-        dashboard_generator = DashboardGenerator(self.output_dir)
+        dashboard_generator = DashboardGenerator(self.results_dir)
         dashboard_generator.create_dashboard()
 
 class DashboardGenerator:

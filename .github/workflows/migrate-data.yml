@@ -1,0 +1,38 @@
+name: Migrate Data to New Format (One-time)
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history to get all lighthouse results
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Create results directory
+      run: mkdir -p results
+      
+    - name: Run data reorganization
+      run: python reorganize_data.py
+      
+    - name: Build new dashboard
+      run: python build_dashboard_new.py
+      
+    - name: Commit and push migrated data
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add results/ docs/
+        git diff --staged --quiet || git commit -m "Migrate to new per-university data structure"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

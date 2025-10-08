@@ -35,10 +35,14 @@ jobs:
     - name: Create necessary directories
       run: |
         mkdir -p lighthouse_results
+        mkdir -p results
         mkdir -p docs
         
     - name: Run Lighthouse tests
       run: python lighthouse_monitor.py
+      
+    - name: Build dashboard
+      run: python build_dashboard_new.py
       
     - name: Commit and push results
       run: |
