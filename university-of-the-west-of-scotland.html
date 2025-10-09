@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of the West of Scotland - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>University of the West of Scotland</h1>
+                <p>https://www.uws.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "University of the West of Scotland",
+  "slug": "university-of-the-west-of-scotland",
+  "url": "https://www.uws.ac.uk",
+  "total_tests": 19,
+  "last_updated": "2025-08-14T06:51:35.381163",
+  "week_averages": {
+    "mobile": {
+      "performance": 28.999999999999996,
+      "accessibility": 96.0,
+      "best_practices": 56.99999999999999,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 24.666666666666668,
+      "accessibility": 96.0,
+      "best_practices": 55.99999999999999,
+      "seo": 100
+    },
+    "total_tests": 4
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 28.999999999999996,
+      "accessibility": 96.0,
+      "best_practices": 56.99999999999999,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 24.666666666666668,
+      "accessibility": 96.0,
+      "best_practices": 55.99999999999999,
+      "seo": 100
+    },
+    "total_tests": 4
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:53:11.534750",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 96.0,
+        "best_practices": 54.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6523.228,
+        "largest_contentful_paint": 9746.475,
+        "cumulative_layout_shift": 0.3277445549414249,
+        "total_blocking_time": 23526.41699999999,
+        "speed_index": 10290,
+        "interactive": 37986.863
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:50:16.306948",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6365.248,
+        "largest_contentful_paint": 10589.613,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22824.123999999996,
+        "speed_index": 10334,
+        "interactive": 37592.85000000024
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:50:06.440024",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5861.485,
+        "largest_contentful_paint": 8097.553,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 20782.134000000027,
+        "speed_index": 9804,
+        "interactive": 35595.449
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:50:07.311016",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 10601.242,
+        "largest_contentful_paint": 11980.93,
+        "cumulative_layout_shift": 0.0012618538857520117,
+        "total_blocking_time": 16902.05800000002,
+        "speed_index": 13680,
+        "interactive": 38065.404000000235
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:54:06.021999",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5166.595,
+        "largest_contentful_paint": 9048.876,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21661.567,
+        "speed_index": 9056,
+        "interactive": 35978.879
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:54:29.944390",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5382.231,
+        "largest_contentful_paint": 8096.693,
+        "cumulative_layout_shift": 0.0006309269428760059,
+        "total_blocking_time": 18213.91499999974,
+        "speed_index": 8342,
+        "interactive": 34773.05099999976
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:53:48.890326",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6507.939,
+        "largest_contentful_paint": 27636.983,
+        "cumulative_layout_shift": 0.0006309269428760059,
+        "total_blocking_time": 18246.278000000002,
+        "speed_index": 13546,
+        "interactive": 35020.447
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:53:49.376071",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4971.242,
+        "largest_contentful_paint": 6057.917,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 18428.980999999752,
+        "speed_index": 8099,
+        "interactive": 33716.11199999976
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:53:45.500722",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5254.512,
+        "largest_contentful_paint": 6369.608,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 17918.095999999994,
+        "speed_index": 9012,
+        "interactive": 38522.015
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T06:54:07.695124",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5306.509,
+        "largest_contentful_paint": 33517.394,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 22204.72100000001,
+        "speed_index": 15585,
+        "interactive": 39790.404
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:52:51.866326",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5997.37,
+        "largest_contentful_paint": 5997.37,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 17610.804999999516,
+        "speed_index": 8607,
+        "interactive": 33582.37699999952
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:53:01.957133",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5647.354,
+        "largest_contentful_paint": 8578.985,
+        "cumulative_layout_shift": 0.0012618538857520117,
+        "total_blocking_time": 19418.866,
+        "speed_index": 8903,
+        "interactive": 34902.171
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:54:16.895648",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6117.251,
+        "largest_contentful_paint": 11641.023,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23179.399000000012,
+        "speed_index": 12484,
+        "interactive": 37082.546
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:48:47.331097",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5316.923,
+        "largest_contentful_paint": 8873.599,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22334.619000000013,
+        "speed_index": 10471,
+        "interactive": 35893.963
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T06:58:35.347701",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5209.352,
+        "largest_contentful_paint": 6518.515,
+        "cumulative_layout_shift": 0.0008738858399498304,
+        "total_blocking_time": 19630.433,
+        "speed_index": 8692,
+        "interactive": 39322.023
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:54:21.604061",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5413.002,
+        "largest_contentful_paint": 7684.155,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20913.060999999987,
+        "speed_index": 8765,
+        "interactive": 37574.14
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:54:02.354395",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5351.24,
+        "largest_contentful_paint": 6453.043,
+        "cumulative_layout_shift": 0.0008004152979205713,
+        "total_blocking_time": 18400.53499999999,
+        "speed_index": 9132,
+        "interactive": 31761.329
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:54:10.767198",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 96.0,
+        "best_practices": 54.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4934.028,
+        "largest_contentful_paint": 7065.808,
+        "cumulative_layout_shift": 0.0015220272986323333,
+        "total_blocking_time": 15634.899000000009,
+        "speed_index": 8040,
+        "interactive": 31352.7
+      }
+    },
+    {
+      "name": "University of the West of Scotland",
+      "url": "https://www.uws.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T06:51:35.381163",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6041.829,
+        "largest_contentful_paint": 8459.661,
+        "cumulative_layout_shift": 0.21036136954443743,
+        "total_blocking_time": 18500.431999999983,
+        "speed_index": 10287,
+        "interactive": 31789.823000000237
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

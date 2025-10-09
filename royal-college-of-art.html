@@ -1,0 +1,2308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal College of Art - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Royal College of Art</h1>
+                <p>https://www.rca.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Royal College of Art",
+  "slug": "royal-college-of-art",
+  "url": "https://www.rca.ac.uk",
+  "total_tests": 91,
+  "last_updated": "2025-10-03T07:13:44.012184",
+  "week_averages": {
+    "mobile": {
+      "performance": 27.0,
+      "accessibility": 95.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "desktop": {
+      "performance": 28.000000000000004,
+      "accessibility": 95.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "total_tests": 2
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 27.642857142857142,
+      "accessibility": 95.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "desktop": {
+      "performance": 27.666666666666668,
+      "accessibility": 95.0,
+      "best_practices": 96.0,
+      "seo": 85.0
+    },
+    "total_tests": 26
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T23:31:08.945309",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3584.943,
+        "largest_contentful_paint": 27908.851,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15298.020999999993,
+        "speed_index": 21312,
+        "interactive": 28110.739
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:31:09.818704",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3612.313,
+        "largest_contentful_paint": 30606.971,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 19468.818999999996,
+        "speed_index": 23363,
+        "interactive": 31137.108
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:56:23.847584",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3245.964,
+        "largest_contentful_paint": 23087.331,
+        "cumulative_layout_shift": 0.05164846034940184,
+        "total_blocking_time": 10997.581000000007,
+        "speed_index": 17832,
+        "interactive": 28560.005
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:56:32.998863",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2834.273,
+        "largest_contentful_paint": 21784.761,
+        "cumulative_layout_shift": 0.0492094683676618,
+        "total_blocking_time": 10106.642,
+        "speed_index": 16733,
+        "interactive": 27357.65100000048
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T07:16:21.513421",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3772.365,
+        "largest_contentful_paint": 30313.28,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 19416.438000000002,
+        "speed_index": 23112,
+        "interactive": 31007.528
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T07:15:05.900224",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3205.224,
+        "largest_contentful_paint": 26181.096,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15207.261,
+        "speed_index": 20088,
+        "interactive": 26511.821
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T07:15:07.441356",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3328.394,
+        "largest_contentful_paint": 26952.586,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15309.191000000003,
+        "speed_index": 20623,
+        "interactive": 27249.665
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T07:12:59.776249",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2568.877,
+        "largest_contentful_paint": 20654.15,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 8888.370000000003,
+        "speed_index": 15902,
+        "interactive": 21225.906
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T07:13:22.852034",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2432.87,
+        "largest_contentful_paint": 20575.202,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 9153.233999999993,
+        "speed_index": 15723,
+        "interactive": 26010.970000000478
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T07:13:18.263192",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2946.744,
+        "largest_contentful_paint": 20198.747,
+        "cumulative_layout_shift": 0.05164846034940184,
+        "total_blocking_time": 7611.298000000001,
+        "speed_index": 15714,
+        "interactive": 20360.261
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T07:13:20.110269",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2260.127,
+        "largest_contentful_paint": 20403.306,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 8842.071000000007,
+        "speed_index": 15671,
+        "interactive": 25863.919
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T07:12:54.739989",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2996.414,
+        "largest_contentful_paint": 22449.565,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11275.049000000006,
+        "speed_index": 17395,
+        "interactive": 27932.399000000478
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T07:13:07.702470",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2931.948,
+        "largest_contentful_paint": 22360.264,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11113.657000000001,
+        "speed_index": 17141,
+        "interactive": 22646.452
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T07:17:23.178906",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3200.68,
+        "largest_contentful_paint": 24913.289,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14205.479999999998,
+        "speed_index": 19230,
+        "interactive": 30456.324
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T07:17:19.254173",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3345.219,
+        "largest_contentful_paint": 27341.135,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16163.290000000003,
+        "speed_index": 20959,
+        "interactive": 32996.366
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-05T07:14:17.192684",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3352.193,
+        "largest_contentful_paint": 25862.102,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14658.51,
+        "speed_index": 19855,
+        "interactive": 26397.407000000476
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T07:14:40.931294",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2884.847,
+        "largest_contentful_paint": 28093.668,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16585.492999999988,
+        "speed_index": 21250,
+        "interactive": 33595.85
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T07:14:43.438923",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3138.136,
+        "largest_contentful_paint": 29470.189,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17786.031999999996,
+        "speed_index": 22439,
+        "interactive": 34954.742
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T07:16:02.051379",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2940.464,
+        "largest_contentful_paint": 26781.543,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16664.103999999996,
+        "speed_index": 20461,
+        "interactive": 32303.026
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T07:16:02.609574",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2979.991,
+        "largest_contentful_paint": 27262.827,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15596.248999999529,
+        "speed_index": 20720,
+        "interactive": 27757.518999999524
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T07:16:37.481080",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3452.648,
+        "largest_contentful_paint": 32567.766,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 21540.459000000006,
+        "speed_index": 24735,
+        "interactive": 33176.887
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T07:16:47.131976",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3675.089,
+        "largest_contentful_paint": 28200.653,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 18346.528000000006,
+        "speed_index": 21703,
+        "interactive": 33808.608
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T07:14:13.834389",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3078.591,
+        "largest_contentful_paint": 27044.062,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15486.861999999996,
+        "speed_index": 20627,
+        "interactive": 32825.52
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T07:14:20.176317",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3606.894,
+        "largest_contentful_paint": 28738.166,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16471.519999999997,
+        "speed_index": 21958,
+        "interactive": 34244.906
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T07:17:41.773980",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3360.121,
+        "largest_contentful_paint": 28130.899,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16598.246000000003,
+        "speed_index": 21537,
+        "interactive": 28598.128
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T07:17:43.721563",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3352.355,
+        "largest_contentful_paint": 28705.52,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17054.053000000007,
+        "speed_index": 21927,
+        "interactive": 34198.515
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T07:18:02.924062",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3466.071,
+        "largest_contentful_paint": 30855.002,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 19040.99399999953,
+        "speed_index": 23509,
+        "interactive": 36470.96199999953
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T07:18:09.498717",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3520.039,
+        "largest_contentful_paint": 31811.824,
+        "cumulative_layout_shift": 0.04912383789856923,
+        "total_blocking_time": 20526.997,
+        "speed_index": 24326,
+        "interactive": 32789.809
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T07:15:01.408779",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3991.104,
+        "largest_contentful_paint": 29252.79,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17190.67099999999,
+        "speed_index": 22483,
+        "interactive": 29591.997
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T07:15:04.855407",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3189.844,
+        "largest_contentful_paint": 29006.282,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 18347.738000000005,
+        "speed_index": 22141,
+        "interactive": 34782.3
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T07:18:15.907421",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3227.875,
+        "largest_contentful_paint": 26207.398,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14350.125000000007,
+        "speed_index": 19934,
+        "interactive": 32087.342000000477
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T07:18:16.810495",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2825.701,
+        "largest_contentful_paint": 25303.398,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13130.898999999981,
+        "speed_index": 19256,
+        "interactive": 31193.1
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T07:17:56.847853",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2958.78,
+        "largest_contentful_paint": 29698.456,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17679.982000000004,
+        "speed_index": 22547,
+        "interactive": 30682.715
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T07:18:04.302590",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3113.91,
+        "largest_contentful_paint": 30432.287,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 18382.036999999997,
+        "speed_index": 23193,
+        "interactive": 36513.929
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T07:20:59.898949",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2882.518,
+        "largest_contentful_paint": 29649.642,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17543.332000000006,
+        "speed_index": 22413,
+        "interactive": 30614.802
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T07:21:01.953676",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3030.434,
+        "largest_contentful_paint": 29190.805,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16955.94899999952,
+        "speed_index": 22240,
+        "interactive": 29823.600999999522
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T07:18:53.416175",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3513.984,
+        "largest_contentful_paint": 28088.392,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15583.782,
+        "speed_index": 21500,
+        "interactive": 28759.124
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T07:19:03.219346",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2978.949,
+        "largest_contentful_paint": 27735.22,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 16368.729000000014,
+        "speed_index": 21068,
+        "interactive": 33254.593
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T07:19:40.382207",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3153.881,
+        "largest_contentful_paint": 27429.246,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15720.999999999533,
+        "speed_index": 17918,
+        "interactive": 27759.595999999525
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T07:19:42.159376",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3499.357,
+        "largest_contentful_paint": 27265.445,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15946.929999999997,
+        "speed_index": 17603,
+        "interactive": 33170.83900000048
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T07:15:45.239791",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3200.466,
+        "largest_contentful_paint": 23247.237,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11857.291999999992,
+        "speed_index": 15550,
+        "interactive": 29115.287
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T07:15:45.911317",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3491.338,
+        "largest_contentful_paint": 24955.343,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13807.482000000009,
+        "speed_index": 17172,
+        "interactive": 30416.1
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T07:17:08.369696",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3135.292,
+        "largest_contentful_paint": 26013.469,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14014.107,
+        "speed_index": 17175,
+        "interactive": 26502.998
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T07:17:11.914493",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3376.585,
+        "largest_contentful_paint": 26364.075,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15869.477999999994,
+        "speed_index": 17500,
+        "interactive": 32174.441
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T07:16:10.380304",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3432.956,
+        "largest_contentful_paint": 25850.364,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14082.675,
+        "speed_index": 17348,
+        "interactive": 31495.282
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T07:16:12.740479",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3187.009,
+        "largest_contentful_paint": 25357.505,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14048.233999999993,
+        "speed_index": 16703,
+        "interactive": 26070.326
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T07:24:05.274793",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3502.701,
+        "largest_contentful_paint": 26414.893,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15294.868000000004,
+        "speed_index": 17832,
+        "interactive": 32014.228
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T07:24:06.387882",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3382.75,
+        "largest_contentful_paint": 24746.587,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13740.599999999517,
+        "speed_index": 16749,
+        "interactive": 30265.654999999522
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T07:14:30.204162",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3773.233,
+        "largest_contentful_paint": 21001.53,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 8915.221000000005,
+        "speed_index": 14956,
+        "interactive": 26487.051
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T07:14:45.053146",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2824.439,
+        "largest_contentful_paint": 22038.748,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 10154.299000000003,
+        "speed_index": 14901,
+        "interactive": 22548.895
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-23T07:11:28.948924",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3230.839,
+        "largest_contentful_paint": 26182.005,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14159.357999999993,
+        "speed_index": 17613,
+        "interactive": 31738.463
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-23T07:11:33.167417",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2911.2,
+        "largest_contentful_paint": 24866.566,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12660.681999999999,
+        "speed_index": 16655,
+        "interactive": 25376.704
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T07:11:57.283052",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3986.573,
+        "largest_contentful_paint": 25463.744,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13003.298000000003,
+        "speed_index": 17496,
+        "interactive": 30894.185
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T07:12:31.411344",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3255.41,
+        "largest_contentful_paint": 23621.095,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12815.800999999523,
+        "speed_index": 15974,
+        "interactive": 23943.052999999523
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T07:16:24.553453",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3696.177,
+        "largest_contentful_paint": 28662.748,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17504.655999999515,
+        "speed_index": 18798,
+        "interactive": 29575.353999999523
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T07:11:26.639339",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3061.534,
+        "largest_contentful_paint": 24831.496,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12834.198999999999,
+        "speed_index": 14575,
+        "interactive": 25407.186
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T07:11:41.994662",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3544.895,
+        "largest_contentful_paint": 25758.995,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14321.714999999986,
+        "speed_index": 14996,
+        "interactive": 31289.454
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T07:16:00.040502",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3373.315,
+        "largest_contentful_paint": 25396.86,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13887.675,
+        "speed_index": 14517,
+        "interactive": 31010.816
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T07:15:20.792543",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3545.521,
+        "largest_contentful_paint": 25682.411,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14094.532999999528,
+        "speed_index": 15539,
+        "interactive": 31352.700999999524
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T07:15:21.208709",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3171.732,
+        "largest_contentful_paint": 24694.585,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12809.413999999522,
+        "speed_index": 14617,
+        "interactive": 25085.887999999522
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T07:11:40.558574",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3072.641,
+        "largest_contentful_paint": 25664.932,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14126.017000000002,
+        "speed_index": 15388,
+        "interactive": 31086.229
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T07:12:54.129808",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3498.027,
+        "largest_contentful_paint": 24435.407,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12481.230999999527,
+        "speed_index": 14773,
+        "interactive": 29991.174999999523
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T07:10:32.523245",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3711.757,
+        "largest_contentful_paint": 25296.138,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12609.418999999998,
+        "speed_index": 15300,
+        "interactive": 30852.620000000476
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T07:10:33.375744",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3394.843,
+        "largest_contentful_paint": 24193.103,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12544.526,
+        "speed_index": 14442,
+        "interactive": 29666.824
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T07:16:03.810281",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3547.4,
+        "largest_contentful_paint": 26716.518,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14894.68,
+        "speed_index": 15441,
+        "interactive": 32496.906
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T07:14:01.617761",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3262.447,
+        "largest_contentful_paint": 24273.062,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12391.199999999526,
+        "speed_index": 14229,
+        "interactive": 29707.612999999525
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T07:14:03.079769",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5472.874,
+        "largest_contentful_paint": 25494.477,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12032.282000000003,
+        "speed_index": 15561,
+        "interactive": 25867.625
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T07:13:13.014185",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3509.752,
+        "largest_contentful_paint": 25459.836,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13989.355999999992,
+        "speed_index": 15016,
+        "interactive": 31141.409
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T07:13:16.937636",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6269.183,
+        "largest_contentful_paint": 25044.63,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12085.151000000002,
+        "speed_index": 14746,
+        "interactive": 30642.128
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T07:13:18.826231",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3950.233,
+        "largest_contentful_paint": 25457.175,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14142.397000000004,
+        "speed_index": 15230,
+        "interactive": 25982.311000000478
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T07:14:10.393250",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5403.667,
+        "largest_contentful_paint": 23847.07,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11271.181999999995,
+        "speed_index": 14485,
+        "interactive": 29417.667
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T07:14:10.710942",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3515.539,
+        "largest_contentful_paint": 25814.357,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14405.332999999999,
+        "speed_index": 15505,
+        "interactive": 26592.646
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T07:11:36.919635",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5312.13,
+        "largest_contentful_paint": 24489.375,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12364.106999999996,
+        "speed_index": 14318,
+        "interactive": 25115.737000000478
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T07:11:42.258542",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4074.487,
+        "largest_contentful_paint": 24743.754,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13142.453999999998,
+        "speed_index": 14619,
+        "interactive": 25347.426
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T07:15:04.151001",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3406.98,
+        "largest_contentful_paint": 24369.557,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13606.618999999997,
+        "speed_index": 14473,
+        "interactive": 29982.183
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T07:16:31.108651",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3314.095,
+        "largest_contentful_paint": 24276.923,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12624.66299999952,
+        "speed_index": 14084,
+        "interactive": 24831.964999999524
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T07:14:37.293054",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2904.779,
+        "largest_contentful_paint": 25987.04,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15144.139000000006,
+        "speed_index": 14739,
+        "interactive": 31501.788000000477
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T07:14:37.587318",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3332.78,
+        "largest_contentful_paint": 25750.806,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15135.706000000015,
+        "speed_index": 14571,
+        "interactive": 31324.578000000478
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T07:13:34.364509",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3529.824,
+        "largest_contentful_paint": 22987.487,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11086.540999999988,
+        "speed_index": 13324,
+        "interactive": 28700.964
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T07:13:51.166091",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3151.425,
+        "largest_contentful_paint": 24652.019,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13279.681999999526,
+        "speed_index": 14334,
+        "interactive": 25316.438999999522
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T07:16:01.382980",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3024.253,
+        "largest_contentful_paint": 25137.357,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 11810.397999999994,
+        "speed_index": 10726,
+        "interactive": 25411.529
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T07:16:07.880301",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3487.268,
+        "largest_contentful_paint": 27235.796,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 12885.485000000004,
+        "speed_index": 10879,
+        "interactive": 32931.398
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T07:15:00.263368",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3565.656,
+        "largest_contentful_paint": 27229.453,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13261.512999999994,
+        "speed_index": 18152,
+        "interactive": 32708.691
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T07:10:13.006504",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3768.988,
+        "largest_contentful_paint": 28595.274,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14803.597999999996,
+        "speed_index": 18689,
+        "interactive": 34046.792
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T07:10:16.111754",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3595.475,
+        "largest_contentful_paint": 28670.01,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14890.583000000002,
+        "speed_index": 18800,
+        "interactive": 34237.609
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T07:11:11.064282",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3241.842,
+        "largest_contentful_paint": 29329.165,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 14913.126000000013,
+        "speed_index": 18900,
+        "interactive": 34911.273
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T07:11:15.663128",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4101.074,
+        "largest_contentful_paint": 28217.743,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13937.465999999999,
+        "speed_index": 18483,
+        "interactive": 33773.156
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-30T07:14:01.992163",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3481.599,
+        "largest_contentful_paint": 28352.12,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 15458.057000000013,
+        "speed_index": 18604,
+        "interactive": 33830.474
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T07:14:07.784647",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3767.385,
+        "largest_contentful_paint": 30962.213,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 17937.090999999993,
+        "speed_index": 20559,
+        "interactive": 36439.571
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T07:13:43.258497",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4150.498,
+        "largest_contentful_paint": 27706.836,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13888.208999999999,
+        "speed_index": 18624,
+        "interactive": 33248.87600000048
+      }
+    },
+    {
+      "name": "Royal College of Art",
+      "url": "https://www.rca.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T07:13:44.012184",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3684.082,
+        "largest_contentful_paint": 26580.395,
+        "cumulative_layout_shift": 0.05247228451756827,
+        "total_blocking_time": 13002.622,
+        "speed_index": 17338,
+        "interactive": 31941.632
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

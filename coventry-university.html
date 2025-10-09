@@ -1,0 +1,4288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coventry University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Coventry University</h1>
+                <p>https://www.coventry.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Coventry University",
+  "slug": "coventry-university",
+  "url": "https://www.coventry.ac.uk",
+  "total_tests": 190,
+  "last_updated": "2025-10-07T06:54:14.530996",
+  "week_averages": {
+    "mobile": {
+      "performance": 28.666666666666664,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 28.4,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "total_tests": 8
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 20.666666666666668,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "desktop": {
+      "performance": 22.25,
+      "accessibility": 100,
+      "best_practices": 75.0,
+      "seo": 92.0
+    },
+    "total_tests": 48
+  },
+  "trend": "down",
+  "results": [
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-21T23:09:35.717117",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6437.901,
+        "largest_contentful_paint": 8044.422,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 10790.855000000005,
+        "speed_index": 10630,
+        "interactive": 23450.777
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-21T23:10:03.464240",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5673.792,
+        "largest_contentful_paint": 6558.833,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 10555.835000000003,
+        "speed_index": 9264,
+        "interactive": 22528.58
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:36:11.029646",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5452.144,
+        "largest_contentful_paint": 6119.541,
+        "cumulative_layout_shift": 0.0007150483254563288,
+        "total_blocking_time": 8911.609999999997,
+        "speed_index": 8683,
+        "interactive": 20688.473
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:36:20.610337",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5913.549,
+        "largest_contentful_paint": 6876.093,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 7110.990000000002,
+        "speed_index": 9642,
+        "interactive": 15939.577
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-23T06:54:10.556670",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5272.466,
+        "largest_contentful_paint": 5458.718,
+        "cumulative_layout_shift": 0.0007150483254563288,
+        "total_blocking_time": 11028.989999999993,
+        "speed_index": 8502,
+        "interactive": 22239.569
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-23T06:54:13.755054",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5972.252,
+        "largest_contentful_paint": 8459.814,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 12064.626000000015,
+        "speed_index": 11192,
+        "interactive": 24858.272000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-24T06:53:34.008150",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6782.693,
+        "largest_contentful_paint": 7876.806,
+        "cumulative_layout_shift": 0.0007150483254563288,
+        "total_blocking_time": 11189.063999999998,
+        "speed_index": 10624,
+        "interactive": 24118.592
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-24T06:53:47.493207",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6236.908,
+        "largest_contentful_paint": 8243.93,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 10650.897000000015,
+        "speed_index": 10603,
+        "interactive": 22361.956
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-25T06:52:45.338278",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5766.161,
+        "largest_contentful_paint": 6274.514,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 10008.94500000001,
+        "speed_index": 9227,
+        "interactive": 21828.973
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-25T06:52:55.607914",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5949.637,
+        "largest_contentful_paint": 7608.725,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 8700.761999999999,
+        "speed_index": 9771,
+        "interactive": 20492.301
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-26T06:52:31.793021",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6093.495,
+        "largest_contentful_paint": 7192.582,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 9863.308999999997,
+        "speed_index": 9695,
+        "interactive": 21919.357
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-26T06:52:44.238458",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5562.892,
+        "largest_contentful_paint": 6580.555,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 10023.059999999758,
+        "speed_index": 9051,
+        "interactive": 21226.43399999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-27T06:52:45.603501",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5313.036,
+        "largest_contentful_paint": 5793.211,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 9738.235999999995,
+        "speed_index": 8531,
+        "interactive": 21596.168000000238
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-27T06:52:54.858094",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5425.586,
+        "largest_contentful_paint": 6677.872,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 9255.442999999996,
+        "speed_index": 8934,
+        "interactive": 20092.949
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-28T06:52:56.272399",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5937.359,
+        "largest_contentful_paint": 7816.606,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 13575.59399999975,
+        "speed_index": 10711,
+        "interactive": 25058.014999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-28T06:53:01.689778",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6524.037,
+        "largest_contentful_paint": 8541.107,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 13667.538999999984,
+        "speed_index": 11621,
+        "interactive": 26656.594
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-30T06:56:16.767502",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6262.684,
+        "largest_contentful_paint": 8299.369,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 11160.919000000009,
+        "speed_index": 10790,
+        "interactive": 27739.267
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-30T06:56:23.470754",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5896.562,
+        "largest_contentful_paint": 6579.264,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 11946.016000000005,
+        "speed_index": 9556,
+        "interactive": 28833.915
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-01T06:55:11.114309",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5598.53,
+        "largest_contentful_paint": 6597.169,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 10734.485000000004,
+        "speed_index": 9323,
+        "interactive": 22638.898
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-01T06:55:23.460800",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5578.541,
+        "largest_contentful_paint": 6135.711,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 9735.93799999975,
+        "speed_index": 8695,
+        "interactive": 21144.60899999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-03T06:54:51.943456",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5994.034,
+        "largest_contentful_paint": 7477.172,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 8075.574999999998,
+        "speed_index": 9552,
+        "interactive": 19962.287
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-03T06:54:52.783797",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5524.089,
+        "largest_contentful_paint": 6287.361,
+        "cumulative_layout_shift": 0.0036294357056007275,
+        "total_blocking_time": 8499.530000000004,
+        "speed_index": 8584,
+        "interactive": 19885.039
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-04T06:55:35.890997",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5785.115,
+        "largest_contentful_paint": 8023.132,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 12429.291999999994,
+        "speed_index": 10776,
+        "interactive": 29004.627000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-04T06:55:41.109619",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6360.201,
+        "largest_contentful_paint": 6732.085,
+        "cumulative_layout_shift": 0.002801182375239854,
+        "total_blocking_time": 12273.307999999772,
+        "speed_index": 10287,
+        "interactive": 29798.439999999762
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-05T06:52:30.679883",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6174.002,
+        "largest_contentful_paint": 7725.105,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 10363.01300000001,
+        "speed_index": 11103,
+        "interactive": 22926.942
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-06T06:53:08.121333",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5431,
+        "largest_contentful_paint": 6348.228,
+        "cumulative_layout_shift": 0.0005060377158283077,
+        "total_blocking_time": 11394.45999999999,
+        "speed_index": 9864,
+        "interactive": 22572.114000000238
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-06T06:53:52.157546",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5746.836,
+        "largest_contentful_paint": 7836.559,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 10589.888999999761,
+        "speed_index": 10853,
+        "interactive": 21913.58899999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-07T06:57:24.300341",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6458.517,
+        "largest_contentful_paint": 9018.743,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 11224.340000000004,
+        "speed_index": 12099,
+        "interactive": 28711.51
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-08T06:55:14.577331",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5184.578,
+        "largest_contentful_paint": 6498.971,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 8408.402000000002,
+        "speed_index": 9233,
+        "interactive": 19293.027
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-08T06:55:16.929412",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4841.602,
+        "largest_contentful_paint": 5217.227,
+        "cumulative_layout_shift": 0.0005060377158283077,
+        "total_blocking_time": 8117.691999999991,
+        "speed_index": 8204,
+        "interactive": 18730.821
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-09T06:55:31.250750",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5298.292,
+        "largest_contentful_paint": 5948.697,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 10152.807000000004,
+        "speed_index": 9199,
+        "interactive": 26030.317
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-09T06:55:32.573963",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5175.364,
+        "largest_contentful_paint": 6174.911,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9992.995999999994,
+        "speed_index": 9479,
+        "interactive": 21192.936
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-10T06:55:33.391639",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5754.139,
+        "largest_contentful_paint": 8050.432,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 10282.642000000003,
+        "speed_index": 11137,
+        "interactive": 22536.053
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-10T06:56:18.673328",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6146.749,
+        "largest_contentful_paint": 6875.287,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9519.267000000007,
+        "speed_index": 10291,
+        "interactive": 21960.577
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-12T06:53:29.610117",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6022.006,
+        "largest_contentful_paint": 7075.816,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 11749.841000000004,
+        "speed_index": 11032,
+        "interactive": 23997.006
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-12T06:53:31.199755",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6471.718,
+        "largest_contentful_paint": 9833.074,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 12775.841000000019,
+        "speed_index": 13138,
+        "interactive": 25329.818
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-13T06:53:40.014758",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6082.876,
+        "largest_contentful_paint": 8571.093,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9814.854,
+        "speed_index": 11475,
+        "interactive": 22019.509
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-13T06:53:46.827868",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6656.468,
+        "largest_contentful_paint": 7188.174,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9024.43299999976,
+        "speed_index": 10156,
+        "interactive": 19983.283999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-14T06:57:07.595427",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5512.541,
+        "largest_contentful_paint": 6940.73,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9275.688999999997,
+        "speed_index": 9958,
+        "interactive": 20936.495
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-14T06:57:19.059377",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6040.686,
+        "largest_contentful_paint": 6673.142,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 7942.8729999999905,
+        "speed_index": 9725,
+        "interactive": 20427.375
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T06:57:07.637478",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5409.525,
+        "largest_contentful_paint": 6456.888,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9191.770999999757,
+        "speed_index": 9328,
+        "interactive": 19601.99099999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T06:57:10.031401",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5990.497,
+        "largest_contentful_paint": 7824.25,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9196.438999999771,
+        "speed_index": 10685,
+        "interactive": 21069.959999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-17T06:55:58.693154",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5909.258,
+        "largest_contentful_paint": 6616.687,
+        "cumulative_layout_shift": 0.0015458462516036182,
+        "total_blocking_time": 11387.751999999995,
+        "speed_index": 10535,
+        "interactive": 23183.270000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-17T06:56:39.585614",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5817.941,
+        "largest_contentful_paint": 6359.136,
+        "cumulative_layout_shift": 0.0030393552194458513,
+        "total_blocking_time": 11302.912000000008,
+        "speed_index": 10240,
+        "interactive": 28754.888
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-18T06:56:48.009369",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6228.41,
+        "largest_contentful_paint": 8679.462,
+        "cumulative_layout_shift": 0.001474369571651424,
+        "total_blocking_time": 12959.483000000007,
+        "speed_index": 12237,
+        "interactive": 24994.78
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-18T06:56:49.719952",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5619.833,
+        "largest_contentful_paint": 6680.522,
+        "cumulative_layout_shift": 0.0016069135269293849,
+        "total_blocking_time": 12185.32999999999,
+        "speed_index": 10579,
+        "interactive": 29176.346
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-19T06:53:27.580845",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5608.267,
+        "largest_contentful_paint": 6501.2,
+        "cumulative_layout_shift": 0.0014502251953049106,
+        "total_blocking_time": 9215.517999999993,
+        "speed_index": 9809,
+        "interactive": 21383.437
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-19T06:53:47.416816",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5338.822,
+        "largest_contentful_paint": 5592.687,
+        "cumulative_layout_shift": 0.005440304917465143,
+        "total_blocking_time": 9875.01200000001,
+        "speed_index": 9118,
+        "interactive": 21157.631
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-20T06:54:21.162574",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6711.12,
+        "largest_contentful_paint": 8124.811,
+        "cumulative_layout_shift": 0.0018493433030644772,
+        "total_blocking_time": 8750.170999999998,
+        "speed_index": 10858,
+        "interactive": 20718.842
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-20T06:54:25.760560",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4789.801,
+        "largest_contentful_paint": 5727.107,
+        "cumulative_layout_shift": 0.006842937336084268,
+        "total_blocking_time": 10654.849999999997,
+        "speed_index": 9415,
+        "interactive": 22264.15400000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-21T06:57:13.478553",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5118.094,
+        "largest_contentful_paint": 7043.312,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 10161.439000000006,
+        "speed_index": 10169,
+        "interactive": 20853.848
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-21T06:57:13.897831",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5327.489,
+        "largest_contentful_paint": 5841.802,
+        "cumulative_layout_shift": 0.004726454141070995,
+        "total_blocking_time": 9695.696,
+        "speed_index": 9484,
+        "interactive": 21597.69
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T06:56:27.782945",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5472.72,
+        "largest_contentful_paint": 5716.167,
+        "cumulative_layout_shift": 0.0014986048784111125,
+        "total_blocking_time": 10191.509000000005,
+        "speed_index": 9397,
+        "interactive": 21678.886
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T06:56:30.620917",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5320.68,
+        "largest_contentful_paint": 7604.658,
+        "cumulative_layout_shift": 0.0014513143445641934,
+        "total_blocking_time": 10624.065000000006,
+        "speed_index": 10925,
+        "interactive": 27657.475
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-23T06:57:07.137046",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5751.908,
+        "largest_contentful_paint": 6323.691,
+        "cumulative_layout_shift": 0.0006897901635316918,
+        "total_blocking_time": 9723.49,
+        "speed_index": 9870,
+        "interactive": 26438.748
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-23T06:57:14.657728",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5884.297,
+        "largest_contentful_paint": 8365.708,
+        "cumulative_layout_shift": 0.0008913658120918335,
+        "total_blocking_time": 9398.985999999994,
+        "speed_index": 11342,
+        "interactive": 21623.736000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-24T06:57:35.314691",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5436.884,
+        "largest_contentful_paint": 6101.479,
+        "cumulative_layout_shift": 0.006690581861044224,
+        "total_blocking_time": 9336.677999999998,
+        "speed_index": 9444,
+        "interactive": 20583.146
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-24T06:57:39.066236",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5367.291,
+        "largest_contentful_paint": 6283.174,
+        "cumulative_layout_shift": 0.001495510556764752,
+        "total_blocking_time": 9120.440999999992,
+        "speed_index": 9669,
+        "interactive": 21166.405
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-25T06:57:31.042325",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5732.949,
+        "largest_contentful_paint": 6821.452,
+        "cumulative_layout_shift": 0.0014846420207417523,
+        "total_blocking_time": 11680.536999999997,
+        "speed_index": 10656,
+        "interactive": 29087.192
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-25T06:57:53.539287",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5450.472,
+        "largest_contentful_paint": 7046.429,
+        "cumulative_layout_shift": 0.0014786681613560126,
+        "total_blocking_time": 13292.70399999999,
+        "speed_index": 10925,
+        "interactive": 29249.872
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-26T06:55:33.980691",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5889.605,
+        "largest_contentful_paint": 6497.742,
+        "cumulative_layout_shift": 0.0010125595353218304,
+        "total_blocking_time": 11790.552999999998,
+        "speed_index": 10685,
+        "interactive": 29213.431000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-26T06:55:35.467434",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6480.328,
+        "largest_contentful_paint": 8885.224,
+        "cumulative_layout_shift": 0.0014802458936112087,
+        "total_blocking_time": 12907.813999999998,
+        "speed_index": 12492,
+        "interactive": 30336.676
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T06:54:28.643760",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5732.202,
+        "largest_contentful_paint": 7793.161,
+        "cumulative_layout_shift": 0.0017546390537764365,
+        "total_blocking_time": 8653.142000000002,
+        "speed_index": 10606,
+        "interactive": 20547.339
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T06:54:30.286439",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5619.141,
+        "largest_contentful_paint": 6085.467,
+        "cumulative_layout_shift": 0.0016517740238724964,
+        "total_blocking_time": 8643.010000000004,
+        "speed_index": 9411,
+        "interactive": 19964.13700000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-28T06:59:00.033099",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5111.667,
+        "largest_contentful_paint": 6327.997,
+        "cumulative_layout_shift": 0.005889672380964367,
+        "total_blocking_time": 8983.475000000004,
+        "speed_index": 9377,
+        "interactive": 20005.106
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-28T06:59:05.918339",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5295.097,
+        "largest_contentful_paint": 6431.065,
+        "cumulative_layout_shift": 0.005451149041135837,
+        "total_blocking_time": 9529.143999999997,
+        "speed_index": 9698,
+        "interactive": 20773.806
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-29T06:57:51.791171",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5523.336,
+        "largest_contentful_paint": 8023.787,
+        "cumulative_layout_shift": 0.0008447134148945156,
+        "total_blocking_time": 10828.747999999985,
+        "speed_index": 11250,
+        "interactive": 22716.632
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-29T06:58:03.977924",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5514.327,
+        "largest_contentful_paint": 7511.853,
+        "cumulative_layout_shift": 0.0010130186667184024,
+        "total_blocking_time": 9873.012999999999,
+        "speed_index": 10637,
+        "interactive": 21464.316
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T06:58:42.958972",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5884.676,
+        "largest_contentful_paint": 7812.893,
+        "cumulative_layout_shift": 0.0010069407748771958,
+        "total_blocking_time": 8726.511000000015,
+        "speed_index": 10448,
+        "interactive": 20946.864
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-31T06:57:35.152086",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6216.426,
+        "largest_contentful_paint": 6762.019,
+        "cumulative_layout_shift": 0.001534231683052823,
+        "total_blocking_time": 9836.875000000004,
+        "speed_index": 10274,
+        "interactive": 22182.82
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-31T06:57:36.662815",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5525.897,
+        "largest_contentful_paint": 6645.034,
+        "cumulative_layout_shift": 0.0012513030462587861,
+        "total_blocking_time": 10241.835000000001,
+        "speed_index": 10148,
+        "interactive": 22214.373000000476
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-01T06:59:09.026437",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5820.46,
+        "largest_contentful_paint": 7863.787,
+        "cumulative_layout_shift": 0.004494762552435583,
+        "total_blocking_time": 10978.017000000002,
+        "speed_index": 11512,
+        "interactive": 23216.943
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-01T06:59:44.434730",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6022.35,
+        "largest_contentful_paint": 7986.208,
+        "cumulative_layout_shift": 0.003091085889847425,
+        "total_blocking_time": 12653.186999999994,
+        "speed_index": 12037,
+        "interactive": 30252.161
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T06:53:34.523830",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5588.897,
+        "largest_contentful_paint": 6238.296,
+        "cumulative_layout_shift": 0.006506077781649672,
+        "total_blocking_time": 12801.372000000007,
+        "speed_index": 11181,
+        "interactive": 25333.025
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-02T06:53:40.073998",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5279.265,
+        "largest_contentful_paint": 8258.946,
+        "cumulative_layout_shift": 0.003430561373409808,
+        "total_blocking_time": 13149.473999999756,
+        "speed_index": 12266,
+        "interactive": 29288.051999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-03T06:55:25.039054",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5358.029,
+        "largest_contentful_paint": 6166.001,
+        "cumulative_layout_shift": 0.005180406871439496,
+        "total_blocking_time": 10637.379000000004,
+        "speed_index": 10093,
+        "interactive": 22365.078
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-04T07:03:25.467421",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5719.624,
+        "largest_contentful_paint": 8134.967,
+        "cumulative_layout_shift": 0.003430561373409808,
+        "total_blocking_time": 13861.865999999998,
+        "speed_index": 12560,
+        "interactive": 26700.823000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-04T07:03:51.310171",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5782.301,
+        "largest_contentful_paint": 6385.374,
+        "cumulative_layout_shift": 0.006353406849745202,
+        "total_blocking_time": 12048.792000000001,
+        "speed_index": 10704,
+        "interactive": 28514.145
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-05T06:59:28.072017",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6030.621,
+        "largest_contentful_paint": 6543.583,
+        "cumulative_layout_shift": 0.0169722840167791,
+        "total_blocking_time": 10335.068000000003,
+        "speed_index": 10221,
+        "interactive": 25946.963
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-05T06:59:40.678220",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5749.136,
+        "largest_contentful_paint": 7582.946,
+        "cumulative_layout_shift": 0.003433929998069803,
+        "total_blocking_time": 11203.539,
+        "speed_index": 11465,
+        "interactive": 28327.727
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-06T06:58:54.829016",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4898.589,
+        "largest_contentful_paint": 5722.573,
+        "cumulative_layout_shift": 0.005180406871439496,
+        "total_blocking_time": 9959.957000000006,
+        "speed_index": 9469,
+        "interactive": 21200.885
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-06T06:58:58.824642",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4977.195,
+        "largest_contentful_paint": 6248.257,
+        "cumulative_layout_shift": 0.0057219483222985795,
+        "total_blocking_time": 10552.574000000008,
+        "speed_index": 10052,
+        "interactive": 22065.341
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-07T06:59:53.384812",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6254.829,
+        "largest_contentful_paint": 7016.192,
+        "cumulative_layout_shift": 0.006073036806646014,
+        "total_blocking_time": 13518.436999999773,
+        "speed_index": 11689,
+        "interactive": 30839.460999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-08T06:59:07.232109",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6912.316,
+        "largest_contentful_paint": 9264.622,
+        "cumulative_layout_shift": 0.0049870350610615915,
+        "total_blocking_time": 11378.635999999999,
+        "speed_index": 13043,
+        "interactive": 25260.138
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-08T06:59:12.554697",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6270.854,
+        "largest_contentful_paint": 7733.136,
+        "cumulative_layout_shift": 0.013341171921664547,
+        "total_blocking_time": 11853.057999999997,
+        "speed_index": 11448,
+        "interactive": 28862.472
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-09T06:54:20.628155",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6111.842,
+        "largest_contentful_paint": 7064.564,
+        "cumulative_layout_shift": 0.006043608723791095,
+        "total_blocking_time": 9570.784999999996,
+        "speed_index": 10661,
+        "interactive": 21571.88
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-09T06:54:28.125514",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5555.779,
+        "largest_contentful_paint": 6849.501,
+        "cumulative_layout_shift": 0.005135200458183211,
+        "total_blocking_time": 11501.348999999987,
+        "speed_index": 10792,
+        "interactive": 23382.729
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-10T06:54:33.603436",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5984.697,
+        "largest_contentful_paint": 7224.511,
+        "cumulative_layout_shift": 0.005180406871439496,
+        "total_blocking_time": 12970.534999999994,
+        "speed_index": 11627,
+        "interactive": 30475.974
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-11T06:57:48.040857",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5563.81,
+        "largest_contentful_paint": 5948.102,
+        "cumulative_layout_shift": 0.010982324012794574,
+        "total_blocking_time": 9750.583999999993,
+        "speed_index": 9794,
+        "interactive": 21580.10700000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-11T06:57:59.180689",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5558.728,
+        "largest_contentful_paint": 6482.452,
+        "cumulative_layout_shift": 0.004327771312272032,
+        "total_blocking_time": 9259.286999999762,
+        "speed_index": 10127,
+        "interactive": 21434.531999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-12T06:56:50.964766",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6213.93,
+        "largest_contentful_paint": 8802.423,
+        "cumulative_layout_shift": 0.003107332870223097,
+        "total_blocking_time": 14023.267999999995,
+        "speed_index": 13007,
+        "interactive": 31461.406
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-12T06:57:04.461814",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6377.556,
+        "largest_contentful_paint": 13939.515,
+        "cumulative_layout_shift": 0.003425852477013258,
+        "total_blocking_time": 13719.07399999999,
+        "speed_index": 16735,
+        "interactive": 31525.3
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-13T06:57:09.909696",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6109.325,
+        "largest_contentful_paint": 9413.294,
+        "cumulative_layout_shift": 0.005180406871439496,
+        "total_blocking_time": 13563.054000000015,
+        "speed_index": 13371,
+        "interactive": 31224.844
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-14T06:56:56.479972",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6277.044,
+        "largest_contentful_paint": 7132.855,
+        "cumulative_layout_shift": 0.005770086569480146,
+        "total_blocking_time": 11787.202000000005,
+        "speed_index": 11356,
+        "interactive": 29873.879
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-14T06:57:00.086364",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5115.785,
+        "largest_contentful_paint": 6388,
+        "cumulative_layout_shift": 0.00605334421311397,
+        "total_blocking_time": 11300.893000000013,
+        "speed_index": 10250,
+        "interactive": 22194.098
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-15T06:54:57.152284",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5583.575,
+        "largest_contentful_paint": 6794.459,
+        "cumulative_layout_shift": 0.005418857658115321,
+        "total_blocking_time": 8330.699999999995,
+        "speed_index": 9985,
+        "interactive": 19368.257
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-15T06:54:58.285029",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5263.965,
+        "largest_contentful_paint": 6001.225,
+        "cumulative_layout_shift": 0.0064876941605309275,
+        "total_blocking_time": 9930.631000000005,
+        "speed_index": 9783,
+        "interactive": 20669.942
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-16T06:51:14.329937",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5100.124,
+        "largest_contentful_paint": 5752.396,
+        "cumulative_layout_shift": 0.016974460971498455,
+        "total_blocking_time": 8415.918000000001,
+        "speed_index": 9026,
+        "interactive": 19239.393
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-16T06:52:01.728148",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5916.052,
+        "largest_contentful_paint": 6813.088,
+        "cumulative_layout_shift": 0.004941886095221512,
+        "total_blocking_time": 10431.321000000007,
+        "speed_index": 10763,
+        "interactive": 22662.078
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-17T06:53:27.392037",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5902.568,
+        "largest_contentful_paint": 7830.672,
+        "cumulative_layout_shift": 0.0034170953854981523,
+        "total_blocking_time": 10188.071,
+        "speed_index": 11354,
+        "interactive": 22787.254
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-17T06:53:33.066268",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5403.335,
+        "largest_contentful_paint": 6934.375,
+        "cumulative_layout_shift": 0.004511009532811255,
+        "total_blocking_time": 11018.168000000001,
+        "speed_index": 10764,
+        "interactive": 28163.615
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-18T06:58:40.230557",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6142.678,
+        "largest_contentful_paint": 7812.298,
+        "cumulative_layout_shift": 0.005180406871439496,
+        "total_blocking_time": 15170.321999999993,
+        "speed_index": 12576,
+        "interactive": 27424.234
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-19T06:55:38.813712",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6241.667,
+        "largest_contentful_paint": 6944.657,
+        "cumulative_layout_shift": 0.024168729459670735,
+        "total_blocking_time": 11238.837999999994,
+        "speed_index": 11195,
+        "interactive": 29220.279
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-19T06:55:45.068411",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6200.582,
+        "largest_contentful_paint": 8351.108,
+        "cumulative_layout_shift": 0.004587572492771329,
+        "total_blocking_time": 11522.303999999993,
+        "speed_index": 12119,
+        "interactive": 29137.257
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-20T06:55:02.798545",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5767.721,
+        "largest_contentful_paint": 6138.62,
+        "cumulative_layout_shift": 0.012741665691904583,
+        "total_blocking_time": 11418.616000000009,
+        "speed_index": 10353,
+        "interactive": 23199.215000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-20T06:55:05.442853",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5779.52,
+        "largest_contentful_paint": 7058.605,
+        "cumulative_layout_shift": 0.013430513516240628,
+        "total_blocking_time": 10987.189999999988,
+        "speed_index": 10961,
+        "interactive": 23144.471
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-21T07:02:46.574310",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5993.26,
+        "largest_contentful_paint": 7513.857,
+        "cumulative_layout_shift": 0.003430561373409808,
+        "total_blocking_time": 11269.455999999984,
+        "speed_index": 11402,
+        "interactive": 28971.475
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-21T07:02:46.991788",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5471.384,
+        "largest_contentful_paint": 6900.731,
+        "cumulative_layout_shift": 0.020613816714846824,
+        "total_blocking_time": 11124.748999999762,
+        "speed_index": 10722,
+        "interactive": 22635.176999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-22T06:53:48.880174",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6464.039,
+        "largest_contentful_paint": 14524.988,
+        "cumulative_layout_shift": 0.003474987375275187,
+        "total_blocking_time": 12129.235000000011,
+        "speed_index": 16782,
+        "interactive": 25433.804
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-22T06:53:53.767639",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6043.97,
+        "largest_contentful_paint": 7185.915,
+        "cumulative_layout_shift": 0.00315920575937434,
+        "total_blocking_time": 10941.277999999767,
+        "speed_index": 11053,
+        "interactive": 28999.64999999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-23T06:52:05.026717",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6356.337,
+        "largest_contentful_paint": 15677.722,
+        "cumulative_layout_shift": 0.004290995447322949,
+        "total_blocking_time": 15555.805999999995,
+        "speed_index": 18430,
+        "interactive": 34018.232
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T06:51:19.615023",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5280.534,
+        "largest_contentful_paint": 6590.911,
+        "cumulative_layout_shift": 0.005991711758237349,
+        "total_blocking_time": 9369.956999999766,
+        "speed_index": 9893,
+        "interactive": 20220.598999999762
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-24T06:51:21.357021",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5374.324,
+        "largest_contentful_paint": 6255.858,
+        "cumulative_layout_shift": 0.006447502581957884,
+        "total_blocking_time": 8492.559000000012,
+        "speed_index": 9685,
+        "interactive": 20511.062
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-25T06:55:38.777678",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5709.016,
+        "largest_contentful_paint": 6972.419,
+        "cumulative_layout_shift": 0.0038847307914008375,
+        "total_blocking_time": 8426.809000000001,
+        "speed_index": 10215,
+        "interactive": 20335.028
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-25T06:55:41.035306",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5745.882,
+        "largest_contentful_paint": 6414.155,
+        "cumulative_layout_shift": 0.052885443647317884,
+        "total_blocking_time": 10602.018999999995,
+        "speed_index": 10387,
+        "interactive": 23038.617
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T06:54:34.691818",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5633.644,
+        "largest_contentful_paint": 6526.587,
+        "cumulative_layout_shift": 0.006020628973426131,
+        "total_blocking_time": 10909.783000000007,
+        "speed_index": 10424,
+        "interactive": 23100.523
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T06:54:40.103919",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5781.965,
+        "largest_contentful_paint": 7616.43,
+        "cumulative_layout_shift": 0.004442021568995016,
+        "total_blocking_time": 9401.974000000006,
+        "speed_index": 10659,
+        "interactive": 20710.544
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-27T06:52:56.902861",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5961.578,
+        "largest_contentful_paint": 7996.838,
+        "cumulative_layout_shift": 0.004585054101069497,
+        "total_blocking_time": 11524.900000000001,
+        "speed_index": 11792,
+        "interactive": 24181.499
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-28T06:53:57.477320",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5626.135,
+        "largest_contentful_paint": 6444.662,
+        "cumulative_layout_shift": 0.2733178504700366,
+        "total_blocking_time": 12740.264,
+        "speed_index": 10721,
+        "interactive": 29506.778
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-28T06:54:00.680514",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6069.754,
+        "largest_contentful_paint": 6609.846,
+        "cumulative_layout_shift": 0.25262497636794706,
+        "total_blocking_time": 13319.617999999991,
+        "speed_index": 10888,
+        "interactive": 29859.934
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-29T06:52:36.019158",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6454.123,
+        "largest_contentful_paint": 7163.261,
+        "cumulative_layout_shift": 0.253097036232747,
+        "total_blocking_time": 13533.48200000001,
+        "speed_index": 11501,
+        "interactive": 26399.649
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-29T06:52:38.849750",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6650.414,
+        "largest_contentful_paint": 10059.245,
+        "cumulative_layout_shift": 0.001895616916859623,
+        "total_blocking_time": 12063.726999999999,
+        "speed_index": 13381,
+        "interactive": 25566.896
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-30T06:49:27.963356",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6311.117,
+        "largest_contentful_paint": 8423.425,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 12049.020000000006,
+        "speed_index": 12039,
+        "interactive": 30188.035
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-30T06:49:59.421135",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5887.095,
+        "largest_contentful_paint": 7094.114,
+        "cumulative_layout_shift": 0.2613642959145408,
+        "total_blocking_time": 11595.902999999986,
+        "speed_index": 10775,
+        "interactive": 23602.804
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T06:50:38.633986",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5963.869,
+        "largest_contentful_paint": 6741.826,
+        "cumulative_layout_shift": 0.2614268340900846,
+        "total_blocking_time": 9740.435,
+        "speed_index": 10235,
+        "interactive": 22208.099
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T06:50:40.171273",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6113.479,
+        "largest_contentful_paint": 8276.652,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 9664.456000000013,
+        "speed_index": 11268,
+        "interactive": 21824.62
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T06:55:20.288086",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6067.862,
+        "largest_contentful_paint": 6554.636,
+        "cumulative_layout_shift": 0.261360499681774,
+        "total_blocking_time": 9133.056000000004,
+        "speed_index": 10149,
+        "interactive": 21335.212
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-01T06:55:28.167324",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5010.652,
+        "largest_contentful_paint": 6030.648,
+        "cumulative_layout_shift": 0.26259630894711405,
+        "total_blocking_time": 10014.742,
+        "speed_index": 9492,
+        "interactive": 21577.774
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-02T06:54:21.274700",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5906.577,
+        "largest_contentful_paint": 7544.004,
+        "cumulative_layout_shift": 0.2610410674113541,
+        "total_blocking_time": 11916.549999999981,
+        "speed_index": 11264,
+        "interactive": 29416.891
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-02T06:54:22.952185",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5632.772,
+        "largest_contentful_paint": 6705.324,
+        "cumulative_layout_shift": 0.2619214791322066,
+        "total_blocking_time": 11695.785,
+        "speed_index": 10607,
+        "interactive": 24017.276000000238
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-03T06:51:07.485352",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5893.861,
+        "largest_contentful_paint": 7710.931,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 8811.130000000001,
+        "speed_index": 10521,
+        "interactive": 20285.78
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T06:51:09.343752",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6927.478,
+        "largest_contentful_paint": 7236.098,
+        "cumulative_layout_shift": 0.25262497636794706,
+        "total_blocking_time": 8995.704999999996,
+        "speed_index": 10749,
+        "interactive": 22277.135
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-04T06:51:47.044806",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5581.522,
+        "largest_contentful_paint": 8024.46,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10049.072000000007,
+        "speed_index": 11093,
+        "interactive": 22125.846
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-04T06:52:10.409183",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5876.126,
+        "largest_contentful_paint": 6926.288,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10296.569000000007,
+        "speed_index": 10453,
+        "interactive": 22640.755
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-05T06:53:03.464214",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5865.009,
+        "largest_contentful_paint": 7381.267,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10026.788999999999,
+        "speed_index": 10672,
+        "interactive": 22297.56300000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-05T06:53:10.896896",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5708.328,
+        "largest_contentful_paint": 6719.125,
+        "cumulative_layout_shift": 0.2613970985011772,
+        "total_blocking_time": 9816.366999999993,
+        "speed_index": 9945,
+        "interactive": 21887.022000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-06T06:48:13.895200",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6232.482,
+        "largest_contentful_paint": 6600.462,
+        "cumulative_layout_shift": 0.26115181751906946,
+        "total_blocking_time": 11888.334999999997,
+        "speed_index": 10698,
+        "interactive": 29390.868
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-06T06:48:26.606644",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6040.542,
+        "largest_contentful_paint": 6943.864,
+        "cumulative_layout_shift": 0.26233339911111014,
+        "total_blocking_time": 12867.003999999997,
+        "speed_index": 11186,
+        "interactive": 25709.185
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-07T06:48:33.087665",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6243.7,
+        "largest_contentful_paint": 6816.635,
+        "cumulative_layout_shift": 0.2532091174855626,
+        "total_blocking_time": 10119.294000000005,
+        "speed_index": 10462,
+        "interactive": 22866.23
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-07T06:49:30.977992",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9034.535,
+        "largest_contentful_paint": 10577.667,
+        "cumulative_layout_shift": 0.26233385544292503,
+        "total_blocking_time": 10160.625000000013,
+        "speed_index": 13709,
+        "interactive": 29671.136
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-08T06:54:13.671490",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6741.649,
+        "largest_contentful_paint": 7850.006,
+        "cumulative_layout_shift": 0.2610410674113541,
+        "total_blocking_time": 10930.543000000001,
+        "speed_index": 11412,
+        "interactive": 29237.735000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-08T06:54:36.650017",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6225.806,
+        "largest_contentful_paint": 8943.865,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 15086.00199999976,
+        "speed_index": 12863,
+        "interactive": 31690.389999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T06:53:21.663244",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5354.713,
+        "largest_contentful_paint": 5963.041,
+        "cumulative_layout_shift": 0.26115253667561306,
+        "total_blocking_time": 9951.699000000002,
+        "speed_index": 9859,
+        "interactive": 21714.357
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T06:53:21.858479",
+      "scores": {
+        "performance": 17.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5352.591,
+        "largest_contentful_paint": 5939.431,
+        "cumulative_layout_shift": 0.2611404637595485,
+        "total_blocking_time": 9365.132000000001,
+        "speed_index": 9292,
+        "interactive": 20870.747
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-10T06:52:06.322988",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6354.991,
+        "largest_contentful_paint": 7075.638,
+        "cumulative_layout_shift": 0.26135802227594807,
+        "total_blocking_time": 12046.649,
+        "speed_index": 11099,
+        "interactive": 24813.854
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-10T06:52:29.111878",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6094.151,
+        "largest_contentful_paint": 9140.549,
+        "cumulative_layout_shift": 0.0018107604761117152,
+        "total_blocking_time": 12501.270000000015,
+        "speed_index": 12783,
+        "interactive": 25787.26600000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-11T06:52:16.254482",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5647.219,
+        "largest_contentful_paint": 7180.535,
+        "cumulative_layout_shift": 0.2623945475743048,
+        "total_blocking_time": 10931.392999999995,
+        "speed_index": 10376,
+        "interactive": 23172.315
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-11T06:52:40.876890",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5850.204,
+        "largest_contentful_paint": 7227.635,
+        "cumulative_layout_shift": 0.26142147233123875,
+        "total_blocking_time": 11107.940999999999,
+        "speed_index": 10666,
+        "interactive": 22669.622
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-12T06:52:22.943229",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6269.578,
+        "largest_contentful_paint": 7930,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 11025.807,
+        "speed_index": 11319,
+        "interactive": 28390.466
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-12T06:53:16.218628",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5765.714,
+        "largest_contentful_paint": 6797.52,
+        "cumulative_layout_shift": 0.2643340182585331,
+        "total_blocking_time": 12290.811000000002,
+        "speed_index": 10687,
+        "interactive": 29234.82
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T06:48:33.896371",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5761.398,
+        "largest_contentful_paint": 6706.115,
+        "cumulative_layout_shift": 0.26233955595115493,
+        "total_blocking_time": 9847.101999999764,
+        "speed_index": 10076,
+        "interactive": 21711.87799999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-13T06:48:35.852661",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5855.519,
+        "largest_contentful_paint": 7819.492,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 9368.487000000003,
+        "speed_index": 10687,
+        "interactive": 20979.41000000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-14T06:49:55.814037",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5975.993,
+        "largest_contentful_paint": 6756.452,
+        "cumulative_layout_shift": 0.09727355552622052,
+        "total_blocking_time": 11716.117000000013,
+        "speed_index": 11284,
+        "interactive": 29509.394000000237
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-14T06:50:15.244807",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6288.424,
+        "largest_contentful_paint": 7609.818,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10793.660000000014,
+        "speed_index": 11201,
+        "interactive": 29039.733
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-15T06:54:56.649886",
+      "scores": {
+        "performance": 16.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5685.301,
+        "largest_contentful_paint": 6086.906,
+        "cumulative_layout_shift": 0.2610410674113541,
+        "total_blocking_time": 8882.678999999996,
+        "speed_index": 9645,
+        "interactive": 20876.531
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-15T06:54:59.262384",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5562.735,
+        "largest_contentful_paint": 7010.652,
+        "cumulative_layout_shift": 0.26134576268377674,
+        "total_blocking_time": 9501.032000000003,
+        "speed_index": 10079,
+        "interactive": 20775.002
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-16T06:53:27.361281",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5515.785,
+        "largest_contentful_paint": 7333.709,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 8333.514000000003,
+        "speed_index": 10121,
+        "interactive": 19627.292
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T06:53:43.552148",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5136.322,
+        "largest_contentful_paint": 5594.248,
+        "cumulative_layout_shift": 0.25262497636794706,
+        "total_blocking_time": 7843.510000000008,
+        "speed_index": 8614,
+        "interactive": 18892.016
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-17T06:53:18.174546",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5795.834,
+        "largest_contentful_paint": 7101.763,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10218.649999999763,
+        "speed_index": 10221,
+        "interactive": 21209.547999999762
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T06:53:30.956145",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5790.488,
+        "largest_contentful_paint": 7065.638,
+        "cumulative_layout_shift": 0.2613642959145408,
+        "total_blocking_time": 9364.663999999997,
+        "speed_index": 10094,
+        "interactive": 20688.88
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T06:52:11.927516",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6027.848,
+        "largest_contentful_paint": 6852.784,
+        "cumulative_layout_shift": 0.2662713411036916,
+        "total_blocking_time": 9462.313000000006,
+        "speed_index": 10411,
+        "interactive": 21958.739
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T06:52:22.177276",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5847.036,
+        "largest_contentful_paint": 6961.399,
+        "cumulative_layout_shift": 0.2614314522800345,
+        "total_blocking_time": 8569.110999999779,
+        "speed_index": 9903,
+        "interactive": 20143.122999999763
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-20T06:50:31.535727",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6266.714,
+        "largest_contentful_paint": 6731.248,
+        "cumulative_layout_shift": 0.26136680825914616,
+        "total_blocking_time": 11031.940999999995,
+        "speed_index": 10857,
+        "interactive": 28991.822
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-21T06:51:42.429832",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6112.834,
+        "largest_contentful_paint": 7300.142,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10607.084000000013,
+        "speed_index": 10832,
+        "interactive": 28040.77
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-21T06:52:07.924608",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6393.438,
+        "largest_contentful_paint": 7592.481,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 11200.469000000001,
+        "speed_index": 11136,
+        "interactive": 28942.706
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T06:53:35.339375",
+      "scores": {
+        "performance": 15.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5788.694,
+        "largest_contentful_paint": 6553.902,
+        "cumulative_layout_shift": 0.2652936303132692,
+        "total_blocking_time": 8667.249999999753,
+        "speed_index": 9780,
+        "interactive": 20677.44699999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-22T06:53:41.281847",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5466.977,
+        "largest_contentful_paint": 5843.639,
+        "cumulative_layout_shift": 0.25960273528698613,
+        "total_blocking_time": 8302.427000000003,
+        "speed_index": 9036,
+        "interactive": 19682.757
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-23T06:53:10.578325",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5941.956,
+        "largest_contentful_paint": 8155.849,
+        "cumulative_layout_shift": 0.25953121717322497,
+        "total_blocking_time": 10608.214000000013,
+        "speed_index": 11334,
+        "interactive": 22652.591
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-24T06:52:41.858152",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5890.181,
+        "largest_contentful_paint": 6484.826,
+        "cumulative_layout_shift": 0.016114264190129055,
+        "total_blocking_time": 12169.053000000018,
+        "speed_index": 10402,
+        "interactive": 27243.863
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-24T06:52:52.713229",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6019.676,
+        "largest_contentful_paint": 6729.814,
+        "cumulative_layout_shift": 0.016120160109160644,
+        "total_blocking_time": 10750.370999999766,
+        "speed_index": 10653,
+        "interactive": 23195.61299999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-25T06:53:48.131265",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5255.871,
+        "largest_contentful_paint": 6740.136,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 10530.340999999999,
+        "speed_index": 9885,
+        "interactive": 21247.375
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-26T06:52:56.154469",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6336.154,
+        "largest_contentful_paint": 7152.823,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 10084.030000000013,
+        "speed_index": 10448,
+        "interactive": 22251.12400000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-26T06:53:03.361286",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5500.254,
+        "largest_contentful_paint": 7122.936,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 10289.028000000002,
+        "speed_index": 10264,
+        "interactive": 22171.694
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-27T06:49:18.524746",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5640.592,
+        "largest_contentful_paint": 6226.352,
+        "cumulative_layout_shift": 0.10914608335673216,
+        "total_blocking_time": 10292.946999999995,
+        "speed_index": 9894,
+        "interactive": 26119.278
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-27T06:49:23.320526",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5267.878,
+        "largest_contentful_paint": 8265.214,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 10809.913999999993,
+        "speed_index": 11114,
+        "interactive": 22446.603
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-28T06:51:08.568643",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5228.382,
+        "largest_contentful_paint": 6051.5,
+        "cumulative_layout_shift": 0.016120160109160644,
+        "total_blocking_time": 10273.431999999992,
+        "speed_index": 9907,
+        "interactive": 22307.894
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-28T06:51:23.511921",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5765.402,
+        "largest_contentful_paint": 6662.753,
+        "cumulative_layout_shift": 0.016251354106149415,
+        "total_blocking_time": 7951.727000000001,
+        "speed_index": 9454,
+        "interactive": 20015.753
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-29T06:56:06.588708",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5682.201,
+        "largest_contentful_paint": 7506.171,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 10979.792000000001,
+        "speed_index": 10755,
+        "interactive": 21905.16100000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-29T06:56:11.308755",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6299.985,
+        "largest_contentful_paint": 7355.574,
+        "cumulative_layout_shift": 0.015153229387979944,
+        "total_blocking_time": 9934.862000000008,
+        "speed_index": 10559,
+        "interactive": 25929.575
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T06:54:03.968945",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5329.256,
+        "largest_contentful_paint": 6141.016,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 11068.262999999752,
+        "speed_index": 9626,
+        "interactive": 21644.05499999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-01T06:52:53.826743",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5688.142,
+        "largest_contentful_paint": 6127.977,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 7758.84099999976,
+        "speed_index": 9080,
+        "interactive": 19432.64299999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T06:53:10.062061",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5051.623,
+        "largest_contentful_paint": 5797.466,
+        "cumulative_layout_shift": 0.02209194276520508,
+        "total_blocking_time": 10095.890000000005,
+        "speed_index": 8952,
+        "interactive": 23776.81600000024
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T06:52:01.793621",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4992.271,
+        "largest_contentful_paint": 5866.355,
+        "cumulative_layout_shift": 0.015029301425300094,
+        "total_blocking_time": 8397.836999999763,
+        "speed_index": 8610,
+        "interactive": 18006.05899999976
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T06:52:03.377174",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5106.095,
+        "largest_contentful_paint": 5500.657,
+        "cumulative_layout_shift": 0.04580694726847332,
+        "total_blocking_time": 9445.411999999993,
+        "speed_index": 8909,
+        "interactive": 19359.634
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-03T06:51:08.776703",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5452.221,
+        "largest_contentful_paint": 6384.955,
+        "cumulative_layout_shift": 0.015589396599861189,
+        "total_blocking_time": 8583.610000000002,
+        "speed_index": 9317,
+        "interactive": 20317.091
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-03T06:51:10.302924",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5539.135,
+        "largest_contentful_paint": 5832.334,
+        "cumulative_layout_shift": 0.016160138135642647,
+        "total_blocking_time": 8641.529000000002,
+        "speed_index": 9198,
+        "interactive": 19382.354
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-04T06:51:09.968669",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6181.02,
+        "largest_contentful_paint": 8732.347,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 14608.239999999998,
+        "speed_index": 12670,
+        "interactive": 30406.823
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-04T06:51:10.346677",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5904.998,
+        "largest_contentful_paint": 8063.044,
+        "cumulative_layout_shift": 0.013828760170212846,
+        "total_blocking_time": 13300.887999999983,
+        "speed_index": 11932,
+        "interactive": 26522.979
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-05T06:48:13.161850",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5608.069,
+        "largest_contentful_paint": 6247.166,
+        "cumulative_layout_shift": 0.01617604076747089,
+        "total_blocking_time": 8213.895999999995,
+        "speed_index": 9359,
+        "interactive": 23011.109
+      }
+    },
+    {
+      "name": "Coventry University",
+      "url": "https://www.coventry.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-07T06:54:14.530996",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5971.246,
+        "largest_contentful_paint": 6497.927,
+        "cumulative_layout_shift": 0.12245610086149068,
+        "total_blocking_time": 12217.088999999985,
+        "speed_index": 10741,
+        "interactive": 28466.725
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>

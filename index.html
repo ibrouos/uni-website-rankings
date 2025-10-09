@@ -3,177 +3,3494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lighthouse Performance Dashboard</title>
+    <title>🎓 University Website Performance Dashboard</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .controls { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .controls select, .controls input { margin: 0 10px 10px 0; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .result-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .site-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333; }
-        .device-badge { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-left: 10px; }
-        .mobile { background: #e3f2fd; color: #1976d2; }
-        .desktop { background: #f3e5f5; color: #7b1fa2; }
-        .scores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .score { text-align: center; padding: 10px; border-radius: 6px; }
-        .score-label { font-size: 12px; color: #666; }
-        .score-value { font-size: 20px; font-weight: bold; }
-        .score-good { background: #e8f5e8; color: #2e7d32; }
-        .score-average { background: #fff3e0; color: #f57c00; }
-        .score-poor { background: #ffebee; color: #d32f2f; }
-        .metrics { margin-top: 15px; }
-        .metric { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
-        .metric:last-child { border-bottom: none; }
-        .timestamp { font-size: 12px; color: #666; margin-top: 10px; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4299e1;
+        }
+        
+        .stat-label {
+            color: #718096;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .controls input, .controls select {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            min-width: 200px;
+        }
+        
+        .controls input:focus, .controls select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        .university-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+        
+        .university-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        
+        .university-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #4299e1;
+        }
+        
+        .uni-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .uni-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            line-height: 1.3;
+        }
+        
+        .trend-icon {
+            font-size: 24px;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .trend-up { background: #c6f6d5; color: #22543d; }
+        .trend-down { background: #fed7d7; color: #c53030; }
+        .trend-stable { background: #e2e8f0; color: #4a5568; }
+        
+        .time-period {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .period-tab {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            background: #f7fafc;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .period-tab.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .device-section {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .device-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        
+        .score-label {
+            font-weight: 500;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+        
+        .score-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        .score-none { background: #e2e8f0; color: #4a5568; }
+        
+        .uni-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #718096;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .last-updated {
+            font-style: italic;
+        }
+        
+        .total-tests {
+            font-weight: 600;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #a0aec0;
+            padding: 40px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .stats-bar { gap: 20px; }
+            .university-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; align-items: stretch; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚦 Lighthouse Performance Dashboard</h1>
-            <p>Monitor website performance, accessibility, and SEO scores</p>
+            <h1>🎓 University Website Performance</h1>
+            <p>Lighthouse performance monitoring for UK universities</p>
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-number">33</div>
+                    <div class="stat-label">Universities</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">65</div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">33</div>
+                    <div class="stat-label">Active This Week</div>
+                </div>
+            </div>
         </div>
         
         <div class="controls">
-            <select id="sortBy">
+            <input type="text" id="searchInput" placeholder="🔍 Search universities..." />
+            <select id="sortSelect">
+                <option value="name">Sort by Name</option>
                 <option value="performance">Sort by Performance</option>
                 <option value="accessibility">Sort by Accessibility</option>
-                <option value="best_practices">Sort by Best Practices</option>
-                <option value="seo">Sort by SEO</option>
-                <option value="timestamp">Sort by Date</option>
+                <option value="last_updated">Sort by Last Updated</option>
             </select>
-            
-            <select id="deviceFilter">
-                <option value="all">All Devices</option>
-                <option value="mobile">Mobile Only</option>
-                <option value="desktop">Desktop Only</option>
-            </select>
-            
-            <input type="text" id="urlFilter" placeholder="Filter by name or URL..." />
         </div>
         
-        <div id="results" class="results-grid"></div>
+        <div class="university-grid" id="universityGrid">
+            <div class="no-data">Loading universities...</div>
+        </div>
     </div>
     
-    <script src="data.js"></script>
     <script>
-        let currentData = window.lighthouseData || [];
+        const universities = [
+  {
+    "name": "Aberystwyth University",
+    "slug": "aberystwyth-university",
+    "url": "https://www.aber.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:05.687415",
+    "week_averages": {
+      "mobile": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "desktop": {
+        "performance": 47.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "desktop": {
+        "performance": 47.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Aberystwyth University",
+        "url": "https://www.aber.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:15:04.497471",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 22.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 83.0
+        },
+        "metrics": {
+          "first_contentful_paint": 3406.0499999999997,
+          "largest_contentful_paint": 6579.033499999998,
+          "cumulative_layout_shift": 0.19927095990279464,
+          "total_blocking_time": 8567.548,
+          "speed_index": 9899.054654143127,
+          "interactive": 12990.698
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Aberystwyth University",
+        "url": "https://www.aber.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:05.687415",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 47.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 83.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1301.075,
+          "largest_contentful_paint": 1955.1570000000002,
+          "cumulative_layout_shift": 0.7181044957472661,
+          "total_blocking_time": 1689.0155000000002,
+          "speed_index": 3924.569109842399,
+          "interactive": 3755.471850000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Birkbeck, University of London",
+    "slug": "birkbeck-university-of-london",
+    "url": "https://www.bbk.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:14:44.460563",
+    "week_averages": {
+      "mobile": {
+        "performance": 44.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "desktop": {
+        "performance": 68.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 44.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "desktop": {
+        "performance": 68.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "Birkbeck, University of London",
+        "url": "https://www.bbk.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:14:42.443627",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 68.0,
+          "accessibility": 93.0,
+          "best_practices": 100,
+          "seo": 85.0
+        },
+        "metrics": {
+          "first_contentful_paint": 663.556,
+          "largest_contentful_paint": 1085.8899999999999,
+          "cumulative_layout_shift": 0.06664412715238828,
+          "total_blocking_time": 3451.5000000000005,
+          "speed_index": 3765.9031689743983,
+          "interactive": 6194.894000000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "Birkbeck, University of London",
+        "url": "https://www.bbk.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:14:44.460563",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 44.0,
+          "accessibility": 93.0,
+          "best_practices": 100,
+          "seo": 85.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1876.5329999999994,
+          "largest_contentful_paint": 4219.615,
+          "cumulative_layout_shift": 0.10321094162579954,
+          "total_blocking_time": 13284.5,
+          "speed_index": 8847.602925640504,
+          "interactive": 17889.986
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Cardiff University",
+    "slug": "cardiff-university",
+    "url": "https://www.cardiff.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:09:10.249418",
+    "week_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Cardiff University",
+        "url": "https://www.cardiff.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:09:08.415684",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 34.0,
+          "accessibility": 93.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2554.613,
+          "largest_contentful_paint": 8705.564,
+          "cumulative_layout_shift": 0.044779775820463955,
+          "total_blocking_time": 12497.999999999996,
+          "speed_index": 7559.454371018545,
+          "interactive": 16992.406
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Cardiff University",
+        "url": "https://www.cardiff.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:09:10.249418",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 71.0,
+          "accessibility": 93.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 852.115,
+          "largest_contentful_paint": 2081.7725,
+          "cumulative_layout_shift": 0.044779775820463955,
+          "total_blocking_time": 1952.09,
+          "speed_index": 2169.944663202839,
+          "interactive": 3900.705
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Edinburgh Napier University",
+    "slug": "edinburgh-napier-university",
+    "url": "https://www.napier.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:11.319386",
+    "week_averages": {
+      "mobile": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 60.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 60.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Edinburgh Napier University",
+        "url": "https://www.napier.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:15:09.100105",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 27.0,
+          "accessibility": 96.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 5394.621999999999,
+          "largest_contentful_paint": 17946.3895,
+          "cumulative_layout_shift": 0.0016818596724739194,
+          "total_blocking_time": 9536.269000000002,
+          "speed_index": 8974.516374380411,
+          "interactive": 31908.355100000008
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Edinburgh Napier University",
+        "url": "https://www.napier.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:11.319386",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 60.0,
+          "accessibility": 96.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1870.3265000000001,
+          "largest_contentful_paint": 3541.9400000000005,
+          "cumulative_layout_shift": 0.00042615350013037366,
+          "total_blocking_time": 2052.4999999999995,
+          "speed_index": 3881.428354105934,
+          "interactive": 6299.078600000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Imperial College London",
+    "slug": "imperial-college-london",
+    "url": "https://www.imperial.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:05:55.161808",
+    "week_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 64.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 64.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "Imperial College London",
+        "url": "https://www.imperial.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:05:51.503868",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 64.0,
+          "accessibility": 97.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1213.6618999999998,
+          "largest_contentful_paint": 1325.3076,
+          "cumulative_layout_shift": 0.1357994277891542,
+          "total_blocking_time": 3743.5000000000005,
+          "speed_index": 3626.1037355604976,
+          "interactive": 6427.169100000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "Imperial College London",
+        "url": "https://www.imperial.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:05:55.161808",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 34.0,
+          "accessibility": 97.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 3370.8908999999994,
+          "largest_contentful_paint": 4541.7137,
+          "cumulative_layout_shift": 0.1357994277891542,
+          "total_blocking_time": 19802.3802,
+          "speed_index": 8903.830839278078,
+          "interactive": 25656.8211
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "King's College London",
+    "slug": "kings-college-london",
+    "url": "https://www.kcl.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:05:56.240324",
+    "week_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 68.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 68.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "King's College London",
+        "url": "https://www.kcl.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:05:54.493655",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 28.999999999999996,
+          "accessibility": 94.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 3357.43,
+          "largest_contentful_paint": 9392.3295,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 16917.206,
+          "speed_index": 11104.731220231102,
+          "interactive": 22565.336
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "King's College London",
+        "url": "https://www.kcl.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:05:56.240324",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 68.0,
+          "accessibility": 94.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1235.137,
+          "largest_contentful_paint": 2347.447,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2433.000000000001,
+          "speed_index": 3989.8123336267417,
+          "interactive": 5214.673000000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Lancaster University",
+    "slug": "lancaster-university",
+    "url": "https://www.lancaster.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:08:42.934549",
+    "week_averages": {
+      "mobile": {
+        "performance": 43.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 43.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Lancaster University",
+        "url": "https://www.lancaster.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:08:29.976206",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 43.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 3100.371,
+          "largest_contentful_paint": 5114.239,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 5998.9450000000015,
+          "speed_index": 4584.321283971887,
+          "interactive": 10318.816000000003
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Lancaster University",
+        "url": "https://www.lancaster.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:08:42.934549",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 80.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1200.966,
+          "largest_contentful_paint": 1693.3909999999998,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 855.017,
+          "speed_index": 1706.6712228543454,
+          "interactive": 2580.5830000000005
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Loughborough University",
+    "slug": "loughborough-university",
+    "url": "https://www.lboro.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:11:58.760520",
+    "week_averages": {
+      "mobile": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Loughborough University",
+        "url": "https://www.lboro.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:11:50.155604",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 49.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2054.92,
+          "largest_contentful_paint": 3690.21,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 14042.999999999998,
+          "speed_index": 9684.801454606648,
+          "interactive": 18279.08485
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Loughborough University",
+        "url": "https://www.lboro.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:11:58.760520",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 71.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 773.9879999999999,
+          "largest_contentful_paint": 1272.9879999999998,
+          "cumulative_layout_shift": 0.0168713668238293,
+          "total_blocking_time": 2223.0000000000005,
+          "speed_index": 3487.9620750601125,
+          "interactive": 4292.7880000000005
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Northumbria University",
+    "slug": "northumbria-university",
+    "url": "https://www.northumbria.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:30.020465",
+    "week_averages": {
+      "mobile": {
+        "performance": 26.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 41.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 26.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 41.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Northumbria University",
+        "url": "https://www.northumbria.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:15:29.920487",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 26.0,
+          "accessibility": 89.0,
+          "best_practices": 75.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 4567.707,
+          "largest_contentful_paint": 28342.54999999999,
+          "cumulative_layout_shift": 0.04273846240158033,
+          "total_blocking_time": 22191.890499999994,
+          "speed_index": 17854.120846443588,
+          "interactive": 30353.185449999997
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Northumbria University",
+        "url": "https://www.northumbria.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:30.020465",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 41.0,
+          "accessibility": 89.0,
+          "best_practices": 75.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1504.339,
+          "largest_contentful_paint": 6693.054999999999,
+          "cumulative_layout_shift": 0.040020433201590364,
+          "total_blocking_time": 4043.836000000002,
+          "speed_index": 6336.860463829407,
+          "interactive": 7275.225000000002
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Oxford Brookes University",
+    "slug": "oxford-brookes-university",
+    "url": "https://www.brookes.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:13:39.226582",
+    "week_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Oxford Brookes University",
+        "url": "https://www.brookes.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:13:39.061800",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 34.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 2927.412,
+          "largest_contentful_paint": 12492.436250000002,
+          "cumulative_layout_shift": 0.04912305356776397,
+          "total_blocking_time": 7267.393,
+          "speed_index": 6267.151950460188,
+          "interactive": 15137.126675000003
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Oxford Brookes University",
+        "url": "https://www.brookes.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:13:39.226582",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 70.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1048.28148,
+          "largest_contentful_paint": 2529.6362599999993,
+          "cumulative_layout_shift": 0.040824619983975616,
+          "total_blocking_time": 1683.0000000000005,
+          "speed_index": 2585.6210230144516,
+          "interactive": 3983.8342400000006
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Robert Gordon University",
+    "slug": "robert-gordon-university",
+    "url": "https://www.rgu.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:04.093025",
+    "week_averages": {
+      "mobile": {
+        "performance": 28.000000000000004,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 81.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 28.000000000000004,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 81.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Robert Gordon University",
+        "url": "https://www.rgu.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:15:03.250791",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 28.000000000000004,
+          "accessibility": 96.0,
+          "best_practices": 96.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 7575.05890875244,
+          "largest_contentful_paint": 17138.385749999998,
+          "cumulative_layout_shift": 0.06218615031942931,
+          "total_blocking_time": 1943.4320912475555,
+          "speed_index": 10166.750971533942,
+          "interactive": 17272.676825
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Robert Gordon University",
+        "url": "https://www.rgu.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:04.093025",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 81.0,
+          "accessibility": 96.0,
+          "best_practices": 96.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 2470.9161999999997,
+          "largest_contentful_paint": 4168.8095,
+          "cumulative_layout_shift": 0.030605925997558053,
+          "total_blocking_time": 71.25300000000084,
+          "speed_index": 3989.83509620594,
+          "interactive": 4196.4329
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Royal Holloway, University of London",
+    "slug": "royal-holloway-university-of-london",
+    "url": "https://www.rhul.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:21:00.678632",
+    "week_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "desktop": {
+        "performance": 73.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "desktop": {
+        "performance": 73.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 91.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "Royal Holloway, University of London",
+        "url": "https://www.rhul.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:20:59.406260",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 28.999999999999996,
+          "accessibility": 96.0,
+          "best_practices": 75.0,
+          "seo": 91.0
+        },
+        "metrics": {
+          "first_contentful_paint": 4526.826999999999,
+          "largest_contentful_paint": 13365.018999999998,
+          "cumulative_layout_shift": 0.007896457998993104,
+          "total_blocking_time": 7855.7485000000015,
+          "speed_index": 7418.6746492870625,
+          "interactive": 20754.334650000004
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "Royal Holloway, University of London",
+        "url": "https://www.rhul.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:21:00.678632",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 73.0,
+          "accessibility": 96.0,
+          "best_practices": 75.0,
+          "seo": 91.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1343.8599999999997,
+          "largest_contentful_paint": 2411.46,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 1233.0000000000007,
+          "speed_index": 2214.830530947545,
+          "interactive": 4916.5327
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University College London",
+    "slug": "university-college-london",
+    "url": "https://www.ucl.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:05:39.196309",
+    "week_averages": {
+      "mobile": {
+        "performance": 42.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 88.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 42.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 88.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University College London",
+        "url": "https://www.ucl.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:05:39.185111",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 88.0,
+          "accessibility": 96.0,
+          "best_practices": 89.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1315.2655,
+          "largest_contentful_paint": 1369.7752500000001,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 470.5194999999999,
+          "speed_index": 2705.6209980911685,
+          "interactive": 2782.4849999999997
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University College London",
+        "url": "https://www.ucl.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:05:39.196309",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 42.0,
+          "accessibility": 96.0,
+          "best_practices": 89.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 4048.098000000001,
+          "largest_contentful_paint": 4175.280000000001,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 4002.8639999999987,
+          "speed_index": 7213.676735931216,
+          "interactive": 9714.162
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Aberdeen",
+    "slug": "university-of-aberdeen",
+    "url": "https://www.abdn.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:11:08.594803",
+    "week_averages": {
+      "mobile": {
+        "performance": 26.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 56.99999999999999,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 26.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 56.99999999999999,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Aberdeen",
+        "url": "https://www.abdn.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:11:05.110509",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 56.99999999999999,
+          "accessibility": 97.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1273.9551999999999,
+          "largest_contentful_paint": 3490.310000000001,
+          "cumulative_layout_shift": 0.004429162194443173,
+          "total_blocking_time": 1787.1383,
+          "speed_index": 6883.712406962724,
+          "interactive": 3846.9935000000005
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Aberdeen",
+        "url": "https://www.abdn.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:11:08.594803",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 26.0,
+          "accessibility": 97.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 4721.376200000001,
+          "largest_contentful_paint": 14490.279499999999,
+          "cumulative_layout_shift": 0.004362724761526525,
+          "total_blocking_time": 7763.683299999997,
+          "speed_index": 16702.430007275652,
+          "interactive": 14533.996899999998
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Bath",
+    "slug": "university-of-bath",
+    "url": "https://www.bath.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:09:26.431815",
+    "week_averages": {
+      "mobile": {
+        "performance": 37.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 37.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Bath",
+        "url": "https://www.bath.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:09:15.148343",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 70.0,
+          "accessibility": 99.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1425.3885,
+          "largest_contentful_paint": 2077.063,
+          "cumulative_layout_shift": 0.06804374240583232,
+          "total_blocking_time": 1530.6815,
+          "speed_index": 3717.0662549678073,
+          "interactive": 5111.292999999998
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Bath",
+        "url": "https://www.bath.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:09:26.431815",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 37.0,
+          "accessibility": 99.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2878.8979999999997,
+          "largest_contentful_paint": 5229.442499999999,
+          "cumulative_layout_shift": 0.06804374240583232,
+          "total_blocking_time": 9486.875,
+          "speed_index": 7859.717819458145,
+          "interactive": 18632.64645
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Birmingham",
+    "slug": "university-of-birmingham",
+    "url": "https://www.birmingham.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:07:17.540833",
+    "week_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 59.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 59.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Birmingham",
+        "url": "https://www.birmingham.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:07:15.120966",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 28.999999999999996,
+          "accessibility": 100,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 3459.6799499999997,
+          "largest_contentful_paint": 13526.471999999998,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 13996.441399999998,
+          "speed_index": 14806.096089920562,
+          "interactive": 20818.47135
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Birmingham",
+        "url": "https://www.birmingham.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:07:17.540833",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 59.0,
+          "accessibility": 100,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2099.78238,
+          "largest_contentful_paint": 3238.85905,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 1978.35538,
+          "speed_index": 5505.138673153699,
+          "interactive": 5384.48776
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Bradford",
+    "slug": "university-of-bradford",
+    "url": "https://www.bradford.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:21.334778",
+    "week_averages": {
+      "mobile": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Bradford",
+        "url": "https://www.bradford.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:20.446944",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 93.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1173.28882,
+          "largest_contentful_paint": 1435.5615,
+          "cumulative_layout_shift": 0.033931823665822036,
+          "total_blocking_time": 303.10484999999994,
+          "speed_index": 1866.165136920587,
+          "interactive": 2135.066725
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Bradford",
+        "url": "https://www.bradford.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:15:21.334778",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 50.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 2987.8875199999998,
+          "largest_contentful_paint": 4067.98059,
+          "cumulative_layout_shift": 0.0005108125703693893,
+          "total_blocking_time": 2588.2788400000004,
+          "speed_index": 4802.8521533351095,
+          "interactive": 7547.8249909999995
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Cambridge",
+    "slug": "university-of-cambridge",
+    "url": "https://www.cam.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:05:40.767182",
+    "week_averages": {
+      "mobile": {
+        "performance": 40.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 69.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 40.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 69.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Cambridge",
+        "url": "https://www.cam.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:05:39.375234",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 69.0,
+          "accessibility": 96.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1239.0265,
+          "largest_contentful_paint": 1364.0265000000004,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2594.4999999999995,
+          "speed_index": 4232.258857889192,
+          "interactive": 5600.925
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Cambridge",
+        "url": "https://www.cam.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:05:40.767182",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 40.0,
+          "accessibility": 96.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 3682.9455,
+          "largest_contentful_paint": 4329.451,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 8735.999999999998,
+          "speed_index": 8655.597630953534,
+          "interactive": 17926.90935
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Dundee",
+    "slug": "university-of-dundee",
+    "url": "https://www.dundee.ac.uk",
+    "total_tests": 1,
+    "last_updated": "2025-10-09T21:11:09.364293",
+    "week_averages": {
+      "mobile": {},
+      "desktop": {
+        "performance": 74.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 1
+    },
+    "month_averages": {
+      "mobile": {},
+      "desktop": {
+        "performance": 74.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 1
+    },
+    "trend": "stable",
+    "results": [
+      {
+        "name": "University of Dundee",
+        "url": "https://www.dundee.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:11:09.364293",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 74.0,
+          "accessibility": 91.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 687.3219999999999,
+          "largest_contentful_paint": 1265.4024999999997,
+          "cumulative_layout_shift": 0.010780511575615395,
+          "total_blocking_time": 1605.5000000000002,
+          "speed_index": 2102.5736520887012,
+          "interactive": 6966.5705
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Edinburgh",
+    "slug": "university-of-edinburgh",
+    "url": "https://www.ed.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:05:35.017911",
+    "week_averages": {
+      "mobile": {
+        "performance": 44.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 81.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 44.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 81.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Edinburgh",
+        "url": "https://www.ed.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:05:34.273854",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 44.0,
+          "accessibility": 98.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2778.9915,
+          "largest_contentful_paint": 4271.4915,
+          "cumulative_layout_shift": 0.03815021946498673,
+          "total_blocking_time": 6741,
+          "speed_index": 7464.254100480322,
+          "interactive": 10616.291500000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Edinburgh",
+        "url": "https://www.ed.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:05:35.017911",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 81.0,
+          "accessibility": 98.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 340.544,
+          "largest_contentful_paint": 907.5439999999999,
+          "cumulative_layout_shift": 0.03815021946498673,
+          "total_blocking_time": 788,
+          "speed_index": 1981.3026909965668,
+          "interactive": 2062.6440000000002
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Essex",
+    "slug": "university-of-essex",
+    "url": "https://www.essex.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:21:13.177277",
+    "week_averages": {
+      "mobile": {
+        "performance": 28.000000000000004,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 55.00000000000001,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 28.000000000000004,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "desktop": {
+        "performance": 55.00000000000001,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Essex",
+        "url": "https://www.essex.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:21:12.191874",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 55.00000000000001,
+          "accessibility": 92.0,
+          "best_practices": 54.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 1036.4889999999998,
+          "largest_contentful_paint": 3627.9710000000005,
+          "cumulative_layout_shift": 0.07290400972053462,
+          "total_blocking_time": 2444.5000000000005,
+          "speed_index": 5986.146574471626,
+          "interactive": 8275.150225000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Essex",
+        "url": "https://www.essex.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:21:13.177277",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 28.000000000000004,
+          "accessibility": 92.0,
+          "best_practices": 54.0,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 3340.898,
+          "largest_contentful_paint": 15192.894499999999,
+          "cumulative_layout_shift": 0.07290400972053462,
+          "total_blocking_time": 13948.04,
+          "speed_index": 16846.325013326335,
+          "interactive": 36157.32860000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Exeter",
+    "slug": "university-of-exeter",
+    "url": "https://www.exeter.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:08:46.084845",
+    "week_averages": {
+      "mobile": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 72.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 72.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Exeter",
+        "url": "https://www.exeter.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:08:40.799891",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 72.0,
+          "accessibility": 95.0,
+          "best_practices": 61.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 742.4325000000001,
+          "largest_contentful_paint": 1115.5595,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2249.57,
+          "speed_index": 1761.2737417148255,
+          "interactive": 5215.9025
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Exeter",
+        "url": "https://www.exeter.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:08:46.084845",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 47.0,
+          "accessibility": 95.0,
+          "best_practices": 61.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2330.429,
+          "largest_contentful_paint": 4406.3775000000005,
+          "cumulative_layout_shift": 0.0011952889038937308,
+          "total_blocking_time": 19285.5285,
+          "speed_index": 5721.08746756615,
+          "interactive": 26183.9075
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Glasgow",
+    "slug": "university-of-glasgow",
+    "url": "https://www.gla.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:07:22.828960",
+    "week_averages": {
+      "mobile": {
+        "performance": 1.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 1.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Glasgow",
+        "url": "https://www.gla.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:07:20.732594",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 26.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1835.769,
+          "largest_contentful_paint": 4436.263,
+          "cumulative_layout_shift": 0.7788814307116988,
+          "total_blocking_time": 2861.9259999999995,
+          "speed_index": 5614.189085045783,
+          "interactive": 5720.645
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Glasgow",
+        "url": "https://www.gla.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:07:22.828960",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 1.0,
+          "accessibility": 100,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 6769.976500000001,
+          "largest_contentful_paint": 17254.9525,
+          "cumulative_layout_shift": 0.7788814307116988,
+          "total_blocking_time": 15317.784499999998,
+          "speed_index": 17004.08894292139,
+          "interactive": 23779.811
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Leeds",
+    "slug": "university-of-leeds",
+    "url": "https://www.leeds.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:07:09.125821",
+    "week_averages": {
+      "mobile": {
+        "performance": 39.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 39.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Leeds",
+        "url": "https://www.leeds.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:07:06.245470",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 93.0,
+          "accessibility": 99.0,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 826.43182,
+          "largest_contentful_paint": 1547.4455000000003,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 296.21186,
+          "speed_index": 2025.1151481810207,
+          "interactive": 1771.4641740000004
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Leeds",
+        "url": "https://www.leeds.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:07:09.125821",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 39.0,
+          "accessibility": 99.0,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 3429.8553999999995,
+          "largest_contentful_paint": 6073.046999999999,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2462.4716000000008,
+          "speed_index": 5011.189768236638,
+          "interactive": 7195.784
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Liverpool",
+    "slug": "university-of-liverpool",
+    "url": "https://www.liverpool.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:09:25.893667",
+    "week_averages": {
+      "mobile": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 73.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 73.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Liverpool",
+        "url": "https://www.liverpool.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:09:15.167377",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 35.0,
+          "accessibility": 95.0,
+          "best_practices": 79.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1731.0819999999999,
+          "largest_contentful_paint": 10181.192,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 17453.29,
+          "speed_index": 10421.725163811196,
+          "interactive": 23750.203
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Liverpool",
+        "url": "https://www.liverpool.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:09:25.893667",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 73.0,
+          "accessibility": 95.0,
+          "best_practices": 79.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1143.4569999999999,
+          "largest_contentful_paint": 2250.6684999999998,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 1374.72225,
+          "speed_index": 2803.921450654544,
+          "interactive": 4197.368425000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Nottingham",
+    "slug": "university-of-nottingham",
+    "url": "https://www.nottingham.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:08:21.488675",
+    "week_averages": {
+      "mobile": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "desktop": {
+        "performance": 31.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "desktop": {
+        "performance": 31.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Nottingham",
+        "url": "https://www.nottingham.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:08:14.687109",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 31.0,
+          "accessibility": 88.0,
+          "best_practices": 100,
+          "seo": 75.0
+        },
+        "metrics": {
+          "first_contentful_paint": 4749.9445,
+          "largest_contentful_paint": 6462.631080000001,
+          "cumulative_layout_shift": 0.04557607898082025,
+          "total_blocking_time": 3896.0220000000018,
+          "speed_index": 7430.243207320749,
+          "interactive": 9462.735900000003
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Nottingham",
+        "url": "https://www.nottingham.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:08:21.488675",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 25.0,
+          "accessibility": 88.0,
+          "best_practices": 100,
+          "seo": 75.0
+        },
+        "metrics": {
+          "first_contentful_paint": 16568.6705,
+          "largest_contentful_paint": 23815.567550000003,
+          "cumulative_layout_shift": 0.04343827002830235,
+          "total_blocking_time": 17495.685500000007,
+          "speed_index": 17253.285486761444,
+          "interactive": 34933.08875000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Oxford",
+    "slug": "university-of-oxford",
+    "url": "https://www.ox.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:06:08.998479",
+    "week_averages": {
+      "mobile": {
+        "performance": 3.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 45.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 3.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 45.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "down",
+    "results": [
+      {
+        "name": "University of Oxford",
+        "url": "https://www.ox.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:06:03.078930",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 45.0,
+          "accessibility": 94.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1309.6469999999995,
+          "largest_contentful_paint": 2346.6789999999983,
+          "cumulative_layout_shift": 0.9217189873754114,
+          "total_blocking_time": 1631.4999999999989,
+          "speed_index": 4292.340658352599,
+          "interactive": 4535.881299999999
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      },
+      {
+        "name": "University of Oxford",
+        "url": "https://www.ox.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:06:08.998479",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 3.0,
+          "accessibility": 94.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 5095.994,
+          "largest_contentful_paint": 9849.371000000001,
+          "cumulative_layout_shift": 0.9217189873754114,
+          "total_blocking_time": 7954.454999999998,
+          "speed_index": 9761.99442206729,
+          "interactive": 18107.471200000007
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Sheffield",
+    "slug": "university-of-sheffield",
+    "url": "https://www.sheffield.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:07:45.898954",
+    "week_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 87.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 34.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 87.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Sheffield",
+        "url": "https://www.sheffield.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:07:37.249135",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 34.0,
+          "accessibility": 99.0,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 4660.391739999999,
+          "largest_contentful_paint": 6399.358525,
+          "cumulative_layout_shift": 0.00039075530932917583,
+          "total_blocking_time": 4048.3947800000014,
+          "speed_index": 5781.274285967921,
+          "interactive": 10032.336027000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Sheffield",
+        "url": "https://www.sheffield.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:07:45.898954",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 87.0,
+          "accessibility": 99.0,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1332.4859999999999,
+          "largest_contentful_paint": 1579.3270000000002,
+          "cumulative_layout_shift": 0.00039075530932917583,
+          "total_blocking_time": 513.4999999999998,
+          "speed_index": 1698.2183388120575,
+          "interactive": 2363.3632999999995
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Southampton",
+    "slug": "university-of-southampton",
+    "url": "https://www.southampton.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:07:38.242852",
+    "week_averages": {
+      "mobile": {
+        "performance": 46.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 46.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Southampton",
+        "url": "https://www.southampton.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:07:34.869974",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 46.0,
+          "accessibility": 85.0,
+          "best_practices": 75.0,
+          "seo": 69.0
+        },
+        "metrics": {
+          "first_contentful_paint": 3348.0820000000003,
+          "largest_contentful_paint": 3615.0945,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 10196,
+          "speed_index": 8591.516634843196,
+          "interactive": 15273.8652
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Southampton",
+        "url": "https://www.southampton.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:07:38.242852",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 70.0,
+          "accessibility": 85.0,
+          "best_practices": 75.0,
+          "seo": 69.0
+        },
+        "metrics": {
+          "first_contentful_paint": 716.295,
+          "largest_contentful_paint": 991.5515,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2843.5,
+          "speed_index": 2980.5587959661334,
+          "interactive": 4862.297600000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Stirling",
+    "slug": "university-of-stirling",
+    "url": "https://www.stir.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:15:17.446013",
+    "week_averages": {
+      "mobile": {
+        "performance": 41.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 41.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 70.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Stirling",
+        "url": "https://www.stir.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:14:47.978164",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 41.0,
+          "accessibility": 96.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1862.366,
+          "largest_contentful_paint": 7161.971500000001,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 26472.739,
+          "speed_index": 5380.7262407053895,
+          "interactive": 32867.95810000001
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Stirling",
+        "url": "https://www.stir.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:15:17.446013",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 70.0,
+          "accessibility": 96.0,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 678.319,
+          "largest_contentful_paint": 1814.7805000000003,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 3631.911999999997,
+          "speed_index": 1717.4457201442951,
+          "interactive": 7057.180549999999
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Strathclyde",
+    "slug": "university-of-strathclyde",
+    "url": "https://www.strath.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:11:23.436938",
+    "week_averages": {
+      "mobile": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Strathclyde",
+        "url": "https://www.strath.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:11:16.931922",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 32.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 3438.758,
+          "largest_contentful_paint": 12113.309,
+          "cumulative_layout_shift": 0.01672857651156233,
+          "total_blocking_time": 7731.352500000001,
+          "speed_index": 6799.524059559818,
+          "interactive": 19100.49235
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Strathclyde",
+        "url": "https://www.strath.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:11:23.436938",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 71.0,
+          "accessibility": 100,
+          "best_practices": 75.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1152.334,
+          "largest_contentful_paint": 1846.8684999999996,
+          "cumulative_layout_shift": 3.7269823141833515e-05,
+          "total_blocking_time": 2172.1159999999995,
+          "speed_index": 2685.6778721282026,
+          "interactive": 5165.2599
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Surrey",
+    "slug": "university-of-surrey",
+    "url": "https://www.surrey.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:10:13.085505",
+    "week_averages": {
+      "mobile": {
+        "performance": 59.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 88.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 59.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 88.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Surrey",
+        "url": "https://www.surrey.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:10:07.437911",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 59.0,
+          "accessibility": 100,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 2297.68,
+          "largest_contentful_paint": 3267.9519999999998,
+          "cumulative_layout_shift": 0.0022677310435549043,
+          "total_blocking_time": 2831.5359999999996,
+          "speed_index": 3987.6349188236486,
+          "interactive": 8393.242199999999
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Surrey",
+        "url": "https://www.surrey.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:10:13.085505",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 88.0,
+          "accessibility": 100,
+          "best_practices": 96.0,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 901.577,
+          "largest_contentful_paint": 1045.162,
+          "cumulative_layout_shift": 0.0022677310435549043,
+          "total_blocking_time": 465.183,
+          "speed_index": 1615.346059749178,
+          "interactive": 2541.7287
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "University of Sussex",
+    "slug": "university-of-sussex",
+    "url": "https://www.sussex.ac.uk",
+    "total_tests": 2,
+    "last_updated": "2025-10-09T21:09:47.521959",
+    "week_averages": {
+      "mobile": {
+        "performance": 53.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "month_averages": {
+      "mobile": {
+        "performance": 53.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "desktop": {
+        "performance": 93.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "total_tests": 2
+    },
+    "trend": "up",
+    "results": [
+      {
+        "name": "University of Sussex",
+        "url": "https://www.sussex.ac.uk",
+        "device": "mobile",
+        "timestamp": "2025-10-09T21:09:36.788088",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 53.0,
+          "accessibility": 97.0,
+          "best_practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first_contentful_paint": 1972.4479999999999,
+          "largest_contentful_paint": 4356.896,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 2067.4999999999995,
+          "speed_index": 4537.197743997556,
+          "interactive": 4853.297999999999
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "mobile"
+        }
+      },
+      {
+        "name": "University of Sussex",
+        "url": "https://www.sussex.ac.uk",
+        "device": "desktop",
+        "timestamp": "2025-10-09T21:09:47.521959",
+        "lighthouse_version": "12.8.2",
+        "test_type": "lab",
+        "scores": {
+          "performance": 93.0,
+          "accessibility": 97.0,
+          "best_practices": 100,
+          "seo": 92.0
+        },
+        "metrics": {
+          "first_contentful_paint": 414.04,
+          "largest_contentful_paint": 948.0800000000002,
+          "cumulative_layout_shift": 0,
+          "total_blocking_time": 304.5,
+          "speed_index": 1421.1952074531064,
+          "interactive": 1173.99
+        },
+        "throttling_config": {
+          "method": "simulate",
+          "device": "desktop"
+        }
+      }
+    ]
+  }
+];
+        let currentPeriod = 'week';
         
         function getScoreClass(score) {
+            if (!score || score === 0) return 'score-none';
             if (score >= 90) return 'score-good';
             if (score >= 50) return 'score-average';
             return 'score-poor';
         }
         
-        function formatMetric(value, unit = 'ms') {
-            if (value < 1000) return `${Math.round(value)}${unit}`;
-            return `${(value / 1000).toFixed(1)}s`;
+        function getTrendIcon(trend) {
+            switch(trend) {
+                case 'up': return '📈';
+                case 'down': return '📉';
+                default: return '➡️';
+            }
         }
         
-        function renderResults(data) {
-            const resultsContainer = document.getElementById('results');
-            resultsContainer.innerHTML = '';
-            
-            data.forEach(result => {
-                const card = document.createElement('div');
-                card.className = 'result-card';
-                
-                const url = new URL(result.url);
-                const siteName = url.hostname.replace('www.', '');
-                
-                card.innerHTML = `
-                    <div class="site-name">
-                        ${siteName}
-                        <span class="device-badge ${result.device}">${result.device}</span>
-                    </div>
-                    
-                    <div class="scores">
-                        <div class="score ${getScoreClass(result.scores.performance)}">
-                            <div class="score-label">Performance</div>
-                            <div class="score-value">${Math.round(result.scores.performance)}</div>
-                        </div>
-                        <div class="score ${getScoreClass(result.scores.accessibility)}">
-                            <div class="score-label">Accessibility</div>
-                            <div class="score-value">${Math.round(result.scores.accessibility)}</div>
-                        </div>
-                        <div class="score ${getScoreClass(result.scores.best_practices)}">
-                            <div class="score-label">Best Practices</div>
-                            <div class="score-value">${Math.round(result.scores.best_practices)}</div>
-                        </div>
-                        <div class="score ${getScoreClass(result.scores.seo)}">
-                            <div class="score-label">SEO</div>
-                            <div class="score-value">${Math.round(result.scores.seo)}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <span>First Contentful Paint</span>
-                            <span>${formatMetric(result.metrics.first_contentful_paint)}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Largest Contentful Paint</span>
-                            <span>${formatMetric(result.metrics.largest_contentful_paint)}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Cumulative Layout Shift</span>
-                            <span>${result.metrics.cumulative_layout_shift.toFixed(3)}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Speed Index</span>
-                            <span>${formatMetric(result.metrics.speed_index)}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="timestamp">
-                        Last tested: ${new Date(result.timestamp).toLocaleString()}
-                    </div>
-                `;
-                
-                resultsContainer.appendChild(card);
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: '2-digit'
             });
         }
         
-        function filterAndSort() {
-            let filteredData = [...currentData];
+        function getDataAgeBadge(dateString) {
+            const now = new Date();
+            const testDate = new Date(dateString);
+            const daysOld = Math.floor((now - testDate) / (1000 * 60 * 60 * 24));
             
-            // Apply URL filter
-            const urlFilter = document.getElementById('urlFilter').value.toLowerCase();
-            if (urlFilter) {
-                filteredData = filteredData.filter(result => 
-                    result.name.toLowerCase().includes(urlFilter) || 
-                    result.url.toLowerCase().includes(urlFilter)
+            if (daysOld > 60) {
+                return '<span class="data-age-badge badge-error">60+ days old</span>';
+            } else if (daysOld > 30) {
+                return '<span class="data-age-badge badge-warning">30+ days old</span>';
+            }
+            return '';
+        }
+        
+        function getLastUpdatedClass(dateString) {
+            const now = new Date();
+            const testDate = new Date(dateString);
+            const daysOld = Math.floor((now - testDate) / (1000 * 60 * 60 * 24));
+            
+            if (daysOld > 60) return 'last-updated very-old-data';
+            if (daysOld > 30) return 'last-updated old-data';
+            return 'last-updated';
+        }
+        
+        function renderUniversityCard(uni) {
+            const period = currentPeriod === 'week' ? 'week_averages' : 'month_averages';
+            const averages = uni[period];
+            
+            if (!averages) {
+                return `
+                    <div class="university-card" onclick="openDetail('${uni.slug}')">
+                        <div class="uni-header">
+                            <div class="uni-name">${uni.name}</div>
+                        </div>
+                        <div class="no-data">No recent data available</div>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="university-card" onclick="openDetail('${uni.slug}')">
+                    <div class="uni-header">
+                        <div class="uni-name">${uni.name}</div>
+                        <div class="trend-icon trend-${uni.trend}">
+                            ${getTrendIcon(uni.trend)}
+                        </div>
+                    </div>
+                    
+                    <div class="time-period">
+                        <div class="period-tab ${currentPeriod === 'week' ? 'active' : ''}" onclick="event.stopPropagation(); switchPeriod('week')">
+                            7 Days
+                        </div>
+                        <div class="period-tab ${currentPeriod === 'month' ? 'active' : ''}" onclick="event.stopPropagation(); switchPeriod('month')">
+                            30 Days
+                        </div>
+                    </div>
+                    
+                    <div class="device-scores">
+                        <div class="device-section">
+                            <div class="device-title">📱 Mobile</div>
+                            <div class="score-grid">
+                                <div class="score ${getScoreClass(averages.mobile?.performance || 0)}">
+                                    <div class="score-label">Perf</div>
+                                    <div class="score-value">${Math.round(averages.mobile?.performance || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.mobile?.accessibility || 0)}">
+                                    <div class="score-label">A11y</div>
+                                    <div class="score-value">${Math.round(averages.mobile?.accessibility || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.mobile?.best_practices || 0)}">
+                                    <div class="score-label">Best</div>
+                                    <div class="score-value">${Math.round(averages.mobile?.best_practices || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.mobile?.seo || 0)}">
+                                    <div class="score-label">SEO</div>
+                                    <div class="score-value">${Math.round(averages.mobile?.seo || 0)}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="device-section">
+                            <div class="device-title">💻 Desktop</div>
+                            <div class="score-grid">
+                                <div class="score ${getScoreClass(averages.desktop?.performance || 0)}">
+                                    <div class="score-label">Perf</div>
+                                    <div class="score-value">${Math.round(averages.desktop?.performance || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.desktop?.accessibility || 0)}">
+                                    <div class="score-label">A11y</div>
+                                    <div class="score-value">${Math.round(averages.desktop?.accessibility || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.desktop?.best_practices || 0)}">
+                                    <div class="score-label">Best</div>
+                                    <div class="score-value">${Math.round(averages.desktop?.best_practices || 0)}</div>
+                                </div>
+                                <div class="score ${getScoreClass(averages.desktop?.seo || 0)}">
+                                    <div class="score-label">SEO</div>
+                                    <div class="score-value">${Math.round(averages.desktop?.seo || 0)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="uni-footer">
+                        <div class="last-updated">
+                            Last: ${formatDate(uni.last_updated)}
+                        </div>
+                        <div class="total-tests">
+                            ${uni.total_tests} tests
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderGrid(unis) {
+            const grid = document.getElementById('universityGrid');
+            grid.innerHTML = unis.map(renderUniversityCard).join('');
+        }
+        
+        function switchPeriod(period) {
+            currentPeriod = period;
+            renderGrid(getFilteredUniversities());
+        }
+        
+        function getFilteredUniversities() {
+            let filtered = [...universities];
+            
+            // Search filter
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            if (search) {
+                filtered = filtered.filter(uni => 
+                    uni.name.toLowerCase().includes(search) ||
+                    uni.url.toLowerCase().includes(search)
                 );
             }
             
-            // Apply device filter
-            const deviceFilter = document.getElementById('deviceFilter').value;
-            if (deviceFilter !== 'all') {
-                filteredData = filteredData.filter(result => result.device === deviceFilter);
-            }
-            
-            // Sort data
-            const sortBy = document.getElementById('sortBy').value;
-            filteredData.sort((a, b) => {
-                if (sortBy === 'timestamp') {
-                    return new Date(b.timestamp) - new Date(a.timestamp);
+            // Sort
+            const sort = document.getElementById('sortSelect').value;
+            filtered.sort((a, b) => {
+                switch(sort) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'performance':
+                        const aPref = a[currentPeriod === 'week' ? 'week_averages' : 'month_averages'];
+                        const bPerf = b[currentPeriod === 'week' ? 'week_averages' : 'month_averages'];
+                        const aScore = aPref?.desktop?.performance || 0;
+                        const bScore = bPerf?.desktop?.performance || 0;
+                        return bScore - aScore;
+                    case 'accessibility':
+                        const aAcc = a[currentPeriod === 'week' ? 'week_averages' : 'month_averages'];
+                        const bAcc = b[currentPeriod === 'week' ? 'week_averages' : 'month_averages'];
+                        const aAccScore = aAcc?.desktop?.accessibility || 0;
+                        const bAccScore = bAcc?.desktop?.accessibility || 0;
+                        return bAccScore - aAccScore;
+                    case 'last_updated':
+                        return new Date(b.last_updated) - new Date(a.last_updated);
+                    default:
+                        return 0;
                 }
-                return b.scores[sortBy] - a.scores[sortBy];
             });
             
-            renderResults(filteredData);
+            return filtered;
+        }
+        
+        function openDetail(slug) {
+            window.location.href = `${slug}.html`;
         }
         
         // Event listeners
-        document.getElementById('sortBy').addEventListener('change', filterAndSort);
-        document.getElementById('deviceFilter').addEventListener('change', filterAndSort);
-        document.getElementById('urlFilter').addEventListener('input', filterAndSort);
+        document.getElementById('searchInput').addEventListener('input', () => {
+            renderGrid(getFilteredUniversities());
+        });
+        
+        document.getElementById('sortSelect').addEventListener('change', () => {
+            renderGrid(getFilteredUniversities());
+        });
         
         // Initial render
-        filterAndSort();
+        renderGrid(getFilteredUniversities());
     </script>
 </body>
 </html>

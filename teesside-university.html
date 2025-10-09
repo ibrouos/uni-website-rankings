@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teesside University - Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .header-info h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .header-info p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-range-selector {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .time-range-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .time-range-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .device-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .device-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .device-btn.active {
+            border-color: #4299e1;
+            background: #e6fffa;
+            color: #2d3748;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chart-subtitle {
+            color: #718096;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .table-subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .score-cell {
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 4px 8px;
+            text-align: center;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .score-good { background: #c6f6d5; color: #22543d; }
+        .score-average { background: #fefcbf; color: #744210; }
+        .score-poor { background: #fed7d7; color: #c53030; }
+        
+        .device-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .mobile { background: #bee3f8; color: #2b6cb0; }
+        .desktop { background: #e9d8fd; color: #6b46c1; }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .chart-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Teesside University</h1>
+                <p>https://www.tees.ac.uk</p>
+            </div>
+            <a href="index.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="controls">
+            <div class="time-range-selector">
+                <button class="time-range-btn active" data-range="week">Last Week</button>
+                <button class="time-range-btn" data-range="month">Last Month</button>
+                <button class="time-range-btn" data-range="year">Last Year</button>
+                <button class="time-range-btn" data-range="all">All Time</button>
+            </div>
+            
+            <div class="device-selector">
+                <button class="device-btn active" data-device="both">Both Devices</button>
+                <button class="device-btn" data-device="mobile">Mobile Only</button>
+                <button class="device-btn" data-device="desktop">Desktop Only</button>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Performance Trends</h2>
+                <p class="chart-subtitle">Lighthouse scores over time</p>
+            </div>
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="data-table">
+            <div class="table-header">
+                <h2 class="table-title">Historical Test Results</h2>
+                <p class="table-subtitle">All Lighthouse test results for this university</p>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Performance</th>
+                            <th>FCP</th>
+                            <th>LCP</th>
+                            <th>CLS</th>
+                            <th>Speed Index</th>
+                            <th>Accessibility</th>
+                            <th>Best Practice</th>
+                            <th>SEO</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const universityData = {
+  "name": "Teesside University",
+  "slug": "teesside-university",
+  "url": "https://www.tees.ac.uk",
+  "total_tests": 30,
+  "last_updated": "2025-10-02T07:08:46.374061",
+  "week_averages": {
+    "mobile": {
+      "performance": 26.0,
+      "accessibility": 88.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 26.0,
+      "accessibility": 88.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "total_tests": 2
+  },
+  "month_averages": {
+    "mobile": {
+      "performance": 26.5,
+      "accessibility": 88.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "desktop": {
+      "performance": 26.666666666666668,
+      "accessibility": 88.0,
+      "best_practices": 75.0,
+      "seo": 100
+    },
+    "total_tests": 12
+  },
+  "trend": "stable",
+  "results": [
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-06-22T19:51:31.007924",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3763.795,
+        "largest_contentful_paint": 9374.182,
+        "cumulative_layout_shift": 0.00043320323875820223,
+        "total_blocking_time": 18176.301000000003,
+        "speed_index": 15376,
+        "interactive": 35885.091
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-06-22T19:51:36.032532",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3833.002,
+        "largest_contentful_paint": 5281.265,
+        "cumulative_layout_shift": 0.00043320323875820223,
+        "total_blocking_time": 19508.51700000001,
+        "speed_index": 17665,
+        "interactive": 36288.45
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-16T07:13:55.677438",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4000.881,
+        "largest_contentful_paint": 10472.813,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 20273.84999999952,
+        "speed_index": 18199,
+        "interactive": 37588.60699999952
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-16T07:13:58.024321",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4049.271,
+        "largest_contentful_paint": 10819.813,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 19744.331000000006,
+        "speed_index": 17827,
+        "interactive": 36233.622
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-22T07:12:30.170652",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4823.691,
+        "largest_contentful_paint": 10696.269,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 15596.439999999533,
+        "speed_index": 16571,
+        "interactive": 39546.72599999952
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-22T07:12:41.581378",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3897.391,
+        "largest_contentful_paint": 10301.513,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 16475.803999999516,
+        "speed_index": 16303,
+        "interactive": 37664.629999999524
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-27T07:10:20.604558",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4046.417,
+        "largest_contentful_paint": 10458.562,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 19274.825999999983,
+        "speed_index": 17572,
+        "interactive": 38748.66600000048
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-27T07:10:24.682076",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4550.386,
+        "largest_contentful_paint": 10712.265,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 18952.231000000003,
+        "speed_index": 17478,
+        "interactive": 36250.961000000476
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-07-30T07:14:03.597113",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4225.47,
+        "largest_contentful_paint": 10685.81,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 20616.554999999993,
+        "speed_index": 17639,
+        "interactive": 36969.26
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-07-30T07:14:17.903003",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4241.601,
+        "largest_contentful_paint": 10197.905,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 19858.874999999996,
+        "speed_index": 17519,
+        "interactive": 35437.17400000048
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-02T07:09:19.277919",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5289.665,
+        "largest_contentful_paint": 11207.444,
+        "cumulative_layout_shift": 0.0651452017778657,
+        "total_blocking_time": 19214.070000000003,
+        "speed_index": 20522,
+        "interactive": 36954.824
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-24T07:06:48.999888",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3950.181,
+        "largest_contentful_paint": 10109.649,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 19483.832000000006,
+        "speed_index": 15753,
+        "interactive": 38844.221
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-26T07:10:13.523602",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4441.865,
+        "largest_contentful_paint": 10345.407,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 23669.977000000028,
+        "speed_index": 21167,
+        "interactive": 39660.355
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-26T07:10:17.180796",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4239.017,
+        "largest_contentful_paint": 10140.664,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 22687.808,
+        "speed_index": 20781,
+        "interactive": 38975.011
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-08-31T07:06:21.514802",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4500.566,
+        "largest_contentful_paint": 10447.277,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 17968.913999999986,
+        "speed_index": 16403,
+        "interactive": 37747.721
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-08-31T07:06:29.704017",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4228.086,
+        "largest_contentful_paint": 10219.277,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 17719.239999999998,
+        "speed_index": 16423,
+        "interactive": 38767.148
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-01T07:10:25.087895",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3926.448,
+        "largest_contentful_paint": 10122.895,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 21468.980999999978,
+        "speed_index": 18512,
+        "interactive": 37653.31000000048
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-03T07:06:22.270727",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4757.524,
+        "largest_contentful_paint": 10412.937,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 20101.628999999986,
+        "speed_index": 17449,
+        "interactive": 38982.96
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-09T07:08:41.968580",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4292.67,
+        "largest_contentful_paint": 10747.731,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 20179.99699999999,
+        "speed_index": 17825,
+        "interactive": 37143.787
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-09T07:08:52.084997",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3661.194,
+        "largest_contentful_paint": 10876.335,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 20740.324999999993,
+        "speed_index": 18485,
+        "interactive": 37417.961000000476
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-13T07:04:47.327631",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3764.137,
+        "largest_contentful_paint": 10839.578,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 16941.262999999995,
+        "speed_index": 18854,
+        "interactive": 34035.019
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-16T07:10:04.047865",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3518.827,
+        "largest_contentful_paint": 10546.227,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 15233.935000000001,
+        "speed_index": 15876,
+        "interactive": 31757.370000000476
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-17T07:08:59.220542",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4641.451,
+        "largest_contentful_paint": 8246.012,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 20460.032999999996,
+        "speed_index": 17855,
+        "interactive": 39329.503
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-18T07:07:51.864319",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5119.695,
+        "largest_contentful_paint": 6343.495,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 18502.356999999996,
+        "speed_index": 16713,
+        "interactive": 35424.639
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-09-18T07:09:17.125045",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4405.615,
+        "largest_contentful_paint": 10812.641,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 17934.801000000007,
+        "speed_index": 17250,
+        "interactive": 34595.586
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-22T07:09:33.116367",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4766.612,
+        "largest_contentful_paint": 10773.212,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 18006.37600000001,
+        "speed_index": 19783,
+        "interactive": 36488.765
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-09-30T07:08:38.859834",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4370.717,
+        "largest_contentful_paint": 11293.938,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 20247.873000000014,
+        "speed_index": 18889,
+        "interactive": 37847.628
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-01T07:09:34.758629",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4387.639,
+        "largest_contentful_paint": 11212.319,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 18038.218999999517,
+        "speed_index": 17581,
+        "interactive": 35678.771999999524
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-02T07:08:04.902070",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4930.235,
+        "largest_contentful_paint": 11734.245,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 19263.82599999952,
+        "speed_index": 20624,
+        "interactive": 36944.87699999952
+      }
+    },
+    {
+      "name": "Teesside University",
+      "url": "https://www.tees.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-02T07:08:46.374061",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4312.956,
+        "largest_contentful_paint": 11076.487,
+        "cumulative_layout_shift": 0.05270031716492281,
+        "total_blocking_time": 17466.329999999998,
+        "speed_index": 16731,
+        "interactive": 34928.173
+      }
+    }
+  ]
+};
+        let currentRange = 'week';
+        let currentDevice = 'both';
+        let chart;
+        
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-average';
+            return 'score-poor';
+        }
+        
+        function formatMetric(value, unit = 'ms') {
+            if (!value) return '-';
+            if (value < 1000) return `${Math.round(value)}${unit}`;
+            return `${(value / 1000).toFixed(1)}s`;
+        }
+        
+        function filterData(data, range, device) {
+            let filtered = [...data];
+            
+            // Time range filter
+            if (range !== 'all') {
+                const now = new Date();
+                const cutoff = new Date();
+                switch(range) {
+                    case 'week': cutoff.setDate(now.getDate() - 7); break;
+                    case 'month': cutoff.setDate(now.getDate() - 30); break;
+                    case 'year': cutoff.setFullYear(now.getFullYear() - 1); break;
+                }
+                filtered = filtered.filter(result => 
+                    new Date(result.timestamp) >= cutoff
+                );
+            }
+            
+            // Device filter
+            if (device !== 'both') {
+                filtered = filtered.filter(result => result.device === device);
+            }
+            
+            return filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        }
+        
+        function createChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const mobileData = data.filter(r => r.device === 'mobile');
+            const desktopData = data.filter(r => r.device === 'desktop');
+            
+            const datasets = [];
+            
+            if (currentDevice === 'both' || currentDevice === 'mobile') {
+                datasets.push({
+                    label: 'Mobile Performance',
+                    data: mobileData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            if (currentDevice === 'both' || currentDevice === 'desktop') {
+                datasets.push({
+                    label: 'Desktop Performance',
+                    data: desktopData.map(r => ({
+                        x: r.timestamp,
+                        y: r.scores.performance
+                    })),
+                    borderColor: '#805ad5',
+                    backgroundColor: 'rgba(128, 90, 213, 0.1)',
+                    tension: 0.4
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Score'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateTable(data) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            data.slice().reverse().forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(result.timestamp).toLocaleDateString('en-GB')}</td>
+                    <td><span class="device-badge ${result.device}">${result.device}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.performance)}">${Math.round(result.scores.performance)}</span></td>
+                    <td>${formatMetric(result.metrics.first_contentful_paint)}</td>
+                    <td>${formatMetric(result.metrics.largest_contentful_paint)}</td>
+                    <td>${result.metrics.cumulative_layout_shift.toFixed(3)}</td>
+                    <td>${formatMetric(result.metrics.speed_index)}</td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.accessibility)}">${Math.round(result.scores.accessibility)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.best_practices)}">${Math.round(result.scores.best_practices)}</span></td>
+                    <td><span class="score-cell ${getScoreClass(result.scores.seo)}">${Math.round(result.scores.seo)}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateView() {
+            const filteredData = filterData(universityData.results, currentRange, currentDevice);
+            createChart(filteredData);
+            updateTable(filteredData);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.time-range-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRange = e.target.dataset.range;
+                updateView();
+            });
+        });
+        
+        document.querySelectorAll('.device-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDevice = e.target.dataset.device;
+                updateView();
+            });
+        });
+        
+        // Initial load
+        updateView();
+    </script>
+</body>
+</html>
