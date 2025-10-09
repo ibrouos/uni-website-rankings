@@ -1,4 +1,4 @@
-name: Lighthouse Performance Monitor
+name: Lighthouse Monitor - Top 50 Universities
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  lighthouse-tests:
+  lighthouse-top50:
     runs-on: ubuntu-latest
     
     steps:
@@ -25,7 +25,7 @@ jobs:
         python-version: '3.9'
         
     - name: Install Lighthouse CLI
-      run: npm install -g @lhci/cli lighthouse
+      run: npm install -g lighthouse
       
     - name: Install Chrome dependencies
       run: |
@@ -38,8 +38,8 @@ jobs:
         mkdir -p results
         mkdir -p docs
         
-    - name: Run Lighthouse tests
-      run: python lighthouse_monitor.py
+    - name: Run Lighthouse tests (Top 50)
+      run: python lighthouse_top50.py
       
     - name: Build dashboard
       run: python build_dashboard_new.py
@@ -49,7 +49,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git diff --staged --quiet || git commit -m "Update lighthouse results $(date +'%Y-%m-%d')"
+        git diff --staged --quiet || git commit -m "Update lighthouse results (Top 50) $(date +'%Y-%m-%d')"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
