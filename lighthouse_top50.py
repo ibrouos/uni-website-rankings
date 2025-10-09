@@ -65,9 +65,9 @@ class LighthouseMonitor:
         retry_suffix = f" (retry {retry_count})" if retry_count > 0 else ""
         logger.info(f"Testing {name} ({url}) on {device}{retry_suffix}")
         
-        # Adjust timeout for known slow sites
-        timeout = 180 if self.is_slow_site(url) else 120
-        max_wait = 60000 if self.is_slow_site(url) else 45000
+        # Adjust timeout for known slow sites - increased for reliability
+        timeout = 240 if self.is_slow_site(url) else 180
+        max_wait = 90000 if self.is_slow_site(url) else 60000
         
         # Optimized Lighthouse CLI command
         cmd = [
@@ -377,8 +377,8 @@ def main():
         logger.error(f"Failed to load sites: {str(e)}")
         return
     
-    # Initialize with 16 workers and 2 retries for maximum reliability
-    monitor = LighthouseMonitor(sites_to_test, max_workers=16, max_retries=2)
+    # Initialize with fewer workers and retries for stability
+    monitor = LighthouseMonitor(sites_to_test, max_workers=8, max_retries=1)
     
     logger.info("Starting Lighthouse tests with retry logic...")
     results = monitor.run_all_tests()
