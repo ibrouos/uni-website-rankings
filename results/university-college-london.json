@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2025-10-09T21:05:39.196309",
-  "total_tests": 2,
+  "last_updated": "2025-10-10T06:30:38.989676",
+  "total_tests": 4,
   "results": [
     {
       "name": "University College London",
@@ -51,6 +51,58 @@
         "total_blocking_time": 4002.8639999999987,
         "speed_index": 7213.676735931216,
         "interactive": 9714.162
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-10T06:30:38.482517",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 943.8760000000001,
+        "largest_contentful_paint": 950.2615000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1.5,
+        "speed_index": 1501.838912992632,
+        "interactive": 1193.05005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-10T06:30:38.989676",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2567.2259999999997,
+        "largest_contentful_paint": 2807.8549999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 553.4464999999998,
+        "speed_index": 3976.6453612864534,
+        "interactive": 3823.7068500000005
       },
       "throttling_config": {
         "method": "simulate",

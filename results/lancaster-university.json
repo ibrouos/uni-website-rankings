@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2025-10-09T21:08:42.934549",
-  "total_tests": 2,
+  "last_updated": "2025-10-10T06:33:09.144299",
+  "total_tests": 4,
   "results": [
     {
       "name": "Lancaster University",
@@ -51,6 +51,58 @@
         "total_blocking_time": 855.017,
         "speed_index": 1706.6712228543454,
         "interactive": 2580.5830000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-10T06:33:08.178332",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2934.713,
+        "largest_contentful_paint": 5266.925,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2276.217999999999,
+        "speed_index": 3698.423067592747,
+        "interactive": 6558.3896
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-10T06:33:09.144299",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1273.646,
+        "largest_contentful_paint": 1781.7489999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 180.5,
+        "speed_index": 1557.7319528567773,
+        "interactive": 2064.941
       },
       "throttling_config": {
         "method": "simulate",

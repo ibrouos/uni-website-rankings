@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2025-10-09T21:11:10.282485",
-  "total_tests": 2,
+  "last_updated": "2025-10-10T06:35:56.094052",
+  "total_tests": 4,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -55,6 +55,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-10T06:35:56.004810",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3281.3590000000004,
+        "largest_contentful_paint": 12520.790000000003,
+        "cumulative_layout_shift": 0.010324377075247037,
+        "total_blocking_time": 3300.776,
+        "speed_index": 5913.614206284906,
+        "interactive": 15722.845500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-10T06:35:56.094052",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1640.5564999999997,
+        "largest_contentful_paint": 2668.2169999999996,
+        "cumulative_layout_shift": 0.04594395745240726,
+        "total_blocking_time": 287.4999999999998,
+        "speed_index": 1982.0129742890745,
+        "interactive": 2963.22785
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
