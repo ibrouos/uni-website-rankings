@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2025-10-10T06:37:56.960904",
-  "total_tests": 2,
+  "last_updated": "2025-10-11T06:34:57.622804",
+  "total_tests": 4,
   "results": [
     {
       "name": "University of Reading",
@@ -55,6 +55,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-11T06:34:48.642480",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 21.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4998.417000000001,
+        "largest_contentful_paint": 6456.657000000001,
+        "cumulative_layout_shift": 0.17067038322587694,
+        "total_blocking_time": 5194.153999999996,
+        "speed_index": 12723.640139449142,
+        "interactive": 24438.829575000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-11T06:34:57.622804",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2097.8029,
+        "largest_contentful_paint": 2460.5967,
+        "cumulative_layout_shift": 0.17067038322587694,
+        "total_blocking_time": 628.4999999999995,
+        "speed_index": 5191.178682268048,
+        "interactive": 5838.406535000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-10-10T06:31:47.316830",
-  "total_tests": 4,
+  "last_updated": "2025-10-11T06:30:07.946894",
+  "total_tests": 6,
   "results": [
     {
       "name": "University of Birmingham",
@@ -107,6 +107,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-11T06:29:54.171868",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4061.540016052246,
+        "largest_contentful_paint": 19122.295810000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 23841.03235394775,
+        "speed_index": 16332.687628676244,
+        "interactive": 35755.200883
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-11T06:30:07.946894",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1404.8584999999998,
+        "largest_contentful_paint": 3293.2438699999993,
+        "cumulative_layout_shift": 6.708245653719757e-06,
+        "total_blocking_time": 2907.16337,
+        "speed_index": 4176.342855088664,
+        "interactive": 7407.925533000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

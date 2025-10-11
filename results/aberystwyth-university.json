@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2025-10-10T06:39:37.301263",
-  "total_tests": 4,
+  "last_updated": "2025-10-11T06:37:03.116979",
+  "total_tests": 6,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -103,6 +103,58 @@
         "total_blocking_time": 23.499999999999773,
         "speed_index": 1908.783985115149,
         "interactive": 2538.7676749999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-11T06:36:32.296323",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3615.531,
+        "largest_contentful_paint": 8676.405,
+        "cumulative_layout_shift": 0.2990542785961224,
+        "total_blocking_time": 375.5000000000009,
+        "speed_index": 5741.977632334739,
+        "interactive": 9513.783300000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-11T06:37:03.116979",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2047.427,
+        "largest_contentful_paint": 2709.2614999999996,
+        "cumulative_layout_shift": 0.2987183388722467,
+        "total_blocking_time": 37.5,
+        "speed_index": 2418.699828828516,
+        "interactive": 2863.2614999999996
       },
       "throttling_config": {
         "method": "simulate",

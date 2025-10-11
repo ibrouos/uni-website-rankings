@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2025-10-10T06:36:42.394315",
-  "total_tests": 4,
+  "last_updated": "2025-10-11T06:33:46.288115",
+  "total_tests": 6,
   "results": [
     {
       "name": "Loughborough University",
@@ -103,6 +103,58 @@
         "total_blocking_time": 109.00000000000023,
         "speed_index": 1374.5729622107237,
         "interactive": 2629.985182071687
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-11T06:33:40.113996",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2156.1800000000003,
+        "largest_contentful_paint": 5311.646500000001,
+        "cumulative_layout_shift": 0.0168713668238293,
+        "total_blocking_time": 2341.0000000000005,
+        "speed_index": 4177.986319578812,
+        "interactive": 8753.03275
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-11T06:33:46.288115",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 628.331,
+        "largest_contentful_paint": 2135.996165519714,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 224,
+        "speed_index": 1372.40911764134,
+        "interactive": 2183.438982071685
       },
       "throttling_config": {
         "method": "simulate",
