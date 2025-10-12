@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-10-11T06:30:07.946894",
-  "total_tests": 6,
+  "last_updated": "2025-10-12T06:28:30.809880",
+  "total_tests": 8,
   "results": [
     {
       "name": "University of Birmingham",
@@ -159,6 +159,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-12T06:28:30.232647",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1688.2661899999998,
+        "largest_contentful_paint": 3494.6232449999993,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 435.5000000000002,
+        "speed_index": 3275.9731952945067,
+        "interactive": 3665.7711999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-12T06:28:30.809880",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3636.368256052246,
+        "largest_contentful_paint": 13368.186074999998,
+        "cumulative_layout_shift": 6.708245653719757e-06,
+        "total_blocking_time": 4119.213943947752,
+        "speed_index": 9148.352675166825,
+        "interactive": 13409.3164905
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
