@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2025-10-12T06:35:13.164977",
-  "total_tests": 6,
+  "last_updated": "2025-10-13T06:40:28.865979",
+  "total_tests": 8,
   "results": [
     {
       "name": "Swansea University",
@@ -155,6 +155,58 @@
         "total_blocking_time": 10497.969000000005,
         "speed_index": 14181.214488615637,
         "interactive": 27369.540050000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-13T06:39:34.181979",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1096.604,
+        "largest_contentful_paint": 1627.256,
+        "cumulative_layout_shift": 0.02419899523335786,
+        "total_blocking_time": 1581.4166199999995,
+        "speed_index": 2640.929503676379,
+        "interactive": 6377.902958000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-13T06:40:28.865979",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2391.083,
+        "largest_contentful_paint": 6772.407999999999,
+        "cumulative_layout_shift": 0.024379369649806786,
+        "total_blocking_time": 11590.569,
+        "speed_index": 17747.590227133267,
+        "interactive": 33346.9914
       },
       "throttling_config": {
         "method": "simulate",
