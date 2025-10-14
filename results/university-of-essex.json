@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2025-10-13T06:42:40.400993",
-  "total_tests": 10,
+  "last_updated": "2025-10-14T06:40:32.334150",
+  "total_tests": 12,
   "results": [
     {
       "name": "University of Essex",
@@ -259,6 +259,58 @@
         "total_blocking_time": 1893.0000000000005,
         "speed_index": 4766.254364266087,
         "interactive": 7455.652250000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-14T06:40:20.273577",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2571.7345000000005,
+        "largest_contentful_paint": 18707.120500000008,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 6787.000000000004,
+        "speed_index": 9888.387131466196,
+        "interactive": 32325.51920000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-14T06:40:32.334150",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 92.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1084.7060999999999,
+        "largest_contentful_paint": 3742.4800999999993,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 627.9999999999991,
+        "speed_index": 2833.789034688868,
+        "interactive": 6740.935489999999
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-10-13T06:34:21.023335",
-  "total_tests": 8,
+  "last_updated": "2025-10-14T06:32:25.728811",
+  "total_tests": 10,
   "results": [
     {
       "name": "University of Warwick",
@@ -211,6 +211,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-14T06:32:19.603431",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5955.327999999999,
+        "largest_contentful_paint": 10050.559706237793,
+        "cumulative_layout_shift": 0.00019083107801421654,
+        "total_blocking_time": 3537,
+        "speed_index": 7824.774281320819,
+        "interactive": 23724.397250000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-14T06:32:25.728811",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1940.0349199999994,
+        "largest_contentful_paint": 2778.5017199999998,
+        "cumulative_layout_shift": 0.00019083107801421654,
+        "total_blocking_time": 503,
+        "speed_index": 2569.314199731991,
+        "interactive": 4990.279265000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2025-10-13T06:37:01.763640",
-  "total_tests": 10,
+  "last_updated": "2025-10-14T06:34:54.114015",
+  "total_tests": 12,
   "results": [
     {
       "name": "University of Surrey",
@@ -259,6 +259,58 @@
         "total_blocking_time": 333.10400000000004,
         "speed_index": 1729.7220871751601,
         "interactive": 2475.3135999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-14T06:34:52.784636",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2294.9645,
+        "largest_contentful_paint": 3150.5815000000002,
+        "cumulative_layout_shift": 0.023105720790460103,
+        "total_blocking_time": 1403.2689999999993,
+        "speed_index": 3859.513286096185,
+        "interactive": 7179.139600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-14T06:34:54.114015",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 99.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 930.4364999999998,
+        "largest_contentful_paint": 1153.4325,
+        "cumulative_layout_shift": 0.02435303521669862,
+        "total_blocking_time": 110.5010000000002,
+        "speed_index": 1483.4780783547185,
+        "interactive": 2469.0384
       },
       "throttling_config": {
         "method": "simulate",

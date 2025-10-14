@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2025-10-13T06:32:01.914903",
-  "total_tests": 10,
+  "last_updated": "2025-10-14T06:30:06.187858",
+  "total_tests": 12,
   "results": [
     {
       "name": "University of Oxford",
@@ -263,6 +263,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-14T06:30:05.545047",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3501.9590000000003,
+        "largest_contentful_paint": 7947.958999999999,
+        "cumulative_layout_shift": 0.01892433366945753,
+        "total_blocking_time": 3103.6994999999993,
+        "speed_index": 6012.36037889732,
+        "interactive": 12299.655999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-14T06:30:06.187858",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1311.338,
+        "largest_contentful_paint": 2918.3014999999996,
+        "cumulative_layout_shift": 8.678983186054612e-05,
+        "total_blocking_time": 396.6824999999999,
+        "speed_index": 2483.9616485790953,
+        "interactive": 2960.4602499999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
