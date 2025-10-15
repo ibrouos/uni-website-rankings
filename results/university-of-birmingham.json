@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-10-14T06:31:30.837416",
-  "total_tests": 12,
+  "last_updated": "2025-10-15T06:32:13.763378",
+  "total_tests": 14,
   "results": [
     {
       "name": "University of Birmingham",
@@ -311,6 +311,58 @@
         "total_blocking_time": 133,
         "speed_index": 2290.3388499862913,
         "interactive": 3105.4238499999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-15T06:32:13.550330",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3525.303,
+        "largest_contentful_paint": 13053.228000000003,
+        "cumulative_layout_shift": 0.010125110913603285,
+        "total_blocking_time": 3035.0460000000003,
+        "speed_index": 6889.22507218382,
+        "interactive": 13200.955200000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-15T06:32:13.763378",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1309.3225,
+        "largest_contentful_paint": 3027.1735,
+        "cumulative_layout_shift": 0.010125110913603285,
+        "total_blocking_time": 391.5,
+        "speed_index": 2131.7291839365444,
+        "interactive": 3233.4032000000007
       },
       "throttling_config": {
         "method": "simulate",

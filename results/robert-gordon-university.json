@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2025-10-14T06:39:59.898155",
-  "total_tests": 12,
+  "last_updated": "2025-10-15T06:41:45.855513",
+  "total_tests": 14,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -311,6 +311,58 @@
         "total_blocking_time": 0,
         "speed_index": 2316.867567366373,
         "interactive": 3878.794200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-15T06:40:13.991623",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5423.749999999998,
+        "largest_contentful_paint": 15769.974400000001,
+        "cumulative_layout_shift": 0.17187549832554017,
+        "total_blocking_time": 10,
+        "speed_index": 5423.749999999998,
+        "interactive": 15769.974400000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-15T06:41:45.855513",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2284.8144999999995,
+        "largest_contentful_paint": 3910.1519999999987,
+        "cumulative_layout_shift": 0.17187549832554017,
+        "total_blocking_time": 0,
+        "speed_index": 2312.117336344469,
+        "interactive": 3912.158059999999
       },
       "throttling_config": {
         "method": "simulate",
