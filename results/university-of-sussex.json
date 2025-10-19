@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2025-10-18T06:32:07.231715",
-  "total_tests": 20,
+  "last_updated": "2025-10-19T06:33:21.684003",
+  "total_tests": 22,
   "results": [
     {
       "name": "University of Sussex",
@@ -519,6 +519,58 @@
         "total_blocking_time": 9,
         "speed_index": 1098.7264815936735,
         "interactive": 901.156
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-19T06:33:12.096623",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1220.484,
+        "largest_contentful_paint": 4520.484,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 926.7579999999996,
+        "speed_index": 4457.108472818318,
+        "interactive": 4565.484
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-19T06:33:21.684003",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 351.192,
+        "largest_contentful_paint": 911.192,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13,
+        "speed_index": 1474.9316432657138,
+        "interactive": 919.192
       },
       "throttling_config": {
         "method": "simulate",
