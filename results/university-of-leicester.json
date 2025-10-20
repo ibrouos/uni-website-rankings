@@ -2,8 +2,8 @@
   "name": "University of Leicester",
   "slug": "university-of-leicester",
   "url": "https://www.le.ac.uk",
-  "last_updated": "2025-10-19T06:35:50.764419",
-  "total_tests": 20,
+  "last_updated": "2025-10-20T06:38:53.581710",
+  "total_tests": 22,
   "results": [
     {
       "name": "University of Leicester",
@@ -523,6 +523,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-20T06:38:47.195715",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3675.0289999999995,
+        "largest_contentful_paint": 7134.095000000001,
+        "cumulative_layout_shift": 0.1543134872417983,
+        "total_blocking_time": 3418.458999999998,
+        "speed_index": 6699.969104042606,
+        "interactive": 21887.833099999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-20T06:38:53.581710",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1709.8059999999998,
+        "largest_contentful_paint": 2599.7459999999996,
+        "cumulative_layout_shift": 0.1543134872417983,
+        "total_blocking_time": 1194.9999999999995,
+        "speed_index": 2595.502193356773,
+        "interactive": 5813.15825
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

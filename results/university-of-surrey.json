@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2025-10-19T06:33:48.273333",
-  "total_tests": 22,
+  "last_updated": "2025-10-20T06:36:51.394564",
+  "total_tests": 24,
   "results": [
     {
       "name": "University of Surrey",
@@ -575,6 +575,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-20T06:36:50.920559",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1161.8074999999997,
+        "largest_contentful_paint": 1398.7549999999997,
+        "cumulative_layout_shift": 0.034905352889054345,
+        "total_blocking_time": 228.82100000000014,
+        "speed_index": 2747.7578790135703,
+        "interactive": 2429.9313999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-20T06:36:51.394564",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2678.2570000000014,
+        "largest_contentful_paint": 3927.189000000003,
+        "cumulative_layout_shift": 0.014067363142149144,
+        "total_blocking_time": 1621.4439999999995,
+        "speed_index": 10726.922271964313,
+        "interactive": 7640.809600000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

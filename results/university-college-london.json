@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2025-10-19T06:28:36.906542",
-  "total_tests": 22,
+  "last_updated": "2025-10-20T06:31:51.417112",
+  "total_tests": 24,
   "results": [
     {
       "name": "University College London",
@@ -571,6 +571,58 @@
         "total_blocking_time": 0,
         "speed_index": 1857.428643693463,
         "interactive": 1059.462
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-20T06:31:50.495855",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2519.002,
+        "largest_contentful_paint": 2861.002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 355.84000000000015,
+        "speed_index": 3830.111000683515,
+        "interactive": 3419.302
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-20T06:31:51.417112",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 96.0,
+        "best_practices": 89.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 874.443,
+        "largest_contentful_paint": 874.443,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6,
+        "speed_index": 1527.8896241877235,
+        "interactive": 1054.24025
       },
       "throttling_config": {
         "method": "simulate",
