@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2025-10-20T06:36:51.394564",
-  "total_tests": 24,
+  "last_updated": "2025-10-21T06:35:31.652537",
+  "total_tests": 26,
   "results": [
     {
       "name": "University of Surrey",
@@ -627,6 +627,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-21T06:35:30.255999",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2326.6355,
+        "largest_contentful_paint": 3464.7119999999995,
+        "cumulative_layout_shift": 0.020347485118122528,
+        "total_blocking_time": 801.2189999999996,
+        "speed_index": 3817.2831598972743,
+        "interactive": 6456.3236
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-21T06:35:31.652537",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1087.7914999999998,
+        "largest_contentful_paint": 1209.8134999999997,
+        "cumulative_layout_shift": 0.023105720790460103,
+        "total_blocking_time": 84.49450000000002,
+        "speed_index": 1900.0215542544752,
+        "interactive": 2031.6395499999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

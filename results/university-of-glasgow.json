@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2025-10-20T06:32:41.106128",
-  "total_tests": 24,
+  "last_updated": "2025-10-21T06:31:47.136107",
+  "total_tests": 26,
   "results": [
     {
       "name": "University of Glasgow",
@@ -623,6 +623,58 @@
         "total_blocking_time": 813.8542500000001,
         "speed_index": 3432.107477397362,
         "interactive": 3548.9245
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-21T06:31:46.217222",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6514.5135,
+        "largest_contentful_paint": 11628.265999999998,
+        "cumulative_layout_shift": 0.7788814307116988,
+        "total_blocking_time": 2950.0950000000003,
+        "speed_index": 7553.037618596801,
+        "interactive": 11984.1565
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-21T06:31:47.136107",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1884.25625,
+        "largest_contentful_paint": 3153.296,
+        "cumulative_layout_shift": 0.7788814307116988,
+        "total_blocking_time": 629.836,
+        "speed_index": 3068.3900721049577,
+        "interactive": 3165.232
       },
       "throttling_config": {
         "method": "simulate",
