@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-10-21T06:32:55.862780",
-  "total_tests": 24,
+  "last_updated": "2025-10-22T06:32:49.993631",
+  "total_tests": 26,
   "results": [
     {
       "name": "University of Warwick",
@@ -627,6 +627,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-22T06:32:49.536534",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1805.04182,
+        "largest_contentful_paint": 2720.5378862377934,
+        "cumulative_layout_shift": 0.00019083107801421654,
+        "total_blocking_time": 1022.7720000000008,
+        "speed_index": 2671.846276213305,
+        "interactive": 4689.085800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-22T06:32:49.993631",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5317.9225,
+        "largest_contentful_paint": 10750.844500000001,
+        "cumulative_layout_shift": 0.00019083107801421654,
+        "total_blocking_time": 10033.2635,
+        "speed_index": 8028.612258784078,
+        "interactive": 22069.500549999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

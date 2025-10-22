@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2025-10-21T06:34:51.424081",
-  "total_tests": 24,
+  "last_updated": "2025-10-22T06:35:13.946647",
+  "total_tests": 26,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -623,6 +623,58 @@
         "total_blocking_time": 1143.0000000000002,
         "speed_index": 2822.74898341598,
         "interactive": 4848.580462
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-22T06:34:15.763523",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4567.913500000001,
+        "largest_contentful_paint": 8364.868500000004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10178.450499999994,
+        "speed_index": 5917.008797804636,
+        "interactive": 23029.171349999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-22T06:35:13.946647",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1468.3122499999997,
+        "largest_contentful_paint": 3500.0725,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2339.5,
+        "speed_index": 3586.0588019500556,
+        "interactive": 6510.19845
       },
       "throttling_config": {
         "method": "simulate",

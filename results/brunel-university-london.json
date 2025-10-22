@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2025-10-21T06:38:17.891890",
-  "total_tests": 24,
+  "last_updated": "2025-10-22T06:38:50.611916",
+  "total_tests": 26,
   "results": [
     {
       "name": "Brunel University London",
@@ -627,6 +627,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-22T06:38:49.089866",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1514.2445599999999,
+        "largest_contentful_paint": 2031.4965000000002,
+        "cumulative_layout_shift": 0.0023010424821586824,
+        "total_blocking_time": 2031.0000000000005,
+        "speed_index": 2525.871729630154,
+        "interactive": 4594.1265
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-22T06:38:50.611916",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3150.81126,
+        "largest_contentful_paint": 14237.99,
+        "cumulative_layout_shift": 0.0023010424821586824,
+        "total_blocking_time": 9470.64274,
+        "speed_index": 6819.8055772806365,
+        "interactive": 18454.746
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

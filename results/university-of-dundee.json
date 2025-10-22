@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2025-10-21T06:36:26.225707",
-  "total_tests": 25,
+  "last_updated": "2025-10-22T06:36:50.486128",
+  "total_tests": 27,
   "results": [
     {
       "name": "University of Dundee",
@@ -649,6 +649,58 @@
         "total_blocking_time": 472.50000000000057,
         "speed_index": 1416.0998729541682,
         "interactive": 2742.7294250000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-22T06:36:35.776737",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2004.2354999999998,
+        "largest_contentful_paint": 4684.5015,
+        "cumulative_layout_shift": 0.010780511575615395,
+        "total_blocking_time": 1535.5,
+        "speed_index": 2860.0774573437848,
+        "interactive": 7821.9637999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-22T06:36:50.486128",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 564.745,
+        "largest_contentful_paint": 951.9379999999999,
+        "cumulative_layout_shift": 0.010780511575615395,
+        "total_blocking_time": 387.6445,
+        "speed_index": 1336.4699727154186,
+        "interactive": 2453.26395
       },
       "throttling_config": {
         "method": "simulate",

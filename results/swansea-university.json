@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2025-10-21T06:39:01.857797",
-  "total_tests": 24,
+  "last_updated": "2025-10-22T06:38:53.484572",
+  "total_tests": 26,
   "results": [
     {
       "name": "Swansea University",
@@ -627,6 +627,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-22T06:38:50.038066",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3967.6440000000002,
+        "largest_contentful_paint": 9244.309000000001,
+        "cumulative_layout_shift": 0.00018037441644892224,
+        "total_blocking_time": 10699.670750000008,
+        "speed_index": 7583.760708798961,
+        "interactive": 29343.32652500001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-22T06:38:53.484572",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1030.7849999999999,
+        "largest_contentful_paint": 1719.0500000000002,
+        "cumulative_layout_shift": 0.00018037441644892224,
+        "total_blocking_time": 1462.5397499999995,
+        "speed_index": 2423.8785970066474,
+        "interactive": 6148.805275000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
