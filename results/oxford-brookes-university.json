@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2025-10-23T06:38:55.195932",
-  "total_tests": 30,
+  "last_updated": "2025-10-24T06:37:41.828564",
+  "total_tests": 32,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -779,6 +779,58 @@
         "total_blocking_time": 217.00000000000023,
         "speed_index": 1853.3761909731445,
         "interactive": 3194.39465
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-24T06:37:38.328729",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2767.13916,
+        "largest_contentful_paint": 13751.73197,
+        "cumulative_layout_shift": 0.04912305356776397,
+        "total_blocking_time": 3099.434920000001,
+        "speed_index": 5624.031079444305,
+        "interactive": 13931.798883000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-24T06:37:41.828564",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 94.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1102.8459599999999,
+        "largest_contentful_paint": 2911.701255,
+        "cumulative_layout_shift": 0.040824619983975616,
+        "total_blocking_time": 111,
+        "speed_index": 1844.5329385046773,
+        "interactive": 3031.1474080000003
       },
       "throttling_config": {
         "method": "simulate",

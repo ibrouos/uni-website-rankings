@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2025-10-23T06:31:46.979086",
-  "total_tests": 30,
+  "last_updated": "2025-10-24T06:30:36.336394",
+  "total_tests": 32,
   "results": [
     {
       "name": "University of Glasgow",
@@ -783,6 +783,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-24T06:30:36.268739",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2377.2104999999997,
+        "largest_contentful_paint": 3155.603,
+        "cumulative_layout_shift": 0.7788814307116988,
+        "total_blocking_time": 409.4704999999992,
+        "speed_index": 2723.7197680326935,
+        "interactive": 3296.11645
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-24T06:30:36.336394",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 3.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6931.6320000000005,
+        "largest_contentful_paint": 13590.940499999999,
+        "cumulative_layout_shift": 0.7788814307116988,
+        "total_blocking_time": 4306.7085,
+        "speed_index": 8853.87982218968,
+        "interactive": 13941.943650000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
