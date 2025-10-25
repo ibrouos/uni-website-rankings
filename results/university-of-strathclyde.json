@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-10-24T06:35:23.674298",
-  "total_tests": 32,
+  "last_updated": "2025-10-25T06:33:33.296079",
+  "total_tests": 34,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -831,6 +831,58 @@
         "total_blocking_time": 458.4999999999998,
         "speed_index": 2365.303355791632,
         "interactive": 3585.164149999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-25T06:33:23.475602",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3036.4049999999997,
+        "largest_contentful_paint": 10823.922999999999,
+        "cumulative_layout_shift": 0.017404023746214914,
+        "total_blocking_time": 2498.242500000002,
+        "speed_index": 4986.892268204331,
+        "interactive": 14670.003799999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-25T06:33:33.296079",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1294.0829999999999,
+        "largest_contentful_paint": 2131.457,
+        "cumulative_layout_shift": 0.018411252542056007,
+        "total_blocking_time": 596.5,
+        "speed_index": 2004.402079134882,
+        "interactive": 3591.0569500000006
       },
       "throttling_config": {
         "method": "simulate",

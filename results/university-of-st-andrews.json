@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2025-10-24T06:33:39.450874",
-  "total_tests": 30,
+  "last_updated": "2025-10-25T06:31:54.224336",
+  "total_tests": 32,
   "results": [
     {
       "name": "University of St Andrews",
@@ -779,6 +779,58 @@
         "total_blocking_time": 742.5,
         "speed_index": 2458.3085,
         "interactive": 6313.762849999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-25T06:31:50.944293",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8634.8035,
+        "largest_contentful_paint": 10059.8035,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8292.786999999998,
+        "speed_index": 8634.8035,
+        "interactive": 25658.9825
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-25T06:31:54.224336",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2031.9325,
+        "largest_contentful_paint": 2231.9325,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1749.4460000000008,
+        "speed_index": 2031.9325,
+        "interactive": 6447.811750000001
       },
       "throttling_config": {
         "method": "simulate",
