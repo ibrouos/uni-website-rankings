@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2025-10-25T06:31:22.049987",
-  "total_tests": 34,
+  "last_updated": "2025-10-26T06:32:10.607910",
+  "total_tests": 36,
   "results": [
     {
       "name": "University of Bath",
@@ -883,6 +883,58 @@
         "total_blocking_time": 198.50000000000023,
         "speed_index": 1798.1044637523564,
         "interactive": 3667.564924999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-26T06:32:08.256786",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2294.9959999999996,
+        "largest_contentful_paint": 5073.6990000000005,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 857,
+        "speed_index": 5246.630686255949,
+        "interactive": 14905.253100000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-26T06:32:10.607910",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1511.6875,
+        "largest_contentful_paint": 1984.8165,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 121.31650000000013,
+        "speed_index": 2147.7569643506167,
+        "interactive": 3963.30325
       },
       "throttling_config": {
         "method": "simulate",

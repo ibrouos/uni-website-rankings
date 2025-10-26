@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2025-10-25T06:27:21.206621",
-  "total_tests": 34,
+  "last_updated": "2025-10-26T06:28:30.375741",
+  "total_tests": 36,
   "results": [
     {
       "name": "University of Cambridge",
@@ -887,6 +887,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-26T06:28:30.024739",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 847.136,
+        "largest_contentful_paint": 1096.1520000000003,
+        "cumulative_layout_shift": 0.0009901416610013287,
+        "total_blocking_time": 994.2835,
+        "speed_index": 1944.801744594984,
+        "interactive": 3755.9674999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-26T06:28:30.375741",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3084.028,
+        "largest_contentful_paint": 4084.794000000001,
+        "cumulative_layout_shift": 0.0009901416610013287,
+        "total_blocking_time": 4817,
+        "speed_index": 5190.8911848925245,
+        "interactive": 14477.878800000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

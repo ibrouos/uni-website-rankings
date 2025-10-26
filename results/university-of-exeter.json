@@ -2,8 +2,8 @@
   "name": "University of Exeter",
   "slug": "university-of-exeter",
   "url": "https://www.exeter.ac.uk",
-  "last_updated": "2025-10-25T06:30:28.061625",
-  "total_tests": 34,
+  "last_updated": "2025-10-26T06:31:35.230421",
+  "total_tests": 36,
   "results": [
     {
       "name": "University of Exeter",
@@ -883,6 +883,58 @@
         "total_blocking_time": 581.7700000000002,
         "speed_index": 3694.771723739294,
         "interactive": 3080.3014999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-26T06:31:34.727457",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2335.5834999999997,
+        "largest_contentful_paint": 3530.1115,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3312,
+        "speed_index": 3850.0778799118198,
+        "interactive": 12005.172174000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-26T06:31:35.230421",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 798.439,
+        "largest_contentful_paint": 3029.832,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 592.9999999999993,
+        "speed_index": 2197.3642813451615,
+        "interactive": 3038.38725
       },
       "throttling_config": {
         "method": "simulate",

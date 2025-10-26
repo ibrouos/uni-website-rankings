@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-10-25T06:33:33.296079",
-  "total_tests": 34,
+  "last_updated": "2025-10-26T06:34:45.661851",
+  "total_tests": 36,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -887,6 +887,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-26T06:34:44.662245",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1380.2780000000002,
+        "largest_contentful_paint": 2356.2710000000006,
+        "cumulative_layout_shift": 0.018411252542056007,
+        "total_blocking_time": 408.5,
+        "speed_index": 2433.173903428501,
+        "interactive": 3671.893
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-26T06:34:45.661851",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3175.2139999999995,
+        "largest_contentful_paint": 10039.963,
+        "cumulative_layout_shift": 0.017404023746214914,
+        "total_blocking_time": 2569.9624999999996,
+        "speed_index": 5983.0470561811435,
+        "interactive": 15569.93465
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
