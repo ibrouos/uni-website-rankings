@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-10-26T06:31:03.100460",
-  "total_tests": 34,
+  "last_updated": "2025-10-27T06:36:44.748825",
+  "total_tests": 36,
   "results": [
     {
       "name": "University of Warwick",
@@ -883,6 +883,58 @@
         "total_blocking_time": 408.5,
         "speed_index": 2746.859281406184,
         "interactive": 4656.6142500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-27T06:36:37.349742",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5953.9555,
+        "largest_contentful_paint": 11338.2915,
+        "cumulative_layout_shift": 8.488611631378402e-06,
+        "total_blocking_time": 3189.59425,
+        "speed_index": 8427.703704295225,
+        "interactive": 19646.561900000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-27T06:36:44.748825",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2267.0475,
+        "largest_contentful_paint": 3306.468500000001,
+        "cumulative_layout_shift": 0.0001952212700315848,
+        "total_blocking_time": 214.49999999999977,
+        "speed_index": 2987.7564743646326,
+        "interactive": 4078.1721500000012
       },
       "throttling_config": {
         "method": "simulate",

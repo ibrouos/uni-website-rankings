@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2025-10-26T06:31:32.934204",
-  "total_tests": 36,
+  "last_updated": "2025-10-27T06:37:30.606825",
+  "total_tests": 38,
   "results": [
     {
       "name": "Lancaster University",
@@ -935,6 +935,58 @@
         "total_blocking_time": 43,
         "speed_index": 1668.737116742741,
         "interactive": 2208.612
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-27T06:37:28.198370",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3315.492000000001,
+        "largest_contentful_paint": 6979.279000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1138.9125,
+        "speed_index": 4280.771216165033,
+        "interactive": 7243.144350000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-27T06:37:30.606825",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1709.4950000000003,
+        "largest_contentful_paint": 2665.4035000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 87,
+        "speed_index": 1940.495095686505,
+        "interactive": 2769.4035000000003
       },
       "throttling_config": {
         "method": "simulate",

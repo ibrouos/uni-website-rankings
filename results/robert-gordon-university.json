@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2025-10-26T06:38:38.275191",
-  "total_tests": 36,
+  "last_updated": "2025-10-27T06:44:50.077647",
+  "total_tests": 38,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -939,6 +939,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-27T06:44:49.554749",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2900.435800000002,
+        "largest_contentful_paint": 4545.566409583459,
+        "cumulative_layout_shift": 0.6178244454835855,
+        "total_blocking_time": 0,
+        "speed_index": 3328.85195016033,
+        "interactive": 4547.598745969707
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-27T06:44:50.077647",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6296.0509,
+        "largest_contentful_paint": 14856.607199999995,
+        "cumulative_layout_shift": 0.3762797721044112,
+        "total_blocking_time": 396,
+        "speed_index": 6968.474952245178,
+        "interactive": 14856.607199999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
