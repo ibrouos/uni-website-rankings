@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2025-10-27T06:38:24.921697",
-  "total_tests": 38,
+  "last_updated": "2025-10-28T06:35:30.534158",
+  "total_tests": 40,
   "results": [
     {
       "name": "University of Bath",
@@ -987,6 +987,58 @@
         "total_blocking_time": 435.99749999999926,
         "speed_index": 2336.3483345221043,
         "interactive": 4447.533100000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-28T06:35:28.225212",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4592.573200000001,
+        "largest_contentful_paint": 7723.746499999999,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 1953.5,
+        "speed_index": 5837.69485879652,
+        "interactive": 14470.268400000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-28T06:35:30.534158",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1195.0855000000001,
+        "largest_contentful_paint": 1922.1995000000002,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 420.4999999999998,
+        "speed_index": 2106.6703308662754,
+        "interactive": 3859.01245
       },
       "throttling_config": {
         "method": "simulate",

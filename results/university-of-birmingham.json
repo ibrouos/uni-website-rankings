@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-10-27T06:36:44.381833",
-  "total_tests": 38,
+  "last_updated": "2025-10-28T06:33:27.753282",
+  "total_tests": 40,
   "results": [
     {
       "name": "University of Birmingham",
@@ -987,6 +987,58 @@
         "total_blocking_time": 995,
         "speed_index": 2962.3213191801683,
         "interactive": 3587.1581000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-28T06:33:27.501705",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3471.5860000000007,
+        "largest_contentful_paint": 14185.819000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2525.0119999999993,
+        "speed_index": 7721.772384239556,
+        "interactive": 14223.567500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-28T06:33:27.753282",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 87.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1473.512,
+        "largest_contentful_paint": 3178.187,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 260.5,
+        "speed_index": 2784.0719795762316,
+        "interactive": 3259.2697
       },
       "throttling_config": {
         "method": "simulate",

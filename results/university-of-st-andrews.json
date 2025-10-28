@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2025-10-27T06:39:00.849672",
-  "total_tests": 36,
+  "last_updated": "2025-10-28T06:36:12.651557",
+  "total_tests": 38,
   "results": [
     {
       "name": "University of St Andrews",
@@ -939,6 +939,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-28T06:36:08.873468",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8729.9295,
+        "largest_contentful_paint": 10529.9295,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4407.999999999998,
+        "speed_index": 8729.9295,
+        "interactive": 22912.7471
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-28T06:36:12.651557",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2067.0795000000003,
+        "largest_contentful_paint": 2427.0795,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 597.5,
+        "speed_index": 2067.0795000000003,
+        "interactive": 5316.5828
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
