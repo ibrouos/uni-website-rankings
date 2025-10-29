@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2025-10-28T06:34:22.060732",
-  "total_tests": 38,
+  "last_updated": "2025-10-29T06:34:48.619857",
+  "total_tests": 40,
   "results": [
     {
       "name": "University of Manchester",
@@ -991,6 +991,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-29T06:34:45.441267",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2459.25,
+        "largest_contentful_paint": 3139.25,
+        "cumulative_layout_shift": 0.001158986504199455,
+        "total_blocking_time": 2592.5,
+        "speed_index": 2893.2841325833324,
+        "interactive": 6811.151999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-29T06:34:48.619857",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3012.0780000000004,
+        "largest_contentful_paint": 11175.25,
+        "cumulative_layout_shift": 0.0021564653648761733,
+        "total_blocking_time": 15120.241500000002,
+        "speed_index": 4460.9060476631,
+        "interactive": 30109.149350000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

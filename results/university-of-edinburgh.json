@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2025-10-28T06:32:15.938593",
-  "total_tests": 40,
+  "last_updated": "2025-10-29T06:32:45.996047",
+  "total_tests": 42,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -1039,6 +1039,58 @@
         "total_blocking_time": 3.5,
         "speed_index": 1850.7121851866164,
         "interactive": 1218.234
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-29T06:32:45.786405",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2119.452,
+        "largest_contentful_paint": 5715.952,
+        "cumulative_layout_shift": 0.06730727582469244,
+        "total_blocking_time": 286,
+        "speed_index": 3910.3168594946337,
+        "interactive": 5731.302
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-29T06:32:45.996047",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 454.9705,
+        "largest_contentful_paint": 1110.9705,
+        "cumulative_layout_shift": 0.038421255310801976,
+        "total_blocking_time": 0,
+        "speed_index": 1145.1716012711179,
+        "interactive": 1113.3705
       },
       "throttling_config": {
         "method": "simulate",

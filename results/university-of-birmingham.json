@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-10-28T06:33:27.753282",
-  "total_tests": 40,
+  "last_updated": "2025-10-29T06:33:56.091921",
+  "total_tests": 42,
   "results": [
     {
       "name": "University of Birmingham",
@@ -1043,6 +1043,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-29T06:33:55.569068",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1317.3105160522462,
+        "largest_contentful_paint": 3153.226,
+        "cumulative_layout_shift": 6.708245653719757e-06,
+        "total_blocking_time": 550.5354839477538,
+        "speed_index": 2789.3377355424786,
+        "interactive": 3228.7839999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-29T06:33:56.091921",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3458.353000000001,
+        "largest_contentful_paint": 12838.922000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3164.8240000000005,
+        "speed_index": 6387.754242791959,
+        "interactive": 12879.920500000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

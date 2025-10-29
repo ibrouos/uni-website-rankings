@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-10-28T06:34:08.605152",
-  "total_tests": 38,
+  "last_updated": "2025-10-29T06:34:43.977785",
+  "total_tests": 40,
   "results": [
     {
       "name": "University of Warwick",
@@ -987,6 +987,58 @@
         "total_blocking_time": 417.7293500000005,
         "speed_index": 2650.740562010825,
         "interactive": 4526.086665000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-29T06:34:42.624786",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5642.180000000001,
+        "largest_contentful_paint": 12378.371000000003,
+        "cumulative_layout_shift": 0.0001952212700315848,
+        "total_blocking_time": 5580.006749999997,
+        "speed_index": 7664.432829039946,
+        "interactive": 19693.2474
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-29T06:34:43.977785",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1997.3230000000003,
+        "largest_contentful_paint": 3205.2545000000014,
+        "cumulative_layout_shift": 8.482732509836932e-06,
+        "total_blocking_time": 1002.4160000000015,
+        "speed_index": 2744.7544207453566,
+        "interactive": 4742.4054000000015
       },
       "throttling_config": {
         "method": "simulate",
