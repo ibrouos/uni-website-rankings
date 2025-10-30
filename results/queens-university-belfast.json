@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2025-10-29T06:38:45.592005",
-  "total_tests": 40,
+  "last_updated": "2025-10-30T06:36:44.571637",
+  "total_tests": 42,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -1043,6 +1043,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-30T06:36:44.133711",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 833.954,
+        "largest_contentful_paint": 2784.3799999999997,
+        "cumulative_layout_shift": 0.02205466779083294,
+        "total_blocking_time": 3178.500000000002,
+        "speed_index": 1699.4811568513567,
+        "interactive": 8251.704600000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-30T06:36:44.571637",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1645.698,
+        "largest_contentful_paint": 14537.315999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22508.283499999994,
+        "speed_index": 6642.260190582068,
+        "interactive": 39161.614474999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

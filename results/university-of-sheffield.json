@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-10-29T06:34:43.901794",
-  "total_tests": 42,
+  "last_updated": "2025-10-30T06:33:06.654112",
+  "total_tests": 44,
   "results": [
     {
       "name": "University of Sheffield",
@@ -1091,6 +1091,58 @@
         "total_blocking_time": 83.00000000000011,
         "speed_index": 1414.417798913034,
         "interactive": 1973.8481000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-30T06:32:59.305621",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3498.349,
+        "largest_contentful_paint": 7028.504,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 1299.3474999999985,
+        "speed_index": 5162.018130873581,
+        "interactive": 7872.516749999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-30T06:33:06.654112",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1153.0967600000001,
+        "largest_contentful_paint": 1429.1994800000002,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 87.49999999999989,
+        "speed_index": 1448.3579360395315,
+        "interactive": 2031.623204
       },
       "throttling_config": {
         "method": "simulate",

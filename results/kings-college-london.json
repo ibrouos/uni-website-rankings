@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2025-10-29T06:32:47.013687",
-  "total_tests": 42,
+  "last_updated": "2025-10-30T06:31:02.332941",
+  "total_tests": 44,
   "results": [
     {
       "name": "King's College London",
@@ -1091,6 +1091,58 @@
         "total_blocking_time": 333.5,
         "speed_index": 1846.9636272699968,
         "interactive": 2546.34315
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-30T06:30:59.159926",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3083.752,
+        "largest_contentful_paint": 5820.486,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1302.4444999999992,
+        "speed_index": 4019.781594165275,
+        "interactive": 8737.29905
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-30T06:31:02.332941",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1234.4965000000002,
+        "largest_contentful_paint": 1931.0515,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 181.5,
+        "speed_index": 1645.5936699450422,
+        "interactive": 2194.9894500000005
       },
       "throttling_config": {
         "method": "simulate",

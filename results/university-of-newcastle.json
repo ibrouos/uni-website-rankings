@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2025-10-29T06:37:49.605364",
-  "total_tests": 40,
+  "last_updated": "2025-10-30T06:35:44.058501",
+  "total_tests": 42,
   "results": [
     {
       "name": "University of Newcastle",
@@ -1039,6 +1039,58 @@
         "total_blocking_time": 1755.7781999999997,
         "speed_index": 2265.2296149730323,
         "interactive": 5638.175179999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-30T06:35:30.665505",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3013.0366000000004,
+        "largest_contentful_paint": 14521.014700000007,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6047.365400000001,
+        "speed_index": 5451.128624240902,
+        "interactive": 19756.85722
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-30T06:35:44.058501",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1426.7981000000004,
+        "largest_contentful_paint": 3387.1266000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 963.6016499999996,
+        "speed_index": 2147.4471313466574,
+        "interactive": 5140.505885
       },
       "throttling_config": {
         "method": "simulate",
