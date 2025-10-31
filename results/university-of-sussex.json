@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2025-10-30T06:35:00.255426",
-  "total_tests": 44,
+  "last_updated": "2025-10-31T06:35:29.742596",
+  "total_tests": 46,
   "results": [
     {
       "name": "University of Sussex",
@@ -1143,6 +1143,58 @@
         "total_blocking_time": 28,
         "speed_index": 1786.7480709181932,
         "interactive": 827.1679999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-10-31T06:35:27.587721",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1215.4139999999998,
+        "largest_contentful_paint": 4515.414,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 577,
+        "speed_index": 3193.7881971667553,
+        "interactive": 4560.414
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-10-31T06:35:29.742596",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 335.1740000000001,
+        "largest_contentful_paint": 895.1740000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1118.7577122242772,
+        "interactive": 903.1740000000002
       },
       "throttling_config": {
         "method": "simulate",
