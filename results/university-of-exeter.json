@@ -2,8 +2,8 @@
   "name": "University of Exeter",
   "slug": "university-of-exeter",
   "url": "https://www.exeter.ac.uk",
-  "last_updated": "2025-10-31T06:34:07.227329",
-  "total_tests": 46,
+  "last_updated": "2025-11-01T06:30:57.018060",
+  "total_tests": 48,
   "results": [
     {
       "name": "University of Exeter",
@@ -1199,6 +1199,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-01T06:30:50.060288",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1930.7825,
+        "largest_contentful_paint": 3330.004999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5651.19275,
+        "speed_index": 3314.3981537669692,
+        "interactive": 12822.337800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-01T06:30:57.018060",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1071.4055,
+        "largest_contentful_paint": 2712.6051000000007,
+        "cumulative_layout_shift": 0.0010298751160272071,
+        "total_blocking_time": 771.2750000000005,
+        "speed_index": 2391.033851752476,
+        "interactive": 3181.2180000000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

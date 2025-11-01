@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2025-10-31T06:34:28.264443",
-  "total_tests": 46,
+  "last_updated": "2025-11-01T06:31:34.121968",
+  "total_tests": 48,
   "results": [
     {
       "name": "Cardiff University",
@@ -1195,6 +1195,58 @@
         "total_blocking_time": 42.500000000000114,
         "speed_index": 1555.6219568293145,
         "interactive": 2249.3843
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-01T06:31:29.283898",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2965.688,
+        "largest_contentful_paint": 7706.571,
+        "cumulative_layout_shift": 0.044779775820463955,
+        "total_blocking_time": 1691,
+        "speed_index": 3693.8910595849848,
+        "interactive": 9716.296950000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-01T06:31:34.121968",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1683.8782500000002,
+        "largest_contentful_paint": 2914.5885000000003,
+        "cumulative_layout_shift": 0.005921166331137324,
+        "total_blocking_time": 202.66124999999988,
+        "speed_index": 2492.759607416662,
+        "interactive": 2917.2000000000007
       },
       "throttling_config": {
         "method": "simulate",

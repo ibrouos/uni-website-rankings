@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2025-10-31T06:36:52.344055",
-  "total_tests": 46,
+  "last_updated": "2025-11-01T06:33:39.841930",
+  "total_tests": 48,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -1199,6 +1199,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-01T06:33:36.805844",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3547.1719999999996,
+        "largest_contentful_paint": 8262.415659999997,
+        "cumulative_layout_shift": 0.04063901085369779,
+        "total_blocking_time": 4188.215999999999,
+        "speed_index": 5771.1684906159635,
+        "interactive": 19187.08135
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-01T06:33:39.841930",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1419.8475,
+        "largest_contentful_paint": 2632.6184000000003,
+        "cumulative_layout_shift": 0.04960068236045448,
+        "total_blocking_time": 705.0640000000001,
+        "speed_index": 2162.0951994766438,
+        "interactive": 4387.1098
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
