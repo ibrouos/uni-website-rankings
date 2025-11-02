@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2025-11-01T06:33:39.841930",
-  "total_tests": 48,
+  "last_updated": "2025-11-02T06:35:39.544818",
+  "total_tests": 50,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -1247,6 +1247,58 @@
         "total_blocking_time": 705.0640000000001,
         "speed_index": 2162.0951994766438,
         "interactive": 4387.1098
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-02T06:35:35.224337",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3970.707,
+        "largest_contentful_paint": 9652.70667,
+        "cumulative_layout_shift": 0.03948745735085903,
+        "total_blocking_time": 5071.823999999999,
+        "speed_index": 5921.0403235873255,
+        "interactive": 18701.464000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-02T06:35:39.544818",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1288.434,
+        "largest_contentful_paint": 2426.66528,
+        "cumulative_layout_shift": 0.026530681544714607,
+        "total_blocking_time": 656.9999999999995,
+        "speed_index": 2198.6556059114528,
+        "interactive": 4119.468000000001
       },
       "throttling_config": {
         "method": "simulate",

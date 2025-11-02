@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2025-11-01T06:29:25.349662",
-  "total_tests": 48,
+  "last_updated": "2025-11-02T06:31:13.902995",
+  "total_tests": 50,
   "results": [
     {
       "name": "University of Southampton",
@@ -1247,6 +1247,58 @@
         "total_blocking_time": 77.5,
         "speed_index": 2144.488380059725,
         "interactive": 2365.3268
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-02T06:30:46.097946",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3365.721,
+        "largest_contentful_paint": 6739.5779999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2729.5,
+        "speed_index": 5250.537013321005,
+        "interactive": 9945.293075
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-02T06:31:13.902995",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1433.4840000000002,
+        "largest_contentful_paint": 1626.44,
+        "cumulative_layout_shift": 0.12393681652490887,
+        "total_blocking_time": 191.5,
+        "speed_index": 1801.2855099353355,
+        "interactive": 2588.272875000001
       },
       "throttling_config": {
         "method": "simulate",
