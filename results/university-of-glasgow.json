@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2025-11-02T06:30:44.294084",
-  "total_tests": 50,
+  "last_updated": "2025-11-03T06:34:01.862778",
+  "total_tests": 52,
   "results": [
     {
       "name": "University of Glasgow",
@@ -1299,6 +1299,58 @@
         "total_blocking_time": 1120.9129999999989,
         "speed_index": 3528.781381919997,
         "interactive": 3706.8229999999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-03T06:33:57.498152",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6781.582999999999,
+        "largest_contentful_paint": 12099.200999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 517,
+        "speed_index": 7190.431709262621,
+        "interactive": 12190.353599999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-03T06:34:01.862778",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2458.205,
+        "largest_contentful_paint": 3047.325,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3.5,
+        "speed_index": 2458.205,
+        "interactive": 3061.64875
       },
       "throttling_config": {
         "method": "simulate",
