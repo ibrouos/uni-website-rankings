@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2025-11-04T06:33:24.762521",
-  "total_tests": 54,
+  "last_updated": "2025-11-05T06:32:57.606086",
+  "total_tests": 56,
   "results": [
     {
       "name": "University of Leeds",
@@ -1403,6 +1403,58 @@
         "total_blocking_time": 0,
         "speed_index": 1046.4234644017313,
         "interactive": 1206.3841000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-05T06:32:57.281046",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3387.3518,
+        "largest_contentful_paint": 6240.374,
+        "cumulative_layout_shift": 0.4359431956257594,
+        "total_blocking_time": 248,
+        "speed_index": 3387.3518,
+        "interactive": 6270.407200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-05T06:32:57.606086",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 894.33444,
+        "largest_contentful_paint": 1366.382,
+        "cumulative_layout_shift": 0.4359431956257594,
+        "total_blocking_time": 3,
+        "speed_index": 1160.1978503329012,
+        "interactive": 1370.382
       },
       "throttling_config": {
         "method": "simulate",

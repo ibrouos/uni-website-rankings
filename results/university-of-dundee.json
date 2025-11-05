@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2025-11-04T06:37:45.638137",
-  "total_tests": 53,
+  "last_updated": "2025-11-05T06:37:13.180655",
+  "total_tests": 55,
   "results": [
     {
       "name": "University of Dundee",
@@ -1381,6 +1381,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-05T06:37:11.704661",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 94.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 593.0975000000001,
+        "largest_contentful_paint": 1102.1399999999999,
+        "cumulative_layout_shift": 0.010780511575615395,
+        "total_blocking_time": 298.0000000000002,
+        "speed_index": 1108.8008158016178,
+        "interactive": 2495.5677
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-05T06:37:13.180655",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1664.6950000000002,
+        "largest_contentful_paint": 5493.114750000001,
+        "cumulative_layout_shift": 0.010780511575615395,
+        "total_blocking_time": 5253.94175,
+        "speed_index": 3386.482440125339,
+        "interactive": 11954.935325000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
