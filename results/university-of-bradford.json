@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2025-11-06T06:42:05.707951",
-  "total_tests": 58,
+  "last_updated": "2025-11-07T06:42:54.137921",
+  "total_tests": 60,
   "results": [
     {
       "name": "University of Bradford",
@@ -1511,6 +1511,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-07T06:42:53.921870",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1216.4245,
+        "largest_contentful_paint": 1438.5925000000002,
+        "cumulative_layout_shift": 0.0007958606024833092,
+        "total_blocking_time": 145.76224999999977,
+        "speed_index": 1895.3738513208837,
+        "interactive": 2146.7165250000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-07T06:42:54.137921",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2791.9947199999997,
+        "largest_contentful_paint": 3927.533990000001,
+        "cumulative_layout_shift": 0.0004969691988464054,
+        "total_blocking_time": 1408.09141,
+        "speed_index": 4278.100863071597,
+        "interactive": 6936.590069
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
