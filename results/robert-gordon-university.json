@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2025-11-07T06:42:23.998352",
-  "total_tests": 60,
+  "last_updated": "2025-11-08T06:38:40.601525",
+  "total_tests": 62,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -1563,6 +1563,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-08T06:38:34.374054",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5481.268000000002,
+        "largest_contentful_paint": 7461.034400000006,
+        "cumulative_layout_shift": 0.006354443030918977,
+        "total_blocking_time": 14,
+        "speed_index": 5667.081179216586,
+        "interactive": 7786.877280000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-08T06:38:40.601525",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2315.271000000001,
+        "largest_contentful_paint": 3232.5727000000006,
+        "cumulative_layout_shift": 0.22101279504509194,
+        "total_blocking_time": 0,
+        "speed_index": 2495.3190159060173,
+        "interactive": 3234.589640000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

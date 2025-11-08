@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2025-11-07T06:36:36.797718",
-  "total_tests": 60,
+  "last_updated": "2025-11-08T06:33:28.021989",
+  "total_tests": 62,
   "results": [
     {
       "name": "University of Sussex",
@@ -1559,6 +1559,58 @@
         "total_blocking_time": 0,
         "speed_index": 1342.179541130452,
         "interactive": 741.518
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-08T06:33:18.418240",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1212.632,
+        "largest_contentful_paint": 3987.6319999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1142.1839999999997,
+        "speed_index": 3877.7506595201767,
+        "interactive": 4157.1558
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-08T06:33:28.021989",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 341.398,
+        "largest_contentful_paint": 834.097,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 79,
+        "speed_index": 1110.987776400658,
+        "interactive": 858.097
       },
       "throttling_config": {
         "method": "simulate",

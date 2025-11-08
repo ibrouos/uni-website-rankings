@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2025-11-07T06:36:45.253018",
-  "total_tests": 60,
+  "last_updated": "2025-11-08T06:33:37.633779",
+  "total_tests": 62,
   "results": [
     {
       "name": "University of Surrey",
@@ -1563,6 +1563,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-08T06:33:34.907491",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2379.2685,
+        "largest_contentful_paint": 6011.913,
+        "cumulative_layout_shift": 0.0014173319022218155,
+        "total_blocking_time": 1163.1169999999997,
+        "speed_index": 3697.982360323639,
+        "interactive": 6585.6098
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-08T06:33:37.633779",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1056.635,
+        "largest_contentful_paint": 1254.29,
+        "cumulative_layout_shift": 0.0014173319022218155,
+        "total_blocking_time": 207.5,
+        "speed_index": 1407.2393841177927,
+        "interactive": 2036.8800000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
