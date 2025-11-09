@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2025-11-08T06:29:52.620897",
-  "total_tests": 62,
+  "last_updated": "2025-11-09T06:29:56.616278",
+  "total_tests": 64,
   "results": [
     {
       "name": "University of Southampton",
@@ -1615,6 +1615,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-09T06:29:56.322839",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 93.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1899.6099999999997,
+        "largest_contentful_paint": 2225.3829999999994,
+        "cumulative_layout_shift": 0.12395032170696414,
+        "total_blocking_time": 10.5,
+        "speed_index": 2249.2277948761207,
+        "interactive": 2462.8685999999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-09T06:29:56.616278",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3759.312,
+        "largest_contentful_paint": 5694.322,
+        "cumulative_layout_shift": 1.3505182055265137e-05,
+        "total_blocking_time": 669.5,
+        "speed_index": 5370.9967409885685,
+        "interactive": 8676.8648
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

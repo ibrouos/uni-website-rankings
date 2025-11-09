@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-11-08T06:30:54.934579",
-  "total_tests": 60,
+  "last_updated": "2025-11-09T06:30:43.743947",
+  "total_tests": 62,
   "results": [
     {
       "name": "University of Warwick",
@@ -1563,6 +1563,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-09T06:30:41.608350",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7804.79519152648,
+        "largest_contentful_paint": 11629.795191526482,
+        "cumulative_layout_shift": 1.7412950156430415e-05,
+        "total_blocking_time": 2756,
+        "speed_index": 8870.629123246385,
+        "interactive": 21007.41284576324
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-09T06:30:43.743947",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2821.162500000001,
+        "largest_contentful_paint": 3519.0805000000005,
+        "cumulative_layout_shift": 1.7412950156430415e-05,
+        "total_blocking_time": 339,
+        "speed_index": 3337.7271618907157,
+        "interactive": 5193.414700000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2025-11-08T06:28:44.990368",
-  "total_tests": 62,
+  "last_updated": "2025-11-09T06:39:58.906824",
+  "total_tests": 64,
   "results": [
     {
       "name": "University of Oxford",
@@ -1611,6 +1611,58 @@
         "total_blocking_time": 6303.414500000001,
         "speed_index": 7113.130135463003,
         "interactive": 13807.4326
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-09T06:39:58.770186",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 757.7225000000001,
+        "largest_contentful_paint": 1461.0815000000002,
+        "cumulative_layout_shift": 0.6922636076135978,
+        "total_blocking_time": 422.74350000000027,
+        "speed_index": 2140.489401804868,
+        "interactive": 2664.4638500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-09T06:39:58.906824",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3408.7315,
+        "largest_contentful_paint": 6790.7315,
+        "cumulative_layout_shift": 0.022157622071401047,
+        "total_blocking_time": 2520.301,
+        "speed_index": 6242.6143395904455,
+        "interactive": 11808.7561
       },
       "throttling_config": {
         "method": "simulate",
