@@ -2,8 +2,8 @@
   "name": "University of Leicester",
   "slug": "university-of-leicester",
   "url": "https://www.le.ac.uk",
-  "last_updated": "2025-11-09T06:35:20.375864",
-  "total_tests": 62,
+  "last_updated": "2025-11-10T06:41:27.194369",
+  "total_tests": 64,
   "results": [
     {
       "name": "University of Leicester",
@@ -1611,6 +1611,58 @@
         "total_blocking_time": 451.5,
         "speed_index": 2598.0033987963716,
         "interactive": 5360.7935
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-10T06:41:23.980780",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3231.1460000000006,
+        "largest_contentful_paint": 6434.5555,
+        "cumulative_layout_shift": 0.1543134872417983,
+        "total_blocking_time": 4571.5,
+        "speed_index": 5495.5903839441835,
+        "interactive": 22074.48485
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-10T06:41:27.194369",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1431.4955,
+        "largest_contentful_paint": 2057.857,
+        "cumulative_layout_shift": 0.1543134872417983,
+        "total_blocking_time": 782.5,
+        "speed_index": 2462.339277083689,
+        "interactive": 5134.041000000001
       },
       "throttling_config": {
         "method": "simulate",
