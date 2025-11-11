@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2025-11-10T06:40:06.289674",
-  "total_tests": 66,
+  "last_updated": "2025-11-11T06:37:41.970848",
+  "total_tests": 68,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -1719,6 +1719,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-11T06:37:41.881040",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1268.8034999999998,
+        "largest_contentful_paint": 2931.5429999999997,
+        "cumulative_layout_shift": 0.011623597985617034,
+        "total_blocking_time": 194.10050000000024,
+        "speed_index": 1861.2256934828056,
+        "interactive": 2969.3981999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-11T06:37:41.970848",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3249.3714999999993,
+        "largest_contentful_paint": 9507.311999999998,
+        "cumulative_layout_shift": 0.014359343834384768,
+        "total_blocking_time": 4021.8525000000045,
+        "speed_index": 5662.684144605462,
+        "interactive": 16353.034400000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

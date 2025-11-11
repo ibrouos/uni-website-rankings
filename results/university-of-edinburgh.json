@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2025-11-10T06:34:39.645791",
-  "total_tests": 66,
+  "last_updated": "2025-11-11T06:32:14.685042",
+  "total_tests": 68,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -1719,6 +1719,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-11T06:32:12.842974",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2135.5045,
+        "largest_contentful_paint": 6353.0045,
+        "cumulative_layout_shift": 0.06730727582469244,
+        "total_blocking_time": 737,
+        "speed_index": 3739.1351095485907,
+        "interactive": 6441.254500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-11T06:32:14.685042",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 618.4015,
+        "largest_contentful_paint": 1180.6485000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 40.999999999999886,
+        "speed_index": 1901.2159734449615,
+        "interactive": 1184.6790000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
