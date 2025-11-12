@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2025-11-11T06:35:16.688988",
-  "total_tests": 68,
+  "last_updated": "2025-11-12T06:36:48.031028",
+  "total_tests": 70,
   "results": [
     {
       "name": "Cardiff University",
@@ -1767,6 +1767,58 @@
         "total_blocking_time": 138.9999999999999,
         "speed_index": 2190.5958323695536,
         "interactive": 2710.5476
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-12T06:35:46.468421",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2262.388,
+        "largest_contentful_paint": 6291.821499999998,
+        "cumulative_layout_shift": 0.044779775820463955,
+        "total_blocking_time": 2392.293999999999,
+        "speed_index": 3764.4982216251547,
+        "interactive": 10109.460149999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-12T06:36:48.031028",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 82.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 369.994,
+        "largest_contentful_paint": 1229.547,
+        "cumulative_layout_shift": 0.0207310383355885,
+        "total_blocking_time": 7244,
+        "speed_index": 830.9188461666624,
+        "interactive": 11799.991
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-11-11T06:37:52.329716",
-  "total_tests": 66,
+  "last_updated": "2025-11-12T06:38:19.405344",
+  "total_tests": 68,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -1719,6 +1719,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-12T06:38:16.335019",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4259.1265,
+        "largest_contentful_paint": 12623.4525,
+        "cumulative_layout_shift": 0.020045905444167067,
+        "total_blocking_time": 2332.5,
+        "speed_index": 5883.89411893786,
+        "interactive": 14480.907550000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-12T06:38:19.405344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1558.621,
+        "largest_contentful_paint": 3792.5239999999994,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 295,
+        "speed_index": 2239.354000738587,
+        "interactive": 3888.4835999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
