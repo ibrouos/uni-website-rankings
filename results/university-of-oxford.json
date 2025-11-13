@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2025-11-12T06:32:12.549377",
-  "total_tests": 70,
+  "last_updated": "2025-11-13T06:32:28.557693",
+  "total_tests": 72,
   "results": [
     {
       "name": "University of Oxford",
@@ -1823,6 +1823,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-13T06:32:27.498268",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3606.7970000000005,
+        "largest_contentful_paint": 6757.856499999998,
+        "cumulative_layout_shift": 0.09557300427864235,
+        "total_blocking_time": 2170.1050000000005,
+        "speed_index": 5064.329731707745,
+        "interactive": 10965.57315
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-13T06:32:28.557693",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 87.0,
+        "accessibility": 94.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1386.0439999999999,
+        "largest_contentful_paint": 2638.4729999999995,
+        "cumulative_layout_shift": 0.016774713617754445,
+        "total_blocking_time": 382.42499999999905,
+        "speed_index": 2526.9290682567243,
+        "interactive": 2686.2953999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
