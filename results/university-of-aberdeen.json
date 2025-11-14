@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2025-11-13T06:38:01.282778",
-  "total_tests": 72,
+  "last_updated": "2025-11-14T06:37:11.545645",
+  "total_tests": 74,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -1871,6 +1871,58 @@
         "total_blocking_time": 181.99999999999977,
         "speed_index": 5804.206746178646,
         "interactive": 2707.6486999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-14T06:37:07.034004",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4046.984,
+        "largest_contentful_paint": 11421.412499999999,
+        "cumulative_layout_shift": 0.12087417270524642,
+        "total_blocking_time": 1467,
+        "speed_index": 16265.336981143506,
+        "interactive": 11447.89965
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-14T06:37:11.545645",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1681.8616999999997,
+        "largest_contentful_paint": 2872.2785,
+        "cumulative_layout_shift": 0.5345747612620658,
+        "total_blocking_time": 149,
+        "speed_index": 5965.6692984417205,
+        "interactive": 2874.9383500000004
       },
       "throttling_config": {
         "method": "simulate",
