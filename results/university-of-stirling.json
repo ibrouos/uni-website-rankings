@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2025-11-14T06:42:31.687625",
-  "total_tests": 74,
+  "last_updated": "2025-11-15T06:40:11.270601",
+  "total_tests": 76,
   "results": [
     {
       "name": "University of Stirling",
@@ -1923,6 +1923,58 @@
         "total_blocking_time": 160.51299999999992,
         "speed_index": 1557.7461571987642,
         "interactive": 3320.8091999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-15T06:40:03.513733",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1577.141,
+        "largest_contentful_paint": 5500.727,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2394.861,
+        "speed_index": 3715.5154535245347,
+        "interactive": 14098.76785
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-15T06:40:11.270601",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 96.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 952.682,
+        "largest_contentful_paint": 1465.9075000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 219,
+        "speed_index": 1426.2949253348008,
+        "interactive": 3691.3024000000005
       },
       "throttling_config": {
         "method": "simulate",
