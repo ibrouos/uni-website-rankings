@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2025-11-17T06:39:09.932361",
-  "total_tests": 78,
+  "last_updated": "2025-11-18T06:37:22.440678",
+  "total_tests": 80,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -2027,6 +2027,58 @@
         "total_blocking_time": 2018.6355000000003,
         "speed_index": 2153.531536032804,
         "interactive": 8613.2602
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-18T06:37:20.906512",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2759.1545,
+        "largest_contentful_paint": 16546.764,
+        "cumulative_layout_shift": 0.002206152788579733,
+        "total_blocking_time": 11387.499999999998,
+        "speed_index": 13110.693875476733,
+        "interactive": 31984.264000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-18T06:37:22.440678",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1034.1239999999998,
+        "largest_contentful_paint": 3343.7185,
+        "cumulative_layout_shift": 0.022217286308368847,
+        "total_blocking_time": 1784.269499999998,
+        "speed_index": 3337.4890889314183,
+        "interactive": 6904.782699999998
       },
       "throttling_config": {
         "method": "simulate",

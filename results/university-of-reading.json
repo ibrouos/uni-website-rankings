@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2025-11-17T06:40:03.261989",
-  "total_tests": 78,
+  "last_updated": "2025-11-18T06:45:26.370592",
+  "total_tests": 80,
   "results": [
     {
       "name": "University of Reading",
@@ -2031,6 +2031,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-18T06:45:25.769828",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2095.9373000000005,
+        "largest_contentful_paint": 3094.0459500000006,
+        "cumulative_layout_shift": 0.17067038322587694,
+        "total_blocking_time": 1545.499999999999,
+        "speed_index": 6833.0407599834025,
+        "interactive": 6480.28009
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-18T06:45:26.370592",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5034.9448,
+        "largest_contentful_paint": 11941.8416,
+        "cumulative_layout_shift": 0.17067038322587694,
+        "total_blocking_time": 7861.500000000002,
+        "speed_index": 16752.77466564405,
+        "interactive": 26099.65268000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

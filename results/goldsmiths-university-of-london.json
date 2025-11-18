@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2025-11-17T06:42:29.647684",
-  "total_tests": 78,
+  "last_updated": "2025-11-18T06:41:59.300330",
+  "total_tests": 80,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -2031,6 +2031,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-18T06:41:58.815830",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1203.7400000000002,
+        "largest_contentful_paint": 2268.399000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 352.5,
+        "speed_index": 2272.5005762781416,
+        "interactive": 4265.29195
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-18T06:41:59.300330",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2915.004,
+        "largest_contentful_paint": 7808.947999999999,
+        "cumulative_layout_shift": 0.0001130045548557973,
+        "total_blocking_time": 2505.6009999999987,
+        "speed_index": 7125.516329684113,
+        "interactive": 17946.207099999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
