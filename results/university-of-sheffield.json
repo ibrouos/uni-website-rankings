@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-11-18T06:34:35.055896",
-  "total_tests": 82,
+  "last_updated": "2025-11-19T06:34:11.911432",
+  "total_tests": 84,
   "results": [
     {
       "name": "University of Sheffield",
@@ -2135,6 +2135,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-19T06:34:11.253747",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3656.3459999999995,
+        "largest_contentful_paint": 4565.987999999999,
+        "cumulative_layout_shift": 0.00039075530932917583,
+        "total_blocking_time": 985.5,
+        "speed_index": 5147.339029071671,
+        "interactive": 10798.429699999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-19T06:34:11.911432",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 99.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1191.941,
+        "largest_contentful_paint": 1253.2415,
+        "cumulative_layout_shift": 0.00043116603915663185,
+        "total_blocking_time": 110.50000000000023,
+        "speed_index": 1955.2852743378717,
+        "interactive": 2458.2692000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
