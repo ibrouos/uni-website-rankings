@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2025-11-19T06:32:16.483616",
-  "total_tests": 84,
+  "last_updated": "2025-11-20T06:31:28.700545",
+  "total_tests": 86,
   "results": [
     {
       "name": "University College London",
@@ -2187,6 +2187,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-20T06:31:28.563380",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2892.7104999999997,
+        "largest_contentful_paint": 3025.079499999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 392.4999999999998,
+        "speed_index": 4708.98927712769,
+        "interactive": 3978.9546499999988
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-20T06:31:28.700545",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1070.888,
+        "largest_contentful_paint": 1070.888,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1792.7604724410337,
+        "interactive": 1070.888
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
