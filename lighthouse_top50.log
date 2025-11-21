@@ -11824,3 +11824,284 @@ Permanently failed tests:
 2025-11-20 06:42:29,561 - INFO - Updated university-of-essex.json (2 new, 86 total)
 2025-11-20 06:42:29,585 - INFO - Updated index.json with 50 universities
 2025-11-20 06:42:29,585 - INFO - All tasks completed! Success rate: 100.0%
+2025-11-21 06:32:04,767 - INFO - Loaded 50 sites from universities_top50.json
+2025-11-21 06:32:04,768 - INFO - Starting Lighthouse tests with retry logic...
+2025-11-21 06:32:04,768 - INFO - Running 100 tests (50 sites × 2 devices) with 8 workers
+2025-11-21 06:32:04,768 - INFO - Max retries: 1
+2025-11-21 06:32:04,768 - INFO - Estimated time: 12.5 minutes
+2025-11-21 06:32:04,779 - INFO - Testing University of Oxford (https://www.ox.ac.uk) on mobile
+2025-11-21 06:32:04,780 - INFO - Testing University of Oxford (https://www.ox.ac.uk) on desktop
+2025-11-21 06:32:04,780 - INFO - Testing University of Cambridge (https://www.cam.ac.uk) on mobile
+2025-11-21 06:32:04,780 - INFO - Testing University of Cambridge (https://www.cam.ac.uk) on desktop
+2025-11-21 06:32:04,781 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on mobile
+2025-11-21 06:32:04,781 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on desktop
+2025-11-21 06:32:04,782 - INFO - Testing London School of Economics and Political Science (https://www.lse.ac.uk) on mobile
+2025-11-21 06:32:04,783 - INFO - Testing London School of Economics and Political Science (https://www.lse.ac.uk) on desktop
+2025-11-21 06:32:21,560 - ERROR - Lighthouse failed for Imperial College London (https://www.imperial.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status 
+2025-11-21 06:32:21,561 - INFO - Testing University College London (https://www.ucl.ac.uk) on mobile
+2025-11-21 06:32:21,567 - WARNING - ❌ [1/100] Imperial College London (mobile) FAILED - will retry
+2025-11-21 06:32:22,199 - ERROR - Lighthouse failed for Imperial College London (https://www.imperial.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status 
+2025-11-21 06:32:22,200 - INFO - Testing University College London (https://www.ucl.ac.uk) on desktop
+2025-11-21 06:32:22,203 - WARNING - ❌ [2/100] Imperial College London (desktop) FAILED - will retry
+2025-11-21 06:32:41,392 - INFO - Testing King's College London (https://www.kcl.ac.uk) on mobile
+2025-11-21 06:32:41,392 - INFO - ✅ [3/100] University of Cambridge (desktop) - ETA: 19.7m
+2025-11-21 06:32:41,726 - INFO - Testing King's College London (https://www.kcl.ac.uk) on desktop
+2025-11-21 06:32:41,728 - INFO - ✅ [4/100] University of Cambridge (mobile) - ETA: 14.8m
+2025-11-21 06:32:46,700 - INFO - Testing University of Edinburgh (https://www.ed.ac.uk) on mobile
+2025-11-21 06:32:46,702 - INFO - ✅ [5/100] University of Oxford (desktop) - ETA: 13.3m
+2025-11-21 06:32:47,175 - INFO - Testing University of Edinburgh (https://www.ed.ac.uk) on desktop
+2025-11-21 06:32:47,178 - INFO - ✅ [6/100] University of Oxford (mobile) - ETA: 11.1m
+2025-11-21 06:32:51,528 - INFO - Testing University of Manchester (https://www.manchester.ac.uk) on mobile
+2025-11-21 06:32:51,528 - INFO - ✅ [7/100] University College London (desktop) - ETA: 10.4m
+2025-11-21 06:32:52,001 - INFO - Testing University of Manchester (https://www.manchester.ac.uk) on desktop
+2025-11-21 06:32:52,001 - INFO - ✅ [8/100] University College London (mobile) - ETA: 9.1m
+2025-11-21 06:33:12,067 - INFO - Testing University of Warwick (https://www.warwick.ac.uk) on mobile
+2025-11-21 06:33:12,067 - INFO - ✅ [9/100] University of Edinburgh (mobile) - ETA: 11.3m
+2025-11-21 06:33:12,768 - INFO - Testing University of Warwick (https://www.warwick.ac.uk) on desktop
+2025-11-21 06:33:12,768 - INFO - ✅ [10/100] King's College London (mobile) - ETA: 10.2m
+2025-11-21 06:33:13,004 - INFO - Testing University of Glasgow (https://www.gla.ac.uk) on mobile
+2025-11-21 06:33:13,004 - INFO - ✅ [11/100] King's College London (desktop) - ETA: 9.2m
+2025-11-21 06:33:13,654 - INFO - Testing University of Glasgow (https://www.gla.ac.uk) on desktop
+2025-11-21 06:33:13,654 - INFO - ✅ [12/100] University of Edinburgh (desktop) - ETA: 8.4m
+2025-11-21 06:33:43,337 - INFO - Testing University of Southampton (https://www.southampton.ac.uk) on mobile
+2025-11-21 06:33:43,337 - INFO - ✅ [13/100] University of Glasgow (mobile) - ETA: 11.0m
+2025-11-21 06:33:43,471 - INFO - Testing University of Southampton (https://www.southampton.ac.uk) on desktop
+2025-11-21 06:33:43,474 - INFO - ✅ [14/100] University of Glasgow (desktop) - ETA: 10.1m
+2025-11-21 06:33:51,467 - INFO - Testing University of Birmingham (https://www.birmingham.ac.uk) on mobile
+2025-11-21 06:33:51,467 - INFO - ✅ [15/100] London School of Economics and Political Science (desktop) - ETA: 10.1m
+2025-11-21 06:33:51,496 - INFO - Testing University of Birmingham (https://www.birmingham.ac.uk) on desktop
+2025-11-21 06:33:51,497 - INFO - ✅ [16/100] London School of Economics and Political Science (mobile) - ETA: 9.3m
+2025-11-21 06:34:16,651 - INFO - Testing University of Leeds (https://www.leeds.ac.uk) on mobile
+2025-11-21 06:34:16,659 - INFO - ✅ [17/100] University of Southampton (desktop) - ETA: 10.7m
+2025-11-21 06:34:16,922 - INFO - Testing University of Leeds (https://www.leeds.ac.uk) on desktop
+2025-11-21 06:34:16,928 - INFO - ✅ [18/100] University of Southampton (mobile) - ETA: 10.0m
+2025-11-21 06:34:24,104 - INFO - Testing University of Sheffield (https://www.sheffield.ac.uk) on mobile
+2025-11-21 06:34:24,110 - INFO - ✅ [19/100] University of Birmingham (mobile) - ETA: 9.9m
+2025-11-21 06:34:24,749 - INFO - Testing University of Sheffield (https://www.sheffield.ac.uk) on desktop
+2025-11-21 06:34:24,750 - INFO - ✅ [20/100] University of Birmingham (desktop) - ETA: 9.3m
+2025-11-21 06:34:47,702 - INFO - Testing University of Nottingham (https://www.nottingham.ac.uk) on mobile
+2025-11-21 06:34:47,710 - INFO - ✅ [21/100] University of Leeds (mobile) - ETA: 10.2m
+2025-11-21 06:34:48,132 - INFO - Testing University of Nottingham (https://www.nottingham.ac.uk) on desktop
+2025-11-21 06:34:48,135 - INFO - ✅ [22/100] University of Leeds (desktop) - ETA: 9.7m
+2025-11-21 06:34:53,167 - INFO - Testing Queen Mary University of London (https://www.qmul.ac.uk) on mobile
+2025-11-21 06:34:53,168 - INFO - ✅ [23/100] University of Manchester (mobile) - ETA: 9.4m
+2025-11-21 06:34:53,518 - INFO - Testing Queen Mary University of London (https://www.qmul.ac.uk) on desktop
+2025-11-21 06:34:53,519 - INFO - ✅ [24/100] University of Manchester (desktop) - ETA: 8.9m
+2025-11-21 06:34:54,674 - INFO - Testing Lancaster University (https://www.lancaster.ac.uk) on mobile
+2025-11-21 06:34:54,674 - INFO - ✅ [25/100] University of Warwick (desktop) - ETA: 8.5m
+2025-11-21 06:34:55,405 - INFO - Testing Lancaster University (https://www.lancaster.ac.uk) on desktop
+2025-11-21 06:34:55,405 - INFO - ✅ [26/100] University of Warwick (mobile) - ETA: 8.1m
+2025-11-21 06:35:05,431 - INFO - Testing University of Exeter (https://www.exeter.ac.uk) on mobile
+2025-11-21 06:35:05,448 - INFO - ✅ [27/100] University of Sheffield (mobile) - ETA: 8.1m
+2025-11-21 06:35:08,453 - INFO - Testing University of Exeter (https://www.exeter.ac.uk) on desktop
+2025-11-21 06:35:08,453 - INFO - ✅ [28/100] University of Sheffield (desktop) - ETA: 7.9m
+2025-11-21 06:35:29,328 - INFO - Testing University of York (https://www.york.ac.uk) on mobile
+2025-11-21 06:35:29,329 - INFO - ✅ [29/100] Lancaster University (desktop) - ETA: 8.3m
+2025-11-21 06:35:29,380 - INFO - Testing University of York (https://www.york.ac.uk) on desktop
+2025-11-21 06:35:29,380 - INFO - ✅ [30/100] Lancaster University (mobile) - ETA: 8.0m
+2025-11-21 06:35:30,198 - INFO - Testing University of Bath (https://www.bath.ac.uk) on mobile
+2025-11-21 06:35:30,202 - INFO - ✅ [31/100] University of Nottingham (mobile) - ETA: 7.6m
+2025-11-21 06:35:32,051 - INFO - Testing University of Bath (https://www.bath.ac.uk) on desktop
+2025-11-21 06:35:32,062 - INFO - ✅ [32/100] University of Nottingham (desktop) - ETA: 7.3m
+2025-11-21 06:35:35,906 - INFO - Testing Cardiff University (https://www.cardiff.ac.uk) on mobile
+2025-11-21 06:35:35,913 - INFO - ✅ [33/100] University of Exeter (mobile) - ETA: 7.1m
+2025-11-21 06:35:40,875 - INFO - Testing Cardiff University (https://www.cardiff.ac.uk) on desktop
+2025-11-21 06:35:40,875 - INFO - ✅ [34/100] University of Exeter (desktop) - ETA: 7.0m
+2025-11-21 06:36:10,197 - INFO - Testing University of Liverpool (https://www.liverpool.ac.uk) on mobile
+2025-11-21 06:36:10,205 - INFO - ✅ [35/100] Cardiff University (mobile) - ETA: 7.6m
+2025-11-21 06:36:10,578 - INFO - Testing University of Liverpool (https://www.liverpool.ac.uk) on desktop
+2025-11-21 06:36:10,578 - INFO - ✅ [36/100] University of Bath (mobile) - ETA: 7.3m
+2025-11-21 06:36:11,691 - INFO - Testing University of St Andrews (https://www.st-andrews.ac.uk) on mobile
+2025-11-21 06:36:11,704 - INFO - ✅ [37/100] Cardiff University (desktop) - ETA: 7.0m
+2025-11-21 06:36:17,624 - INFO - Testing University of St Andrews (https://www.st-andrews.ac.uk) on desktop
+2025-11-21 06:36:17,628 - INFO - ✅ [38/100] University of Bath (desktop) - ETA: 6.9m
+2025-11-21 06:36:40,357 - INFO - Testing University of Newcastle (https://www.ncl.ac.uk) on mobile
+2025-11-21 06:36:40,370 - INFO - ✅ [39/100] University of Liverpool (desktop) - ETA: 7.2m
+2025-11-21 06:36:41,338 - INFO - Testing University of Newcastle (https://www.ncl.ac.uk) on desktop
+2025-11-21 06:36:41,339 - INFO - ✅ [40/100] Queen Mary University of London (mobile) - ETA: 6.9m
+2025-11-21 06:36:42,300 - INFO - Testing University of Sussex (https://www.sussex.ac.uk) on mobile
+2025-11-21 06:36:42,305 - INFO - ✅ [41/100] Queen Mary University of London (desktop) - ETA: 6.7m
+2025-11-21 06:36:48,538 - INFO - Testing University of Sussex (https://www.sussex.ac.uk) on desktop
+2025-11-21 06:36:48,549 - INFO - ✅ [42/100] University of Liverpool (mobile) - ETA: 6.5m
+2025-11-21 06:36:58,537 - INFO - Testing University of Surrey (https://www.surrey.ac.uk) on mobile
+2025-11-21 06:36:58,539 - INFO - ✅ [43/100] University of St Andrews (mobile) - ETA: 6.5m
+2025-11-21 06:37:01,440 - INFO - Testing University of Surrey (https://www.surrey.ac.uk) on desktop
+2025-11-21 06:37:01,442 - INFO - ✅ [44/100] University of St Andrews (desktop) - ETA: 6.3m
+2025-11-21 06:37:10,691 - INFO - Testing Queen's University Belfast (https://www.qub.ac.uk) on mobile
+2025-11-21 06:37:10,691 - INFO - ✅ [45/100] University of Sussex (mobile) - ETA: 6.2m
+2025-11-21 06:37:21,273 - INFO - Testing Queen's University Belfast (https://www.qub.ac.uk) on desktop
+2025-11-21 06:37:21,288 - INFO - ✅ [46/100] University of York (desktop) - ETA: 6.2m
+2025-11-21 06:37:22,715 - INFO - Testing University of Aberdeen (https://www.abdn.ac.uk) on mobile
+2025-11-21 06:37:22,718 - INFO - ✅ [47/100] University of York (mobile) - ETA: 6.0m
+2025-11-21 06:37:23,820 - INFO - Testing University of Aberdeen (https://www.abdn.ac.uk) on desktop
+2025-11-21 06:37:23,827 - INFO - ✅ [48/100] University of Sussex (desktop) - ETA: 5.8m
+2025-11-21 06:37:37,770 - INFO - Testing University of Dundee (https://www.dundee.ac.uk) on mobile
+2025-11-21 06:37:37,771 - INFO - ✅ [49/100] University of Surrey (mobile) - ETA: 5.8m
+2025-11-21 06:37:39,271 - INFO - Testing University of Dundee (https://www.dundee.ac.uk) on desktop
+2025-11-21 06:37:39,271 - INFO - ✅ [50/100] University of Surrey (desktop) - ETA: 5.6m
+2025-11-21 06:37:56,827 - INFO - Testing Heriot-Watt University (https://www.hw.ac.uk) on mobile
+2025-11-21 06:37:56,827 - INFO - ✅ [51/100] University of Newcastle (mobile) - ETA: 5.6m
+2025-11-21 06:37:58,026 - INFO - Testing Heriot-Watt University (https://www.hw.ac.uk) on desktop
+2025-11-21 06:37:58,027 - INFO - ✅ [52/100] University of Newcastle (desktop) - ETA: 5.4m
+2025-11-21 06:38:15,720 - INFO - Testing University of Strathclyde (https://www.strath.ac.uk) on mobile
+2025-11-21 06:38:15,729 - INFO - ✅ [53/100] University of Aberdeen (desktop) - ETA: 5.5m
+2025-11-21 06:38:16,922 - INFO - Testing University of Strathclyde (https://www.strath.ac.uk) on desktop
+2025-11-21 06:38:16,922 - INFO - ✅ [54/100] University of Aberdeen (mobile) - ETA: 5.3m
+2025-11-21 06:38:30,210 - INFO - Testing University of Reading (https://www.reading.ac.uk) on mobile
+2025-11-21 06:38:30,210 - INFO - ✅ [55/100] University of Dundee (mobile) - ETA: 5.3m
+2025-11-21 06:38:34,415 - INFO - Testing University of Reading (https://www.reading.ac.uk) on desktop
+2025-11-21 06:38:34,418 - INFO - ✅ [56/100] University of Dundee (desktop) - ETA: 5.1m
+2025-11-21 06:38:35,896 - INFO - Testing Loughborough University (https://www.lboro.ac.uk) on mobile
+2025-11-21 06:38:35,916 - INFO - ✅ [57/100] Heriot-Watt University (mobile) - ETA: 4.9m
+2025-11-21 06:38:37,941 - INFO - Testing Loughborough University (https://www.lboro.ac.uk) on desktop
+2025-11-21 06:38:37,941 - INFO - ✅ [58/100] Heriot-Watt University (desktop) - ETA: 4.7m
+2025-11-21 06:38:53,010 - INFO - Testing University of Leicester (https://www.le.ac.uk) on mobile
+2025-11-21 06:38:53,019 - INFO - ✅ [59/100] University of Strathclyde (mobile) - ETA: 4.7m
+2025-11-21 06:38:53,514 - INFO - Testing University of Leicester (https://www.le.ac.uk) on desktop
+2025-11-21 06:38:53,515 - INFO - ✅ [60/100] University of Strathclyde (desktop) - ETA: 4.5m
+2025-11-21 06:39:07,131 - INFO - Testing Swansea University (https://www.swansea.ac.uk) on mobile
+2025-11-21 06:39:07,135 - INFO - ✅ [61/100] Queen's University Belfast (mobile) - ETA: 4.5m
+2025-11-21 06:39:08,008 - INFO - Testing Swansea University (https://www.swansea.ac.uk) on desktop
+2025-11-21 06:39:08,020 - INFO - ✅ [62/100] Loughborough University (desktop) - ETA: 4.3m
+2025-11-21 06:39:08,623 - INFO - Testing City, University of London (https://www.city.ac.uk) on mobile
+2025-11-21 06:39:08,623 - INFO - ✅ [63/100] Loughborough University (mobile) - ETA: 4.1m
+2025-11-21 06:39:15,356 - INFO - Testing City, University of London (https://www.city.ac.uk) on desktop
+2025-11-21 06:39:15,370 - INFO - ✅ [64/100] Queen's University Belfast (desktop) - ETA: 4.0m
+2025-11-21 06:39:43,737 - INFO - Testing Brunel University London (https://www.brunel.ac.uk) on mobile
+2025-11-21 06:39:43,737 - INFO - ✅ [65/100] University of Leicester (desktop) - ETA: 4.1m
+2025-11-21 06:39:44,593 - INFO - Testing Brunel University London (https://www.brunel.ac.uk) on desktop
+2025-11-21 06:39:44,596 - INFO - ✅ [66/100] University of Leicester (mobile) - ETA: 3.9m
+2025-11-21 06:40:02,145 - INFO - Testing Aston University (https://www.aston.ac.uk) on mobile
+2025-11-21 06:40:02,145 - INFO - ✅ [67/100] City, University of London (mobile) - ETA: 3.9m
+2025-11-21 06:40:10,732 - INFO - Testing Aston University (https://www.aston.ac.uk) on desktop
+2025-11-21 06:40:10,744 - INFO - ✅ [68/100] City, University of London (desktop) - ETA: 3.8m
+2025-11-21 06:40:20,262 - INFO - Testing University of Kent (https://www.kent.ac.uk) on mobile
+2025-11-21 06:40:20,273 - INFO - ✅ [69/100] Swansea University (desktop) - ETA: 3.7m
+2025-11-21 06:40:20,369 - INFO - Testing University of Kent (https://www.kent.ac.uk) on desktop
+2025-11-21 06:40:20,369 - INFO - ✅ [70/100] University of Reading (mobile) - ETA: 3.5m
+2025-11-21 06:40:22,698 - INFO - Testing Oxford Brookes University (https://www.brookes.ac.uk) on mobile
+2025-11-21 06:40:22,722 - INFO - ✅ [71/100] University of Reading (desktop) - ETA: 3.4m
+2025-11-21 06:40:44,185 - INFO - Testing Oxford Brookes University (https://www.brookes.ac.uk) on desktop
+2025-11-21 06:40:44,186 - INFO - ✅ [72/100] Brunel University London (mobile) - ETA: 3.4m
+2025-11-21 06:40:47,910 - INFO - Testing Goldsmiths, University of London (https://www.gold.ac.uk) on mobile
+2025-11-21 06:40:47,922 - INFO - ✅ [73/100] Brunel University London (desktop) - ETA: 3.2m
+2025-11-21 06:41:08,282 - INFO - Testing Goldsmiths, University of London (https://www.gold.ac.uk) on desktop
+2025-11-21 06:41:08,283 - INFO - ✅ [74/100] Oxford Brookes University (mobile) - ETA: 3.2m
+2025-11-21 06:41:11,166 - INFO - Testing Royal Holloway, University of London (https://www.rhul.ac.uk) on mobile
+2025-11-21 06:41:11,166 - INFO - ✅ [75/100] Aston University (mobile) - ETA: 3.0m
+2025-11-21 06:41:18,760 - INFO - Testing Royal Holloway, University of London (https://www.rhul.ac.uk) on desktop
+2025-11-21 06:41:18,762 - INFO - ✅ [76/100] Swansea University (mobile) - ETA: 2.9m
+2025-11-21 06:41:21,124 - INFO - Testing Birkbeck, University of London (https://www.bbk.ac.uk) on mobile
+2025-11-21 06:41:21,124 - INFO - ✅ [77/100] Aston University (desktop) - ETA: 2.8m
+2025-11-21 06:41:21,194 - INFO - Testing Birkbeck, University of London (https://www.bbk.ac.uk) on desktop
+2025-11-21 06:41:21,194 - INFO - ✅ [78/100] Oxford Brookes University (desktop) - ETA: 2.6m
+2025-11-21 06:41:29,366 - INFO - Testing University of Essex (https://www.essex.ac.uk) on mobile
+2025-11-21 06:41:29,366 - INFO - ✅ [79/100] University of Kent (desktop) - ETA: 2.5m
+2025-11-21 06:41:46,765 - INFO - Testing University of Essex (https://www.essex.ac.uk) on desktop
+2025-11-21 06:41:46,766 - INFO - ✅ [80/100] Birkbeck, University of London (desktop) - ETA: 2.4m
+2025-11-21 06:41:50,693 - INFO - Testing Aberystwyth University (https://www.aber.ac.uk) on mobile
+2025-11-21 06:41:50,693 - INFO - ✅ [81/100] Birkbeck, University of London (mobile) - ETA: 2.3m
+2025-11-21 06:41:59,393 - INFO - Testing Aberystwyth University (https://www.aber.ac.uk) on desktop
+2025-11-21 06:41:59,393 - INFO - ✅ [82/100] University of Kent (mobile) - ETA: 2.2m
+2025-11-21 06:42:12,895 - INFO - Testing University of Stirling (https://www.stir.ac.uk) on mobile
+2025-11-21 06:42:12,895 - INFO - ✅ [83/100] Goldsmiths, University of London (mobile) - ETA: 2.1m
+2025-11-21 06:42:13,030 - INFO - Testing University of Stirling (https://www.stir.ac.uk) on desktop
+2025-11-21 06:42:13,030 - INFO - ✅ [84/100] Aberystwyth University (mobile) - ETA: 1.9m
+2025-11-21 06:42:21,472 - INFO - Testing Robert Gordon University (https://www.rgu.ac.uk) on mobile
+2025-11-21 06:42:21,475 - INFO - ✅ [85/100] Aberystwyth University (desktop) - ETA: 1.8m
+2025-11-21 06:42:33,243 - INFO - Testing Robert Gordon University (https://www.rgu.ac.uk) on desktop
+2025-11-21 06:42:33,244 - INFO - ✅ [86/100] Goldsmiths, University of London (desktop) - ETA: 1.7m
+2025-11-21 06:42:37,115 - INFO - Testing Edinburgh Napier University (https://www.napier.ac.uk) on mobile
+2025-11-21 06:42:37,116 - INFO - ✅ [87/100] Royal Holloway, University of London (mobile) - ETA: 1.6m
+2025-11-21 06:42:40,391 - INFO - Testing Edinburgh Napier University (https://www.napier.ac.uk) on desktop
+2025-11-21 06:42:40,391 - INFO - ✅ [88/100] Royal Holloway, University of London (desktop) - ETA: 1.4m
+2025-11-21 06:42:43,318 - INFO - Testing Northumbria University (https://www.northumbria.ac.uk) on mobile
+2025-11-21 06:42:43,318 - INFO - ✅ [89/100] Robert Gordon University (mobile) - ETA: 1.3m
+2025-11-21 06:42:58,776 - INFO - Testing Northumbria University (https://www.northumbria.ac.uk) on desktop
+2025-11-21 06:42:58,776 - INFO - ✅ [90/100] Robert Gordon University (desktop) - ETA: 1.2m
+2025-11-21 06:43:06,679 - INFO - Testing University of Bradford (https://www.bradford.ac.uk) on mobile
+2025-11-21 06:43:06,679 - INFO - ✅ [91/100] Edinburgh Napier University (mobile) - ETA: 1.1m
+2025-11-21 06:43:12,127 - INFO - Testing University of Bradford (https://www.bradford.ac.uk) on desktop
+2025-11-21 06:43:12,145 - INFO - ✅ [92/100] Edinburgh Napier University (desktop) - ETA: 1.0m
+2025-11-21 06:43:33,893 - INFO - ✅ [93/100] Northumbria University (mobile) - ETA: 0.9m
+2025-11-21 06:43:34,591 - INFO - ✅ [94/100] University of Bradford (mobile) - ETA: 0.7m
+2025-11-21 06:43:37,090 - INFO - ✅ [95/100] University of Essex (mobile) - ETA: 0.6m
+2025-11-21 06:43:37,785 - INFO - ✅ [96/100] University of Bradford (desktop) - ETA: 0.5m
+2025-11-21 06:43:41,962 - INFO - ✅ [97/100] University of Stirling (mobile) - ETA: 0.4m
+2025-11-21 06:43:43,165 - INFO - ✅ [98/100] University of Stirling (desktop) - ETA: 0.2m
+2025-11-21 06:43:44,256 - INFO - ✅ [99/100] Northumbria University (desktop) - ETA: 0.1m
+2025-11-21 06:43:48,999 - INFO - ✅ [100/100] University of Essex (desktop) - ETA: 0.0m
+2025-11-21 06:43:49,001 - INFO - 
+🔄 Retrying 2 failed tests...
+
+2025-11-21 06:43:49,003 - INFO - Retry attempt 1/1 for 2 tests
+2025-11-21 06:43:49,004 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on mobile (retry 1)
+2025-11-21 06:43:49,005 - INFO - Testing Imperial College London (https://www.imperial.ac.uk) on desktop (retry 1)
+2025-11-21 06:43:56,660 - ERROR - Lighthouse failed for Imperial College London (https://www.imperial.ac.uk) on desktop: Runtime error encountered: Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status 
+2025-11-21 06:43:56,661 - WARNING - ❌ Retry failed: Imperial College London (desktop)
+2025-11-21 06:43:56,924 - ERROR - Lighthouse failed for Imperial College London (https://www.imperial.ac.uk) on mobile: Runtime error encountered: Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status 
+2025-11-21 06:43:56,925 - WARNING - ❌ Retry failed: Imperial College London (mobile)
+2025-11-21 06:43:56,925 - INFO - 
+============================================================
+2025-11-21 06:43:56,925 - INFO - Completed in 11.9 minutes
+2025-11-21 06:43:56,925 - INFO - ✅ Successful: 98 (98.0%)
+2025-11-21 06:43:56,925 - INFO - ❌ Failed: 2
+2025-11-21 06:43:56,925 - INFO - Total: 100
+2025-11-21 06:43:56,925 - WARNING - 
+Permanently failed tests:
+2025-11-21 06:43:56,925 - WARNING -   - Imperial College London (desktop)
+2025-11-21 06:43:56,925 - WARNING -   - Imperial College London (mobile)
+2025-11-21 06:43:56,925 - INFO - ============================================================
+
+2025-11-21 06:43:56,929 - INFO - Results saved to lighthouse_results/lighthouse_results_2025-11-21.json
+2025-11-21 06:43:56,937 - INFO - Updated university-of-cambridge.json (2 new, 88 total)
+2025-11-21 06:43:56,941 - INFO - Updated university-of-oxford.json (2 new, 88 total)
+2025-11-21 06:43:56,944 - INFO - Updated university-college-london.json (2 new, 88 total)
+2025-11-21 06:43:56,948 - INFO - Updated university-of-edinburgh.json (2 new, 88 total)
+2025-11-21 06:43:56,951 - INFO - Updated kings-college-london.json (2 new, 88 total)
+2025-11-21 06:43:56,955 - INFO - Updated university-of-glasgow.json (2 new, 88 total)
+2025-11-21 06:43:56,959 - INFO - Updated london-school-of-economics-and-political-science.json (2 new, 86 total)
+2025-11-21 06:43:56,962 - INFO - Updated university-of-southampton.json (2 new, 88 total)
+2025-11-21 06:43:56,966 - INFO - Updated university-of-birmingham.json (2 new, 88 total)
+2025-11-21 06:43:56,969 - INFO - Updated university-of-leeds.json (2 new, 88 total)
+2025-11-21 06:43:56,973 - INFO - Updated university-of-manchester.json (2 new, 86 total)
+2025-11-21 06:43:56,977 - INFO - Updated university-of-warwick.json (2 new, 86 total)
+2025-11-21 06:43:56,980 - INFO - Updated university-of-sheffield.json (2 new, 88 total)
+2025-11-21 06:43:56,984 - INFO - Updated lancaster-university.json (2 new, 88 total)
+2025-11-21 06:43:56,988 - INFO - Updated university-of-nottingham.json (2 new, 88 total)
+2025-11-21 06:43:56,991 - INFO - Updated university-of-exeter.json (2 new, 88 total)
+2025-11-21 06:43:56,995 - INFO - Updated cardiff-university.json (2 new, 88 total)
+2025-11-21 06:43:56,999 - INFO - Updated university-of-bath.json (2 new, 88 total)
+2025-11-21 06:43:57,002 - INFO - Updated university-of-liverpool.json (2 new, 88 total)
+2025-11-21 06:43:57,006 - INFO - Updated queen-mary-university-of-london.json (2 new, 86 total)
+2025-11-21 06:43:57,009 - INFO - Updated university-of-st-andrews.json (2 new, 86 total)
+2025-11-21 06:43:57,013 - INFO - Updated university-of-sussex.json (2 new, 88 total)
+2025-11-21 06:43:57,017 - INFO - Updated university-of-york.json (2 new, 86 total)
+2025-11-21 06:43:57,020 - INFO - Updated university-of-surrey.json (2 new, 88 total)
+2025-11-21 06:43:57,024 - INFO - Updated university-of-newcastle.json (2 new, 86 total)
+2025-11-21 06:43:57,028 - INFO - Updated university-of-aberdeen.json (2 new, 88 total)
+2025-11-21 06:43:57,031 - INFO - Updated university-of-dundee.json (2 new, 87 total)
+2025-11-21 06:43:57,035 - INFO - Updated heriot-watt-university.json (2 new, 88 total)
+2025-11-21 06:43:57,038 - INFO - Updated university-of-strathclyde.json (2 new, 86 total)
+2025-11-21 06:43:57,042 - INFO - Updated queens-university-belfast.json (2 new, 86 total)
+2025-11-21 06:43:57,046 - INFO - Updated loughborough-university.json (2 new, 88 total)
+2025-11-21 06:43:57,049 - INFO - Updated university-of-leicester.json (2 new, 86 total)
+2025-11-21 06:43:57,053 - INFO - Updated city-university-of-london.json (2 new, 86 total)
+2025-11-21 06:43:57,057 - INFO - Updated swansea-university.json (2 new, 86 total)
+2025-11-21 06:43:57,060 - INFO - Updated university-of-reading.json (2 new, 86 total)
+2025-11-21 06:43:57,064 - INFO - Updated brunel-university-london.json (2 new, 86 total)
+2025-11-21 06:43:57,068 - INFO - Updated oxford-brookes-university.json (2 new, 88 total)
+2025-11-21 06:43:57,071 - INFO - Updated aston-university.json (2 new, 86 total)
+2025-11-21 06:43:57,075 - INFO - Updated university-of-kent.json (2 new, 86 total)
+2025-11-21 06:43:57,078 - INFO - Updated birkbeck-university-of-london.json (2 new, 88 total)
+2025-11-21 06:43:57,082 - INFO - Updated goldsmiths-university-of-london.json (2 new, 86 total)
+2025-11-21 06:43:57,086 - INFO - Updated aberystwyth-university.json (2 new, 88 total)
+2025-11-21 06:43:57,089 - INFO - Updated royal-holloway-university-of-london.json (2 new, 88 total)
+2025-11-21 06:43:57,093 - INFO - Updated robert-gordon-university.json (2 new, 88 total)
+2025-11-21 06:43:57,097 - INFO - Updated edinburgh-napier-university.json (2 new, 86 total)
+2025-11-21 06:43:57,100 - INFO - Updated northumbria-university.json (2 new, 88 total)
+2025-11-21 06:43:57,104 - INFO - Updated university-of-bradford.json (2 new, 88 total)
+2025-11-21 06:43:57,108 - INFO - Updated university-of-essex.json (2 new, 88 total)
+2025-11-21 06:43:57,111 - INFO - Updated university-of-stirling.json (2 new, 88 total)
+2025-11-21 06:43:57,136 - INFO - Updated index.json with 50 universities
+2025-11-21 06:43:57,136 - INFO - All tasks completed! Success rate: 98.0%
