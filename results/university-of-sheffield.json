@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-11-22T06:31:26.379928",
-  "total_tests": 90,
+  "last_updated": "2025-11-23T06:32:33.260973",
+  "total_tests": 92,
   "results": [
     {
       "name": "University of Sheffield",
@@ -2343,6 +2343,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-23T06:32:32.735017",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1775.8496300000004,
+        "largest_contentful_paint": 2401.975235000001,
+        "cumulative_layout_shift": 0.025197470353173507,
+        "total_blocking_time": 135.90499999999997,
+        "speed_index": 2190.819533139608,
+        "interactive": 2571.596200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-23T06:32:33.260973",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3670.5065500000005,
+        "largest_contentful_paint": 7813.9283,
+        "cumulative_layout_shift": 0.025197470353173507,
+        "total_blocking_time": 1173.9703699999995,
+        "speed_index": 5373.92134229297,
+        "interactive": 8131.888751
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
