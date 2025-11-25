@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2025-11-24T06:38:08.517412",
-  "total_tests": 94,
+  "last_updated": "2025-11-25T06:45:13.993004",
+  "total_tests": 96,
   "results": [
     {
       "name": "University of Sussex",
@@ -2443,6 +2443,58 @@
         "total_blocking_time": 94.5,
         "speed_index": 1355.2514036556324,
         "interactive": 844.1651500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-25T06:38:21.711527",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1217.75,
+        "largest_contentful_paint": 3842.75,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 311.1875,
+        "speed_index": 3119.04739940958,
+        "interactive": 3850.25
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-25T06:45:13.993004",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 335.668,
+        "largest_contentful_paint": 735.668,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1018.4312999657164,
+        "interactive": 735.6680000000001
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2025-11-24T06:40:01.896004",
-  "total_tests": 94,
+  "last_updated": "2025-11-25T06:40:06.299098",
+  "total_tests": 96,
   "results": [
     {
       "name": "Loughborough University",
@@ -2447,6 +2447,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-25T06:40:04.936484",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 94.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 873.4830000000001,
+        "largest_contentful_paint": 1248.0994999999998,
+        "cumulative_layout_shift": 0.0168713668238293,
+        "total_blocking_time": 298,
+        "speed_index": 1674.8063706032785,
+        "interactive": 2111.7877000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-25T06:40:06.299098",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1839.2426,
+        "largest_contentful_paint": 4059.724399145813,
+        "cumulative_layout_shift": 0.0168713668238293,
+        "total_blocking_time": 1859.1479600000002,
+        "speed_index": 3476.6454497341924,
+        "interactive": 9313.339326000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
