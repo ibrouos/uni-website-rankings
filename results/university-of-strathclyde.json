@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-11-25T06:40:00.847285",
-  "total_tests": 94,
+  "last_updated": "2025-11-26T06:39:08.711125",
+  "total_tests": 96,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -2447,6 +2447,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-26T06:39:05.386574",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4113.25,
+        "largest_contentful_paint": 8545.61,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2996.157,
+        "speed_index": 5638.347051993094,
+        "interactive": 14109.461299999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-26T06:39:08.711125",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1263.6840000000002,
+        "largest_contentful_paint": 2272.726,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 667.9999999999998,
+        "speed_index": 2154.7887970139,
+        "interactive": 3404.1743
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

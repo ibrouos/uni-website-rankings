@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2025-11-25T06:33:54.664336",
-  "total_tests": 94,
+  "last_updated": "2025-11-26T06:32:53.813518",
+  "total_tests": 96,
   "results": [
     {
       "name": "Imperial College London",
@@ -2447,6 +2447,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-26T06:32:53.057036",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1332.2586999999999,
+        "largest_contentful_paint": 2105.9148000000005,
+        "cumulative_layout_shift": 0.03186044005202789,
+        "total_blocking_time": 715.1584999999998,
+        "speed_index": 2220.504638161995,
+        "interactive": 2926.55868
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-26T06:32:53.813518",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2642.1084000000005,
+        "largest_contentful_paint": 5650.460800000001,
+        "cumulative_layout_shift": 0.03647857983343398,
+        "total_blocking_time": 4688.267999999999,
+        "speed_index": 5677.725067349873,
+        "interactive": 11254.139210000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
