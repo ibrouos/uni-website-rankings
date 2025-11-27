@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-11-26T06:35:07.158383",
-  "total_tests": 96,
+  "last_updated": "2025-11-27T06:36:17.856701",
+  "total_tests": 98,
   "results": [
     {
       "name": "University of Warwick",
@@ -2499,6 +2499,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-27T06:36:16.212539",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2224.971000000001,
+        "largest_contentful_paint": 2404.9080000000004,
+        "cumulative_layout_shift": 1.7412950156430415e-05,
+        "total_blocking_time": 853.4999999999998,
+        "speed_index": 2466.090819574172,
+        "interactive": 4374.99295
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-27T06:36:17.856701",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7406.121999999999,
+        "largest_contentful_paint": 8172.601999999999,
+        "cumulative_layout_shift": 1.7412950156430415e-05,
+        "total_blocking_time": 5810.118250000001,
+        "speed_index": 7406.121999999999,
+        "interactive": 16198.216425000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
