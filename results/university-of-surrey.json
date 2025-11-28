@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2025-11-27T06:38:41.750902",
-  "total_tests": 100,
+  "last_updated": "2025-11-28T06:38:00.790941",
+  "total_tests": 102,
   "results": [
     {
       "name": "University of Surrey",
@@ -2599,6 +2599,58 @@
         "total_blocking_time": 61.59100000000001,
         "speed_index": 1265.3842332292315,
         "interactive": 1717.0029000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-28T06:38:00.277384",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2785.8190000000004,
+        "largest_contentful_paint": 4404.291000000001,
+        "cumulative_layout_shift": 0.014067363142149144,
+        "total_blocking_time": 1624.4080000000004,
+        "speed_index": 5448.964032319273,
+        "interactive": 6781.493200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-28T06:38:00.790941",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1117.8129999999999,
+        "largest_contentful_paint": 1327.3179999999998,
+        "cumulative_layout_shift": 0.41746955026244076,
+        "total_blocking_time": 169.0000000000001,
+        "speed_index": 2704.0366083019553,
+        "interactive": 2041.868
       },
       "throttling_config": {
         "method": "simulate",

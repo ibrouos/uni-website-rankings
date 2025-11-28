@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2025-11-27T06:33:55.953961",
-  "total_tests": 98,
+  "last_updated": "2025-11-28T06:33:04.961489",
+  "total_tests": 100,
   "results": [
     {
       "name": "Imperial College London",
@@ -2551,6 +2551,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-28T06:33:03.431632",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2647.1044,
+        "largest_contentful_paint": 4890.5443000000005,
+        "cumulative_layout_shift": 0.0380169755023039,
+        "total_blocking_time": 6358.499999999999,
+        "speed_index": 5215.173414877163,
+        "interactive": 11582.823414999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-28T06:33:04.961489",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1166.6346999999998,
+        "largest_contentful_paint": 1713.5481999999997,
+        "cumulative_layout_shift": 0.039534701747599765,
+        "total_blocking_time": 926.8589500000005,
+        "speed_index": 1942.402527737714,
+        "interactive": 2943.9640550000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

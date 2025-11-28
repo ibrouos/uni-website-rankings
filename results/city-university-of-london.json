@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2025-11-27T06:41:11.442725",
-  "total_tests": 98,
+  "last_updated": "2025-11-28T06:40:35.464373",
+  "total_tests": 100,
   "results": [
     {
       "name": "City, University of London",
@@ -2551,6 +2551,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-28T06:40:35.139042",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1181.319,
+        "largest_contentful_paint": 1937.5642500000001,
+        "cumulative_layout_shift": 0.08000703401841675,
+        "total_blocking_time": 94.5,
+        "speed_index": 1800.1001505837694,
+        "interactive": 3342.6264
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-28T06:40:35.464373",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4067.8769999999995,
+        "largest_contentful_paint": 16278.651000000002,
+        "cumulative_layout_shift": 0.08000703401841675,
+        "total_blocking_time": 1326.500000000001,
+        "speed_index": 4921.4834385134545,
+        "interactive": 16788.651
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

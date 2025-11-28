@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-11-27T06:36:19.950143",
-  "total_tests": 100,
+  "last_updated": "2025-11-28T06:35:35.183269",
+  "total_tests": 102,
   "results": [
     {
       "name": "University of Sheffield",
@@ -2603,6 +2603,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-28T06:35:33.682366",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1190.50065,
+        "largest_contentful_paint": 1431.370485,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 155.21799999999962,
+        "speed_index": 1393.0222261661347,
+        "interactive": 2073.74795
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-28T06:35:35.183269",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3565.2239999999997,
+        "largest_contentful_paint": 6982.879999999998,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 1509.0640000000008,
+        "speed_index": 4805.6254003321,
+        "interactive": 8088.185600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
