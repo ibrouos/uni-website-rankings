@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2025-11-29T06:39:33.511177",
-  "total_tests": 104,
+  "last_updated": "2025-11-30T06:41:01.617849",
+  "total_tests": 106,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -2703,6 +2703,58 @@
         "total_blocking_time": 72.49999999999977,
         "speed_index": 1177.8585051015561,
         "interactive": 2311.9882999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-30T06:40:58.732583",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1990.3880000000001,
+        "largest_contentful_paint": 10602.447,
+        "cumulative_layout_shift": 1.1585641303585676,
+        "total_blocking_time": 981.9999999999998,
+        "speed_index": 4316.344404738995,
+        "interactive": 10869.269100000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-30T06:41:01.617849",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 642.3805,
+        "largest_contentful_paint": 907.6700000000001,
+        "cumulative_layout_shift": 0.01940770664385223,
+        "total_blocking_time": 19,
+        "speed_index": 1188.898791831292,
+        "interactive": 2309.498200000001
       },
       "throttling_config": {
         "method": "simulate",

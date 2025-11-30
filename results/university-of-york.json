@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2025-11-29T06:35:02.394217",
-  "total_tests": 102,
+  "last_updated": "2025-11-30T06:36:41.008473",
+  "total_tests": 104,
   "results": [
     {
       "name": "University of York",
@@ -2651,6 +2651,58 @@
         "total_blocking_time": 1074.5,
         "speed_index": 1651.1489096791013,
         "interactive": 4197.837810000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-11-30T06:36:30.914765",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1466.135,
+        "largest_contentful_paint": 7036.785000000002,
+        "cumulative_layout_shift": 0.12509798082370216,
+        "total_blocking_time": 9766.500000000004,
+        "speed_index": 4221.224168513692,
+        "interactive": 18412.278950000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-11-30T06:36:41.008473",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 348.6385,
+        "largest_contentful_paint": 1898.3172042541505,
+        "cumulative_layout_shift": 0.12503931956486936,
+        "total_blocking_time": 878.0469999999993,
+        "speed_index": 995.9451003148231,
+        "interactive": 3726.1966999999986
       },
       "throttling_config": {
         "method": "simulate",
