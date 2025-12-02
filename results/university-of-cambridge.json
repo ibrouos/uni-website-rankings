@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2025-12-01T06:35:32.113292",
-  "total_tests": 108,
+  "last_updated": "2025-12-02T06:34:33.230740",
+  "total_tests": 110,
   "results": [
     {
       "name": "University of Cambridge",
@@ -2807,6 +2807,58 @@
         "total_blocking_time": 948.3254999999999,
         "speed_index": 2213.663682810339,
         "interactive": 3076.1344500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-02T06:34:32.364018",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3335.0050000000006,
+        "largest_contentful_paint": 11605.141999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3521.6219999999994,
+        "speed_index": 5428.323903430068,
+        "interactive": 12524.32995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-02T06:34:33.230740",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 737.5530000000001,
+        "largest_contentful_paint": 2746.6615,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 926.9999999999995,
+        "speed_index": 2289.7271095377096,
+        "interactive": 3350.83705
       },
       "throttling_config": {
         "method": "simulate",

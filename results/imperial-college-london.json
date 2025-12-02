@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2025-12-01T06:35:37.871701",
-  "total_tests": 106,
+  "last_updated": "2025-12-02T06:34:37.421392",
+  "total_tests": 108,
   "results": [
     {
       "name": "Imperial College London",
@@ -2759,6 +2759,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-02T06:34:35.657056",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2725.9,
+        "largest_contentful_paint": 5307.069000000001,
+        "cumulative_layout_shift": 0.04484231444394083,
+        "total_blocking_time": 6657.350000000004,
+        "speed_index": 5130.9446354091115,
+        "interactive": 11746.278700000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-02T06:34:37.421392",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1172.3099000000002,
+        "largest_contentful_paint": 1373.4667000000002,
+        "cumulative_layout_shift": 0.038228098900239024,
+        "total_blocking_time": 1142.52115,
+        "speed_index": 1856.8616959563242,
+        "interactive": 3038.146035
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
