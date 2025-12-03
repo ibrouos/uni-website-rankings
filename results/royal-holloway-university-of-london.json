@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2025-12-02T06:44:53.789692",
-  "total_tests": 110,
+  "last_updated": "2025-12-03T06:44:19.365929",
+  "total_tests": 112,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -2863,6 +2863,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-03T06:44:18.864520",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4834.045999999999,
+        "largest_contentful_paint": 18188.960000000003,
+        "cumulative_layout_shift": 0.011538105927843042,
+        "total_blocking_time": 2360.100000000002,
+        "speed_index": 6879.69397317671,
+        "interactive": 19808.050000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-03T06:44:19.365929",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 96.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1277.9290000000003,
+        "largest_contentful_paint": 3308.8869999999993,
+        "cumulative_layout_shift": 0.011538105927843042,
+        "total_blocking_time": 539.5719999999992,
+        "speed_index": 1905.7484727372348,
+        "interactive": 4092.6918000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
