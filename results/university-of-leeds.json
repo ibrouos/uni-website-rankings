@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2025-12-04T06:35:54.524985",
-  "total_tests": 114,
+  "last_updated": "2025-12-05T06:36:23.154627",
+  "total_tests": 116,
   "results": [
     {
       "name": "University of Leeds",
@@ -2963,6 +2963,58 @@
         "total_blocking_time": 0,
         "speed_index": 1119.3244930571427,
         "interactive": 1301.2379
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-05T06:36:19.745123",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4172.117539999999,
+        "largest_contentful_paint": 5666.299359999999,
+        "cumulative_layout_shift": 0.4359431956257594,
+        "total_blocking_time": 640.9861799999999,
+        "speed_index": 5056.191170335802,
+        "interactive": 5700.7844239999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-05T06:36:23.154627",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2136.3010999999997,
+        "largest_contentful_paint": 3075.6620000000003,
+        "cumulative_layout_shift": 0.4359431956257594,
+        "total_blocking_time": 4.388420000000224,
+        "speed_index": 2136.3010999999997,
+        "interactive": 3075.6620000000003
       },
       "throttling_config": {
         "method": "simulate",

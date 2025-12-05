@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2025-12-04T06:33:56.044452",
-  "total_tests": 114,
+  "last_updated": "2025-12-05T06:34:04.663664",
+  "total_tests": 116,
   "results": [
     {
       "name": "University of Cambridge",
@@ -2967,6 +2967,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-05T06:34:04.034017",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 769.3550000000001,
+        "largest_contentful_paint": 2763.6975000000007,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 217.78275000000008,
+        "speed_index": 1986.3901769053643,
+        "interactive": 2777.409700000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-05T06:34:04.663664",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 57.99999999999999,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2943.8705000000004,
+        "largest_contentful_paint": 3945.3794999999996,
+        "cumulative_layout_shift": 0.05416761555315069,
+        "total_blocking_time": 1225.5,
+        "speed_index": 3004.752809666639,
+        "interactive": 11528.2254
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

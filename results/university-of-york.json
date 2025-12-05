@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2025-12-04T06:38:33.112772",
-  "total_tests": 112,
+  "last_updated": "2025-12-05T06:38:44.850280",
+  "total_tests": 114,
   "results": [
     {
       "name": "University of York",
@@ -2915,6 +2915,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-05T06:38:44.020856",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 312.07999999999987,
+        "largest_contentful_paint": 1278.454999999998,
+        "cumulative_layout_shift": 0.1253343960345338,
+        "total_blocking_time": 890.5439999999998,
+        "speed_index": 3521.0880506606413,
+        "interactive": 3681.268400000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-05T06:38:44.850280",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1249.5054999999998,
+        "largest_contentful_paint": 7819.526999999997,
+        "cumulative_layout_shift": 0.1253343960345338,
+        "total_blocking_time": 7415.172999999998,
+        "speed_index": 9445.667061721448,
+        "interactive": 17572.152049999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
