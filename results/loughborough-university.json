@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2025-12-05T06:40:45.575715",
-  "total_tests": 116,
+  "last_updated": "2025-12-06T06:36:41.427257",
+  "total_tests": 118,
   "results": [
     {
       "name": "Loughborough University",
@@ -3019,6 +3019,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-06T06:36:21.572931",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2276.348,
+        "largest_contentful_paint": 4601.348,
+        "cumulative_layout_shift": 0.006711837629006695,
+        "total_blocking_time": 2050.5,
+        "speed_index": 4153.034480284996,
+        "interactive": 9191.900599999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-06T06:36:41.427257",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 912.9590000000002,
+        "largest_contentful_paint": 2834.6399999999994,
+        "cumulative_layout_shift": 0.006711837629006695,
+        "total_blocking_time": 460.12899999999956,
+        "speed_index": 2279.6612022557733,
+        "interactive": 2907.7982999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
