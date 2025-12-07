@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2025-12-06T06:33:28.010266",
-  "total_tests": 118,
+  "last_updated": "2025-12-07T06:33:23.015022",
+  "total_tests": 120,
   "results": [
     {
       "name": "University of Bath",
@@ -3071,6 +3071,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-07T06:33:21.570448",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 96.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1406.6509999999998,
+        "largest_contentful_paint": 1735.3809999999999,
+        "cumulative_layout_shift": 0.08890509634165966,
+        "total_blocking_time": 121,
+        "speed_index": 2072.261724568746,
+        "interactive": 3788.7942000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-07T06:33:23.015022",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4342.83,
+        "largest_contentful_paint": 8231.0655,
+        "cumulative_layout_shift": 0.020861353935827345,
+        "total_blocking_time": 1021.0000000000009,
+        "speed_index": 5713.479926474016,
+        "interactive": 17325.143000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
