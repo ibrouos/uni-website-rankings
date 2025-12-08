@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2025-12-07T06:34:10.994634",
-  "total_tests": 116,
+  "last_updated": "2025-12-08T06:40:50.469026",
+  "total_tests": 118,
   "results": [
     {
       "name": "University of St Andrews",
@@ -3019,6 +3019,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-08T06:40:49.373571",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2056.9584999999997,
+        "largest_contentful_paint": 2136.9584999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 910.5000000000009,
+        "speed_index": 2056.9584999999997,
+        "interactive": 5935.311500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-08T06:40:50.469026",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7661.788,
+        "largest_contentful_paint": 8861.788,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5439.025500000001,
+        "speed_index": 7661.788,
+        "interactive": 23119.4924
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

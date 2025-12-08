@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-12-07T06:32:09.002721",
-  "total_tests": 120,
+  "last_updated": "2025-12-08T06:38:49.783244",
+  "total_tests": 122,
   "results": [
     {
       "name": "University of Sheffield",
@@ -3123,6 +3123,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-08T06:38:49.603740",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4194.8508,
+        "largest_contentful_paint": 7779.485040000002,
+        "cumulative_layout_shift": 0.03632729715809616,
+        "total_blocking_time": 1112.5,
+        "speed_index": 4870.950183918367,
+        "interactive": 8588.636128000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-08T06:38:49.783244",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 96.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1795.40796,
+        "largest_contentful_paint": 2536.8075849999996,
+        "cumulative_layout_shift": 0.04145326325207837,
+        "total_blocking_time": 62.5,
+        "speed_index": 2015.1665613847308,
+        "interactive": 2799.322188
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

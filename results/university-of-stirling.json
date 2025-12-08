@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2025-12-07T06:40:49.035155",
-  "total_tests": 120,
+  "last_updated": "2025-12-08T06:47:29.540281",
+  "total_tests": 122,
   "results": [
     {
       "name": "University of Stirling",
@@ -3123,6 +3123,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-08T06:47:29.195555",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 949.9790000000002,
+        "largest_contentful_paint": 1722.8030000000003,
+        "cumulative_layout_shift": 0.007060125747784841,
+        "total_blocking_time": 607.1440000000007,
+        "speed_index": 2653.7679968030434,
+        "interactive": 4009.9691000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-08T06:47:29.540281",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1590.4360000000001,
+        "largest_contentful_paint": 6381.679,
+        "cumulative_layout_shift": 0.007060125747784841,
+        "total_blocking_time": 3728.500000000001,
+        "speed_index": 6917.799402140137,
+        "interactive": 19173.69625
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

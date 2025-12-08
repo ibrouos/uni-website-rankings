@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2025-12-07T06:31:30.130894",
-  "total_tests": 120,
+  "last_updated": "2025-12-08T06:38:09.213159",
+  "total_tests": 122,
   "results": [
     {
       "name": "University of Southampton",
@@ -3119,6 +3119,58 @@
         "total_blocking_time": 99.38749999999993,
         "speed_index": 1481.0025308142408,
         "interactive": 1364.6787500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-08T06:37:47.211548",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2045.9450000000002,
+        "largest_contentful_paint": 3041.101,
+        "cumulative_layout_shift": 0.12395032170696414,
+        "total_blocking_time": 2233.792,
+        "speed_index": 5167.632288554562,
+        "interactive": 8677.149425
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-08T06:38:09.213159",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 601.7500000000001,
+        "largest_contentful_paint": 896.8910000000001,
+        "cumulative_layout_shift": 0.12395032170696414,
+        "total_blocking_time": 77,
+        "speed_index": 1061.7389269777464,
+        "interactive": 1363.64435
       },
       "throttling_config": {
         "method": "simulate",
