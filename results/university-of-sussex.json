@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2025-12-09T06:39:12.052336",
-  "total_tests": 124,
+  "last_updated": "2025-12-10T06:39:54.153758",
+  "total_tests": 126,
   "results": [
     {
       "name": "University of Sussex",
@@ -3223,6 +3223,58 @@
         "total_blocking_time": 54,
         "speed_index": 1465.5300967122407,
         "interactive": 770.203
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-10T06:39:45.317159",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1218.05,
+        "largest_contentful_paint": 3693.05,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 875.4750000000001,
+        "speed_index": 4115.928346149415,
+        "interactive": 3715.55
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-10T06:39:54.153758",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 99.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 345.43000000000006,
+        "largest_contentful_paint": 765.4300000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 97.5,
+        "speed_index": 1370.1847152691084,
+        "interactive": 767.4300000000001
       },
       "throttling_config": {
         "method": "simulate",

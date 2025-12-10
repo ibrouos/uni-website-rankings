@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2025-12-09T06:37:03.317280",
-  "total_tests": 124,
+  "last_updated": "2025-12-10T06:37:50.358344",
+  "total_tests": 126,
   "results": [
     {
       "name": "University of Sheffield",
@@ -3227,6 +3227,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-10T06:37:50.185090",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2042.1430000000003,
+        "largest_contentful_paint": 2104.5789999999997,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 89,
+        "speed_index": 2042.1430000000003,
+        "interactive": 3114.1227
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-10T06:37:50.358344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3652.4760000000006,
+        "largest_contentful_paint": 7092.99,
+        "cumulative_layout_shift": 0.025874898571827402,
+        "total_blocking_time": 975.5000000000005,
+        "speed_index": 5451.5843924565015,
+        "interactive": 7826.238900000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
