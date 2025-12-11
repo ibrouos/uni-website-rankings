@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2025-12-10T06:40:48.177088",
-  "total_tests": 124,
+  "last_updated": "2025-12-11T06:42:37.757551",
+  "total_tests": 126,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -3227,6 +3227,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-11T06:42:33.052425",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 784.9790000000002,
+        "largest_contentful_paint": 2486.057,
+        "cumulative_layout_shift": 0.12030498549721726,
+        "total_blocking_time": 5473.355500000001,
+        "speed_index": 1667.1525827804257,
+        "interactive": 9333.437950000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-11T06:42:37.757551",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1586.149,
+        "largest_contentful_paint": 11867.687,
+        "cumulative_layout_shift": 0.12030498549721726,
+        "total_blocking_time": 26117.955499999985,
+        "speed_index": 6707.384951941362,
+        "interactive": 39603.93127499999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
