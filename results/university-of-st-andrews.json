@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2025-12-10T06:39:35.948070",
-  "total_tests": 122,
+  "last_updated": "2025-12-12T06:39:08.882344",
+  "total_tests": 124,
   "results": [
     {
       "name": "University of St Andrews",
@@ -3175,6 +3175,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-12T06:39:05.823262",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7752.484999999999,
+        "largest_contentful_paint": 9027.485,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3782.500000000002,
+        "speed_index": 7752.484999999999,
+        "interactive": 21429.61677500001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-12T06:39:08.882344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1840.4415,
+        "largest_contentful_paint": 2040.4415000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 406.36349999999993,
+        "speed_index": 1840.4415,
+        "interactive": 4796.163200000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
