@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-12-12T06:36:47.663945",
-  "total_tests": 130,
+  "last_updated": "2025-12-13T06:33:36.169701",
+  "total_tests": 132,
   "results": [
     {
       "name": "University of Birmingham",
@@ -3383,6 +3383,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-13T06:33:35.506235",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2491.6125000000006,
+        "largest_contentful_paint": 3770.2490000000007,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 87,
+        "speed_index": 3011.2886857254657,
+        "interactive": 3782.056200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-13T06:33:36.169701",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2829.182,
+        "largest_contentful_paint": 14972.074500000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2990.0424999999996,
+        "speed_index": 6820.682526360895,
+        "interactive": 15009.678750000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

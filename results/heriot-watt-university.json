@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2025-12-12T06:40:35.829073",
-  "total_tests": 130,
+  "last_updated": "2025-12-13T06:37:58.720356",
+  "total_tests": 132,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -3383,6 +3383,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-13T06:37:56.493707",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 95.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1272.0920000000003,
+        "largest_contentful_paint": 2376.13277,
+        "cumulative_layout_shift": 0.017549817001781997,
+        "total_blocking_time": 507.91849999999977,
+        "speed_index": 2127.2723157622213,
+        "interactive": 3517.132650000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-13T06:37:58.720356",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4586.315500000001,
+        "largest_contentful_paint": 8528.1695,
+        "cumulative_layout_shift": 0.013913474840144154,
+        "total_blocking_time": 3168.6499999999996,
+        "speed_index": 6226.8909779695105,
+        "interactive": 14772.8623
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
