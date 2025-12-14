@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2025-12-13T06:32:43.977466",
-  "total_tests": 132,
+  "last_updated": "2025-12-14T06:32:26.440019",
+  "total_tests": 134,
   "results": [
     {
       "name": "King's College London",
@@ -3431,6 +3431,58 @@
         "total_blocking_time": 2259.281999999999,
         "speed_index": 4523.003858671259,
         "interactive": 9534.992
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-14T06:32:24.623453",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1320.409,
+        "largest_contentful_paint": 2258.742,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 408,
+        "speed_index": 2008.693047662649,
+        "interactive": 2651.4375000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-14T06:32:26.440019",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3497.364000000001,
+        "largest_contentful_paint": 7772.469000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1312.999999999999,
+        "speed_index": 5064.468998307199,
+        "interactive": 9889.917
       },
       "throttling_config": {
         "method": "simulate",

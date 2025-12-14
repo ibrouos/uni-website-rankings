@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2025-12-13T06:33:36.169701",
-  "total_tests": 132,
+  "last_updated": "2025-12-14T06:33:22.640323",
+  "total_tests": 134,
   "results": [
     {
       "name": "University of Birmingham",
@@ -3435,6 +3435,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-14T06:33:22.555877",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2852.4769999999994,
+        "largest_contentful_paint": 13438.091,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1264.574,
+        "speed_index": 6453.826393544238,
+        "interactive": 13492.3762
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-14T06:33:22.640323",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 93.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1221.896,
+        "largest_contentful_paint": 3095.728,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 97,
+        "speed_index": 2031.186568766088,
+        "interactive": 3175.5467
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
