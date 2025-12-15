@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2025-12-14T06:31:51.110943",
-  "total_tests": 132,
+  "last_updated": "2025-12-15T06:37:30.873585",
+  "total_tests": 134,
   "results": [
     {
       "name": "Imperial College London",
@@ -3435,6 +3435,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-15T06:37:29.059196",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1102.3104,
+        "largest_contentful_paint": 1297.4018,
+        "cumulative_layout_shift": 0.03045344286159311,
+        "total_blocking_time": 522.1971999999998,
+        "speed_index": 4337.94527893356,
+        "interactive": 2555.297665
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-15T06:37:30.873585",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2643.913199999999,
+        "largest_contentful_paint": 5195.8992,
+        "cumulative_layout_shift": 0.04037033701495138,
+        "total_blocking_time": 4544.9659,
+        "speed_index": 10313.40644665338,
+        "interactive": 11152.935730000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
