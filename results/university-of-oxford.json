@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2025-12-15T06:37:30.554109",
-  "total_tests": 136,
+  "last_updated": "2025-12-16T06:35:45.906323",
+  "total_tests": 138,
   "results": [
     {
       "name": "University of Oxford",
@@ -3539,6 +3539,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-16T06:35:45.483405",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3276.4584999999997,
+        "largest_contentful_paint": 8965.9585,
+        "cumulative_layout_shift": 0.9215477264372262,
+        "total_blocking_time": 2876.000000000001,
+        "speed_index": 6377.751984975266,
+        "interactive": 13103.760750000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-16T06:35:45.906323",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 778.4065,
+        "largest_contentful_paint": 1871.2404999999999,
+        "cumulative_layout_shift": 0.9474477262824205,
+        "total_blocking_time": 741.9999999999998,
+        "speed_index": 2513.9482370665164,
+        "interactive": 3436.37035
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
