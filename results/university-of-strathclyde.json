@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-12-16T06:42:10.671910",
-  "total_tests": 136,
+  "last_updated": "2025-12-17T06:42:31.091839",
+  "total_tests": 138,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -3539,6 +3539,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-17T06:42:30.459192",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1535.1325000000002,
+        "largest_contentful_paint": 2769.1365000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 209.49999999999977,
+        "speed_index": 2146.4238830787867,
+        "interactive": 3120.0859500000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-17T06:42:31.091839",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3525.500499999999,
+        "largest_contentful_paint": 10368.828499999998,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 2956.7204999999985,
+        "speed_index": 5682.334119742619,
+        "interactive": 13335.6374
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
