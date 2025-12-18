@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2025-12-17T06:42:31.091839",
-  "total_tests": 138,
+  "last_updated": "2025-12-18T06:41:31.181936",
+  "total_tests": 140,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -3591,6 +3591,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-18T06:41:15.317701",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3354.4590000000007,
+        "largest_contentful_paint": 8608.3105,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 2400,
+        "speed_index": 5429.094973182653,
+        "interactive": 12532.683950000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-18T06:41:31.181936",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 94.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1291.3210000000001,
+        "largest_contentful_paint": 2580.070000000001,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 182.5,
+        "speed_index": 1985.2409355984187,
+        "interactive": 3044.460150000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
