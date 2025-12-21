@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2025-12-20T06:40:04.226451",
-  "total_tests": 144,
+  "last_updated": "2025-12-21T06:40:09.691208",
+  "total_tests": 146,
   "results": [
     {
       "name": "Brunel University London",
@@ -3747,6 +3747,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-21T06:40:08.148365",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5220.703,
+        "largest_contentful_paint": 13908.820999999998,
+        "cumulative_layout_shift": 0.0036269194415809777,
+        "total_blocking_time": 5956.568999999999,
+        "speed_index": 6512.7557020688055,
+        "interactive": 19224.474099999992
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-21T06:40:09.691208",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1709.259,
+        "largest_contentful_paint": 3169.111000000001,
+        "cumulative_layout_shift": 0.0036269194415809777,
+        "total_blocking_time": 765.694,
+        "speed_index": 2182.3298027961773,
+        "interactive": 4452.77915
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

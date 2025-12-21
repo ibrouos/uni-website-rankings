@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2025-12-20T06:34:01.543690",
-  "total_tests": 144,
+  "last_updated": "2025-12-21T06:34:20.470950",
+  "total_tests": 146,
   "results": [
     {
       "name": "University of Leeds",
@@ -3743,6 +3743,58 @@
         "total_blocking_time": 0,
         "speed_index": 1293.8035644209958,
         "interactive": 1308.6750000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-21T06:34:18.739975",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3231.2860200000005,
+        "largest_contentful_paint": 5640.546,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 232,
+        "speed_index": 3439.10284228077,
+        "interactive": 5670.5726
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-21T06:34:20.470950",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 955.29128,
+        "largest_contentful_paint": 1253.81666,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 0,
+        "speed_index": 1131.0083121683952,
+        "interactive": 1258.867894
       },
       "throttling_config": {
         "method": "simulate",
