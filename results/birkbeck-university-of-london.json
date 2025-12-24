@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2025-12-23T06:45:02.273811",
-  "total_tests": 152,
+  "last_updated": "2025-12-24T06:44:37.372977",
+  "total_tests": 154,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -3955,6 +3955,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-24T06:44:37.085396",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 96.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 574.6835000000001,
+        "largest_contentful_paint": 1729.38,
+        "cumulative_layout_shift": 0.09523135587175824,
+        "total_blocking_time": 126.5,
+        "speed_index": 1376.5103072226113,
+        "interactive": 2523.71705
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-24T06:44:37.372977",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1032.8479999999997,
+        "largest_contentful_paint": 4381.623,
+        "cumulative_layout_shift": 0.5757180502385103,
+        "total_blocking_time": 1286.5,
+        "speed_index": 4652.595307983065,
+        "interactive": 11806.613350000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
