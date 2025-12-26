@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2025-12-25T06:38:50.535124",
-  "total_tests": 156,
+  "last_updated": "2025-12-26T06:38:32.696182",
+  "total_tests": 158,
   "results": [
     {
       "name": "University of Bath",
@@ -4055,6 +4055,58 @@
         "total_blocking_time": 1116.179500000001,
         "speed_index": 5688.484475223608,
         "interactive": 16365.7175
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-26T06:38:32.254265",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 87.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1353.7339999999997,
+        "largest_contentful_paint": 2928.8949999999995,
+        "cumulative_layout_shift": 0.16440696680175945,
+        "total_blocking_time": 122,
+        "speed_index": 2016.0492803560335,
+        "interactive": 2934.2232999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-26T06:38:32.696182",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3571.204,
+        "largest_contentful_paint": 7551.032999999999,
+        "cumulative_layout_shift": 0.16440696680175945,
+        "total_blocking_time": 1102.5,
+        "speed_index": 5000.588614798815,
+        "interactive": 9275.574600000002
       },
       "throttling_config": {
         "method": "simulate",
