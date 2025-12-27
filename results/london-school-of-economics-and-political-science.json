@@ -2,8 +2,8 @@
   "name": "London School of Economics and Political Science",
   "slug": "london-school-of-economics-and-political-science",
   "url": "https://www.lse.ac.uk",
-  "last_updated": "2025-12-26T06:35:52.218700",
-  "total_tests": 156,
+  "last_updated": "2025-12-27T06:34:06.730297",
+  "total_tests": 158,
   "results": [
     {
       "name": "London School of Economics and Political Science",
@@ -4059,6 +4059,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-27T06:33:16.040501",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4142.2445,
+        "largest_contentful_paint": 10299.323499999997,
+        "cumulative_layout_shift": 0.05574986454145622,
+        "total_blocking_time": 21936.79,
+        "speed_index": 10502.869736017547,
+        "interactive": 38276.8412
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-27T06:34:06.730297",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 95.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1057.8509999999997,
+        "largest_contentful_paint": 2762.8385,
+        "cumulative_layout_shift": 0.05662240949376153,
+        "total_blocking_time": 4597.500000000001,
+        "speed_index": 4206.668505980828,
+        "interactive": 10629.933500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
