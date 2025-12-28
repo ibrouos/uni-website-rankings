@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-12-27T06:35:09.913839",
-  "total_tests": 158,
+  "last_updated": "2025-12-28T06:35:43.154432",
+  "total_tests": 160,
   "results": [
     {
       "name": "University of Warwick",
@@ -4111,6 +4111,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-28T06:35:40.937051",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6409.765499999999,
+        "largest_contentful_paint": 10776.547999999999,
+        "cumulative_layout_shift": 0.011194646975490693,
+        "total_blocking_time": 4909.499999999999,
+        "speed_index": 6989.415481367296,
+        "interactive": 17983.934725
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-28T06:35:43.154432",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2236.4304999999995,
+        "largest_contentful_paint": 3254.8925,
+        "cumulative_layout_shift": 0.011194646975490693,
+        "total_blocking_time": 775.5000000000005,
+        "speed_index": 2691.8578866490134,
+        "interactive": 4608.446250000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
