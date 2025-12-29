@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2025-12-28T06:43:05.955589",
-  "total_tests": 162,
+  "last_updated": "2025-12-29T06:47:57.680630",
+  "total_tests": 164,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -4215,6 +4215,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-29T06:47:57.642418",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1390.917,
+        "largest_contentful_paint": 3308.865,
+        "cumulative_layout_shift": 0.037620427074582664,
+        "total_blocking_time": 733.4060000000011,
+        "speed_index": 2310.095172929043,
+        "interactive": 4533.8994250000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-29T06:47:57.680630",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4311.426,
+        "largest_contentful_paint": 12120.222000000002,
+        "cumulative_layout_shift": 0.037620427074582664,
+        "total_blocking_time": 5513.999999999999,
+        "speed_index": 6110.421235940881,
+        "interactive": 20719.94855
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
