@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2025-12-30T06:39:18.433941",
-  "total_tests": 164,
+  "last_updated": "2025-12-31T06:39:55.640939",
+  "total_tests": 166,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -4267,6 +4267,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-31T06:39:55.445771",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 818.4304999999998,
+        "largest_contentful_paint": 3462.6039999999994,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2298.499999999998,
+        "speed_index": 2460.5560684203438,
+        "interactive": 6105.58375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-31T06:39:55.640939",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3105.662500000001,
+        "largest_contentful_paint": 5835.795500000001,
+        "cumulative_layout_shift": 0.0013547502771702332,
+        "total_blocking_time": 11552.924500000006,
+        "speed_index": 4493.333635799834,
+        "interactive": 23498.486175000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

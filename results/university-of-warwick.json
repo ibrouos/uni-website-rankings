@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2025-12-30T06:37:31.446432",
-  "total_tests": 164,
+  "last_updated": "2025-12-31T06:38:22.869522",
+  "total_tests": 166,
   "results": [
     {
       "name": "University of Warwick",
@@ -4267,6 +4267,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2025-12-31T06:38:22.337306",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8975.064000000002,
+        "largest_contentful_paint": 11485.523999999998,
+        "cumulative_layout_shift": 1.7412950156430415e-05,
+        "total_blocking_time": 4171.999999999997,
+        "speed_index": 8975.064000000002,
+        "interactive": 17272.764574999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2025-12-31T06:38:22.869522",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2005.1595000000002,
+        "largest_contentful_paint": 2912.7034999999996,
+        "cumulative_layout_shift": 0.011194646975490693,
+        "total_blocking_time": 528.4020000000003,
+        "speed_index": 2422.7685785098774,
+        "interactive": 4136.112300000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
