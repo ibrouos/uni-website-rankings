@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2025-12-31T06:39:36.644729",
-  "total_tests": 168,
+  "last_updated": "2026-01-01T06:39:30.516235",
+  "total_tests": 170,
   "results": [
     {
       "name": "University of Bath",
@@ -4371,6 +4371,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-01T06:39:25.687653",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4576.0515000000005,
+        "largest_contentful_paint": 7494.89675,
+        "cumulative_layout_shift": 0.020861353935827345,
+        "total_blocking_time": 1031.5,
+        "speed_index": 5831.739768874967,
+        "interactive": 17242.353300000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-01T06:39:30.516235",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1322.8885,
+        "largest_contentful_paint": 2322.462,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 317.00000000000045,
+        "speed_index": 2297.1849795868357,
+        "interactive": 4014.3889500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
