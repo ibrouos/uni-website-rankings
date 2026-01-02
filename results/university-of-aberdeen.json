@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-01-01T06:41:34.518333",
-  "total_tests": 170,
+  "last_updated": "2026-01-02T06:41:22.878992",
+  "total_tests": 172,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -4423,6 +4423,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-02T06:41:21.720585",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4070.5728000000004,
+        "largest_contentful_paint": 14083.858500000002,
+        "cumulative_layout_shift": 0.12087417270524642,
+        "total_blocking_time": 1088.999999999999,
+        "speed_index": 15219.103486390844,
+        "interactive": 14115.798300000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-02T06:41:22.878992",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1684.1302,
+        "largest_contentful_paint": 2833.6334999999995,
+        "cumulative_layout_shift": 0.276639900057281,
+        "total_blocking_time": 63,
+        "speed_index": 5888.5094616197375,
+        "interactive": 2839.5047999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-01-01T06:44:41.774902",
-  "total_tests": 170,
+  "last_updated": "2026-01-02T06:44:41.627955",
+  "total_tests": 172,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -4423,6 +4423,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-02T06:44:41.109662",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1090.361,
+        "largest_contentful_paint": 4615.584000000001,
+        "cumulative_layout_shift": 0.5770987492784156,
+        "total_blocking_time": 1115.4999999999989,
+        "speed_index": 3720.942984696865,
+        "interactive": 10283.644350000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-02T06:44:41.627955",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 577.601,
+        "largest_contentful_paint": 957.8489999999999,
+        "cumulative_layout_shift": 0.0917815801853517,
+        "total_blocking_time": 38.5,
+        "speed_index": 1111.0725075058156,
+        "interactive": 2383.1433500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

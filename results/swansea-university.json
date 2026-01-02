@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-01-01T06:43:54.774641",
-  "total_tests": 168,
+  "last_updated": "2026-01-02T06:44:17.130741",
+  "total_tests": 170,
   "results": [
     {
       "name": "Swansea University",
@@ -4371,6 +4371,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-02T06:44:16.891341",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1272.3384999999998,
+        "largest_contentful_paint": 1571.7810000000002,
+        "cumulative_layout_shift": 0.00015165266805348656,
+        "total_blocking_time": 2458.9999999999977,
+        "speed_index": 3142.853858309514,
+        "interactive": 8556.529525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-02T06:44:17.130741",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3354.8199999999997,
+        "largest_contentful_paint": 3870.913,
+        "cumulative_layout_shift": 0.00015165266805348656,
+        "total_blocking_time": 16166.862499999996,
+        "speed_index": 7650.767744946583,
+        "interactive": 30802.73465
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

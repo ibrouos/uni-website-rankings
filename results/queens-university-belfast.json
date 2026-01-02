@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-01-01T06:42:30.512136",
-  "total_tests": 168,
+  "last_updated": "2026-01-02T06:42:24.885079",
+  "total_tests": 170,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -4371,6 +4371,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-02T06:42:21.097299",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2131.2630000000004,
+        "largest_contentful_paint": 13477.174499999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 22485.030000000006,
+        "speed_index": 5036.356596428993,
+        "interactive": 37160.58398750001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-02T06:42:24.885079",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 994.7139999999999,
+        "largest_contentful_paint": 2208.321,
+        "cumulative_layout_shift": 0.03075281131394938,
+        "total_blocking_time": 2484.5,
+        "speed_index": 1747.7288808268456,
+        "interactive": 8384.289400000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

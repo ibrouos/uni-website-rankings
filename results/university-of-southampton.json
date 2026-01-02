@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-01-01T06:37:02.493788",
-  "total_tests": 170,
+  "last_updated": "2026-01-02T06:37:51.103754",
+  "total_tests": 172,
   "results": [
     {
       "name": "University of Southampton",
@@ -4423,6 +4423,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-02T06:37:49.621293",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2429.261,
+        "largest_contentful_paint": 4370.9130000000005,
+        "cumulative_layout_shift": 1.3505182055265137e-05,
+        "total_blocking_time": 3320.9999999999995,
+        "speed_index": 6102.38726992182,
+        "interactive": 9713.883775000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-02T06:37:51.103754",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 618.7650000000001,
+        "largest_contentful_paint": 885.355,
+        "cumulative_layout_shift": 1.3505182055265137e-05,
+        "total_blocking_time": 247.99999999999977,
+        "speed_index": 1201.024707095622,
+        "interactive": 1942.3089249999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
