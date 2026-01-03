@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-01-02T06:42:15.007733",
-  "total_tests": 170,
+  "last_updated": "2026-01-03T06:39:47.090502",
+  "total_tests": 172,
   "results": [
     {
       "name": "University of Reading",
@@ -4423,6 +4423,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-03T06:39:32.486048",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 93.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5592.1669999999995,
+        "largest_contentful_paint": 9260.392999999996,
+        "cumulative_layout_shift": 9.041797774287229e-05,
+        "total_blocking_time": 1116.000000000001,
+        "speed_index": 5592.1669999999995,
+        "interactive": 12461.428025000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-03T06:39:47.090502",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 93.0,
+        "best_practices": 71.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1795.5874999999996,
+        "largest_contentful_paint": 2580.229,
+        "cumulative_layout_shift": 9.041797774287229e-05,
+        "total_blocking_time": 329.16300000000047,
+        "speed_index": 1909.6171391425507,
+        "interactive": 3116.0516000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
