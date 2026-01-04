@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-01-03T06:40:45.000223",
-  "total_tests": 172,
+  "last_updated": "2026-01-04T06:41:35.466636",
+  "total_tests": 174,
   "results": [
     {
       "name": "City, University of London",
@@ -4475,6 +4475,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-04T06:41:31.293777",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4266.879000000001,
+        "largest_contentful_paint": 8535.161500000002,
+        "cumulative_layout_shift": 0.08000703401841675,
+        "total_blocking_time": 1719.499999999999,
+        "speed_index": 6425.587267406303,
+        "interactive": 15568.996450000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-04T06:41:35.466636",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1682.3964999999998,
+        "largest_contentful_paint": 4084.8575,
+        "cumulative_layout_shift": 0.00012198113357511781,
+        "total_blocking_time": 410.5,
+        "speed_index": 2783.985596645136,
+        "interactive": 4142.328750000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

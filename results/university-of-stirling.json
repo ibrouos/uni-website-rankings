@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2026-01-03T06:44:37.757552",
-  "total_tests": 174,
+  "last_updated": "2026-01-04T06:44:52.414962",
+  "total_tests": 176,
   "results": [
     {
       "name": "University of Stirling",
@@ -4527,6 +4527,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-04T06:44:51.133011",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 928.222,
+        "largest_contentful_paint": 1742.2700000000004,
+        "cumulative_layout_shift": 0.007060125747784841,
+        "total_blocking_time": 325.18750000000045,
+        "speed_index": 2443.936238020347,
+        "interactive": 4053.190300000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-04T06:44:52.414962",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1696.826,
+        "largest_contentful_paint": 6399.0975,
+        "cumulative_layout_shift": 0.007060125747784841,
+        "total_blocking_time": 3580.5000000000055,
+        "speed_index": 6606.735106103822,
+        "interactive": 19400.82280000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
