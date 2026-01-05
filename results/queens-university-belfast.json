@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-01-04T06:40:27.743329",
-  "total_tests": 174,
+  "last_updated": "2026-01-05T06:47:18.646755",
+  "total_tests": 176,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -4527,6 +4527,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-05T06:47:15.115660",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1252.1530000000002,
+        "largest_contentful_paint": 3139.2615000000005,
+        "cumulative_layout_shift": 0.11147446431397502,
+        "total_blocking_time": 4782.999999999996,
+        "speed_index": 2426.994670149821,
+        "interactive": 9603.948699999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-05T06:47:18.646755",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1708.3950000000002,
+        "largest_contentful_paint": 9889.643999999998,
+        "cumulative_layout_shift": 0.02205466779083294,
+        "total_blocking_time": 18731.118000000002,
+        "speed_index": 7076.936422501689,
+        "interactive": 39148.01980000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

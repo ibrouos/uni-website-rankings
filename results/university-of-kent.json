@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-01-04T06:43:03.822199",
-  "total_tests": 174,
+  "last_updated": "2026-01-05T06:50:16.286204",
+  "total_tests": 176,
   "results": [
     {
       "name": "University of Kent",
@@ -4523,6 +4523,58 @@
         "total_blocking_time": 2004.5000000000005,
         "speed_index": 2598.7049676685347,
         "interactive": 6305.200150000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-05T06:49:28.573032",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 92.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1901.7530000000002,
+        "largest_contentful_paint": 3619.5795,
+        "cumulative_layout_shift": 0.001836625923295769,
+        "total_blocking_time": 15487.772999999997,
+        "speed_index": 6065.117026516204,
+        "interactive": 23865.5007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-05T06:50:16.286204",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 92.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 961.799,
+        "largest_contentful_paint": 2178.157,
+        "cumulative_layout_shift": 0.001836625923295769,
+        "total_blocking_time": 2031.500000000001,
+        "speed_index": 2562.1406982955177,
+        "interactive": 6080.864875
       },
       "throttling_config": {
         "method": "simulate",
