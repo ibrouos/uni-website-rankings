@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-01-05T06:46:42.612970",
-  "total_tests": 178,
+  "last_updated": "2026-01-06T06:42:24.189874",
+  "total_tests": 180,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -4631,6 +4631,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-06T06:42:22.250554",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1264.9840000000002,
+        "largest_contentful_paint": 2708.058,
+        "cumulative_layout_shift": 0.041009612758349336,
+        "total_blocking_time": 405.5319999999999,
+        "speed_index": 2174.8845549842317,
+        "interactive": 3574.6169999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-06T06:42:24.189874",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3497.9355,
+        "largest_contentful_paint": 13319.690999999999,
+        "cumulative_layout_shift": 0.013661012595060895,
+        "total_blocking_time": 3388.8215000000005,
+        "speed_index": 6508.191439622577,
+        "interactive": 15824.286699999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

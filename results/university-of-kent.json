@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-01-05T06:50:16.286204",
-  "total_tests": 176,
+  "last_updated": "2026-01-06T06:45:45.351855",
+  "total_tests": 178,
   "results": [
     {
       "name": "University of Kent",
@@ -4579,6 +4579,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-06T06:45:10.286271",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 92.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 818.4000000000001,
+        "largest_contentful_paint": 1571.7005000000001,
+        "cumulative_layout_shift": 0.001836625923295769,
+        "total_blocking_time": 2766.000000000002,
+        "speed_index": 2297.0199264552784,
+        "interactive": 6624.216300000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-06T06:45:45.351855",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 92.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1922.623,
+        "largest_contentful_paint": 6080.9349999999995,
+        "cumulative_layout_shift": 0.001836625923295769,
+        "total_blocking_time": 12768.500000000004,
+        "speed_index": 6374.9706206785195,
+        "interactive": 21913.624025000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
