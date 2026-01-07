@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-01-06T06:40:32.562671",
-  "total_tests": 178,
+  "last_updated": "2026-01-07T06:39:57.037758",
+  "total_tests": 180,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -4631,6 +4631,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-07T06:38:49.278681",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2015.6020000000003,
+        "largest_contentful_paint": 5180.658500000001,
+        "cumulative_layout_shift": 0.04472555038682999,
+        "total_blocking_time": 15127.616,
+        "speed_index": 3757.0082593769735,
+        "interactive": 26284.049899999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-07T06:39:57.037758",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1273.8776500000001,
+        "largest_contentful_paint": 3502.24395,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1395.5000000000005,
+        "speed_index": 2415.2971089441735,
+        "interactive": 4977.274330500002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
