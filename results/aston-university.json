@@ -2,8 +2,8 @@
   "name": "Aston University",
   "slug": "aston-university",
   "url": "https://www.aston.ac.uk",
-  "last_updated": "2026-01-09T06:45:08.302320",
-  "total_tests": 184,
+  "last_updated": "2026-01-10T06:41:01.107108",
+  "total_tests": 186,
   "results": [
     {
       "name": "Aston University",
@@ -4787,6 +4787,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-10T06:41:00.837869",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1213.4675,
+        "largest_contentful_paint": 19218.7055,
+        "cumulative_layout_shift": 0.07130951133053509,
+        "total_blocking_time": 8450,
+        "speed_index": 5523.215550273209,
+        "interactive": 33400.96320000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-10T06:41:01.107108",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 366.3965,
+        "largest_contentful_paint": 3057.5315,
+        "cumulative_layout_shift": 0.07130951133053509,
+        "total_blocking_time": 1073.5,
+        "speed_index": 1617.1296542298555,
+        "interactive": 6382.717327601624
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
