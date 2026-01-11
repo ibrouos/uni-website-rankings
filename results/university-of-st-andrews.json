@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-01-10T06:36:43.747350",
-  "total_tests": 178,
+  "last_updated": "2026-01-11T06:39:12.592836",
+  "total_tests": 180,
   "results": [
     {
       "name": "University of St Andrews",
@@ -4627,6 +4627,58 @@
         "total_blocking_time": 4717.077249999997,
         "speed_index": 10040.1505,
         "interactive": 23590.736449999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-11T06:39:11.959792",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2460.567,
+        "largest_contentful_paint": 2580.567,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 242,
+        "speed_index": 2590.8551140540767,
+        "interactive": 3146.951
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-11T06:39:12.592836",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 10249.081,
+        "largest_contentful_paint": 11299.081000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 488.73499999999876,
+        "speed_index": 10249.081,
+        "interactive": 13244.072800000002
       },
       "throttling_config": {
         "method": "simulate",

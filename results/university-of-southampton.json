@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-01-10T06:34:25.742356",
-  "total_tests": 188,
+  "last_updated": "2026-01-11T06:36:42.509600",
+  "total_tests": 190,
   "results": [
     {
       "name": "University of Southampton",
@@ -4891,6 +4891,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-11T06:36:42.355066",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 769.439,
+        "largest_contentful_paint": 1538.2659999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 754.1835000000003,
+        "speed_index": 2580.5508584274394,
+        "interactive": 2455.37685
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-11T06:36:42.509600",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3359.7960000000003,
+        "largest_contentful_paint": 3359.7960000000003,
+        "cumulative_layout_shift": 0.12395032170696414,
+        "total_blocking_time": 4101.0335000000005,
+        "speed_index": 5506.973185813243,
+        "interactive": 11205.74815
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
