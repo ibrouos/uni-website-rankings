@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-01-11T06:36:42.509600",
-  "total_tests": 190,
+  "last_updated": "2026-01-12T06:41:39.214224",
+  "total_tests": 192,
   "results": [
     {
       "name": "University of Southampton",
@@ -4943,6 +4943,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-12T06:41:39.034885",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3365.11,
+        "largest_contentful_paint": 4092.13,
+        "cumulative_layout_shift": 0.12393681652490887,
+        "total_blocking_time": 4387.774,
+        "speed_index": 7263.74788359012,
+        "interactive": 11197.137600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-12T06:41:39.214224",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 85.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 695.31,
+        "largest_contentful_paint": 775.0819999999999,
+        "cumulative_layout_shift": 1.3505182055265137e-05,
+        "total_blocking_time": 746.15,
+        "speed_index": 1740.7090278784701,
+        "interactive": 2529.787
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

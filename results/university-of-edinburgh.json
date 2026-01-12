@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-01-11T06:34:47.440150",
-  "total_tests": 190,
+  "last_updated": "2026-01-12T06:39:47.396188",
+  "total_tests": 192,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -4939,6 +4939,58 @@
         "total_blocking_time": 45.944000000000074,
         "speed_index": 1935.760674860966,
         "interactive": 1454.0111000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-12T06:39:46.396555",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2306.178,
+        "largest_contentful_paint": 3802.178,
+        "cumulative_layout_shift": 0.038421255310801976,
+        "total_blocking_time": 359.5,
+        "speed_index": 3227.723293421587,
+        "interactive": 5031.878000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-12T06:39:47.396188",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 610.014,
+        "largest_contentful_paint": 1139.0140000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1776.4009529835284,
+        "interactive": 1142.3140000000003
       },
       "throttling_config": {
         "method": "simulate",

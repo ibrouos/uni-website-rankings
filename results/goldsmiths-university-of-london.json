@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-01-11T06:44:59.153777",
-  "total_tests": 186,
+  "last_updated": "2026-01-12T06:49:44.793633",
+  "total_tests": 188,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -4835,6 +4835,58 @@
         "total_blocking_time": 1005.3344999999995,
         "speed_index": 2710.185983417191,
         "interactive": 4750.819050000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-12T06:49:32.928601",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3408.9365,
+        "largest_contentful_paint": 5371.3475,
+        "cumulative_layout_shift": 0.0004232329205234719,
+        "total_blocking_time": 5915.807999999998,
+        "speed_index": 5916.62597372014,
+        "interactive": 19423.2647
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-12T06:49:44.793633",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1276.7424999999998,
+        "largest_contentful_paint": 1769.3455,
+        "cumulative_layout_shift": 6.77244006178925e-05,
+        "total_blocking_time": 818.3420000000006,
+        "speed_index": 2248.354515216266,
+        "interactive": 4569.202800000001
       },
       "throttling_config": {
         "method": "simulate",

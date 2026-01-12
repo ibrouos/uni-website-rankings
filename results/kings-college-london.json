@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-01-11T06:36:04.311875",
-  "total_tests": 190,
+  "last_updated": "2026-01-12T06:40:59.875900",
+  "total_tests": 192,
   "results": [
     {
       "name": "King's College London",
@@ -4943,6 +4943,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-12T06:40:51.788696",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1385.08,
+        "largest_contentful_paint": 2275.218,
+        "cumulative_layout_shift": 0.024930277605122474,
+        "total_blocking_time": 684,
+        "speed_index": 2083.308615271995,
+        "interactive": 5031.960824999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-12T06:40:59.875900",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3323.322,
+        "largest_contentful_paint": 6870.186000000001,
+        "cumulative_layout_shift": 0.021221592460975387,
+        "total_blocking_time": 5168.000000000002,
+        "speed_index": 6049.5722763145295,
+        "interactive": 19964.326558302302
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
