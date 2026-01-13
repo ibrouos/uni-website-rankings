@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-01-12T06:48:27.808247",
-  "total_tests": 190,
+  "last_updated": "2026-01-13T06:44:56.316242",
+  "total_tests": 192,
   "results": [
     {
       "name": "Swansea University",
@@ -4943,6 +4943,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-13T06:44:43.901532",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2487.7774999999997,
+        "largest_contentful_paint": 4587.7775,
+        "cumulative_layout_shift": 0.0002022895418901775,
+        "total_blocking_time": 18516.50000000001,
+        "speed_index": 8189.404616284223,
+        "interactive": 30404.065000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-13T06:44:56.316242",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1060.6875000000002,
+        "largest_contentful_paint": 1782.2870000000003,
+        "cumulative_layout_shift": 0.0002022895418901775,
+        "total_blocking_time": 2659.4345000000008,
+        "speed_index": 2813.1970662226067,
+        "interactive": 7426.191300000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
