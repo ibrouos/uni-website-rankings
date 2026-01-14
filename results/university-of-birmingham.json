@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-01-13T06:38:38.254140",
-  "total_tests": 194,
+  "last_updated": "2026-01-14T06:37:53.105079",
+  "total_tests": 196,
   "results": [
     {
       "name": "University of Birmingham",
@@ -5043,6 +5043,58 @@
         "total_blocking_time": 27,
         "speed_index": 2456.187508269406,
         "interactive": 3583.116
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-14T06:37:51.694706",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 7184.3525,
+        "largest_contentful_paint": 12756.696999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 932,
+        "speed_index": 7184.3525,
+        "interactive": 12804.363
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-14T06:37:53.105079",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2222.761,
+        "largest_contentful_paint": 2980.9464999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 48.5034999999998,
+        "speed_index": 2828.38132690582,
+        "interactive": 3176.447
       },
       "throttling_config": {
         "method": "simulate",
