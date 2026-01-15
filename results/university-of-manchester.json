@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-01-14T06:38:55.599028",
-  "total_tests": 194,
+  "last_updated": "2026-01-15T06:37:29.011631",
+  "total_tests": 196,
   "results": [
     {
       "name": "University of Manchester",
@@ -5047,6 +5047,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-15T06:37:28.086297",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1469.733,
+        "largest_contentful_paint": 2484.01475,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4427.500000000002,
+        "speed_index": 2626.4061168290273,
+        "interactive": 8641.779050000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-15T06:37:29.011631",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7330.29175,
+        "largest_contentful_paint": 11921.312999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20586.63100000001,
+        "speed_index": 8954.849142861889,
+        "interactive": 38689.01660000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

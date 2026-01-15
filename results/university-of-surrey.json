@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2026-01-14T06:41:26.719539",
-  "total_tests": 196,
+  "last_updated": "2026-01-15T06:40:47.190523",
+  "total_tests": 198,
   "results": [
     {
       "name": "University of Surrey",
@@ -5095,6 +5095,58 @@
         "total_blocking_time": 99.23299999999995,
         "speed_index": 1324.6328060247183,
         "interactive": 1984.4177
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-15T06:40:46.880684",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2446.196,
+        "largest_contentful_paint": 3910.8475000000008,
+        "cumulative_layout_shift": 0.43256379100850545,
+        "total_blocking_time": 1595.0070000000005,
+        "speed_index": 3345.5405365106335,
+        "interactive": 7120.105100000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-15T06:40:47.190523",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1052.1850000000002,
+        "largest_contentful_paint": 1175.1630000000002,
+        "cumulative_layout_shift": 0.43256379100850545,
+        "total_blocking_time": 121.54399999999987,
+        "speed_index": 1504.102367006275,
+        "interactive": 2020.7726000000002
       },
       "throttling_config": {
         "method": "simulate",
