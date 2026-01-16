@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-01-15T06:38:42.425232",
-  "total_tests": 198,
+  "last_updated": "2026-01-16T06:39:39.448067",
+  "total_tests": 200,
   "results": [
     {
       "name": "Lancaster University",
@@ -5151,6 +5151,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-16T06:39:31.882783",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2851.5789999999997,
+        "largest_contentful_paint": 5466.004,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 1584.5000000000005,
+        "speed_index": 3396.6203476093615,
+        "interactive": 7172.279150000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-16T06:39:39.448067",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1100.7359999999999,
+        "largest_contentful_paint": 1650.6129999999998,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 172,
+        "speed_index": 1370.3163548518783,
+        "interactive": 2017.50925
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
