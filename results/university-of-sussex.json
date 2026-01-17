@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2026-01-16T06:40:59.528231",
-  "total_tests": 200,
+  "last_updated": "2026-01-17T06:37:29.823064",
+  "total_tests": 202,
   "results": [
     {
       "name": "University of Sussex",
@@ -5199,6 +5199,58 @@
         "total_blocking_time": 47,
         "speed_index": 1157.0310314614198,
         "interactive": 967.1860000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-17T06:37:25.683406",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1212.8990000000001,
+        "largest_contentful_paint": 5037.899000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 835.3257500000002,
+        "speed_index": 3324.1444408286397,
+        "interactive": 5120.399000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-17T06:37:29.823064",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 370.99199999999996,
+        "largest_contentful_paint": 1070.992,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9,
+        "speed_index": 1083.9477684093044,
+        "interactive": 1092.992
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-01-16T06:44:10.980584",
-  "total_tests": 198,
+  "last_updated": "2026-01-17T06:41:00.785261",
+  "total_tests": 200,
   "results": [
     {
       "name": "Swansea University",
@@ -5147,6 +5147,58 @@
         "total_blocking_time": 1774.1957499999987,
         "speed_index": 2419.281244285931,
         "interactive": 6205.497674999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-17T06:40:14.487941",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2308.5465000000004,
+        "largest_contentful_paint": 4408.5465,
+        "cumulative_layout_shift": 0.00015165266805348656,
+        "total_blocking_time": 9765.664499999995,
+        "speed_index": 6441.6342736312645,
+        "interactive": 25761.07615
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-17T06:41:00.785261",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 919.0809999999999,
+        "largest_contentful_paint": 1162.6769999999997,
+        "cumulative_layout_shift": 0.00015165266805348656,
+        "total_blocking_time": 1877,
+        "speed_index": 2241.651761345703,
+        "interactive": 7537.344975000001
       },
       "throttling_config": {
         "method": "simulate",

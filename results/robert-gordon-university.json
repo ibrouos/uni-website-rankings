@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-01-16T06:46:26.184872",
-  "total_tests": 199,
+  "last_updated": "2026-01-17T06:42:41.471420",
+  "total_tests": 201,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -5177,6 +5177,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-17T06:42:39.683555",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5735.6214,
+        "largest_contentful_paint": 9262.177899999999,
+        "cumulative_layout_shift": 0.22101279504509194,
+        "total_blocking_time": 76,
+        "speed_index": 5735.6214,
+        "interactive": 9286.311169999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-17T06:42:41.471420",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 93.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2173.0589999999997,
+        "largest_contentful_paint": 2853.571999999999,
+        "cumulative_layout_shift": 0.002315692133207354,
+        "total_blocking_time": 0,
+        "speed_index": 2286.1199440861137,
+        "interactive": 2853.8439999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
