@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2026-01-17T06:34:33.237208",
-  "total_tests": 198,
+  "last_updated": "2026-01-18T06:35:32.075294",
+  "total_tests": 200,
   "results": [
     {
       "name": "University of Leeds",
@@ -5147,6 +5147,58 @@
         "total_blocking_time": 25,
         "speed_index": 1211.1946637029394,
         "interactive": 1379.2865000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-18T06:35:04.703707",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3586.7858,
+        "largest_contentful_paint": 6326.34,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 446,
+        "speed_index": 3796.255913538622,
+        "interactive": 6348.8889
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-18T06:35:32.075294",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 928.0966399999999,
+        "largest_contentful_paint": 1377.142,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 17,
+        "speed_index": 1184.671118944812,
+        "interactive": 1381.1745
       },
       "throttling_config": {
         "method": "simulate",
