@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-01-20T06:49:42.500601",
-  "total_tests": 208,
+  "last_updated": "2026-01-21T06:49:22.561555",
+  "total_tests": 210,
   "results": [
     {
       "name": "University of Essex",
@@ -5411,6 +5411,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-21T06:49:21.486053",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1024.8020000000001,
+        "largest_contentful_paint": 3230.8505000000005,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 2188.7782500000008,
+        "speed_index": 5178.684226769878,
+        "interactive": 8008.518425000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-21T06:49:22.561555",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2183.188,
+        "largest_contentful_paint": 14460.473300000005,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 15660.956000000006,
+        "speed_index": 16169.239052453247,
+        "interactive": 37803.5486
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

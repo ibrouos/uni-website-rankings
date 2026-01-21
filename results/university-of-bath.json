@@ -2,8 +2,8 @@
   "name": "University of Bath",
   "slug": "university-of-bath",
   "url": "https://www.bath.ac.uk",
-  "last_updated": "2026-01-20T06:42:34.057916",
-  "total_tests": 208,
+  "last_updated": "2026-01-21T06:42:15.065460",
+  "total_tests": 210,
   "results": [
     {
       "name": "University of Bath",
@@ -5407,6 +5407,58 @@
         "total_blocking_time": 336.71349999999916,
         "speed_index": 2293.946731443305,
         "interactive": 4150.005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-21T06:42:01.487808",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3896.5020000000004,
+        "largest_contentful_paint": 6479.4265,
+        "cumulative_layout_shift": 0.06804374240583232,
+        "total_blocking_time": 1679.4999999999982,
+        "speed_index": 5681.7719729239425,
+        "interactive": 18859.593399999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bath",
+      "url": "https://www.bath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-21T06:42:15.065460",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 99.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1394.852,
+        "largest_contentful_paint": 2293.5995000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 267,
+        "speed_index": 2108.008429600945,
+        "interactive": 4148.600800000001
       },
       "throttling_config": {
         "method": "simulate",
