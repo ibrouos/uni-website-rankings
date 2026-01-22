@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-01-21T06:38:56.641733",
-  "total_tests": 210,
+  "last_updated": "2026-01-22T06:38:09.437600",
+  "total_tests": 212,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -5459,6 +5459,58 @@
         "total_blocking_time": 0,
         "speed_index": 1123.0942292840236,
         "interactive": 1082.0060000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-22T06:38:07.784726",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2115.316,
+        "largest_contentful_paint": 3450.316,
+        "cumulative_layout_shift": 0.038421255310801976,
+        "total_blocking_time": 462.5,
+        "speed_index": 3203.879873867765,
+        "interactive": 5069.966
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-22T06:38:09.437600",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 579.9025,
+        "largest_contentful_paint": 1131.9025000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1741.4100881295888,
+        "interactive": 1137.7025
       },
       "throttling_config": {
         "method": "simulate",

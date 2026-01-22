@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-01-21T06:41:19.529625",
-  "total_tests": 210,
+  "last_updated": "2026-01-22T06:40:12.073881",
+  "total_tests": 212,
   "results": [
     {
       "name": "University of Nottingham",
@@ -5463,6 +5463,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-22T06:40:06.544025",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 10165.8825,
+        "largest_contentful_paint": 15774.635750000005,
+        "cumulative_layout_shift": 0.013448412809727622,
+        "total_blocking_time": 5584.862500000003,
+        "speed_index": 10165.8825,
+        "interactive": 17691.113425000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-22T06:40:12.073881",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2564.4529999999995,
+        "largest_contentful_paint": 3130.1275399999995,
+        "cumulative_layout_shift": 0.019730441188846187,
+        "total_blocking_time": 1278.0665000000004,
+        "speed_index": 3056.141156017,
+        "interactive": 4561.89805
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
