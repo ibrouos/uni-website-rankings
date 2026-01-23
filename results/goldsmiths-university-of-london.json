@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-01-22T06:47:01.577004",
-  "total_tests": 208,
+  "last_updated": "2026-01-23T06:47:24.254873",
+  "total_tests": 210,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -5411,6 +5411,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-23T06:47:24.216753",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1318.2039999999997,
+        "largest_contentful_paint": 1631.331,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1036.5000000000002,
+        "speed_index": 2602.9118290559895,
+        "interactive": 4752.8961
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-23T06:47:24.254873",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3342.3549999999996,
+        "largest_contentful_paint": 6039.252999999999,
+        "cumulative_layout_shift": 0.0003529426472983465,
+        "total_blocking_time": 5055.248499999998,
+        "speed_index": 6559.015089565325,
+        "interactive": 18259.779675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

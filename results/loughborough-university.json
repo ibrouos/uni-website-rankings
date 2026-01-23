@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-01-22T06:43:56.046986",
-  "total_tests": 212,
+  "last_updated": "2026-01-23T06:44:45.215407",
+  "total_tests": 214,
   "results": [
     {
       "name": "Loughborough University",
@@ -5511,6 +5511,58 @@
         "total_blocking_time": 261.37008500000013,
         "speed_index": 1632.9453807449177,
         "interactive": 1937.4258264999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-23T06:44:27.747084",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4362.017,
+        "largest_contentful_paint": 7568.3335,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5316.499999999999,
+        "speed_index": 7388.765932531431,
+        "interactive": 13154.5049
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-23T06:44:45.215407",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 646.9870000000001,
+        "largest_contentful_paint": 1439.0009999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 461.1959999999999,
+        "speed_index": 1785.9285487729833,
+        "interactive": 2165.2959000000005
       },
       "throttling_config": {
         "method": "simulate",

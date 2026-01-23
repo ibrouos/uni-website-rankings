@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-01-22T06:43:03.678638",
-  "total_tests": 212,
+  "last_updated": "2026-01-23T06:43:44.726633",
+  "total_tests": 214,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -5515,6 +5515,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-23T06:43:32.323864",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 14.000000000000002,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5319.712099999999,
+        "largest_contentful_paint": 13800.231499999998,
+        "cumulative_layout_shift": 0.2554895261548263,
+        "total_blocking_time": 2395.000000000001,
+        "speed_index": 16359.451786097623,
+        "interactive": 13833.3761
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-23T06:43:44.726633",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1926.7812000000001,
+        "largest_contentful_paint": 2848.8424999999997,
+        "cumulative_layout_shift": 0.021444526958095695,
+        "total_blocking_time": 282.79479999999944,
+        "speed_index": 6362.159932591695,
+        "interactive": 2848.8424999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

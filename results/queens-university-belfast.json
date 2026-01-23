@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-01-22T06:43:59.659018",
-  "total_tests": 210,
+  "last_updated": "2026-01-23T06:43:19.944958",
+  "total_tests": 212,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -5463,6 +5463,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-23T06:43:18.749168",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2709.6240000000007,
+        "largest_contentful_paint": 16691.420000000002,
+        "cumulative_layout_shift": 0.035531422669687694,
+        "total_blocking_time": 13816.204,
+        "speed_index": 10093.048255361464,
+        "interactive": 32183.920000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-23T06:43:19.944958",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1081.7089999999998,
+        "largest_contentful_paint": 3587.8705,
+        "cumulative_layout_shift": 0.08703152713842996,
+        "total_blocking_time": 2701.4999999999986,
+        "speed_index": 2807.9099028486835,
+        "interactive": 7262.420499999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-01-22T06:40:07.963368",
-  "total_tests": 210,
+  "last_updated": "2026-01-23T06:40:03.124304",
+  "total_tests": 212,
   "results": [
     {
       "name": "University of Manchester",
@@ -5463,6 +5463,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-23T06:40:02.054032",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2606.6324999999997,
+        "largest_contentful_paint": 7458.0109999999995,
+        "cumulative_layout_shift": 1.286015843471516e-05,
+        "total_blocking_time": 17024.284499999994,
+        "speed_index": 3767.540992270658,
+        "interactive": 33412.91214999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-23T06:40:03.124304",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1213.0320000000002,
+        "largest_contentful_paint": 1836.1345000000001,
+        "cumulative_layout_shift": 1.286015843471516e-05,
+        "total_blocking_time": 2794.6874999999977,
+        "speed_index": 1680.3460023380635,
+        "interactive": 6852.836249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
