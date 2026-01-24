@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-01-23T06:40:39.007681",
-  "total_tests": 214,
+  "last_updated": "2026-01-24T06:36:58.451985",
+  "total_tests": 216,
   "results": [
     {
       "name": "Lancaster University",
@@ -5567,6 +5567,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-24T06:36:54.733676",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2942.0620000000004,
+        "largest_contentful_paint": 7311.988999999999,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 1061.9999999999995,
+        "speed_index": 3360.391018555669,
+        "interactive": 7535.589000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-24T06:36:58.451985",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 99.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1112.2305,
+        "largest_contentful_paint": 1683.8589999999995,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 93,
+        "speed_index": 1323.9030671913474,
+        "interactive": 1993.9161999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
