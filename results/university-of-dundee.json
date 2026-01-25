@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-01-24T06:40:06.342266",
-  "total_tests": 215,
+  "last_updated": "2026-01-25T06:41:11.279617",
+  "total_tests": 217,
   "results": [
     {
       "name": "University of Dundee",
@@ -5593,6 +5593,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-25T06:41:01.591285",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 661.1655000000001,
+        "largest_contentful_paint": 989.2630000000001,
+        "cumulative_layout_shift": 2.7705556234900797e-05,
+        "total_blocking_time": 421.2169999999998,
+        "speed_index": 1565.419812507464,
+        "interactive": 2481.62125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-25T06:41:11.279617",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1130.804,
+        "largest_contentful_paint": 4063.762,
+        "cumulative_layout_shift": 3.286977659692905e-05,
+        "total_blocking_time": 6097.96,
+        "speed_index": 3530.3874966510903,
+        "interactive": 10865.028000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

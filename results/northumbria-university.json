@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-01-24T06:44:51.258654",
-  "total_tests": 216,
+  "last_updated": "2026-01-25T06:46:02.531907",
+  "total_tests": 218,
   "results": [
     {
       "name": "Northumbria University",
@@ -5619,6 +5619,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-25T06:45:52.939265",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 86.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3847.915,
+        "largest_contentful_paint": 35613.867999999995,
+        "cumulative_layout_shift": 0.0387315470030074,
+        "total_blocking_time": 5661.999999999991,
+        "speed_index": 8457.304720157856,
+        "interactive": 35763.867999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-25T06:46:02.531907",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 86.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1593.4334999999999,
+        "largest_contentful_paint": 6661.027499999998,
+        "cumulative_layout_shift": 0.027055472762394065,
+        "total_blocking_time": 158.99999999999955,
+        "speed_index": 2360.017321907764,
+        "interactive": 6673.027499999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

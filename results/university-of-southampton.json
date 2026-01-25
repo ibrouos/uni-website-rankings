@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-01-24T06:35:50.147887",
-  "total_tests": 216,
+  "last_updated": "2026-01-25T06:36:57.799655",
+  "total_tests": 218,
   "results": [
     {
       "name": "University of Southampton",
@@ -5619,6 +5619,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-25T06:36:57.724944",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 838.958,
+        "largest_contentful_paint": 1907.6169999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 645.47325,
+        "speed_index": 1879.263429083243,
+        "interactive": 2440.307925
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-25T06:36:57.799655",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2085.835,
+        "largest_contentful_paint": 4018.0594999999994,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2669,
+        "speed_index": 5267.69965651237,
+        "interactive": 9540.59205
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
