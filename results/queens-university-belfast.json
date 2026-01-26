@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-01-25T06:41:53.894126",
-  "total_tests": 216,
+  "last_updated": "2026-01-26T06:46:16.529273",
+  "total_tests": 218,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -5619,6 +5619,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-26T06:46:14.346838",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1760.3847500000002,
+        "largest_contentful_paint": 15036.527725000004,
+        "cumulative_layout_shift": 0.02205466779083294,
+        "total_blocking_time": 19981.893850000008,
+        "speed_index": 5519.991468838514,
+        "interactive": 38792.785050000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-26T06:46:16.529273",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1229.451,
+        "largest_contentful_paint": 2786.3705000000004,
+        "cumulative_layout_shift": 0.11147446431397502,
+        "total_blocking_time": 3900.499999999998,
+        "speed_index": 2377.3216171361755,
+        "interactive": 9380.992649999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2026-01-25T06:46:13.168645",
-  "total_tests": 218,
+  "last_updated": "2026-01-26T06:50:31.815240",
+  "total_tests": 220,
   "results": [
     {
       "name": "University of Bradford",
@@ -5671,6 +5671,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-26T06:50:30.992616",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2545.8058799999994,
+        "largest_contentful_paint": 3498.5959399999997,
+        "cumulative_layout_shift": 0.0004844192340625449,
+        "total_blocking_time": 460.97643000000016,
+        "speed_index": 3728.3362371592098,
+        "interactive": 5679.601763999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-26T06:50:31.815240",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1063.9667800000002,
+        "largest_contentful_paint": 1294.1940300000003,
+        "cumulative_layout_shift": 0.0003915636045536775,
+        "total_blocking_time": 0,
+        "speed_index": 1404.8676533445919,
+        "interactive": 1294.1940300000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
