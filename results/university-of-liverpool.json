@@ -2,8 +2,8 @@
   "name": "University of Liverpool",
   "slug": "university-of-liverpool",
   "url": "https://www.liverpool.ac.uk",
-  "last_updated": "2026-01-26T06:43:35.885427",
-  "total_tests": 220,
+  "last_updated": "2026-01-27T06:42:35.177949",
+  "total_tests": 222,
   "results": [
     {
       "name": "University of Liverpool",
@@ -5723,6 +5723,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-27T06:42:22.065018",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3200.3740000000003,
+        "largest_contentful_paint": 8860.58175,
+        "cumulative_layout_shift": 0.01680341537713664,
+        "total_blocking_time": 3215.094000000002,
+        "speed_index": 7180.319996407119,
+        "interactive": 16987.765600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-27T06:42:35.177949",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 878.6915999999999,
+        "largest_contentful_paint": 2281.187,
+        "cumulative_layout_shift": 0.0217450625000654,
+        "total_blocking_time": 334.9817499999999,
+        "speed_index": 2058.49406371676,
+        "interactive": 3603.687304999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

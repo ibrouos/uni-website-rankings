@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-01-26T06:41:58.450481",
-  "total_tests": 218,
+  "last_updated": "2026-01-27T06:40:16.025329",
+  "total_tests": 220,
   "results": [
     {
       "name": "University of Warwick",
@@ -5671,6 +5671,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-27T06:40:13.320776",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6555.4875,
+        "largest_contentful_paint": 8068.229500000001,
+        "cumulative_layout_shift": 1.7871185686862793e-05,
+        "total_blocking_time": 3661.499999999999,
+        "speed_index": 6555.4875,
+        "interactive": 15604.648725000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-27T06:40:16.025329",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1916.324,
+        "largest_contentful_paint": 2458.4615000000003,
+        "cumulative_layout_shift": 1.7871185686862793e-05,
+        "total_blocking_time": 485.6980000000003,
+        "speed_index": 2331.957390976543,
+        "interactive": 4742.360700000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

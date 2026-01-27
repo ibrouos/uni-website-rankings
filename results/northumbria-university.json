@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-01-26T06:50:21.332542",
-  "total_tests": 220,
+  "last_updated": "2026-01-27T06:48:55.239988",
+  "total_tests": 222,
   "results": [
     {
       "name": "Northumbria University",
@@ -5723,6 +5723,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-27T06:48:51.343452",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1343.0387999999998,
+        "largest_contentful_paint": 5762.6,
+        "cumulative_layout_shift": 0.019304438922118514,
+        "total_blocking_time": 764.9999999999995,
+        "speed_index": 2478.2087845043484,
+        "interactive": 5818.6
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-27T06:48:55.239988",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 86.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3626.537,
+        "largest_contentful_paint": 31926.75899999999,
+        "cumulative_layout_shift": 0.037771895194211376,
+        "total_blocking_time": 5446.999999999998,
+        "speed_index": 7478.548051127493,
+        "interactive": 32292.96499999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
