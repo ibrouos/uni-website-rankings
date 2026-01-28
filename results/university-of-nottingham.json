@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-01-27T06:40:46.109404",
-  "total_tests": 222,
+  "last_updated": "2026-01-28T06:41:18.994991",
+  "total_tests": 224,
   "results": [
     {
       "name": "University of Nottingham",
@@ -5775,6 +5775,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-28T06:41:17.602849",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2978.0035,
+        "largest_contentful_paint": 3646.36513,
+        "cumulative_layout_shift": 0.015475492707384447,
+        "total_blocking_time": 737.9400000000005,
+        "speed_index": 3473.227166510509,
+        "interactive": 4333.6089
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-28T06:41:18.994991",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 11658.047,
+        "largest_contentful_paint": 14940.424109999994,
+        "cumulative_layout_shift": 0.014470072889245848,
+        "total_blocking_time": 5204.183999999999,
+        "speed_index": 11658.047,
+        "interactive": 17702.3924
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

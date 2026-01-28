@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-01-27T06:47:43.837942",
-  "total_tests": 218,
+  "last_updated": "2026-01-28T06:47:58.190816",
+  "total_tests": 220,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -5671,6 +5671,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-28T06:47:57.614445",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1421.128,
+        "largest_contentful_paint": 1830.993,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1149.9999999999995,
+        "speed_index": 2417.050644954864,
+        "interactive": 4498.073375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-28T06:47:58.190816",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3479.325,
+        "largest_contentful_paint": 5332.221,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6804.290000000002,
+        "speed_index": 6903.682305674725,
+        "interactive": 18938.361000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

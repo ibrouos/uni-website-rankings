@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-01-27T06:41:05.932072",
-  "total_tests": 222,
+  "last_updated": "2026-01-28T06:41:21.953577",
+  "total_tests": 224,
   "results": [
     {
       "name": "Lancaster University",
@@ -5771,6 +5771,58 @@
         "total_blocking_time": 21,
         "speed_index": 1328.5649484513647,
         "interactive": 2002.4499999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-28T06:41:21.579328",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3164.88,
+        "largest_contentful_paint": 7155.030000000001,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 1049.5000000000005,
+        "speed_index": 3960.5010133751202,
+        "interactive": 7386.848
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-28T06:41:21.953577",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1415.096,
+        "largest_contentful_paint": 2302.1899999999996,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 49,
+        "speed_index": 1658.005743375493,
+        "interactive": 2334.1899999999996
       },
       "throttling_config": {
         "method": "simulate",

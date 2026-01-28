@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-01-27T06:44:38.449399",
-  "total_tests": 222,
+  "last_updated": "2026-01-28T06:45:15.609251",
+  "total_tests": 224,
   "results": [
     {
       "name": "Loughborough University",
@@ -5771,6 +5771,58 @@
         "total_blocking_time": 168,
         "speed_index": 1440.0938808195456,
         "interactive": 2783.8828424999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-28T06:44:59.830332",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1588.058,
+        "largest_contentful_paint": 3620.309,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5161,
+        "speed_index": 5633.6285738675615,
+        "interactive": 12591.397900000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-28T06:45:15.609251",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 654.1120000000001,
+        "largest_contentful_paint": 2397.889,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 476.9999999999998,
+        "speed_index": 1714.3916247396342,
+        "interactive": 2409.1385
       },
       "throttling_config": {
         "method": "simulate",

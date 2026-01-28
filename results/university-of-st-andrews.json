@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-01-27T06:42:56.614065",
-  "total_tests": 210,
+  "last_updated": "2026-01-28T06:43:01.624756",
+  "total_tests": 212,
   "results": [
     {
       "name": "University of St Andrews",
@@ -5463,6 +5463,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-28T06:42:59.407468",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2046.1925,
+        "largest_contentful_paint": 2406.1925,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 608.925749999999,
+        "speed_index": 2046.1925,
+        "interactive": 5773.871374999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-28T06:43:01.624756",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8448.729,
+        "largest_contentful_paint": 11973.729000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4444.624250000003,
+        "speed_index": 8448.729,
+        "interactive": 23683.312724999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
