@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-01-28T06:47:59.781876",
-  "total_tests": 222,
+  "last_updated": "2026-01-29T07:00:05.621205",
+  "total_tests": 224,
   "results": [
     {
       "name": "University of Kent",
@@ -5771,6 +5771,58 @@
         "total_blocking_time": 2358.3707499999987,
         "speed_index": 2832.837423878452,
         "interactive": 6640.571174999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-29T06:59:59.891175",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 89.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1841.2849999999999,
+        "largest_contentful_paint": 6056.621999999999,
+        "cumulative_layout_shift": 0.003335089926756421,
+        "total_blocking_time": 16330.90075,
+        "speed_index": 6962.634839623841,
+        "interactive": 24838.845675000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-29T07:00:05.621205",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 89.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 821.387,
+        "largest_contentful_paint": 1716.831,
+        "cumulative_layout_shift": 0.003295504289643585,
+        "total_blocking_time": 2919.999999999999,
+        "speed_index": 2997.024386575845,
+        "interactive": 6810.602049999999
       },
       "throttling_config": {
         "method": "simulate",

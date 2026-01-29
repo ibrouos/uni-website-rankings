@@ -2,8 +2,8 @@
   "name": "University of Exeter",
   "slug": "university-of-exeter",
   "url": "https://www.exeter.ac.uk",
-  "last_updated": "2026-01-28T06:41:35.708261",
-  "total_tests": 224,
+  "last_updated": "2026-01-29T06:53:59.247552",
+  "total_tests": 226,
   "results": [
     {
       "name": "University of Exeter",
@@ -5823,6 +5823,58 @@
         "total_blocking_time": 258.9999999999998,
         "speed_index": 1705.4591156764766,
         "interactive": 2488.185049999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-29T06:53:54.060729",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2721.6025000000004,
+        "largest_contentful_paint": 12901.206749999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2738.0000000000005,
+        "speed_index": 6518.632374564328,
+        "interactive": 13087.911774999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-29T06:53:59.247552",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 92.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 706.0329999999999,
+        "largest_contentful_paint": 2070.8375,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 615.6975000000002,
+        "speed_index": 1850.6878374149894,
+        "interactive": 2823.37975
       },
       "throttling_config": {
         "method": "simulate",
