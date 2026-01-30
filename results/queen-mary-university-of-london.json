@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-01-29T06:55:03.058669",
-  "total_tests": 224,
+  "last_updated": "2026-01-30T06:55:18.957727",
+  "total_tests": 226,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -5823,6 +5823,58 @@
         "total_blocking_time": 2218.7662500000006,
         "speed_index": 2666.142802926708,
         "interactive": 5607.416125000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-30T06:55:18.881380",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3173.691999999999,
+        "largest_contentful_paint": 5478.336499999999,
+        "cumulative_layout_shift": 0.02784321687364376,
+        "total_blocking_time": 14924.499999999985,
+        "speed_index": 4691.8488347730545,
+        "interactive": 26327.42959999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-30T06:55:18.957727",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 597.9955,
+        "largest_contentful_paint": 968.4174999999997,
+        "cumulative_layout_shift": 0.027323942679610448,
+        "total_blocking_time": 2917.999999999998,
+        "speed_index": 1720.3535154171414,
+        "interactive": 6439.384799999999
       },
       "throttling_config": {
         "method": "simulate",
