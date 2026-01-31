@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-01-30T06:58:13.513520",
-  "total_tests": 226,
+  "last_updated": "2026-01-31T06:47:17.367340",
+  "total_tests": 228,
   "results": [
     {
       "name": "University of Reading",
@@ -5879,6 +5879,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-31T06:47:16.001086",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 93.0,
+        "best_practices": 68.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2006.5729999999999,
+        "largest_contentful_paint": 3213.0254999999997,
+        "cumulative_layout_shift": 0.13374478813747667,
+        "total_blocking_time": 119.49999999999955,
+        "speed_index": 2060.321516434685,
+        "interactive": 3244.05265
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-31T06:47:17.367340",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 93.0,
+        "best_practices": 68.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6182.7255000000005,
+        "largest_contentful_paint": 9485.878500000003,
+        "cumulative_layout_shift": 0.07149389402006771,
+        "total_blocking_time": 915,
+        "speed_index": 6182.7255000000005,
+        "interactive": 13036.312125000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

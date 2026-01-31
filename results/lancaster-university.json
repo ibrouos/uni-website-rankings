@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-01-30T06:55:00.970360",
-  "total_tests": 228,
+  "last_updated": "2026-01-31T06:44:12.245922",
+  "total_tests": 230,
   "results": [
     {
       "name": "Lancaster University",
@@ -5931,6 +5931,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-31T06:44:11.734448",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3018.0799999999995,
+        "largest_contentful_paint": 5484.495999999999,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 1334.4999999999995,
+        "speed_index": 3710.5021610129907,
+        "interactive": 6708.1235
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-31T06:44:12.245922",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1227.8890000000001,
+        "largest_contentful_paint": 1923.0324999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 147.00000000000034,
+        "speed_index": 1612.284992740374,
+        "interactive": 1937.5478499999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

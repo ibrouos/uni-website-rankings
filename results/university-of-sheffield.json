@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-01-30T06:54:21.921481",
-  "total_tests": 228,
+  "last_updated": "2026-01-31T06:43:30.161005",
+  "total_tests": 230,
   "results": [
     {
       "name": "University of Sheffield",
@@ -5931,6 +5931,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-31T06:43:29.605464",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4170.837,
+        "largest_contentful_paint": 5262.610000000001,
+        "cumulative_layout_shift": 0.00039075530932917583,
+        "total_blocking_time": 2178.8279999999986,
+        "speed_index": 5896.3926323276155,
+        "interactive": 10340.045000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-31T06:43:30.161005",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 93.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2077.4149599999996,
+        "largest_contentful_paint": 2077.4149599999996,
+        "cumulative_layout_shift": 0.00039075530932917583,
+        "total_blocking_time": 231.00000000000023,
+        "speed_index": 2392.145974455797,
+        "interactive": 3083.1206600000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-01-30T07:02:34.324485",
-  "total_tests": 228,
+  "last_updated": "2026-01-31T06:51:22.132087",
+  "total_tests": 230,
   "results": [
     {
       "name": "Northumbria University",
@@ -5931,6 +5931,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-01-31T06:51:20.037265",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1530.1605000000002,
+        "largest_contentful_paint": 6202.1844999999985,
+        "cumulative_layout_shift": 0.027372222361658805,
+        "total_blocking_time": 216.9999999999991,
+        "speed_index": 2276.3955711494145,
+        "interactive": 6242.289249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-01-31T06:51:22.132087",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3682.6565,
+        "largest_contentful_paint": 32818.01549999999,
+        "cumulative_layout_shift": 0.022221780420858418,
+        "total_blocking_time": 3347,
+        "speed_index": 6812.406259357147,
+        "interactive": 33163.87509999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
