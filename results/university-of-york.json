@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2026-01-31T06:45:57.365944",
-  "total_tests": 228,
+  "last_updated": "2026-02-01T06:56:13.905664",
+  "total_tests": 230,
   "results": [
     {
       "name": "University of York",
@@ -5931,6 +5931,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-01T06:56:09.936865",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 811.3375,
+        "largest_contentful_paint": 2322.026,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 578.7630000000005,
+        "speed_index": 2091.4652767500143,
+        "interactive": 3424.037050000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-01T06:56:13.905664",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3299.0190000000002,
+        "largest_contentful_paint": 11351.306000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5138.001,
+        "speed_index": 5300.666633999996,
+        "interactive": 15853.432650000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
