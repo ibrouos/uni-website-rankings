@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-02-01T06:51:38.980943",
-  "total_tests": 230,
+  "last_updated": "2026-02-02T07:04:04.594408",
+  "total_tests": 232,
   "results": [
     {
       "name": "Imperial College London",
@@ -5983,6 +5983,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-02T07:04:04.004103",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2689.7959,
+        "largest_contentful_paint": 4397.4058,
+        "cumulative_layout_shift": 0.03768183556292437,
+        "total_blocking_time": 5254.803250000001,
+        "speed_index": 4951.61971799832,
+        "interactive": 11385.591370000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-02T07:04:04.594408",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1532.1452,
+        "largest_contentful_paint": 1612.6607999999997,
+        "cumulative_layout_shift": 0.03580534717987861,
+        "total_blocking_time": 726.1982999999998,
+        "speed_index": 2410.1161759914303,
+        "interactive": 3088.92287
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
