@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-02-02T07:07:17.531272",
-  "total_tests": 234,
+  "last_updated": "2026-02-03T06:56:57.876089",
+  "total_tests": 236,
   "results": [
     {
       "name": "Lancaster University",
@@ -6087,6 +6087,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-03T06:56:57.241370",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1280.2060000000001,
+        "largest_contentful_paint": 1789.8140000000003,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 144,
+        "speed_index": 1597.8488515978975,
+        "interactive": 2079.3910000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-03T06:56:57.876089",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3092.0620000000004,
+        "largest_contentful_paint": 5660.009,
+        "cumulative_layout_shift": 0.024384699941354452,
+        "total_blocking_time": 1612,
+        "speed_index": 3545.9640887464625,
+        "interactive": 7428.4195
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
