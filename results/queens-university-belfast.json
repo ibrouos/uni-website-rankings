@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-02-03T07:00:42.024676",
-  "total_tests": 234,
+  "last_updated": "2026-02-04T07:01:52.035611",
+  "total_tests": 236,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -6087,6 +6087,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-04T07:01:51.900400",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1238.503,
+        "largest_contentful_paint": 2736.3995000000004,
+        "cumulative_layout_shift": 0.02205466779083294,
+        "total_blocking_time": 3545.500000000001,
+        "speed_index": 1844.6609570960863,
+        "interactive": 8959.200550000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-04T07:01:52.035611",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2247.4239999999995,
+        "largest_contentful_paint": 12793.071999999996,
+        "cumulative_layout_shift": 0.11147446431397502,
+        "total_blocking_time": 21672.693999999996,
+        "speed_index": 5419.011098359739,
+        "interactive": 40366.78499999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

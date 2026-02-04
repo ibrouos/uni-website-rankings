@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2026-02-03T07:00:14.950209",
-  "total_tests": 234,
+  "last_updated": "2026-02-04T07:01:18.170587",
+  "total_tests": 236,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -6087,6 +6087,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-04T07:01:18.168921",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1232.5339999999999,
+        "largest_contentful_paint": 2263.8380000000006,
+        "cumulative_layout_shift": 0.018529769137302553,
+        "total_blocking_time": 393.5000000000002,
+        "speed_index": 1798.3830693146494,
+        "interactive": 3182.6018000000013
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-04T07:01:18.170587",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2781.3635000000004,
+        "largest_contentful_paint": 9373.557499999999,
+        "cumulative_layout_shift": 0.018529769137302553,
+        "total_blocking_time": 3232.098,
+        "speed_index": 4462.989290910663,
+        "interactive": 14173.596699999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

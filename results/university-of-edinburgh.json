@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-02-03T06:54:34.492801",
-  "total_tests": 236,
+  "last_updated": "2026-02-04T06:55:39.403558",
+  "total_tests": 238,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -6139,6 +6139,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-04T06:55:38.402958",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 512.5654999999999,
+        "largest_contentful_paint": 1129.5655,
+        "cumulative_layout_shift": 0.03882875111076651,
+        "total_blocking_time": 22,
+        "speed_index": 1225.9586938187986,
+        "interactive": 1131.0655
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-04T06:55:39.403558",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2975.0375,
+        "largest_contentful_paint": 6003.537499999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1097.8584999999998,
+        "speed_index": 5445.034840982209,
+        "interactive": 6092.3375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
