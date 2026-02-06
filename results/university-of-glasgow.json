@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2026-02-05T07:02:15.513669",
-  "total_tests": 240,
+  "last_updated": "2026-02-06T06:58:26.241952",
+  "total_tests": 242,
   "results": [
     {
       "name": "University of Glasgow",
@@ -6239,6 +6239,58 @@
         "total_blocking_time": 610.6339999999998,
         "speed_index": 3868.184164290141,
         "interactive": 4222.7856
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-06T06:58:26.141789",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 2.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 10753.474999999999,
+        "largest_contentful_paint": 15680.364999999998,
+        "cumulative_layout_shift": 0.7907571487215338,
+        "total_blocking_time": 5362.072,
+        "speed_index": 11804.067764069898,
+        "interactive": 18884.315599999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-06T06:58:26.241952",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2326.3199999999997,
+        "largest_contentful_paint": 3598.8324999999995,
+        "cumulative_layout_shift": 0.8033785534548347,
+        "total_blocking_time": 1086.0922499999997,
+        "speed_index": 3874.9902279531625,
+        "interactive": 4278.1141
       },
       "throttling_config": {
         "method": "simulate",
