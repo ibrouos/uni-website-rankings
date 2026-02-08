@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2026-02-07T06:54:52.684987",
-  "total_tests": 244,
+  "last_updated": "2026-02-08T07:03:07.233273",
+  "total_tests": 246,
   "results": [
     {
       "name": "University of Stirling",
@@ -6343,6 +6343,58 @@
         "total_blocking_time": 485.0000000000002,
         "speed_index": 1351.091155421831,
         "interactive": 4393.5022500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-08T07:03:04.969014",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1920.1109999999996,
+        "largest_contentful_paint": 6365.494500000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5547.44,
+        "speed_index": 3734.388620025866,
+        "interactive": 19272.269625000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-08T07:03:07.233273",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 96.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 661.7829999999999,
+        "largest_contentful_paint": 1575.5749999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1430.4999999999989,
+        "speed_index": 1303.2820521798399,
+        "interactive": 5245.09715
       },
       "throttling_config": {
         "method": "simulate",

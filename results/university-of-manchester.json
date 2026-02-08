@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-02-07T06:46:31.331842",
-  "total_tests": 242,
+  "last_updated": "2026-02-08T06:53:57.742927",
+  "total_tests": 244,
   "results": [
     {
       "name": "University of Manchester",
@@ -6295,6 +6295,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-08T06:53:49.475963",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2308.5415000000003,
+        "largest_contentful_paint": 3203.4285,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4029.000000000001,
+        "speed_index": 2590.9709046666735,
+        "interactive": 9114.022700000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-08T06:53:57.742927",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2698.8394999999996,
+        "largest_contentful_paint": 3536.4934999999996,
+        "cumulative_layout_shift": 0.010516291087449193,
+        "total_blocking_time": 26047.3355,
+        "speed_index": 3708.6815521002854,
+        "interactive": 41117.882150000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
