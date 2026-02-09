@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-02-08T07:00:13.492779",
-  "total_tests": 244,
+  "last_updated": "2026-02-09T07:13:44.082553",
+  "total_tests": 246,
   "results": [
     {
       "name": "Swansea University",
@@ -6347,6 +6347,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-09T07:13:43.607452",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2349.3605000000002,
+        "largest_contentful_paint": 4173.996000000001,
+        "cumulative_layout_shift": 5.063687383669094e-05,
+        "total_blocking_time": 14907.397500000006,
+        "speed_index": 6943.729033590782,
+        "interactive": 28617.06800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-09T07:13:44.082553",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1094.53,
+        "largest_contentful_paint": 1861.7069999999999,
+        "cumulative_layout_shift": 5.063687383669094e-05,
+        "total_blocking_time": 1866.182149999999,
+        "speed_index": 2744.485154212505,
+        "interactive": 6439.798935
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
