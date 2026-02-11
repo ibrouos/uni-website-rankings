@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-02-10T07:14:15.417341",
-  "total_tests": 248,
+  "last_updated": "2026-02-11T07:11:47.237826",
+  "total_tests": 250,
   "results": [
     {
       "name": "Swansea University",
@@ -6447,6 +6447,58 @@
         "total_blocking_time": 2823.9999999999995,
         "speed_index": 2816.1272038981924,
         "interactive": 7371.048350000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-11T07:11:42.415374",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2598.982,
+        "largest_contentful_paint": 5599.982,
+        "cumulative_layout_shift": 5.063687383669094e-05,
+        "total_blocking_time": 18000.805,
+        "speed_index": 6963.237431931006,
+        "interactive": 31251.648
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-11T07:11:47.237826",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1268.013,
+        "largest_contentful_paint": 1633.6750000000002,
+        "cumulative_layout_shift": 5.063687383669094e-05,
+        "total_blocking_time": 2720.6876000000016,
+        "speed_index": 2690.3727686972293,
+        "interactive": 8478.71284
       },
       "throttling_config": {
         "method": "simulate",
