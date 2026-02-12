@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-02-11T07:08:53.489183",
-  "total_tests": 250,
+  "last_updated": "2026-02-12T07:08:33.476210",
+  "total_tests": 252,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -6503,6 +6503,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-12T07:08:27.600538",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1944.6025,
+        "largest_contentful_paint": 12079.818,
+        "cumulative_layout_shift": 0.06875910809186862,
+        "total_blocking_time": 13177.885000000004,
+        "speed_index": 6963.3694091914385,
+        "interactive": 34195.28290000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-12T07:08:33.476210",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1234.0274999999997,
+        "largest_contentful_paint": 3444.8714999999997,
+        "cumulative_layout_shift": 0.002368771306115639,
+        "total_blocking_time": 1275.5000000000018,
+        "speed_index": 3222.667954625308,
+        "interactive": 7490.365900000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
