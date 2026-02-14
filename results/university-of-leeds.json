@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2026-02-13T07:03:27.023256",
-  "total_tests": 252,
+  "last_updated": "2026-02-14T06:49:16.903809",
+  "total_tests": 254,
   "results": [
     {
       "name": "University of Leeds",
@@ -6551,6 +6551,58 @@
         "total_blocking_time": 329.2756499999999,
         "speed_index": 1826.3595184377878,
         "interactive": 2132.16882
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-14T06:49:16.291517",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3211.5336600000005,
+        "largest_contentful_paint": 6260.085999999999,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 118,
+        "speed_index": 3494.224024491419,
+        "interactive": 6305.085999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-14T06:49:16.903809",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 917.1882800000001,
+        "largest_contentful_paint": 1294.0410000000002,
+        "cumulative_layout_shift": 0.39220078979343864,
+        "total_blocking_time": 17,
+        "speed_index": 1201.739533641289,
+        "interactive": 1294.0410000000002
       },
       "throttling_config": {
         "method": "simulate",
