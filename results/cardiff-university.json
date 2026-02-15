@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-02-14T06:51:24.023776",
-  "total_tests": 258,
+  "last_updated": "2026-02-15T06:58:17.961778",
+  "total_tests": 260,
   "results": [
     {
       "name": "Cardiff University",
@@ -6711,6 +6711,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-15T06:58:15.849961",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1662.1939999999997,
+        "largest_contentful_paint": 2798.374,
+        "cumulative_layout_shift": 0.005920987157909393,
+        "total_blocking_time": 235.79500000000007,
+        "speed_index": 2445.538807500001,
+        "interactive": 2798.374
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-15T06:58:17.961778",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2995.2390000000005,
+        "largest_contentful_paint": 7830.166000000001,
+        "cumulative_layout_shift": 0.0075483781690924255,
+        "total_blocking_time": 2349.0480000000007,
+        "speed_index": 3881.2148446931383,
+        "interactive": 10879.178600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

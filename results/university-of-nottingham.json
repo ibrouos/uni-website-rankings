@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-02-14T06:50:04.982633",
-  "total_tests": 256,
+  "last_updated": "2026-02-15T06:56:56.407778",
+  "total_tests": 258,
   "results": [
     {
       "name": "University of Nottingham",
@@ -6659,6 +6659,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-15T06:56:56.342224",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2917.3500000000004,
+        "largest_contentful_paint": 3457.303030000001,
+        "cumulative_layout_shift": 0.014470072889245848,
+        "total_blocking_time": 981.1390000000001,
+        "speed_index": 3285.3728403795767,
+        "interactive": 4483.7497
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-15T06:56:56.407778",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 10247.945,
+        "largest_contentful_paint": 14061.917649999998,
+        "cumulative_layout_shift": 0.012822424552912985,
+        "total_blocking_time": 6099.934999999996,
+        "speed_index": 10247.945,
+        "interactive": 17112.758699999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
