@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-02-15T06:56:47.197402",
-  "total_tests": 256,
+  "last_updated": "2026-02-16T07:07:44.218405",
+  "total_tests": 258,
   "results": [
     {
       "name": "University of Warwick",
@@ -6655,6 +6655,58 @@
         "total_blocking_time": 1401.5,
         "speed_index": 3039.37127110052,
         "interactive": 5405.894325
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-16T07:06:34.896958",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 61.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7800.104,
+        "largest_contentful_paint": 8984.878999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8112.939750000003,
+        "speed_index": 7800.104,
+        "interactive": 20841.75447500001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-16T07:07:44.218405",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 61.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2524.8330000000005,
+        "largest_contentful_paint": 2986.7850000000008,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1261.1399999999985,
+        "speed_index": 3262.0387621600885,
+        "interactive": 5296.969000000001
       },
       "throttling_config": {
         "method": "simulate",
