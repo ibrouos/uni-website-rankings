@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2026-02-16T07:05:13.964191",
-  "total_tests": 262,
+  "last_updated": "2026-02-17T07:00:49.325170",
+  "total_tests": 264,
   "results": [
     {
       "name": "University of Cambridge",
@@ -6815,6 +6815,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-17T07:00:49.250852",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 815.6519999999998,
+        "largest_contentful_paint": 936.8464999999995,
+        "cumulative_layout_shift": 0.0001979369202590409,
+        "total_blocking_time": 567.4375000000002,
+        "speed_index": 1740.2325501868347,
+        "interactive": 2798.59125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-17T07:00:49.325170",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3093.3859999999995,
+        "largest_contentful_paint": 3868.815999999999,
+        "cumulative_layout_shift": 0.0001979369202590409,
+        "total_blocking_time": 3742.904999999998,
+        "speed_index": 4775.302963164049,
+        "interactive": 13267.994549999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

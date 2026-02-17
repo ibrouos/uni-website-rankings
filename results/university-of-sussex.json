@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2026-02-16T07:10:01.782953",
-  "total_tests": 262,
+  "last_updated": "2026-02-17T07:05:19.601039",
+  "total_tests": 264,
   "results": [
     {
       "name": "University of Sussex",
@@ -6811,6 +6811,58 @@
         "total_blocking_time": 20,
         "speed_index": 1173.6959594341874,
         "interactive": 988.5680000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-17T07:05:05.458808",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1228.279,
+        "largest_contentful_paint": 4753.279,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1176.8605000000007,
+        "speed_index": 3884.3751884173275,
+        "interactive": 4790.779
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-17T07:05:19.601039",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 332.625,
+        "largest_contentful_paint": 972.625,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 0,
+        "speed_index": 1404.305413903803,
+        "interactive": 984.625
       },
       "throttling_config": {
         "method": "simulate",
