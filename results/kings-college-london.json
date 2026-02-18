@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-02-17T07:01:26.392221",
-  "total_tests": 264,
+  "last_updated": "2026-02-18T07:03:56.678338",
+  "total_tests": 266,
   "results": [
     {
       "name": "King's College London",
@@ -6863,6 +6863,58 @@
         "total_blocking_time": 255,
         "speed_index": 2293.8323757489966,
         "interactive": 2672.7927999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-18T07:03:54.944157",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3035.261,
+        "largest_contentful_paint": 7840.3144999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1645.999999999999,
+        "speed_index": 4850.83612287786,
+        "interactive": 9388.179375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-18T07:03:56.678338",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1284.4125,
+        "largest_contentful_paint": 2091.9665,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 376.5,
+        "speed_index": 1932.9533789972852,
+        "interactive": 2526.8775
       },
       "throttling_config": {
         "method": "simulate",
