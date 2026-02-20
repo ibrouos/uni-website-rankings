@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-02-19T07:09:03.828419",
-  "total_tests": 266,
+  "last_updated": "2026-02-20T07:05:02.594922",
+  "total_tests": 268,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -6919,6 +6919,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-20T07:05:00.771706",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 756.3879999999999,
+        "largest_contentful_paint": 2287.2919999999995,
+        "cumulative_layout_shift": 0.11147446431397502,
+        "total_blocking_time": 2961.0000000000005,
+        "speed_index": 1630.3699155426232,
+        "interactive": 8347.154899999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-20T07:05:02.594922",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2024.6980000000003,
+        "largest_contentful_paint": 14777.747000000003,
+        "cumulative_layout_shift": 0.11147446431397502,
+        "total_blocking_time": 17113.221999999994,
+        "speed_index": 4584.341184143223,
+        "interactive": 39196.862250000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
