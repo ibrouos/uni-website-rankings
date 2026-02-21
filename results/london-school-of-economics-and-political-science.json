@@ -2,8 +2,8 @@
   "name": "London School of Economics and Political Science",
   "slug": "london-school-of-economics-and-political-science",
   "url": "https://www.lse.ac.uk",
-  "last_updated": "2026-02-20T06:59:17.012984",
-  "total_tests": 268,
+  "last_updated": "2026-02-21T06:44:24.619622",
+  "total_tests": 270,
   "results": [
     {
       "name": "London School of Economics and Political Science",
@@ -6971,6 +6971,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-21T06:44:23.973994",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2994.91,
+        "largest_contentful_paint": 9221.077500000001,
+        "cumulative_layout_shift": 0.055646517423585874,
+        "total_blocking_time": 19940.01525,
+        "speed_index": 10014.13276713355,
+        "interactive": 40424.337325
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-21T06:44:24.619622",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 95.0,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2162.6171000000004,
+        "largest_contentful_paint": 2317.9011,
+        "cumulative_layout_shift": 0.48724179829890646,
+        "total_blocking_time": 3029.653400000002,
+        "speed_index": 3690.935157855938,
+        "interactive": 10027.779075000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
