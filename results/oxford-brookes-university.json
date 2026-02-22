@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-02-21T06:52:00.219209",
-  "total_tests": 272,
+  "last_updated": "2026-02-22T06:59:20.682487",
+  "total_tests": 274,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -7075,6 +7075,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-22T06:59:20.577690",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1116.3222799999999,
+        "largest_contentful_paint": 2271.9761499999995,
+        "cumulative_layout_shift": 0.2335864315239269,
+        "total_blocking_time": 1150.2194499999998,
+        "speed_index": 2354.3105414014535,
+        "interactive": 3631.2419349999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-22T06:59:20.682487",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2627.3628000000003,
+        "largest_contentful_paint": 13183.639850000003,
+        "cumulative_layout_shift": 0.21562617882545979,
+        "total_blocking_time": 5898.0883,
+        "speed_index": 6034.230836591623,
+        "interactive": 14070.120072500002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
