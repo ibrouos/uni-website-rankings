@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2026-02-22T06:57:18.906246",
-  "total_tests": 272,
+  "last_updated": "2026-02-23T07:12:05.127532",
+  "total_tests": 274,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -7075,6 +7075,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-23T07:11:54.924339",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2693.3275000000003,
+        "largest_contentful_paint": 9948.2525,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 772.106499999999,
+        "speed_index": 4624.505163302272,
+        "interactive": 11311.265499999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-23T07:12:05.127532",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 94.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1269.335,
+        "largest_contentful_paint": 2223.7120000000004,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 254.50000000000045,
+        "speed_index": 1900.010627262292,
+        "interactive": 3005.9288000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
