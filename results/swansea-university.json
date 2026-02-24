@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-02-23T07:14:46.750951",
-  "total_tests": 274,
+  "last_updated": "2026-02-24T07:10:14.472977",
+  "total_tests": 276,
   "results": [
     {
       "name": "Swansea University",
@@ -7127,6 +7127,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-24T07:10:13.859384",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 981.2009999999998,
+        "largest_contentful_paint": 1677.1930000000002,
+        "cumulative_layout_shift": 5.063687383669094e-05,
+        "total_blocking_time": 2376.9999999999977,
+        "speed_index": 2674.278884035948,
+        "interactive": 7061.644675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-24T07:10:14.472977",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2328.7180000000003,
+        "largest_contentful_paint": 3585.2650000000003,
+        "cumulative_layout_shift": 0.0025678773876785612,
+        "total_blocking_time": 13162.770820000002,
+        "speed_index": 6684.825813312729,
+        "interactive": 29951.368338
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
