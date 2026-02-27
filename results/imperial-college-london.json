@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-02-26T07:02:15.027588",
-  "total_tests": 280,
+  "last_updated": "2026-02-27T06:56:32.677694",
+  "total_tests": 282,
   "results": [
     {
       "name": "Imperial College London",
@@ -7279,6 +7279,58 @@
         "total_blocking_time": 1051.0000000000005,
         "speed_index": 2096.486385782357,
         "interactive": 3371.5295000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-02-27T06:56:32.080030",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3011.8039000000003,
+        "largest_contentful_paint": 4418.3728,
+        "cumulative_layout_shift": 0.035434773942943525,
+        "total_blocking_time": 4722.009700000001,
+        "speed_index": 5916.717826350591,
+        "interactive": 11141.805945000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-02-27T06:56:32.677694",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1500.1655999999998,
+        "largest_contentful_paint": 1567.1063999999997,
+        "cumulative_layout_shift": 0.03446626380975862,
+        "total_blocking_time": 675.4999999999998,
+        "speed_index": 2128.633256690674,
+        "interactive": 3123.0872
       },
       "throttling_config": {
         "method": "simulate",
