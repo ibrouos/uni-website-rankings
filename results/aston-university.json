@@ -2,8 +2,8 @@
   "name": "Aston University",
   "slug": "aston-university",
   "url": "https://www.aston.ac.uk",
-  "last_updated": "2026-02-28T06:49:03.767994",
-  "total_tests": 282,
+  "last_updated": "2026-03-01T06:59:12.917051",
+  "total_tests": 284,
   "results": [
     {
       "name": "Aston University",
@@ -7331,6 +7331,58 @@
         "total_blocking_time": 1199.999999999999,
         "speed_index": 2151.5095052089255,
         "interactive": 5879.85495
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-01T06:59:10.075120",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1240.649,
+        "largest_contentful_paint": 18340.5385,
+        "cumulative_layout_shift": 0.0003047951614972156,
+        "total_blocking_time": 6475.500000000002,
+        "speed_index": 6531.667597438165,
+        "interactive": 30843.60745
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-01T06:59:12.917051",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 375.18899999999996,
+        "largest_contentful_paint": 4314.198,
+        "cumulative_layout_shift": 0.0003047951614972156,
+        "total_blocking_time": 1381.9999999999984,
+        "speed_index": 2312.881224451796,
+        "interactive": 5969.7059
       },
       "throttling_config": {
         "method": "simulate",

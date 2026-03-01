@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2026-02-28T06:40:40.819260",
-  "total_tests": 286,
+  "last_updated": "2026-03-01T06:50:13.239430",
+  "total_tests": 288,
   "results": [
     {
       "name": "University of Oxford",
@@ -7435,6 +7435,58 @@
         "total_blocking_time": 2346.8740000000003,
         "speed_index": 6686.415977122497,
         "interactive": 13479.723625000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-01T06:50:12.790258",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1025.768,
+        "largest_contentful_paint": 1885.2994999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 660.2654999999993,
+        "speed_index": 2441.815494924546,
+        "interactive": 3101.74125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-01T06:50:13.239430",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4012.321000000001,
+        "largest_contentful_paint": 9274.586000000003,
+        "cumulative_layout_shift": 0.01036572488105657,
+        "total_blocking_time": 4236.197999999997,
+        "speed_index": 6799.260367355962,
+        "interactive": 15201.21305000001
       },
       "throttling_config": {
         "method": "simulate",
