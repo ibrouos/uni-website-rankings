@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-03-02T07:11:40.089825",
-  "total_tests": 290,
+  "last_updated": "2026-03-03T07:04:59.341266",
+  "total_tests": 292,
   "results": [
     {
       "name": "Northumbria University",
@@ -7543,6 +7543,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-03T07:04:43.298678",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 89.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3794.132,
+        "largest_contentful_paint": 33521.295,
+        "cumulative_layout_shift": 0.017715846081711565,
+        "total_blocking_time": 1461.0000000000018,
+        "speed_index": 9073.553913330272,
+        "interactive": 33562.74375000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-03T07:04:59.341266",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 86.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1861.029,
+        "largest_contentful_paint": 6726.0025,
+        "cumulative_layout_shift": 0.021861541895710372,
+        "total_blocking_time": 90.99999999999955,
+        "speed_index": 2883.283603188109,
+        "interactive": 6731.4065
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
