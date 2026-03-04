@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2026-03-03T06:54:34.269851",
-  "total_tests": 292,
+  "last_updated": "2026-03-04T06:51:09.624392",
+  "total_tests": 294,
   "results": [
     {
       "name": "University of Cambridge",
@@ -7591,6 +7591,58 @@
         "total_blocking_time": 3723.09,
         "speed_index": 5464.379077499562,
         "interactive": 13468.134699999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-04T06:51:07.771769",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 771.7655,
+        "largest_contentful_paint": 2998.7955,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1206.8349999999998,
+        "speed_index": 2203.0806448366548,
+        "interactive": 3408.1914000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-04T06:51:09.624392",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2704.108,
+        "largest_contentful_paint": 3590.0519999999997,
+        "cumulative_layout_shift": 0.0001979369202590409,
+        "total_blocking_time": 6371.038500000001,
+        "speed_index": 5786.549955005701,
+        "interactive": 15392.05825
       },
       "throttling_config": {
         "method": "simulate",
