@@ -2,8 +2,8 @@
   "name": "University of Exeter",
   "slug": "university-of-exeter",
   "url": "https://www.exeter.ac.uk",
-  "last_updated": "2026-03-04T06:54:24.262714",
-  "total_tests": 294,
+  "last_updated": "2026-03-05T06:58:16.081178",
+  "total_tests": 296,
   "results": [
     {
       "name": "University of Exeter",
@@ -7643,6 +7643,58 @@
         "total_blocking_time": 630.0000000000007,
         "speed_index": 2354.941671590851,
         "interactive": 2859.7694500000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-05T06:57:59.254208",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1944.119,
+        "largest_contentful_paint": 4826.5745,
+        "cumulative_layout_shift": 0.04570895384665355,
+        "total_blocking_time": 3958.2684500000014,
+        "speed_index": 4822.527556577132,
+        "interactive": 12276.584605
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-05T06:58:16.081178",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 743.0695000000001,
+        "largest_contentful_paint": 2908.39502,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 577.1032700000001,
+        "speed_index": 2275.345004142501,
+        "interactive": 3035.9959180000005
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-03-04T06:51:09.874686",
-  "total_tests": 292,
+  "last_updated": "2026-03-05T06:54:57.423577",
+  "total_tests": 294,
   "results": [
     {
       "name": "Imperial College London",
@@ -7595,6 +7595,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-05T06:54:57.245551",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1079.549,
+        "largest_contentful_paint": 1337.109,
+        "cumulative_layout_shift": 0.0368166725476098,
+        "total_blocking_time": 1269.5062499999997,
+        "speed_index": 2134.21915537947,
+        "interactive": 3200.3611250000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-05T06:54:57.423577",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2741.7405,
+        "largest_contentful_paint": 4315.2335,
+        "cumulative_layout_shift": 0.044192703988755834,
+        "total_blocking_time": 6534.5265,
+        "speed_index": 4470.581503247209,
+        "interactive": 12306.565325000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
