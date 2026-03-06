@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-03-05T07:05:06.853355",
-  "total_tests": 295,
+  "last_updated": "2026-03-06T07:02:33.153186",
+  "total_tests": 297,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -7673,6 +7673,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-06T07:02:32.991338",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2103.686999999999,
+        "largest_contentful_paint": 3542.1429999999987,
+        "cumulative_layout_shift": 0.6178244454835855,
+        "total_blocking_time": 23,
+        "speed_index": 2363.3081901497426,
+        "interactive": 3554.252919999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-06T07:02:33.153186",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5321.944649999998,
+        "largest_contentful_paint": 11295.487799999997,
+        "cumulative_layout_shift": 0.002315692133207354,
+        "total_blocking_time": 147,
+        "speed_index": 5788.901242303842,
+        "interactive": 11321.49413
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
