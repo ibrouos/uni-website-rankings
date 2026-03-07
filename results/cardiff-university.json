@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-03-06T06:56:26.326690",
-  "total_tests": 298,
+  "last_updated": "2026-03-07T06:46:53.605951",
+  "total_tests": 300,
   "results": [
     {
       "name": "Cardiff University",
@@ -7751,6 +7751,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-07T06:46:51.420523",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1738.6892499999997,
+        "largest_contentful_paint": 2903.8965,
+        "cumulative_layout_shift": 0.005920987157909393,
+        "total_blocking_time": 221.25649999999985,
+        "speed_index": 2561.046992258504,
+        "interactive": 2918.866
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-07T06:46:53.605951",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2257.319,
+        "largest_contentful_paint": 6283.982999999999,
+        "cumulative_layout_shift": 0.007344367948306144,
+        "total_blocking_time": 2229.269999999999,
+        "speed_index": 3830.138204475219,
+        "interactive": 10924.799000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

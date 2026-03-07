@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-03-06T06:59:14.942379",
-  "total_tests": 297,
+  "last_updated": "2026-03-07T06:50:18.272703",
+  "total_tests": 299,
   "results": [
     {
       "name": "University of Dundee",
@@ -7725,6 +7725,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-07T06:49:37.747293",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 84.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 672.5529999999999,
+        "largest_contentful_paint": 986.6064999999999,
+        "cumulative_layout_shift": 3.7657733180303154e-05,
+        "total_blocking_time": 1817.401,
+        "speed_index": 2277.9374839349134,
+        "interactive": 5902.9980000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-07T06:50:18.272703",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 84.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1986.9374999999995,
+        "largest_contentful_paint": 5473.199,
+        "cumulative_layout_shift": 3.7657733180303154e-05,
+        "total_blocking_time": 18486.5,
+        "speed_index": 8224.44169400597,
+        "interactive": 30089.220999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
