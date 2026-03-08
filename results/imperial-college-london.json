@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-03-07T06:42:52.996804",
-  "total_tests": 298,
+  "last_updated": "2026-03-08T06:44:33.950789",
+  "total_tests": 300,
   "results": [
     {
       "name": "Imperial College London",
@@ -7751,6 +7751,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-08T06:44:33.908998",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2877.3791,
+        "largest_contentful_paint": 4376.488600000001,
+        "cumulative_layout_shift": 0.044840494043945064,
+        "total_blocking_time": 3612.8869000000022,
+        "speed_index": 5520.4545504309835,
+        "interactive": 11625.16287
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-08T06:44:33.950789",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1531.5309999999997,
+        "largest_contentful_paint": 1565.9279999999997,
+        "cumulative_layout_shift": 0.03694625062604918,
+        "total_blocking_time": 382.49999999999955,
+        "speed_index": 2352.0136153969142,
+        "interactive": 3031.0839000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
