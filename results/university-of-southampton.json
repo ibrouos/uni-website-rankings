@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-03-08T06:46:41.930045",
-  "total_tests": 302,
+  "last_updated": "2026-03-09T07:05:47.191698",
+  "total_tests": 304,
   "results": [
     {
       "name": "University of Southampton",
@@ -7855,6 +7855,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-09T07:05:46.979293",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 846.893,
+        "largest_contentful_paint": 1583.7655000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 734.5455000000002,
+        "speed_index": 1793.2320101061023,
+        "interactive": 2502.13195
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-09T07:05:47.191698",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2928.335,
+        "largest_contentful_paint": 3988.045,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5964.166499999999,
+        "speed_index": 5371.065701253859,
+        "interactive": 12440.39905
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
