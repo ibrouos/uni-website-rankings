@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-03-09T07:07:59.218718",
-  "total_tests": 304,
+  "last_updated": "2026-03-10T06:57:12.801763",
+  "total_tests": 306,
   "results": [
     {
       "name": "Cardiff University",
@@ -7907,6 +7907,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-10T06:57:11.454180",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2294.307,
+        "largest_contentful_paint": 7343.013999999998,
+        "cumulative_layout_shift": 0.007344367948306144,
+        "total_blocking_time": 4857.064,
+        "speed_index": 5073.5065327625725,
+        "interactive": 12725.3704
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-10T06:57:12.801763",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1607.10675,
+        "largest_contentful_paint": 2839.6504999999997,
+        "cumulative_layout_shift": 0.00591170598470259,
+        "total_blocking_time": 489.299,
+        "speed_index": 2490.062761321534,
+        "interactive": 2839.6504999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
