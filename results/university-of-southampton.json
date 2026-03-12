@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-03-11T06:58:08.967279",
-  "total_tests": 308,
+  "last_updated": "2026-03-12T06:59:42.960981",
+  "total_tests": 310,
   "results": [
     {
       "name": "University of Southampton",
@@ -8011,6 +8011,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-12T06:59:42.704440",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3197.7750000000005,
+        "largest_contentful_paint": 3779.8740000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8025.6990000000005,
+        "speed_index": 6251.829021592219,
+        "interactive": 14008.656000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-12T06:59:42.960981",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 903.154,
+        "largest_contentful_paint": 1878.7250000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1144.0000000000002,
+        "speed_index": 2446.6260570914305,
+        "interactive": 2998.64375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

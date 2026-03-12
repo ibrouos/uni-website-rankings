@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-03-11T07:03:19.931842",
-  "total_tests": 306,
+  "last_updated": "2026-03-12T07:04:49.904046",
+  "total_tests": 308,
   "results": [
     {
       "name": "University of Reading",
@@ -7955,6 +7955,58 @@
         "total_blocking_time": 2575.405249999996,
         "speed_index": 5915.324500000001,
         "interactive": 19147.720175000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-12T07:04:49.269008",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 93.0,
+        "best_practices": 68.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1881.3874999999994,
+        "largest_contentful_paint": 2039.7954999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 607.9999999999995,
+        "speed_index": 2128.559272920279,
+        "interactive": 4243.7122
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-12T07:04:49.904046",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 68.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5887.995,
+        "largest_contentful_paint": 15247.649999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3634.7035000000014,
+        "speed_index": 6197.592148859201,
+        "interactive": 19674.559650000003
       },
       "throttling_config": {
         "method": "simulate",

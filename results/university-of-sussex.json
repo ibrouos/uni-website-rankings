@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2026-03-11T07:01:08.357999",
-  "total_tests": 308,
+  "last_updated": "2026-03-12T07:02:45.130354",
+  "total_tests": 310,
   "results": [
     {
       "name": "University of Sussex",
@@ -8011,6 +8011,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-12T07:02:40.545264",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2849.4905,
+        "largest_contentful_paint": 14538.431,
+        "cumulative_layout_shift": 0.019179018446450005,
+        "total_blocking_time": 1045.881499999999,
+        "speed_index": 5252.504178424347,
+        "interactive": 14649.486
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-12T07:02:45.130354",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1388.8404,
+        "largest_contentful_paint": 2424.53337,
+        "cumulative_layout_shift": 0.019179018446450005,
+        "total_blocking_time": 33,
+        "speed_index": 1932.7348410256536,
+        "interactive": 2446.5934770000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
