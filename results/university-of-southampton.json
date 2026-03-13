@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-03-12T06:59:42.960981",
-  "total_tests": 310,
+  "last_updated": "2026-03-13T06:58:19.297789",
+  "total_tests": 312,
   "results": [
     {
       "name": "University of Southampton",
@@ -8063,6 +8063,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-13T06:58:19.078410",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1375.8349999999998,
+        "largest_contentful_paint": 1958.1605,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1796.0012499999998,
+        "speed_index": 3398.1754257784833,
+        "interactive": 4401.725125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-13T06:58:19.297789",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 82.0,
+        "best_practices": 75.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2216.533,
+        "largest_contentful_paint": 3666.3230000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9530.605,
+        "speed_index": 8590.076176490145,
+        "interactive": 14715.207999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

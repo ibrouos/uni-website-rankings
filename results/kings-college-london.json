@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-03-12T06:58:37.526786",
-  "total_tests": 310,
+  "last_updated": "2026-03-13T06:57:12.347453",
+  "total_tests": 312,
   "results": [
     {
       "name": "King's College London",
@@ -8063,6 +8063,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-13T06:57:12.089333",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3405.687999999999,
+        "largest_contentful_paint": 7037.576000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2379.5,
+        "speed_index": 4981.54472591961,
+        "interactive": 10275.704000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-13T06:57:12.347453",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1433.0480000000002,
+        "largest_contentful_paint": 2241.464,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 187.5,
+        "speed_index": 2352.8267910752047,
+        "interactive": 2638.5476500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
