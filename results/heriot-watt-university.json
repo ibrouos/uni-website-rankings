@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-03-15T07:04:46.250221",
-  "total_tests": 316,
+  "last_updated": "2026-03-16T07:25:42.534167",
+  "total_tests": 318,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -8219,6 +8219,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-16T07:25:33.403610",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4208.124,
+        "largest_contentful_paint": 6207.9105,
+        "cumulative_layout_shift": 0.044287192782237285,
+        "total_blocking_time": 4531.419999999998,
+        "speed_index": 5622.464843280768,
+        "interactive": 15955.893550000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-16T07:25:42.534167",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1516.8830000000003,
+        "largest_contentful_paint": 2128.9024400000008,
+        "cumulative_layout_shift": 0.044287192782237285,
+        "total_blocking_time": 620.9950000000006,
+        "speed_index": 2129.0235416442893,
+        "interactive": 3611.459200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

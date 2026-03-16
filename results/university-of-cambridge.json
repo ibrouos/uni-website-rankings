@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2026-03-15T06:58:50.347771",
-  "total_tests": 316,
+  "last_updated": "2026-03-16T07:19:34.485627",
+  "total_tests": 318,
   "results": [
     {
       "name": "University of Cambridge",
@@ -8219,6 +8219,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-16T07:19:34.433582",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5936.864999999999,
+        "largest_contentful_paint": 6043.364999999997,
+        "cumulative_layout_shift": 0.00011043073143657496,
+        "total_blocking_time": 5978.033999999999,
+        "speed_index": 7977.734041963298,
+        "interactive": 17270.88095
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-16T07:19:34.485627",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1465.175,
+        "largest_contentful_paint": 1488.1749999999997,
+        "cumulative_layout_shift": 0.00011043073143657496,
+        "total_blocking_time": 1185.0000000000002,
+        "speed_index": 2884.1639952247933,
+        "interactive": 4205.053000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
