@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-03-17T07:09:06.651037",
-  "total_tests": 318,
+  "last_updated": "2026-03-18T07:06:19.488539",
+  "total_tests": 320,
   "results": [
     {
       "name": "University of Nottingham",
@@ -8271,6 +8271,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-18T07:06:19.382352",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2134.398,
+        "largest_contentful_paint": 2674.793,
+        "cumulative_layout_shift": 0.014470072889245848,
+        "total_blocking_time": 503,
+        "speed_index": 2191.8017486748795,
+        "interactive": 3243.3042000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-18T07:06:19.488539",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 75.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8419.666,
+        "largest_contentful_paint": 12157.159999999998,
+        "cumulative_layout_shift": 0.011066999936515342,
+        "total_blocking_time": 3710.000000000002,
+        "speed_index": 8419.666,
+        "interactive": 14617.496900000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

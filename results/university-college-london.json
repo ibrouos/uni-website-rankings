@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2026-03-17T07:06:48.295695",
-  "total_tests": 320,
+  "last_updated": "2026-03-18T07:04:05.297382",
+  "total_tests": 322,
   "results": [
     {
       "name": "University College London",
@@ -8323,6 +8323,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-18T07:04:04.938010",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 902.149,
+        "largest_contentful_paint": 965.772,
+        "cumulative_layout_shift": 0.007920574715472556,
+        "total_blocking_time": 8.188499999999976,
+        "speed_index": 1604.843364153342,
+        "interactive": 1021.7416499999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-18T07:04:05.297382",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2972.861,
+        "largest_contentful_paint": 3700.155,
+        "cumulative_layout_shift": 0.0076992026088998035,
+        "total_blocking_time": 336.2940000000008,
+        "speed_index": 3932.7978390474063,
+        "interactive": 3881.955000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
