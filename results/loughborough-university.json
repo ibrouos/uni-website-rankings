@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-03-19T07:07:11.413566",
-  "total_tests": 324,
+  "last_updated": "2026-03-20T07:04:54.974570",
+  "total_tests": 326,
   "results": [
     {
       "name": "Loughborough University",
@@ -8423,6 +8423,58 @@
         "total_blocking_time": 6286.500000000001,
         "speed_index": 5590.0487774796275,
         "interactive": 12754.4665875
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-20T07:04:54.937297",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 697.5709999999999,
+        "largest_contentful_paint": 1246.7267904238893,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 815.9820000000002,
+        "speed_index": 2068.115285017284,
+        "interactive": 2672.3208000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-20T07:04:54.974570",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4095.7155000000002,
+        "largest_contentful_paint": 10642.477499999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4986.965499999998,
+        "speed_index": 7190.868736724991,
+        "interactive": 12252.5549
       },
       "throttling_config": {
         "method": "simulate",
