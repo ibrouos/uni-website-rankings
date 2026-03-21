@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-03-20T07:04:08.992095",
-  "total_tests": 326,
+  "last_updated": "2026-03-21T06:52:21.274507",
+  "total_tests": 328,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -8479,6 +8479,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-21T06:52:19.650644",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1389.398,
+        "largest_contentful_paint": 2705.6039999999994,
+        "cumulative_layout_shift": 0.019731917576244335,
+        "total_blocking_time": 452.58999999999946,
+        "speed_index": 2539.7346756170964,
+        "interactive": 2888.2619999999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-21T06:52:21.274507",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5742.079999999998,
+        "largest_contentful_paint": 10879.159499999994,
+        "cumulative_layout_shift": 0.02947564438827228,
+        "total_blocking_time": 2651.8020000000024,
+        "speed_index": 6133.3062686226385,
+        "interactive": 14007.115449999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

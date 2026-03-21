@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-03-20T07:04:54.974570",
-  "total_tests": 326,
+  "last_updated": "2026-03-21T06:53:05.528467",
+  "total_tests": 328,
   "results": [
     {
       "name": "Loughborough University",
@@ -8479,6 +8479,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-21T06:53:05.526208",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2444.2745,
+        "largest_contentful_paint": 4989.876665519714,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4909.5,
+        "speed_index": 5414.70992983289,
+        "interactive": 12200.457600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-21T06:53:05.528467",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 934.371,
+        "largest_contentful_paint": 3388.9771995773312,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 739.9999999999994,
+        "speed_index": 2162.5975750006437,
+        "interactive": 3474.7286195350644
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-03-20T06:58:32.139833",
-  "total_tests": 326,
+  "last_updated": "2026-03-21T06:46:50.160573",
+  "total_tests": 328,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -8475,6 +8475,58 @@
         "total_blocking_time": 43.367500000000064,
         "speed_index": 1793.2926548646199,
         "interactive": 1153.43575
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-21T06:46:49.743842",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2123.5255000000006,
+        "largest_contentful_paint": 5657.006500000001,
+        "cumulative_layout_shift": 0.03882875111076651,
+        "total_blocking_time": 501.99999999999955,
+        "speed_index": 3794.4939883338325,
+        "interactive": 5719.0735
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-21T06:46:50.160573",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 461.587,
+        "largest_contentful_paint": 1098.587,
+        "cumulative_layout_shift": 0.03882875111076651,
+        "total_blocking_time": 44,
+        "speed_index": 1126.6691490111882,
+        "interactive": 1100.1870000000001
       },
       "throttling_config": {
         "method": "simulate",
