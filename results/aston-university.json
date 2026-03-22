@@ -2,8 +2,8 @@
   "name": "Aston University",
   "slug": "aston-university",
   "url": "https://www.aston.ac.uk",
-  "last_updated": "2026-03-21T06:55:09.135036",
-  "total_tests": 324,
+  "last_updated": "2026-03-22T07:03:52.383349",
+  "total_tests": 326,
   "results": [
     {
       "name": "Aston University",
@@ -8423,6 +8423,58 @@
         "total_blocking_time": 1242.7656825714112,
         "speed_index": 2331.5943479612943,
         "interactive": 6161.832349171449
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-22T07:03:29.977644",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1080.6264999999999,
+        "largest_contentful_paint": 20554.404,
+        "cumulative_layout_shift": 0.0003047951614972156,
+        "total_blocking_time": 10675.976749999998,
+        "speed_index": 6585.697103268312,
+        "interactive": 30142.200774999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aston University",
+      "url": "https://www.aston.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-22T07:03:52.383349",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 376.56600000000003,
+        "largest_contentful_paint": 4030.8400000000006,
+        "cumulative_layout_shift": 0.0003047951614972156,
+        "total_blocking_time": 1152.9999999999989,
+        "speed_index": 1848.1335182314047,
+        "interactive": 5334.715999999999
       },
       "throttling_config": {
         "method": "simulate",
