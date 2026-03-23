@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-03-22T07:06:13.253439",
-  "total_tests": 330,
+  "last_updated": "2026-03-23T07:23:09.427161",
+  "total_tests": 332,
   "results": [
     {
       "name": "University of Essex",
@@ -8583,6 +8583,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-23T07:23:07.506737",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1358.567,
+        "largest_contentful_paint": 5115.099999999999,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 3832.0625,
+        "speed_index": 6231.75003598631,
+        "interactive": 9530.33625
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-23T07:23:09.427161",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2509.594,
+        "largest_contentful_paint": 19673.14974999999,
+        "cumulative_layout_shift": 0.0688434563659179,
+        "total_blocking_time": 20230.95649999999,
+        "speed_index": 17093.20042056044,
+        "interactive": 42663.81435
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
