@@ -2,8 +2,8 @@
   "name": "Edinburgh Napier University",
   "slug": "edinburgh-napier-university",
   "url": "https://www.napier.ac.uk",
-  "last_updated": "2026-03-23T07:23:25.584066",
-  "total_tests": 304,
+  "last_updated": "2026-03-24T07:17:31.280485",
+  "total_tests": 306,
   "results": [
     {
       "name": "Edinburgh Napier University",
@@ -7907,6 +7907,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-24T07:17:31.241971",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1766.8684999999998,
+        "largest_contentful_paint": 3953.3327499999996,
+        "cumulative_layout_shift": 0.09565331066383802,
+        "total_blocking_time": 302.5,
+        "speed_index": 3067.27972569965,
+        "interactive": 5337.663125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-24T07:17:31.280485",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4297.814,
+        "largest_contentful_paint": 19968.97175,
+        "cumulative_layout_shift": 0.09454966786044933,
+        "total_blocking_time": 1923.5,
+        "speed_index": 6580.1383376550475,
+        "interactive": 25920.183450000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

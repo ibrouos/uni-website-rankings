@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-03-23T07:21:50.784783",
-  "total_tests": 332,
+  "last_updated": "2026-03-24T07:15:54.882730",
+  "total_tests": 334,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -8631,6 +8631,58 @@
         "total_blocking_time": 1748.8280000000007,
         "speed_index": 2682.778715289325,
         "interactive": 5682.9529
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-24T07:15:49.681919",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5948.812499999999,
+        "largest_contentful_paint": 15575.189500000008,
+        "cumulative_layout_shift": 0.025411487622706248,
+        "total_blocking_time": 6775.756000000003,
+        "speed_index": 8697.789676359138,
+        "interactive": 23370.556025000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-24T07:15:54.882730",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1667.7405,
+        "largest_contentful_paint": 2454.7885000000015,
+        "cumulative_layout_shift": 0.025411487622706248,
+        "total_blocking_time": 1431.0229999999995,
+        "speed_index": 2875.2170504150617,
+        "interactive": 5708.1583
       },
       "throttling_config": {
         "method": "simulate",

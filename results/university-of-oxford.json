@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2026-03-23T07:13:02.737984",
-  "total_tests": 332,
+  "last_updated": "2026-03-24T07:06:28.947754",
+  "total_tests": 334,
   "results": [
     {
       "name": "University of Oxford",
@@ -8631,6 +8631,58 @@
         "total_blocking_time": 1929.5,
         "speed_index": 5207.981054825801,
         "interactive": 11408.434999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-24T07:06:27.242733",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 87.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 857.6469999999999,
+        "largest_contentful_paint": 1640.5619999999994,
+        "cumulative_layout_shift": 0.018753072731272396,
+        "total_blocking_time": 513.8269999999998,
+        "speed_index": 2564.348362659441,
+        "interactive": 2809.4667
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-24T07:06:28.947754",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3534.0320000000006,
+        "largest_contentful_paint": 7041.510000000001,
+        "cumulative_layout_shift": 0.04021540861235824,
+        "total_blocking_time": 2289.491999999999,
+        "speed_index": 6157.176439504203,
+        "interactive": 12118.8701
       },
       "throttling_config": {
         "method": "simulate",

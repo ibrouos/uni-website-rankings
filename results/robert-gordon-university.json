@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-03-23T07:22:21.042121",
-  "total_tests": 331,
+  "last_updated": "2026-03-24T07:16:27.966686",
+  "total_tests": 333,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -8609,6 +8609,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-24T07:16:27.768374",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 18.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6009.3212,
+        "largest_contentful_paint": 11228.115000000002,
+        "cumulative_layout_shift": 0.6158073562851181,
+        "total_blocking_time": 743.5,
+        "speed_index": 7161.193228748279,
+        "interactive": 14055.002310000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-24T07:16:27.966686",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2715.1306000000004,
+        "largest_contentful_paint": 3622.860100000001,
+        "cumulative_layout_shift": 0.12242208202458636,
+        "total_blocking_time": 326.6651999999999,
+        "speed_index": 3242.9662414654076,
+        "interactive": 3622.860100000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
