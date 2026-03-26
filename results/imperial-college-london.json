@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-03-25T07:04:07.005212",
-  "total_tests": 334,
+  "last_updated": "2026-03-26T07:11:05.219330",
+  "total_tests": 336,
   "results": [
     {
       "name": "Imperial College London",
@@ -8687,6 +8687,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-26T07:11:03.634550",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2783.0843000000004,
+        "largest_contentful_paint": 5162.9149,
+        "cumulative_layout_shift": 0.04327143825231165,
+        "total_blocking_time": 6773.589400000001,
+        "speed_index": 5468.67486257906,
+        "interactive": 13462.968295000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-26T07:11:05.219330",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1270.7764000000002,
+        "largest_contentful_paint": 1477.7068000000002,
+        "cumulative_layout_shift": 0.03547611279009166,
+        "total_blocking_time": 987.5340000000006,
+        "speed_index": 2153.265537319065,
+        "interactive": 3530.427600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
