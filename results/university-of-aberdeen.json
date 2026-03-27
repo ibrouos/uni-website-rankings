@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-03-26T07:16:51.496700",
-  "total_tests": 328,
+  "last_updated": "2026-03-27T07:15:25.879477",
+  "total_tests": 330,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -8531,6 +8531,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-27T07:15:25.747470",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1044.7199999999998,
+        "largest_contentful_paint": 3173.5030000000006,
+        "cumulative_layout_shift": 0.004567942609869058,
+        "total_blocking_time": 1079.9999999999995,
+        "speed_index": 5173.631304416019,
+        "interactive": 3183.824800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-27T07:15:25.879477",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 97.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2677.282,
+        "largest_contentful_paint": 14726.603,
+        "cumulative_layout_shift": 0.004609281457017196,
+        "total_blocking_time": 6268.999999999997,
+        "speed_index": 12218.92125249625,
+        "interactive": 14784.0968
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
