@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-03-27T07:20:44.903805",
-  "total_tests": 340,
+  "last_updated": "2026-03-28T07:12:29.432646",
+  "total_tests": 342,
   "results": [
     {
       "name": "Northumbria University",
@@ -8839,6 +8839,58 @@
         "total_blocking_time": 694,
         "speed_index": 2563.3609710647634,
         "interactive": 6337.616000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-28T07:12:27.180092",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 89.0,
+        "best_practices": 71.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4000.1620000000003,
+        "largest_contentful_paint": 33520.43,
+        "cumulative_layout_shift": 0.043240999999999995,
+        "total_blocking_time": 6089.999999999996,
+        "speed_index": 8485.456783552812,
+        "interactive": 34165.175500000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-28T07:12:29.432646",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 89.0,
+        "best_practices": 71.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1515.488,
+        "largest_contentful_paint": 6014.282499999999,
+        "cumulative_layout_shift": 0.04236499999999999,
+        "total_blocking_time": 1274.9999999999977,
+        "speed_index": 2981.6480180042577,
+        "interactive": 6115.40425
       },
       "throttling_config": {
         "method": "simulate",
