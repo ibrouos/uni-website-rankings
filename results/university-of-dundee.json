@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-03-28T07:07:56.473700",
-  "total_tests": 341,
+  "last_updated": "2026-03-29T07:12:10.760801",
+  "total_tests": 343,
   "results": [
     {
       "name": "University of Dundee",
@@ -8869,6 +8869,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-29T07:12:06.761604",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 86.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2045.5469999999998,
+        "largest_contentful_paint": 4763.004,
+        "cumulative_layout_shift": 3.2000000000000005e-05,
+        "total_blocking_time": 10076.664,
+        "speed_index": 5367.963364397485,
+        "interactive": 16844.811500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-29T07:12:10.760801",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 86.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 654.8620000000001,
+        "largest_contentful_paint": 1065.067,
+        "cumulative_layout_shift": 3.2000000000000005e-05,
+        "total_blocking_time": 1282.0690000000002,
+        "speed_index": 1675.5024062529405,
+        "interactive": 4374.502200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

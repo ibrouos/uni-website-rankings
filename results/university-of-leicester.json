@@ -2,8 +2,8 @@
   "name": "University of Leicester",
   "slug": "university-of-leicester",
   "url": "https://www.le.ac.uk",
-  "last_updated": "2026-03-28T07:09:04.070993",
-  "total_tests": 340,
+  "last_updated": "2026-03-29T07:13:11.728105",
+  "total_tests": 342,
   "results": [
     {
       "name": "University of Leicester",
@@ -8843,6 +8843,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-29T07:13:11.335073",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1505.7459999999999,
+        "largest_contentful_paint": 1906.9139999999998,
+        "cumulative_layout_shift": 0.134137,
+        "total_blocking_time": 2068.9999999999995,
+        "speed_index": 2528.1377827579313,
+        "interactive": 6230.371799999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-29T07:13:11.728105",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3306.431,
+        "largest_contentful_paint": 5400.317000000003,
+        "cumulative_layout_shift": 0.134137,
+        "total_blocking_time": 10875.346000000003,
+        "speed_index": 6490.158598923625,
+        "interactive": 26141.530000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

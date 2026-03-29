@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-03-28T07:03:44.796117",
-  "total_tests": 340,
+  "last_updated": "2026-03-29T07:08:40.882813",
+  "total_tests": 342,
   "results": [
     {
       "name": "University of Nottingham",
@@ -8843,6 +8843,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-29T07:08:39.392497",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9593.162499999999,
+        "largest_contentful_paint": 13568.18525,
+        "cumulative_layout_shift": 0.011067,
+        "total_blocking_time": 5067.969000000001,
+        "speed_index": 9593.162499999999,
+        "interactive": 15525.420600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-29T07:08:40.882813",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2510.652,
+        "largest_contentful_paint": 3091.90228,
+        "cumulative_layout_shift": 0.011919,
+        "total_blocking_time": 417.00000000000045,
+        "speed_index": 2645.6966810541344,
+        "interactive": 3604.6420000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

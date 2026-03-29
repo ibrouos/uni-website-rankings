@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-03-28T07:01:00.067797",
-  "total_tests": 340,
+  "last_updated": "2026-03-29T07:06:06.522402",
+  "total_tests": 342,
   "results": [
     {
       "name": "Imperial College London",
@@ -8843,6 +8843,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-29T07:06:04.596620",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2498.384,
+        "largest_contentful_paint": 5005.336500000001,
+        "cumulative_layout_shift": 0.039316000000000004,
+        "total_blocking_time": 7768.567000000003,
+        "speed_index": 4721.808942225049,
+        "interactive": 13226.671600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-29T07:06:06.522402",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1054.2396,
+        "largest_contentful_paint": 1361.6306,
+        "cumulative_layout_shift": 0.043549,
+        "total_blocking_time": 1280.98935,
+        "speed_index": 1645.5683020024908,
+        "interactive": 3183.6291150000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
