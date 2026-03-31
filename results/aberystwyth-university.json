@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-03-30T07:53:37.667451",
-  "total_tests": 346,
+  "last_updated": "2026-03-31T07:26:51.911097",
+  "total_tests": 348,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -8999,6 +8999,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-31T07:26:51.909889",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 904.1735000000001,
+        "largest_contentful_paint": 1726.9705000000001,
+        "cumulative_layout_shift": 0.541943,
+        "total_blocking_time": 74.2867500000001,
+        "speed_index": 1910.7476677648756,
+        "interactive": 1818.2088999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-31T07:26:51.911097",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2310.026,
+        "largest_contentful_paint": 4232.586,
+        "cumulative_layout_shift": 0.771857,
+        "total_blocking_time": 1152.848,
+        "speed_index": 5026.171401928883,
+        "interactive": 6159.607600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

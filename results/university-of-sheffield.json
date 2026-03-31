@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-03-30T07:46:31.977353",
-  "total_tests": 346,
+  "last_updated": "2026-03-31T07:19:43.488528",
+  "total_tests": 348,
   "results": [
     {
       "name": "University of Sheffield",
@@ -8999,6 +8999,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-03-31T07:19:43.188872",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 99.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1451.5931600000001,
+        "largest_contentful_paint": 1724.68818,
+        "cumulative_layout_shift": 0.00044300000000000003,
+        "total_blocking_time": 91.00000000000023,
+        "speed_index": 1744.9333354155162,
+        "interactive": 2441.163444
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-03-31T07:19:43.488528",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3605.33692,
+        "largest_contentful_paint": 4676.6910800000005,
+        "cumulative_layout_shift": 0.00044300000000000003,
+        "total_blocking_time": 911.3621599999997,
+        "speed_index": 5438.69174830856,
+        "interactive": 8213.540603000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
