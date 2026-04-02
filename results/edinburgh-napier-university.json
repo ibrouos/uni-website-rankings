@@ -2,8 +2,8 @@
   "name": "Edinburgh Napier University",
   "slug": "edinburgh-napier-university",
   "url": "https://www.napier.ac.uk",
-  "last_updated": "2026-04-01T07:34:25.286586",
-  "total_tests": 322,
+  "last_updated": "2026-04-02T07:26:01.869804",
+  "total_tests": 324,
   "results": [
     {
       "name": "Edinburgh Napier University",
@@ -8375,6 +8375,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-02T07:25:55.925685",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4776.158,
+        "largest_contentful_paint": 23916.235500000003,
+        "cumulative_layout_shift": 0.09455000000000001,
+        "total_blocking_time": 2363,
+        "speed_index": 5727.576833655674,
+        "interactive": 27167.95345
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-02T07:26:01.869804",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1341.7299999999998,
+        "largest_contentful_paint": 3058.4384999999997,
+        "cumulative_layout_shift": 0.095653,
+        "total_blocking_time": 204,
+        "speed_index": 2563.9462450516244,
+        "interactive": 4810.37175
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

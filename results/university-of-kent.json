@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-04-01T07:32:35.171458",
-  "total_tests": 348,
+  "last_updated": "2026-04-02T07:24:10.542356",
+  "total_tests": 350,
   "results": [
     {
       "name": "University of Kent",
@@ -9047,6 +9047,58 @@
         "total_blocking_time": 2621.2779999999993,
         "speed_index": 2860.5647604606575,
         "interactive": 6573.3392
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-02T07:23:53.576246",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 88.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1883.129,
+        "largest_contentful_paint": 6529.751,
+        "cumulative_layout_shift": 0.001931,
+        "total_blocking_time": 16711.830000000005,
+        "speed_index": 6970.578687478682,
+        "interactive": 25334.858000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-02T07:24:10.542356",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 88.0,
+        "best_practices": 61.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 851.396,
+        "largest_contentful_paint": 1771.11,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3796.999999999998,
+        "speed_index": 2479.5744711196103,
+        "interactive": 8054.017400000001
       },
       "throttling_config": {
         "method": "simulate",
