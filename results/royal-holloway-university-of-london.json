@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-04-02T07:24:22.883233",
-  "total_tests": 352,
+  "last_updated": "2026-04-03T07:21:26.872564",
+  "total_tests": 354,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -9151,6 +9151,58 @@
         "total_blocking_time": 1548.2849999999992,
         "speed_index": 2069.634463366021,
         "interactive": 5221.446
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-03T07:21:05.351367",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5436.6630000000005,
+        "largest_contentful_paint": 20760.925000000007,
+        "cumulative_layout_shift": 0.025411,
+        "total_blocking_time": 6675,
+        "speed_index": 7061.108921473609,
+        "interactive": 25819.407100000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-03T07:21:26.872564",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1482.2264999999998,
+        "largest_contentful_paint": 3615.521499999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2544.661999999999,
+        "speed_index": 3102.8352581069676,
+        "interactive": 6229.521449999998
       },
       "throttling_config": {
         "method": "simulate",
