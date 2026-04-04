@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2026-04-03T07:15:12.746980",
-  "total_tests": 352,
+  "last_updated": "2026-04-04T07:07:05.482497",
+  "total_tests": 354,
   "results": [
     {
       "name": "University of York",
@@ -9151,6 +9151,58 @@
         "total_blocking_time": 1205,
         "speed_index": 2693.2637447509733,
         "interactive": 3606.4122
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-04T07:07:01.535799",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1506.6615,
+        "largest_contentful_paint": 10016.82320425415,
+        "cumulative_layout_shift": 0.125039,
+        "total_blocking_time": 9513.565999999999,
+        "speed_index": 6750.825704160977,
+        "interactive": 17405.206400000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-04T07:07:05.482497",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 505.122,
+        "largest_contentful_paint": 1884.9912042541505,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1317.5,
+        "speed_index": 2481.4233768645645,
+        "interactive": 3509.6637999999994
       },
       "throttling_config": {
         "method": "simulate",

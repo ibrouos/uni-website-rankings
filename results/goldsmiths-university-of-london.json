@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-04-03T07:20:41.623906",
-  "total_tests": 350,
+  "last_updated": "2026-04-04T07:12:26.047856",
+  "total_tests": 352,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -9103,6 +9103,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-04T07:12:25.532851",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3711.8015,
+        "largest_contentful_paint": 5063.4715,
+        "cumulative_layout_shift": 6.8e-05,
+        "total_blocking_time": 8830.221249999999,
+        "speed_index": 6365.87052871931,
+        "interactive": 21448.168125
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-04T07:12:26.047856",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1280.8029999999999,
+        "largest_contentful_paint": 1704.8145,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1455.0000000000011,
+        "speed_index": 2416.690131918933,
+        "interactive": 4715.2302
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

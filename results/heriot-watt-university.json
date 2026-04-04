@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-04-03T07:17:47.007393",
-  "total_tests": 354,
+  "last_updated": "2026-04-04T07:09:34.442392",
+  "total_tests": 356,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -9207,6 +9207,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-04T07:09:32.926550",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1418.0240000000006,
+        "largest_contentful_paint": 2366.334000000001,
+        "cumulative_layout_shift": 0.023732000000000003,
+        "total_blocking_time": 491.59999999999945,
+        "speed_index": 2657.649856167278,
+        "interactive": 3168.867900000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-04T07:09:34.442392",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5786.1615,
+        "largest_contentful_paint": 9800.061499999998,
+        "cumulative_layout_shift": 0.024626,
+        "total_blocking_time": 5450.779999999999,
+        "speed_index": 7084.892036262359,
+        "interactive": 15589.54165
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

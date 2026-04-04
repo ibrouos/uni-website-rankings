@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2026-04-03T07:16:59.576316",
-  "total_tests": 352,
+  "last_updated": "2026-04-04T07:08:43.462842",
+  "total_tests": 354,
   "results": [
     {
       "name": "University of Newcastle",
@@ -9155,6 +9155,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-04T07:08:41.992792",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1208.47465,
+        "largest_contentful_paint": 2378.9929,
+        "cumulative_layout_shift": 9.9e-05,
+        "total_blocking_time": 1642.239399999999,
+        "speed_index": 2383.2006433940073,
+        "interactive": 5324.236324999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-04T07:08:43.462842",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3135.2117000000007,
+        "largest_contentful_paint": 8404.4386,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12248.001699999999,
+        "speed_index": 6528.294305903854,
+        "interactive": 25020.648555000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
