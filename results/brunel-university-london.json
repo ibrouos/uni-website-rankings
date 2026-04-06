@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-04-05T07:17:05.550143",
-  "total_tests": 356,
+  "last_updated": "2026-04-06T07:53:36.494025",
+  "total_tests": 358,
   "results": [
     {
       "name": "Brunel University London",
@@ -9259,6 +9259,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-06T07:53:19.357500",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3312.7039999999997,
+        "largest_contentful_paint": 4518.5019999999995,
+        "cumulative_layout_shift": 0.003422,
+        "total_blocking_time": 8295.782,
+        "speed_index": 6735.070570917664,
+        "interactive": 19988.834450000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-06T07:53:36.494025",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1570.5995,
+        "largest_contentful_paint": 2848.7194999999997,
+        "cumulative_layout_shift": 0.003422,
+        "total_blocking_time": 2347.395500000001,
+        "speed_index": 2749.453184092824,
+        "interactive": 5266.704450000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
