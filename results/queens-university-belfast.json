@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-04-08T07:28:24.628007",
-  "total_tests": 362,
+  "last_updated": "2026-04-09T07:30:34.467809",
+  "total_tests": 364,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -9415,6 +9415,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-09T07:30:26.127143",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 770.3429999999998,
+        "largest_contentful_paint": 3363.0089999999996,
+        "cumulative_layout_shift": 0.11368,
+        "total_blocking_time": 2720.5000000000027,
+        "speed_index": 1930.4081362511904,
+        "interactive": 9044.596000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-09T07:30:34.467809",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2005.703,
+        "largest_contentful_paint": 14052.080999999998,
+        "cumulative_layout_shift": 0.022055,
+        "total_blocking_time": 23030.261999999984,
+        "speed_index": 4605.884583250077,
+        "interactive": 39196.80199999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
