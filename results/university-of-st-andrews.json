@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-04-09T07:29:20.416643",
-  "total_tests": 352,
+  "last_updated": "2026-04-10T07:49:13.177727",
+  "total_tests": 354,
   "results": [
     {
       "name": "University of St Andrews",
@@ -9155,6 +9155,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-10T07:49:11.088226",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1858.0420000000001,
+        "largest_contentful_paint": 2161.4849999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2639.694999999999,
+        "speed_index": 2463.5242017967917,
+        "interactive": 7091.657200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-10T07:49:13.177727",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7160.378000000001,
+        "largest_contentful_paint": 8742.699999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 18057.948999999997,
+        "speed_index": 7160.378000000001,
+        "interactive": 35376.01525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
