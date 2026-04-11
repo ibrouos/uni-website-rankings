@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-04-10T07:47:06.538150",
-  "total_tests": 366,
+  "last_updated": "2026-04-11T07:05:39.436705",
+  "total_tests": 368,
   "results": [
     {
       "name": "University of Nottingham",
@@ -9519,6 +9519,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-11T07:05:37.562272",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 11224.720000000001,
+        "largest_contentful_paint": 14541.427469999999,
+        "cumulative_layout_shift": 0.0044469999999999996,
+        "total_blocking_time": 5248.853999999999,
+        "speed_index": 11224.720000000001,
+        "interactive": 17216.8722
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-11T07:05:39.436705",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 91.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2676.126,
+        "largest_contentful_paint": 3226.6594499999997,
+        "cumulative_layout_shift": 0.012823000000000001,
+        "total_blocking_time": 551.9664999999993,
+        "speed_index": 2971.569150665513,
+        "interactive": 3876.1376499999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
