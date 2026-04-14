@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-04-13T08:05:59.252879",
-  "total_tests": 372,
+  "last_updated": "2026-04-14T07:48:27.734856",
+  "total_tests": 374,
   "results": [
     {
       "name": "Imperial College London",
@@ -9675,6 +9675,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-14T07:48:27.408738",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1159.9699999999998,
+        "largest_contentful_paint": 1439.448,
+        "cumulative_layout_shift": 0.042857,
+        "total_blocking_time": 1060.8159999999998,
+        "speed_index": 2004.5957897261565,
+        "interactive": 3058.4503999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-14T07:48:27.734856",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2957.0751999999998,
+        "largest_contentful_paint": 4052.6440000000002,
+        "cumulative_layout_shift": 0.015770000000000003,
+        "total_blocking_time": 8038.435799999999,
+        "speed_index": 4514.393862636398,
+        "interactive": 13097.31062
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

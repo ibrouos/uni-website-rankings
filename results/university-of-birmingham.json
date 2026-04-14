@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-04-13T08:08:27.021504",
-  "total_tests": 372,
+  "last_updated": "2026-04-14T07:50:39.098180",
+  "total_tests": 374,
   "results": [
     {
       "name": "University of Birmingham",
@@ -9675,6 +9675,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-14T07:50:33.776807",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4661.045999999999,
+        "largest_contentful_paint": 9669.218,
+        "cumulative_layout_shift": 0.057053,
+        "total_blocking_time": 5075.813,
+        "speed_index": 8466.52440746463,
+        "interactive": 11401.9979
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-14T07:50:39.098180",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1376.2549999999999,
+        "largest_contentful_paint": 2743.8370000000004,
+        "cumulative_layout_shift": 0.057053,
+        "total_blocking_time": 849.4040000000002,
+        "speed_index": 2978.747363443716,
+        "interactive": 2762.959
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

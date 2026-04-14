@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-04-13T08:14:56.122912",
-  "total_tests": 372,
+  "last_updated": "2026-04-14T07:56:50.933550",
+  "total_tests": 374,
   "results": [
     {
       "name": "Brunel University London",
@@ -9671,6 +9671,58 @@
         "total_blocking_time": 2610.6630000000005,
         "speed_index": 3387.8471333352363,
         "interactive": 6235.365200000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-14T07:56:40.838210",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3759.1140000000005,
+        "largest_contentful_paint": 15101.787,
+        "cumulative_layout_shift": 0.003422,
+        "total_blocking_time": 8081.036999999997,
+        "speed_index": 6369.992768197325,
+        "interactive": 19441.709799999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-14T07:56:50.933550",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1450.0376400000002,
+        "largest_contentful_paint": 3194.7089999999994,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3324.5000000000005,
+        "speed_index": 3162.7921816394287,
+        "interactive": 6008.455
       },
       "throttling_config": {
         "method": "simulate",

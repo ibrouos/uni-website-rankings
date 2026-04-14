@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-04-13T08:15:51.130722",
-  "total_tests": 374,
+  "last_updated": "2026-04-14T07:57:44.714018",
+  "total_tests": 376,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -9727,6 +9727,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-14T07:57:42.105606",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 23.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2779.7019999999998,
+        "largest_contentful_paint": 11479.01225,
+        "cumulative_layout_shift": 0.231421,
+        "total_blocking_time": 7010.808500000001,
+        "speed_index": 6305.195185199562,
+        "interactive": 13800.962350000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-14T07:57:44.714018",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1039.3380000000002,
+        "largest_contentful_paint": 2631.47425,
+        "cumulative_layout_shift": 0.22448399999999996,
+        "total_blocking_time": 1373.421,
+        "speed_index": 2494.2121528359794,
+        "interactive": 3638.5369
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
