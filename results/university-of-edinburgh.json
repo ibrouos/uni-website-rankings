@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-04-15T07:49:44.686725",
-  "total_tests": 378,
+  "last_updated": "2026-04-16T07:50:08.212061",
+  "total_tests": 380,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -9827,6 +9827,58 @@
         "total_blocking_time": 0,
         "speed_index": 1761.8138627377978,
         "interactive": 1134.633
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-16T07:49:38.459257",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1371.904,
+        "largest_contentful_paint": 3855.904,
+        "cumulative_layout_shift": 0.038436,
+        "total_blocking_time": 478,
+        "speed_index": 2962.1155280045396,
+        "interactive": 5184.298175000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-16T07:50:08.212061",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 700.1635,
+        "largest_contentful_paint": 1267.106,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 69.29250000000002,
+        "speed_index": 1902.6420245148374,
+        "interactive": 1271.3267500000002
       },
       "throttling_config": {
         "method": "simulate",

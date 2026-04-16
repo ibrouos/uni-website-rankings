@@ -2,8 +2,8 @@
   "name": "London School of Economics and Political Science",
   "slug": "london-school-of-economics-and-political-science",
   "url": "https://www.lse.ac.uk",
-  "last_updated": "2026-04-15T07:49:09.790595",
-  "total_tests": 376,
+  "last_updated": "2026-04-16T07:49:39.047651",
+  "total_tests": 378,
   "results": [
     {
       "name": "London School of Economics and Political Science",
@@ -9779,6 +9779,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-16T07:49:30.185031",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3134.6945,
+        "largest_contentful_paint": 12551.081999999995,
+        "cumulative_layout_shift": 0.05706,
+        "total_blocking_time": 34875.56349999999,
+        "speed_index": 11225.491588904288,
+        "interactive": 49860.0662
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "London School of Economics and Political Science",
+      "url": "https://www.lse.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-16T07:49:39.047651",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 100,
+        "best_practices": 54.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1131.138,
+        "largest_contentful_paint": 2800.3869999999997,
+        "cumulative_layout_shift": 0.056552,
+        "total_blocking_time": 5141.460499999998,
+        "speed_index": 3758.754874731386,
+        "interactive": 10848.786050000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
