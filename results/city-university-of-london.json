@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-04-16T07:57:37.028255",
-  "total_tests": 378,
+  "last_updated": "2026-04-17T07:57:44.582494",
+  "total_tests": 380,
   "results": [
     {
       "name": "City, University of London",
@@ -9831,6 +9831,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-17T07:57:44.163856",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3474.9195,
+        "largest_contentful_paint": 11117.839,
+        "cumulative_layout_shift": 0.038306999999999994,
+        "total_blocking_time": 6419.925999999999,
+        "speed_index": 8201.825847259732,
+        "interactive": 17588.502575
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-17T07:57:44.582494",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1179.5965,
+        "largest_contentful_paint": 2178.1325,
+        "cumulative_layout_shift": 0.038306999999999994,
+        "total_blocking_time": 942.3679999999997,
+        "speed_index": 2528.3346323477776,
+        "interactive": 3405.2812999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

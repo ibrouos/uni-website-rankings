@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2026-04-16T07:51:22.938430",
-  "total_tests": 376,
+  "last_updated": "2026-04-17T07:51:42.730175",
+  "total_tests": 378,
   "results": [
     {
       "name": "University of Leeds",
@@ -9775,6 +9775,58 @@
         "total_blocking_time": 115,
         "speed_index": 1884.4603175753887,
         "interactive": 2444.8160000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-17T07:51:39.506675",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2736.2133799999997,
+        "largest_contentful_paint": 5690.919500000001,
+        "cumulative_layout_shift": 0.401444,
+        "total_blocking_time": 434,
+        "speed_index": 3640.1610838373044,
+        "interactive": 5690.919500000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-17T07:51:42.730175",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1303.686,
+        "largest_contentful_paint": 2217.2255,
+        "cumulative_layout_shift": 0.401444,
+        "total_blocking_time": 58,
+        "speed_index": 1680.0133294667953,
+        "interactive": 2226.38735
       },
       "throttling_config": {
         "method": "simulate",
