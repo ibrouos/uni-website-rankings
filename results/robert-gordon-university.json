@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-04-17T08:00:38.261303",
-  "total_tests": 381,
+  "last_updated": "2026-04-18T07:18:49.647184",
+  "total_tests": 383,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -9909,6 +9909,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-18T07:18:49.557734",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1293.5765999999999,
+        "largest_contentful_paint": 2306.3154999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 97,
+        "speed_index": 1867.08157045783,
+        "interactive": 2480.11061
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-18T07:18:49.647184",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3033.328,
+        "largest_contentful_paint": 6445.19055,
+        "cumulative_layout_shift": 0.000299,
+        "total_blocking_time": 734.5589999999993,
+        "speed_index": 5190.773251155521,
+        "interactive": 12478.31204
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
