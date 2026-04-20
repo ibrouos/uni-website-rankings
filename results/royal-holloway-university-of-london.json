@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-04-19T07:31:56.842741",
-  "total_tests": 386,
+  "last_updated": "2026-04-20T08:19:30.296060",
+  "total_tests": 388,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -10035,6 +10035,58 @@
         "total_blocking_time": 1406.0850000000003,
         "speed_index": 2093.678692345503,
         "interactive": 5027.474600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-20T08:19:26.672486",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5164.5235,
+        "largest_contentful_paint": 13826.661999999997,
+        "cumulative_layout_shift": 0.025411,
+        "total_blocking_time": 6465.5,
+        "speed_index": 8245.279895556208,
+        "interactive": 21621.632175000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-20T08:19:30.296060",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 96.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1515.2935000000002,
+        "largest_contentful_paint": 2451.4955,
+        "cumulative_layout_shift": 0.025411,
+        "total_blocking_time": 943.7814999999996,
+        "speed_index": 2439.4171800305962,
+        "interactive": 5027.77945
       },
       "throttling_config": {
         "method": "simulate",
