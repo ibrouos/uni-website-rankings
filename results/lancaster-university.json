@@ -2,8 +2,8 @@
   "name": "Lancaster University",
   "slug": "lancaster-university",
   "url": "https://www.lancaster.ac.uk",
-  "last_updated": "2026-04-20T08:13:17.939301",
-  "total_tests": 388,
+  "last_updated": "2026-04-21T07:55:58.193837",
+  "total_tests": 390,
   "results": [
     {
       "name": "Lancaster University",
@@ -10091,6 +10091,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-21T07:55:54.694888",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3170.323000000001,
+        "largest_contentful_paint": 5443.4635,
+        "cumulative_layout_shift": 0.028486,
+        "total_blocking_time": 1879.9999999999995,
+        "speed_index": 3647.8769717202313,
+        "interactive": 9011.353875
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Lancaster University",
+      "url": "https://www.lancaster.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-21T07:55:58.193837",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 97.0,
+        "accessibility": 100,
+        "best_practices": 82.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1273.71,
+        "largest_contentful_paint": 1728.757,
+        "cumulative_layout_shift": 0.028486,
+        "total_blocking_time": 169,
+        "speed_index": 1592.9803907860614,
+        "interactive": 2512.7470000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
