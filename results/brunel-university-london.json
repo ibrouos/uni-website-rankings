@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-04-21T08:00:56.626868",
-  "total_tests": 388,
+  "last_updated": "2026-04-22T07:58:06.530963",
+  "total_tests": 390,
   "results": [
     {
       "name": "Brunel University London",
@@ -10091,6 +10091,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-22T07:58:06.298353",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1899.587,
+        "largest_contentful_paint": 3882.6859999999992,
+        "cumulative_layout_shift": 0.003422,
+        "total_blocking_time": 1788,
+        "speed_index": 2774.5328516244635,
+        "interactive": 5286.089199999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-22T07:58:06.530963",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3540.379999999999,
+        "largest_contentful_paint": 15151.080500000002,
+        "cumulative_layout_shift": 0.003422,
+        "total_blocking_time": 9691.850500000002,
+        "speed_index": 6711.119789927738,
+        "interactive": 19835.361250000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

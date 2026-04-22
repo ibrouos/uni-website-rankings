@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-04-21T07:58:53.297812",
-  "total_tests": 388,
+  "last_updated": "2026-04-22T07:56:10.283818",
+  "total_tests": 390,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -10091,6 +10091,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-22T07:56:00.268203",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1781.573,
+        "largest_contentful_paint": 10359.7755,
+        "cumulative_layout_shift": 0.111474,
+        "total_blocking_time": 23011.235749999996,
+        "speed_index": 6320.776522893705,
+        "interactive": 41630.16222500001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-22T07:56:10.283818",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1078.6377000000002,
+        "largest_contentful_paint": 3679.004900000001,
+        "cumulative_layout_shift": 0.066391,
+        "total_blocking_time": 5474.253424999999,
+        "speed_index": 2282.4806083876733,
+        "interactive": 10210.7091725
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

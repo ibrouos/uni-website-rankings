@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-04-21T07:59:44.334819",
-  "total_tests": 390,
+  "last_updated": "2026-04-22T07:56:53.422223",
+  "total_tests": 392,
   "results": [
     {
       "name": "Loughborough University",
@@ -10143,6 +10143,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-22T07:56:52.833000",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1101.8154,
+        "largest_contentful_paint": 2777.9078099999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 655.5,
+        "speed_index": 2467.8657726738393,
+        "interactive": 3136.185804
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-22T07:56:53.422223",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2754.5435800000005,
+        "largest_contentful_paint": 3827.0848600000004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4866.067659999998,
+        "speed_index": 6208.2771443265265,
+        "interactive": 12746.082514071684
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
