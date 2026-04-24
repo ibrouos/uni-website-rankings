@@ -2,8 +2,8 @@
   "name": "University of Sussex",
   "slug": "university-of-sussex",
   "url": "https://www.sussex.ac.uk",
-  "last_updated": "2026-04-23T08:00:28.688175",
-  "total_tests": 394,
+  "last_updated": "2026-04-24T08:10:54.596666",
+  "total_tests": 396,
   "results": [
     {
       "name": "University of Sussex",
@@ -10243,6 +10243,58 @@
         "total_blocking_time": 135.00000000000023,
         "speed_index": 2214.186293134139,
         "interactive": 3205.368000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-24T08:10:51.869344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3341.4843699999997,
+        "largest_contentful_paint": 10074.816439999997,
+        "cumulative_layout_shift": 0.019179,
+        "total_blocking_time": 613,
+        "speed_index": 4998.892956158469,
+        "interactive": 10184.452282999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Sussex",
+      "url": "https://www.sussex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-24T08:10:54.596666",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 92.0,
+        "accessibility": 92.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1281.1691600000001,
+        "largest_contentful_paint": 3344.171765,
+        "cumulative_layout_shift": 0.019179,
+        "total_blocking_time": 24,
+        "speed_index": 1947.4392720038811,
+        "interactive": 3374.5605175000005
       },
       "throttling_config": {
         "method": "simulate",
