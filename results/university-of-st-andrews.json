@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-04-25T07:24:13.093472",
-  "total_tests": 384,
+  "last_updated": "2026-04-26T07:47:11.310542",
+  "total_tests": 386,
   "results": [
     {
       "name": "University of St Andrews",
@@ -9983,6 +9983,58 @@
         "total_blocking_time": 2415.631799999999,
         "speed_index": 2166.2952306293873,
         "interactive": 7024.428719999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-26T07:47:05.619325",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8330.451500000001,
+        "largest_contentful_paint": 8878.7615,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15861.560249999999,
+        "speed_index": 8330.451500000001,
+        "interactive": 36526.987225000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-26T07:47:11.310542",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1952.3990000000001,
+        "largest_contentful_paint": 2032.399,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2756.818499999999,
+        "speed_index": 2009.276492396572,
+        "interactive": 6881.68175
       },
       "throttling_config": {
         "method": "simulate",
