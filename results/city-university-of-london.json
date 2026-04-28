@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-04-27T08:36:57.851847",
-  "total_tests": 400,
+  "last_updated": "2026-04-28T08:34:43.454113",
+  "total_tests": 402,
   "results": [
     {
       "name": "City, University of London",
@@ -10403,6 +10403,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-28T08:34:42.448745",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1189.3174999999999,
+        "largest_contentful_paint": 3456.4929999999995,
+        "cumulative_layout_shift": 0.040175999999999996,
+        "total_blocking_time": 333.4999999999998,
+        "speed_index": 2048.8523242191354,
+        "interactive": 3798.606675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-28T08:34:43.454113",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6694.03075,
+        "largest_contentful_paint": 19906.416999999998,
+        "cumulative_layout_shift": 0.038185,
+        "total_blocking_time": 2442.0000000000005,
+        "speed_index": 7997.358444423922,
+        "interactive": 20415.024999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
