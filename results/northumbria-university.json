@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-04-28T08:38:18.222915",
-  "total_tests": 404,
+  "last_updated": "2026-04-29T08:33:25.013973",
+  "total_tests": 406,
   "results": [
     {
       "name": "Northumbria University",
@@ -10507,6 +10507,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-29T08:33:18.473127",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 89.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3628.077,
+        "largest_contentful_paint": 29572.458500000008,
+        "cumulative_layout_shift": 0.042395,
+        "total_blocking_time": 5294.0949999999975,
+        "speed_index": 6931.645216094075,
+        "interactive": 29967.736250000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-29T08:33:25.013973",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 89.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1307.822,
+        "largest_contentful_paint": 5548.867,
+        "cumulative_layout_shift": 0.032605,
+        "total_blocking_time": 844,
+        "speed_index": 2546.978890617947,
+        "interactive": 5614.4395
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
