@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-04-29T08:24:46.477356",
-  "total_tests": 404,
+  "last_updated": "2026-04-30T08:26:59.251134",
+  "total_tests": 406,
   "results": [
     {
       "name": "University of Nottingham",
@@ -10507,6 +10507,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-30T08:26:58.295632",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2476.9345000000003,
+        "largest_contentful_paint": 3624.237250000001,
+        "cumulative_layout_shift": 0.016782,
+        "total_blocking_time": 1014.1059999999998,
+        "speed_index": 3035.833664659218,
+        "interactive": 4156.798525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-30T08:26:59.251134",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 10072.377499999999,
+        "largest_contentful_paint": 19099.129999999997,
+        "cumulative_layout_shift": 0.015475,
+        "total_blocking_time": 7016.368000000004,
+        "speed_index": 10072.377499999999,
+        "interactive": 20907.819425
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

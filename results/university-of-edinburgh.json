@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-04-29T08:22:37.319208",
-  "total_tests": 406,
+  "last_updated": "2026-04-30T08:25:04.920693",
+  "total_tests": 408,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -10555,6 +10555,58 @@
         "total_blocking_time": 2.5,
         "speed_index": 1786.062258765296,
         "interactive": 1207.8515000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-04-30T08:24:42.570412",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1541.3049999999998,
+        "largest_contentful_paint": 3866.305,
+        "cumulative_layout_shift": 0.038436,
+        "total_blocking_time": 679.5,
+        "speed_index": 2935.5381886842374,
+        "interactive": 5150.305
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-04-30T08:25:04.920693",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 597.66,
+        "largest_contentful_paint": 1193.6599999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 90.5,
+        "speed_index": 1810.009524937349,
+        "interactive": 1197.86
       },
       "throttling_config": {
         "method": "simulate",
