@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2026-05-03T08:14:03.021983",
-  "total_tests": 414,
+  "last_updated": "2026-05-04T08:41:47.120893",
+  "total_tests": 416,
   "results": [
     {
       "name": "University of Stirling",
@@ -10767,6 +10767,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-04T08:41:46.500473",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 91.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 673.5229999999999,
+        "largest_contentful_paint": 1546.63,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1348.000000000001,
+        "speed_index": 1296.9138525271235,
+        "interactive": 5001.530350000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-04T08:41:47.120893",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 91.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1670.2160000000003,
+        "largest_contentful_paint": 5792.177500000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 7314.131000000001,
+        "speed_index": 3812.383398803052,
+        "interactive": 19429.3381
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

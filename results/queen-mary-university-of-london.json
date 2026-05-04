@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-05-03T08:06:20.237581",
-  "total_tests": 412,
+  "last_updated": "2026-05-04T08:34:20.120321",
+  "total_tests": 414,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -10715,6 +10715,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-04T08:34:18.362726",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4059.7745,
+        "largest_contentful_paint": 7947.067999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15590.165499999996,
+        "speed_index": 6673.10788255341,
+        "interactive": 27640.567742499996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-04T08:34:20.120321",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 973.1735000000001,
+        "largest_contentful_paint": 1556.9524999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2444.999999999999,
+        "speed_index": 2131.9149912393614,
+        "interactive": 6215.6357499999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

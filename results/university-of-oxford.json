@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2026-05-03T08:04:11.155986",
-  "total_tests": 413,
+  "last_updated": "2026-05-04T08:32:20.825854",
+  "total_tests": 415,
   "results": [
     {
       "name": "University of Oxford",
@@ -10737,6 +10737,58 @@
         "total_blocking_time": 9724.62,
         "speed_index": 1011.2831978304059,
         "interactive": 14207.578000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-04T08:32:20.708658",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 89.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 926.028,
+        "largest_contentful_paint": 1543.056,
+        "cumulative_layout_shift": 0.003723,
+        "total_blocking_time": 45267.486000000004,
+        "speed_index": 3326.8269782773614,
+        "interactive": 50821.228
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-04T08:32:20.825854",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 89.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 294.106,
+        "largest_contentful_paint": 1408.055,
+        "cumulative_layout_shift": 0.003723,
+        "total_blocking_time": 8361.2765,
+        "speed_index": 1248.8464529964062,
+        "interactive": 12868.55485
       },
       "throttling_config": {
         "method": "simulate",
