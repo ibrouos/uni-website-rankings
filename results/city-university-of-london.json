@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-05-04T08:39:29.473916",
-  "total_tests": 414,
+  "last_updated": "2026-05-05T08:19:27.242203",
+  "total_tests": 416,
   "results": [
     {
       "name": "City, University of London",
@@ -10767,6 +10767,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-05T08:19:25.294315",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1188.95,
+        "largest_contentful_paint": 2238.8205000000007,
+        "cumulative_layout_shift": 0.04023999999999999,
+        "total_blocking_time": 666.0000000000002,
+        "speed_index": 2104.23507130202,
+        "interactive": 3234.598600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-05T08:19:27.242203",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 96.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4419.089499999999,
+        "largest_contentful_paint": 6541.609499999999,
+        "cumulative_layout_shift": 0.038306999999999994,
+        "total_blocking_time": 4772.899,
+        "speed_index": 7366.713307884072,
+        "interactive": 18174.924600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-05-04T08:33:51.368392",
-  "total_tests": 416,
+  "last_updated": "2026-05-05T08:14:19.323875",
+  "total_tests": 418,
   "results": [
     {
       "name": "University of Sheffield",
@@ -10819,6 +10819,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-05T08:14:17.680907",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 96.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1515.5808499999998,
+        "largest_contentful_paint": 2103.05595,
+        "cumulative_layout_shift": 0.0020859999999999997,
+        "total_blocking_time": 183,
+        "speed_index": 2389.8926708424115,
+        "interactive": 2794.986205
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-05T08:14:19.323875",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3741.3229999999994,
+        "largest_contentful_paint": 6307.251,
+        "cumulative_layout_shift": 0.001273,
+        "total_blocking_time": 1182.5,
+        "speed_index": 6404.29435637102,
+        "interactive": 10251.7994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
