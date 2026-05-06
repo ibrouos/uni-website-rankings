@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-05-05T08:13:44.536484",
-  "total_tests": 418,
+  "last_updated": "2026-05-06T08:30:33.436137",
+  "total_tests": 420,
   "results": [
     {
       "name": "University of Southampton",
@@ -10871,6 +10871,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-06T08:30:33.100594",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 94.0,
+        "best_practices": 96.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 897.5079999999997,
+        "largest_contentful_paint": 1256.7205,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 829.9139999999995,
+        "speed_index": 2065.420385737206,
+        "interactive": 2558.552599999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-06T08:30:33.436137",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 94.0,
+        "best_practices": 96.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1928.5480000000002,
+        "largest_contentful_paint": 4359.884500000001,
+        "cumulative_layout_shift": 0.367631,
+        "total_blocking_time": 7457.257000000001,
+        "speed_index": 7164.740406522675,
+        "interactive": 14837.659500000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
