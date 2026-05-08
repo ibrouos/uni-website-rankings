@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-05-07T08:47:14.800686",
-  "total_tests": 422,
+  "last_updated": "2026-05-08T07:55:26.187234",
+  "total_tests": 424,
   "results": [
     {
       "name": "University of Essex",
@@ -10975,6 +10975,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-08T07:55:24.742449",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1379.28525,
+        "largest_contentful_paint": 4135.529,
+        "cumulative_layout_shift": 0.06730600000000002,
+        "total_blocking_time": 6692.832749999998,
+        "speed_index": 8008.426464063821,
+        "interactive": 12354.870149999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-08T07:55:26.187234",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2174.2075,
+        "largest_contentful_paint": 24821.009500000007,
+        "cumulative_layout_shift": 0.072924,
+        "total_blocking_time": 32543.824096313507,
+        "speed_index": 14859.612560843654,
+        "interactive": 50432.29649405522
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
