@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-05-08T07:57:25.015682",
-  "total_tests": 422,
+  "last_updated": "2026-05-09T08:12:00.796337",
+  "total_tests": 424,
   "results": [
     {
       "name": "University of Kent",
@@ -10975,6 +10975,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-09T08:11:59.511621",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 93.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 895.4580000000001,
+        "largest_contentful_paint": 2611.9575000000004,
+        "cumulative_layout_shift": 0.002144,
+        "total_blocking_time": 1189.5815000000007,
+        "speed_index": 2896.209321639083,
+        "interactive": 6071.505350000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-09T08:12:00.796337",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 93.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1878.0738,
+        "largest_contentful_paint": 8610.804599999998,
+        "cumulative_layout_shift": 0.002144,
+        "total_blocking_time": 7334.426300000001,
+        "speed_index": 7506.656056084595,
+        "interactive": 24712.160869999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

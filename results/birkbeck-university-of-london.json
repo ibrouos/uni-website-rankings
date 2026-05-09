@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-05-08T07:53:37.112590",
-  "total_tests": 410,
+  "last_updated": "2026-05-09T08:08:13.861271",
+  "total_tests": 412,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -10659,6 +10659,58 @@
         "total_blocking_time": 530.4999999999998,
         "speed_index": 1532.6649729986766,
         "interactive": 2544.3215
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-09T08:08:09.514309",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2137.3914999999997,
+        "largest_contentful_paint": 3744.4579999999996,
+        "cumulative_layout_shift": 0.062115,
+        "total_blocking_time": 6169.08825,
+        "speed_index": 5495.297571972124,
+        "interactive": 13751.839475
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-09T08:08:13.861271",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 681.0975000000001,
+        "largest_contentful_paint": 1093.7525,
+        "cumulative_layout_shift": 0.129313,
+        "total_blocking_time": 693.3990000000001,
+        "speed_index": 1596.6079630662764,
+        "interactive": 2859.0056000000004
       },
       "throttling_config": {
         "method": "simulate",

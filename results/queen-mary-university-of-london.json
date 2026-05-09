@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-05-08T07:47:27.474137",
-  "total_tests": 422,
+  "last_updated": "2026-05-09T08:01:37.022219",
+  "total_tests": 424,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -10975,6 +10975,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-09T08:01:33.051019",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4088.6009999999987,
+        "largest_contentful_paint": 8476.253999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15667.157999999994,
+        "speed_index": 7116.365962485928,
+        "interactive": 28317.4172
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-09T08:01:37.022219",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 968.2945,
+        "largest_contentful_paint": 2898.4965,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2354.8949999999995,
+        "speed_index": 2832.6692016963707,
+        "interactive": 6133.634
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
