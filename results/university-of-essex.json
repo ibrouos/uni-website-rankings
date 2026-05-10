@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-05-09T08:10:03.151443",
-  "total_tests": 426,
+  "last_updated": "2026-05-10T08:20:36.376369",
+  "total_tests": 428,
   "results": [
     {
       "name": "University of Essex",
@@ -11079,6 +11079,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-10T08:20:29.771182",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2710.4175000000005,
+        "largest_contentful_paint": 24617.084330093396,
+        "cumulative_layout_shift": 0.072924,
+        "total_blocking_time": 28544.152079999993,
+        "speed_index": 18776.219186392656,
+        "interactive": 49150.253421999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-10T08:20:36.376369",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1842.9812500000003,
+        "largest_contentful_paint": 6219.336500000002,
+        "cumulative_layout_shift": 0.068847,
+        "total_blocking_time": 5195.76473,
+        "speed_index": 6823.78739929691,
+        "interactive": 11321.114682
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

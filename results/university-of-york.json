@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2026-05-09T08:01:55.903136",
-  "total_tests": 424,
+  "last_updated": "2026-05-10T08:12:44.367181",
+  "total_tests": 426,
   "results": [
     {
       "name": "University of York",
@@ -11023,6 +11023,58 @@
         "total_blocking_time": 1289.5,
         "speed_index": 2016.3336739068932,
         "interactive": 3600.2506249999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-10T08:12:43.548513",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2006.186,
+        "largest_contentful_paint": 4529.296999999999,
+        "cumulative_layout_shift": 0.12507200000000002,
+        "total_blocking_time": 8985.314,
+        "speed_index": 5416.557841338788,
+        "interactive": 15803.793420000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-10T08:12:44.367181",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 500.549,
+        "largest_contentful_paint": 2180.4085000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 995.4999999999999,
+        "speed_index": 1986.9203756688169,
+        "interactive": 2914.87955
       },
       "throttling_config": {
         "method": "simulate",
