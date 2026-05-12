@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-05-11T09:47:59.507652",
-  "total_tests": 428,
+  "last_updated": "2026-05-12T08:48:23.462181",
+  "total_tests": 430,
   "results": [
     {
       "name": "University of Reading",
@@ -11131,6 +11131,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-12T08:48:23.132744",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6111.764999999999,
+        "largest_contentful_paint": 11547,
+        "cumulative_layout_shift": 0.001284,
+        "total_blocking_time": 4129.5,
+        "speed_index": 6539.013906440452,
+        "interactive": 23067.557000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-12T08:48:23.462181",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2028.1310000000003,
+        "largest_contentful_paint": 3868.0415000000007,
+        "cumulative_layout_shift": 0.00439,
+        "total_blocking_time": 616.0000000000002,
+        "speed_index": 2775.835739560854,
+        "interactive": 4988.103500000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

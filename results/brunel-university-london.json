@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-05-11T09:49:05.951740",
-  "total_tests": 428,
+  "last_updated": "2026-05-12T08:49:39.904658",
+  "total_tests": 430,
   "results": [
     {
       "name": "Brunel University London",
@@ -11131,6 +11131,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-12T08:49:35.825499",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1312.4254999999998,
+        "largest_contentful_paint": 3070.7524999999987,
+        "cumulative_layout_shift": 0.003727,
+        "total_blocking_time": 2184.929499999999,
+        "speed_index": 2899.1436080233716,
+        "interactive": 4515.108249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-12T08:49:39.904658",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3101.1745,
+        "largest_contentful_paint": 4707.344999999999,
+        "cumulative_layout_shift": 0.003727,
+        "total_blocking_time": 12523.000000000002,
+        "speed_index": 7686.946314931406,
+        "interactive": 19801.471800000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

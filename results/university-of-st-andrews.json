@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-05-11T09:46:07.246008",
-  "total_tests": 414,
+  "last_updated": "2026-05-12T08:46:09.041389",
+  "total_tests": 416,
   "results": [
     {
       "name": "University of St Andrews",
@@ -10767,6 +10767,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-12T08:46:08.358168",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8290.1613,
+        "largest_contentful_paint": 11633.9598,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15497.707999999995,
+        "speed_index": 8290.1613,
+        "interactive": 37827.76973999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-12T08:46:09.041389",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1856.2948000000001,
+        "largest_contentful_paint": 2326.3149000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3240.3374500000014,
+        "speed_index": 2918.0252227227684,
+        "interactive": 6951.055155000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
