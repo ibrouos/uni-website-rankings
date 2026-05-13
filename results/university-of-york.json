@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2026-05-12T08:45:05.099821",
-  "total_tests": 430,
+  "last_updated": "2026-05-13T08:49:08.445705",
+  "total_tests": 432,
   "results": [
     {
       "name": "University of York",
@@ -11179,6 +11179,58 @@
         "total_blocking_time": 1145.0000000000002,
         "speed_index": 2203.8423765589814,
         "interactive": 3355.2908500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-13T08:49:06.068261",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1227.2324999999998,
+        "largest_contentful_paint": 2207.1974999999998,
+        "cumulative_layout_shift": 0.12507200000000002,
+        "total_blocking_time": 6311.000000000001,
+        "speed_index": 3791.490900516019,
+        "interactive": 13743.8726
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-13T08:49:08.445705",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 535.393,
+        "largest_contentful_paint": 2445.3765000000003,
+        "cumulative_layout_shift": 0.125039,
+        "total_blocking_time": 1036.5,
+        "speed_index": 1954.0377591005424,
+        "interactive": 3575.649500000001
       },
       "throttling_config": {
         "method": "simulate",

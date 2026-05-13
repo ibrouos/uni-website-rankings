@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-05-12T08:49:39.904658",
-  "total_tests": 430,
+  "last_updated": "2026-05-13T08:53:36.693149",
+  "total_tests": 432,
   "results": [
     {
       "name": "Brunel University London",
@@ -11183,6 +11183,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-13T08:53:31.443954",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3633.8462400000008,
+        "largest_contentful_paint": 15272.839999999998,
+        "cumulative_layout_shift": 0.003727,
+        "total_blocking_time": 11837.499999999996,
+        "speed_index": 7221.4532978563,
+        "interactive": 19184.499
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-13T08:53:36.693149",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1623.1194999999998,
+        "largest_contentful_paint": 2006.5915,
+        "cumulative_layout_shift": 0.003727,
+        "total_blocking_time": 2648.000000000001,
+        "speed_index": 2793.995752782739,
+        "interactive": 5242.692500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
