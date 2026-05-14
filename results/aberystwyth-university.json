@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-05-13T08:55:52.091258",
-  "total_tests": 434,
+  "last_updated": "2026-05-14T08:48:47.219748",
+  "total_tests": 436,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -11287,6 +11287,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-14T08:48:46.959387",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 814.1385000000001,
+        "largest_contentful_paint": 962.6570000000002,
+        "cumulative_layout_shift": 0.926165,
+        "total_blocking_time": 313.4999999999999,
+        "speed_index": 1871.3053218274406,
+        "interactive": 1774.2255
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-14T08:48:47.219748",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2336.9415,
+        "largest_contentful_paint": 6498.025500000003,
+        "cumulative_layout_shift": 0.9270160000000001,
+        "total_blocking_time": 1356,
+        "speed_index": 4622.043116803906,
+        "interactive": 7131.1690000000035
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
