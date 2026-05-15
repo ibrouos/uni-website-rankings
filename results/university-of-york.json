@@ -2,8 +2,8 @@
   "name": "University of York",
   "slug": "university-of-york",
   "url": "https://www.york.ac.uk",
-  "last_updated": "2026-05-14T08:42:27.540793",
-  "total_tests": 434,
+  "last_updated": "2026-05-15T08:53:22.302083",
+  "total_tests": 436,
   "results": [
     {
       "name": "University of York",
@@ -11287,6 +11287,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-15T08:53:18.219015",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1412.1785,
+        "largest_contentful_paint": 6182.758704254152,
+        "cumulative_layout_shift": 0.12507200000000002,
+        "total_blocking_time": 8614.429250000001,
+        "speed_index": 4948.51050684757,
+        "interactive": 15584.577785000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of York",
+      "url": "https://www.york.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-15T08:53:22.302083",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 98.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 313.25199999999995,
+        "largest_contentful_paint": 1371.28620425415,
+        "cumulative_layout_shift": 0.125039,
+        "total_blocking_time": 1336,
+        "speed_index": 1740.6478992942102,
+        "interactive": 3704.1865000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

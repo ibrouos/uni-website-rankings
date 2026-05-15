@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-05-14T08:47:41.763200",
-  "total_tests": 436,
+  "last_updated": "2026-05-15T08:58:24.301974",
+  "total_tests": 438,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -11339,6 +11339,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-15T08:58:23.175640",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 968.9569999999999,
+        "largest_contentful_paint": 3008.3559999999998,
+        "cumulative_layout_shift": 0.246177,
+        "total_blocking_time": 862.4999999999998,
+        "speed_index": 2214.00938493296,
+        "interactive": 3125.2328
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-15T08:58:24.301974",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2717.831,
+        "largest_contentful_paint": 9234.946500000002,
+        "cumulative_layout_shift": 0.19252199999999994,
+        "total_blocking_time": 6252.000000000004,
+        "speed_index": 6457.018632336265,
+        "interactive": 16740.884550000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

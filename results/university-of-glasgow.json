@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2026-05-14T08:40:36.803751",
-  "total_tests": 436,
+  "last_updated": "2026-05-15T08:51:37.368376",
+  "total_tests": 438,
   "results": [
     {
       "name": "University of Glasgow",
@@ -11339,6 +11339,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-15T08:51:36.781433",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1711.5600000000002,
+        "largest_contentful_paint": 2825.056999999999,
+        "cumulative_layout_shift": 0.778881,
+        "total_blocking_time": 261,
+        "speed_index": 2252.98576539881,
+        "interactive": 2827.172699999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-15T08:51:37.368376",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6224.880000000001,
+        "largest_contentful_paint": 12441.9925,
+        "cumulative_layout_shift": 0.806046,
+        "total_blocking_time": 2748.1279999999997,
+        "speed_index": 7057.071368769366,
+        "interactive": 12552.401700000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

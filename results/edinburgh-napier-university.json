@@ -2,8 +2,8 @@
   "name": "Edinburgh Napier University",
   "slug": "edinburgh-napier-university",
   "url": "https://www.napier.ac.uk",
-  "last_updated": "2026-05-14T08:50:25.906726",
-  "total_tests": 402,
+  "last_updated": "2026-05-15T09:01:05.557838",
+  "total_tests": 404,
   "results": [
     {
       "name": "Edinburgh Napier University",
@@ -10455,6 +10455,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-15T09:01:05.496740",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1372.6154999999997,
+        "largest_contentful_paint": 2887.9710000000005,
+        "cumulative_layout_shift": 0.621259,
+        "total_blocking_time": 420.5000000000002,
+        "speed_index": 2534.6174429876164,
+        "interactive": 5023.86365
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-15T09:01:05.557838",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 7.000000000000001,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4084.8705,
+        "largest_contentful_paint": 14545.4895,
+        "cumulative_layout_shift": 0.621159,
+        "total_blocking_time": 2881.5515000000005,
+        "speed_index": 8443.263100607463,
+        "interactive": 25341.105750000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
