@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2026-05-16T08:16:08.469457",
-  "total_tests": 440,
+  "last_updated": "2026-05-17T08:34:10.340130",
+  "total_tests": 442,
   "results": [
     {
       "name": "University of Stirling",
@@ -11443,6 +11443,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-17T08:33:32.522170",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1454.1920000000007,
+        "largest_contentful_paint": 5796.771500000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8870.770499999995,
+        "speed_index": 9138.689239436804,
+        "interactive": 20483.95715
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-17T08:34:10.340130",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 91.0,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 781.8149999999991,
+        "largest_contentful_paint": 1333.5759999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1260.9999999999995,
+        "speed_index": 3199.589029935897,
+        "interactive": 4811.952499999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-05-16T08:16:07.590644",
-  "total_tests": 440,
+  "last_updated": "2026-05-17T08:33:30.675492",
+  "total_tests": 442,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -11443,6 +11443,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-17T08:33:30.627836",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1982.658,
+        "largest_contentful_paint": 2083.658,
+        "cumulative_layout_shift": 0.297617,
+        "total_blocking_time": 486.9999999999998,
+        "speed_index": 2554.7812010296634,
+        "interactive": 3088.7419999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-17T08:33:30.675492",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3775.4585,
+        "largest_contentful_paint": 5158.5195,
+        "cumulative_layout_shift": 0.271113,
+        "total_blocking_time": 2961.499999999999,
+        "speed_index": 5545.314310383152,
+        "interactive": 9205.763500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
