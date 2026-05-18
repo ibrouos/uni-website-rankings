@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-05-17T08:34:44.811252",
-  "total_tests": 442,
+  "last_updated": "2026-05-18T10:17:13.649031",
+  "total_tests": 444,
   "results": [
     {
       "name": "University of Essex",
@@ -11495,6 +11495,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-18T10:17:12.570313",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1332.1899999999996,
+        "largest_contentful_paint": 6810.814517646484,
+        "cumulative_layout_shift": 0.072924,
+        "total_blocking_time": 5002.085500000002,
+        "speed_index": 6157.665722917785,
+        "interactive": 11162.988075000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-18T10:17:13.649031",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2496.602,
+        "largest_contentful_paint": 24367.15549999998,
+        "cumulative_layout_shift": 0.072924,
+        "total_blocking_time": 26869.11929000001,
+        "speed_index": 19351.55996421536,
+        "interactive": 47284.31131100003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-05-17T08:26:40.739067",
-  "total_tests": 440,
+  "last_updated": "2026-05-18T10:08:55.920643",
+  "total_tests": 442,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -11443,6 +11443,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-18T10:08:54.950315",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 922.497,
+        "largest_contentful_paint": 3074.8845,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2007,
+        "speed_index": 2889.2314716302044,
+        "interactive": 5779.803538
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-18T10:08:55.920643",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4103.9251,
+        "largest_contentful_paint": 9056.000500000004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17226,
+        "speed_index": 6555.829217519866,
+        "interactive": 29495.257301999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
