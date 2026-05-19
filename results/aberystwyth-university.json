@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-05-18T10:15:52.398760",
-  "total_tests": 444,
+  "last_updated": "2026-05-19T09:54:29.321511",
+  "total_tests": 446,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -11543,6 +11543,58 @@
         "total_blocking_time": 367.54800000000023,
         "speed_index": 2274.52056298691,
         "interactive": 2182.8691999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-19T09:54:05.047072",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 19.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2503.4355,
+        "largest_contentful_paint": 6619.4355,
+        "cumulative_layout_shift": 0.9270160000000001,
+        "total_blocking_time": 1677,
+        "speed_index": 5242.146929233361,
+        "interactive": 7238.1855
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-19T09:54:29.321511",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 864.5350000000001,
+        "largest_contentful_paint": 1071.535,
+        "cumulative_layout_shift": 0.72175,
+        "total_blocking_time": 325.7729999999998,
+        "speed_index": 2119.524161721691,
+        "interactive": 2075.6007
       },
       "throttling_config": {
         "method": "simulate",

@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-05-18T10:17:13.649031",
-  "total_tests": 444,
+  "last_updated": "2026-05-19T09:55:35.164145",
+  "total_tests": 446,
   "results": [
     {
       "name": "University of Essex",
@@ -11547,6 +11547,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-19T09:55:34.574372",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2511.67,
+        "largest_contentful_paint": 26041.474500000008,
+        "cumulative_layout_shift": 0.072924,
+        "total_blocking_time": 23888.999999999993,
+        "speed_index": 18794.2838234361,
+        "interactive": 45686.936526000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-19T09:55:35.164145",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 92.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1384.958,
+        "largest_contentful_paint": 5569.051259999997,
+        "cumulative_layout_shift": 0.072904,
+        "total_blocking_time": 4803.325677474978,
+        "speed_index": 7452.708486889629,
+        "interactive": 10527.23075477753
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
