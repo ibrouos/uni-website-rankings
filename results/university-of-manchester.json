@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-05-19T09:46:21.296176",
-  "total_tests": 444,
+  "last_updated": "2026-05-20T09:37:31.673733",
+  "total_tests": 446,
   "results": [
     {
       "name": "University of Manchester",
@@ -11547,6 +11547,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-20T09:37:28.127823",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2724.1304999999998,
+        "largest_contentful_paint": 6633.006499999998,
+        "cumulative_layout_shift": 2.2e-05,
+        "total_blocking_time": 17803.797499999993,
+        "speed_index": 3835.1891913680142,
+        "interactive": 35054.73575
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-20T09:37:31.673733",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1606.1665000000003,
+        "largest_contentful_paint": 3180.3464999999997,
+        "cumulative_layout_shift": 2.2e-05,
+        "total_blocking_time": 3606.998999999998,
+        "speed_index": 2360.7370694418023,
+        "interactive": 8070.540149999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

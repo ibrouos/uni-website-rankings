@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-05-19T09:52:23.935584",
-  "total_tests": 444,
+  "last_updated": "2026-05-20T09:43:40.731825",
+  "total_tests": 446,
   "results": [
     {
       "name": "City, University of London",
@@ -11547,6 +11547,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-20T09:43:40.685962",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1358.008,
+        "largest_contentful_paint": 3146.7,
+        "cumulative_layout_shift": 0.038306999999999994,
+        "total_blocking_time": 1009.1039999999996,
+        "speed_index": 2498.730818677739,
+        "interactive": 4608.820599999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-20T09:43:40.731825",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4892.527999999999,
+        "largest_contentful_paint": 8753.942000000003,
+        "cumulative_layout_shift": 0.038185,
+        "total_blocking_time": 3557.1687500000025,
+        "speed_index": 7511.595347472139,
+        "interactive": 17973.740300000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

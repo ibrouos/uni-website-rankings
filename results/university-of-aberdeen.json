@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-05-19T09:50:13.378410",
-  "total_tests": 432,
+  "last_updated": "2026-05-20T09:41:21.364573",
+  "total_tests": 434,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -11235,6 +11235,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-20T09:41:19.992841",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1466.676,
+        "largest_contentful_paint": 2518.8005000000003,
+        "cumulative_layout_shift": 0.287458,
+        "total_blocking_time": 271.95450000000005,
+        "speed_index": 5712.324939357353,
+        "interactive": 2661.1306000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-20T09:41:21.364573",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 13.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2789.8459999999995,
+        "largest_contentful_paint": 9112.8,
+        "cumulative_layout_shift": 0.371675,
+        "total_blocking_time": 4271,
+        "speed_index": 13970.213144468074,
+        "interactive": 17071.671
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
