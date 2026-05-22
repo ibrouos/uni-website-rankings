@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-05-21T09:42:55.814424",
-  "total_tests": 450,
+  "last_updated": "2026-05-22T09:26:23.293916",
+  "total_tests": 452,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -11699,6 +11699,58 @@
         "total_blocking_time": 30,
         "speed_index": 1765.020953683759,
         "interactive": 1185.2635000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-22T09:26:17.151217",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1218.8780000000002,
+        "largest_contentful_paint": 3843.878,
+        "cumulative_layout_shift": 0.038436,
+        "total_blocking_time": 653.5,
+        "speed_index": 2217.9869656987985,
+        "interactive": 5147.878000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-22T09:26:23.293916",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 91.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 613.9685,
+        "largest_contentful_paint": 1257.9685,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 68,
+        "speed_index": 1849.9117904500858,
+        "interactive": 1259.4685
       },
       "throttling_config": {
         "method": "simulate",
