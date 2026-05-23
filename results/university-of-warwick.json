@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-05-22T09:26:59.313701",
-  "total_tests": 448,
+  "last_updated": "2026-05-23T08:22:47.930605",
+  "total_tests": 450,
   "results": [
     {
       "name": "University of Warwick",
@@ -11651,6 +11651,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-23T08:22:47.855988",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5385.5419999999995,
+        "largest_contentful_paint": 10055.506,
+        "cumulative_layout_shift": 0.019518,
+        "total_blocking_time": 665,
+        "speed_index": 5922.358914221575,
+        "interactive": 10085.6348
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-23T08:22:47.930605",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 95.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1865.629,
+        "largest_contentful_paint": 2770.089,
+        "cumulative_layout_shift": 0.018273,
+        "total_blocking_time": 60.5,
+        "speed_index": 2070.2743300127354,
+        "interactive": 2861.24635
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

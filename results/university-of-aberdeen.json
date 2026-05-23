@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-05-22T09:31:22.863266",
-  "total_tests": 438,
+  "last_updated": "2026-05-23T08:27:17.534120",
+  "total_tests": 440,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -11387,6 +11387,58 @@
         "total_blocking_time": 4225.499999999999,
         "speed_index": 12912.889672804295,
         "interactive": 11370.218
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-23T08:27:15.916272",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1134.1209999999992,
+        "largest_contentful_paint": 2783.7509999999993,
+        "cumulative_layout_shift": 0.133075,
+        "total_blocking_time": 800.2519999999995,
+        "speed_index": 4951.292020181702,
+        "interactive": 2783.7509999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-23T08:27:17.534120",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2656.781,
+        "largest_contentful_paint": 9443.952999999998,
+        "cumulative_layout_shift": 0.122187,
+        "total_blocking_time": 4159.9155,
+        "speed_index": 12351.407455304454,
+        "interactive": 9998.91575
       },
       "throttling_config": {
         "method": "simulate",

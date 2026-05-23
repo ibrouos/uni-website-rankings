@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-05-22T09:28:45.123862",
-  "total_tests": 450,
+  "last_updated": "2026-05-23T08:24:34.268740",
+  "total_tests": 452,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -11703,6 +11703,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-23T08:24:33.286170",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3899.349250000001,
+        "largest_contentful_paint": 11478.800099999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13509.43145,
+        "speed_index": 6403.241022612292,
+        "interactive": 27611.017925000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-23T08:24:34.268740",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1062.0900000000001,
+        "largest_contentful_paint": 2767.21825,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2867.4009999999994,
+        "speed_index": 2591.9868482252523,
+        "interactive": 6790.4029
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
