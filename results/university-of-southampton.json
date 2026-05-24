@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-05-23T08:24:07.093235",
-  "total_tests": 454,
+  "last_updated": "2026-05-24T08:32:51.453417",
+  "total_tests": 456,
   "results": [
     {
       "name": "University of Southampton",
@@ -11807,6 +11807,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-24T08:32:46.273197",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1848.5525,
+        "largest_contentful_paint": 2071.5365,
+        "cumulative_layout_shift": 0.008944,
+        "total_blocking_time": 11465.27199999999,
+        "speed_index": 3964.2526876409083,
+        "interactive": 25521.35007999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-24T08:32:51.453417",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1128.9702,
+        "largest_contentful_paint": 3882.661050000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2044.000000000001,
+        "speed_index": 2255.0627693136043,
+        "interactive": 6647.508791000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

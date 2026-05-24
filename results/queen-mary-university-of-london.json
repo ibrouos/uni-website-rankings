@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-05-23T08:24:34.268740",
-  "total_tests": 452,
+  "last_updated": "2026-05-24T08:33:13.589315",
+  "total_tests": 454,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -11755,6 +11755,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-24T08:33:11.944316",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 890.6695,
+        "largest_contentful_paint": 3216.694,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1857.9999999999995,
+        "speed_index": 2395.632780071802,
+        "interactive": 5230.553525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-24T08:33:13.589315",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4023.2554999999984,
+        "largest_contentful_paint": 8776.678999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12020.575319999993,
+        "speed_index": 5708.901523942363,
+        "interactive": 25984.537147999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
