@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-05-24T08:36:10.522909",
-  "total_tests": 455,
+  "last_updated": "2026-05-25T10:14:19.949231",
+  "total_tests": 457,
   "results": [
     {
       "name": "University of Dundee",
@@ -11833,6 +11833,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-25T10:14:03.800863",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 85.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 881.2722368927002,
+        "largest_contentful_paint": 1891.0659999999998,
+        "cumulative_layout_shift": 3.2000000000000005e-05,
+        "total_blocking_time": 999.1332631072997,
+        "speed_index": 3930.9744420112042,
+        "interactive": 3939.7586499999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-25T10:14:19.949231",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 85.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1328.9940000000001,
+        "largest_contentful_paint": 4326.29525,
+        "cumulative_layout_shift": 3.2000000000000005e-05,
+        "total_blocking_time": 13950.091250000001,
+        "speed_index": 11104.257352387376,
+        "interactive": 21945.626125000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
