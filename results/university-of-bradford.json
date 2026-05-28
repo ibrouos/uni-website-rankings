@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2026-05-27T10:04:52.196848",
-  "total_tests": 462,
+  "last_updated": "2026-05-28T10:15:42.991357",
+  "total_tests": 464,
   "results": [
     {
       "name": "University of Bradford",
@@ -12011,6 +12011,58 @@
         "total_blocking_time": 10,
         "speed_index": 1421.9096166676964,
         "interactive": 1792.936412
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-28T10:15:41.541450",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2685.906,
+        "largest_contentful_paint": 3604.7090000000003,
+        "cumulative_layout_shift": 0.040272999999999996,
+        "total_blocking_time": 359,
+        "speed_index": 3900.829231677465,
+        "interactive": 5454.9615
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-28T10:15:42.991357",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1100.3664999999996,
+        "largest_contentful_paint": 1504.7464999999997,
+        "cumulative_layout_shift": 0.040272999999999996,
+        "total_blocking_time": 0,
+        "speed_index": 1314.5178483988793,
+        "interactive": 1504.7464999999997
       },
       "throttling_config": {
         "method": "simulate",

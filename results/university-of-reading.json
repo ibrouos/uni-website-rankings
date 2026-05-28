@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-05-27T10:00:02.035516",
-  "total_tests": 460,
+  "last_updated": "2026-05-28T10:11:02.614348",
+  "total_tests": 462,
   "results": [
     {
       "name": "University of Reading",
@@ -11963,6 +11963,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-28T10:11:01.219730",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6720.36,
+        "largest_contentful_paint": 10633.714000000002,
+        "cumulative_layout_shift": 0.00293,
+        "total_blocking_time": 2279,
+        "speed_index": 7628.918470248464,
+        "interactive": 22829.1328
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-28T10:11:02.614348",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2663.421,
+        "largest_contentful_paint": 3135.036999999999,
+        "cumulative_layout_shift": 0.002883,
+        "total_blocking_time": 297,
+        "speed_index": 3124.082729444409,
+        "interactive": 5715.4816999999975
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
