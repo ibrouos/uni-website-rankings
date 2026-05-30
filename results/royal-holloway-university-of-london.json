@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-05-29T10:10:18.915030",
-  "total_tests": 466,
+  "last_updated": "2026-05-30T08:38:43.108388",
+  "total_tests": 468,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -12119,6 +12119,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-30T08:38:40.099691",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1882.4575000000002,
+        "largest_contentful_paint": 3763.9975000000004,
+        "cumulative_layout_shift": 0.03648,
+        "total_blocking_time": 1390.6244999999997,
+        "speed_index": 3361.6132253886894,
+        "interactive": 6346.971975
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-30T08:38:43.108388",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5638.4085,
+        "largest_contentful_paint": 30239.324499999988,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13258.294500000002,
+        "speed_index": 7652.373746936577,
+        "interactive": 30633.31289999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
