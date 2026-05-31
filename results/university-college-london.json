@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2026-05-30T08:31:00.348827",
-  "total_tests": 468,
+  "last_updated": "2026-05-31T08:48:38.219007",
+  "total_tests": 470,
   "results": [
     {
       "name": "University College London",
@@ -12171,6 +12171,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-31T08:48:35.861941",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 89.0,
+        "best_practices": 93.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 284.198,
+        "largest_contentful_paint": 1240.346,
+        "cumulative_layout_shift": 0.000211,
+        "total_blocking_time": 7769.0495,
+        "speed_index": 996.8356120596566,
+        "interactive": 11677.342550000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-31T08:48:38.219007",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 89.0,
+        "best_practices": 93.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 945.002,
+        "largest_contentful_paint": 3931.9869999999996,
+        "cumulative_layout_shift": 0.000211,
+        "total_blocking_time": 40836.750499999995,
+        "speed_index": 2579.4485230659157,
+        "interactive": 46497.577450000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

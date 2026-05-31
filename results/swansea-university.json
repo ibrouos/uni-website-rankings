@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-05-30T08:37:06.066247",
-  "total_tests": 466,
+  "last_updated": "2026-05-31T08:56:01.418241",
+  "total_tests": 468,
   "results": [
     {
       "name": "Swansea University",
@@ -12115,6 +12115,58 @@
         "total_blocking_time": 2373.208999999999,
         "speed_index": 3188.6573720716347,
         "interactive": 6836.010099999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-05-31T08:56:00.383070",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2745.3950000000004,
+        "largest_contentful_paint": 8539.152999999998,
+        "cumulative_layout_shift": 0.00017,
+        "total_blocking_time": 19685.055280000008,
+        "speed_index": 8998.348680628536,
+        "interactive": 34021.685827
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-05-31T08:56:01.418241",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1232.1176,
+        "largest_contentful_paint": 1838.1127999999999,
+        "cumulative_layout_shift": 0.00017,
+        "total_blocking_time": 4052.187,
+        "speed_index": 3942.6332949162957,
+        "interactive": 8821.639080000003
       },
       "throttling_config": {
         "method": "simulate",
