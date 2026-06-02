@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-06-01T11:37:32.523547",
-  "total_tests": 470,
+  "last_updated": "2026-06-02T10:26:31.465377",
+  "total_tests": 472,
   "results": [
     {
       "name": "University of Manchester",
@@ -12219,6 +12219,58 @@
         "total_blocking_time": 3506.4999999999973,
         "speed_index": 1204.7056943805119,
         "interactive": 8322.660675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-02T10:26:30.665393",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7824.605,
+        "largest_contentful_paint": 13432.978499999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 20309.64575000001,
+        "speed_index": 7824.605,
+        "interactive": 36130.897425
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-02T10:26:31.465377",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2434.3489999999997,
+        "largest_contentful_paint": 2532.79564465332,
+        "cumulative_layout_shift": 1.7e-05,
+        "total_blocking_time": 4010.0000000000027,
+        "speed_index": 2687.697123583338,
+        "interactive": 8575.639855500001
       },
       "throttling_config": {
         "method": "simulate",

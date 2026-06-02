@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-06-01T11:40:36.055940",
-  "total_tests": 456,
+  "last_updated": "2026-06-02T10:30:14.262225",
+  "total_tests": 458,
   "results": [
     {
       "name": "University of St Andrews",
@@ -11859,6 +11859,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-02T10:30:03.262425",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6738.95,
+        "largest_contentful_paint": 8163.950000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 15266.235000000002,
+        "speed_index": 6738.95,
+        "interactive": 32463.347400000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-02T10:30:14.262225",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1739.2165,
+        "largest_contentful_paint": 2339.2165000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3144.6234999999997,
+        "speed_index": 2591.378716059016,
+        "interactive": 7613.7382750000015
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

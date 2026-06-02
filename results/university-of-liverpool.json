@@ -2,8 +2,8 @@
   "name": "University of Liverpool",
   "slug": "university-of-liverpool",
   "url": "https://www.liverpool.ac.uk",
-  "last_updated": "2026-06-01T11:39:50.751061",
-  "total_tests": 472,
+  "last_updated": "2026-06-02T10:29:17.011101",
+  "total_tests": 474,
   "results": [
     {
       "name": "University of Liverpool",
@@ -12275,6 +12275,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-02T10:29:14.896742",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1647.0170000000003,
+        "largest_contentful_paint": 8686.512000000002,
+        "cumulative_layout_shift": 0.034835,
+        "total_blocking_time": 7299.841000000002,
+        "speed_index": 6794.350042601758,
+        "interactive": 21098.277800000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-02T10:29:17.011101",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2623.582,
+        "largest_contentful_paint": 3592.9699999999993,
+        "cumulative_layout_shift": 0.011536,
+        "total_blocking_time": 1521.321,
+        "speed_index": 3837.651429253535,
+        "interactive": 5436.2929
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
