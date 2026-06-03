@@ -2,8 +2,8 @@
   "name": "University of Exeter",
   "slug": "university-of-exeter",
   "url": "https://www.exeter.ac.uk",
-  "last_updated": "2026-06-02T10:28:17.316212",
-  "total_tests": 474,
+  "last_updated": "2026-06-03T11:03:25.992094",
+  "total_tests": 476,
   "results": [
     {
       "name": "University of Exeter",
@@ -12327,6 +12327,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-03T11:03:19.674862",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2640.9750000000004,
+        "largest_contentful_paint": 10780.929000000004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6444.049380000001,
+        "speed_index": 6680.072144991897,
+        "interactive": 13253.508142000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Exeter",
+      "url": "https://www.exeter.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-03T11:03:25.992094",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 818.453,
+        "largest_contentful_paint": 3105.4527399999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 768.1754999999996,
+        "speed_index": 2269.1796604277997,
+        "interactive": 3117.17134
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
