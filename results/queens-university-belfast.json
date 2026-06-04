@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-06-02T10:31:44.593315",
-  "total_tests": 472,
+  "last_updated": "2026-06-04T10:03:12.876551",
+  "total_tests": 474,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -12275,6 +12275,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-04T10:03:11.543355",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1426.403,
+        "largest_contentful_paint": 2842.8185000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8741.5,
+        "speed_index": 3082.486877488163,
+        "interactive": 12532.124
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-04T10:03:12.876551",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3767.867000000001,
+        "largest_contentful_paint": 8307.206500000002,
+        "cumulative_layout_shift": 0.08643203255492982,
+        "total_blocking_time": 39627.535999999935,
+        "speed_index": 5652.256726405887,
+        "interactive": 53458.16579999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
