@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-06-04T09:58:38.668604",
-  "total_tests": 474,
+  "last_updated": "2026-06-05T09:53:47.079559",
+  "total_tests": 476,
   "results": [
     {
       "name": "University of Warwick",
@@ -12327,6 +12327,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-05T09:53:46.913983",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1913.7330000000002,
+        "largest_contentful_paint": 2393.733,
+        "cumulative_layout_shift": 0.08629850572251338,
+        "total_blocking_time": 300.0000000000002,
+        "speed_index": 2468.24220794855,
+        "interactive": 3076.911
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-05T09:53:47.079559",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7214.654,
+        "largest_contentful_paint": 8184.955999999998,
+        "cumulative_layout_shift": 0.08638679736197379,
+        "total_blocking_time": 1922.4674999999988,
+        "speed_index": 7214.654,
+        "interactive": 11474.35615
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

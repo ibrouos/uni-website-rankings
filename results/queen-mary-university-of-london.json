@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-06-04T10:00:30.637807",
-  "total_tests": 474,
+  "last_updated": "2026-06-05T09:55:49.738953",
+  "total_tests": 476,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -12327,6 +12327,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-05T09:55:48.885506",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 967.0835000000001,
+        "largest_contentful_paint": 2898.031,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2433.157250000002,
+        "speed_index": 2839.751804455742,
+        "interactive": 6444.789525000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-05T09:55:49.738953",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4013.2139999999995,
+        "largest_contentful_paint": 13069.871499999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 11170.459039999996,
+        "speed_index": 6427.415745018687,
+        "interactive": 25627.24350599999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
