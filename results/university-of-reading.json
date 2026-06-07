@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-06-06T08:41:26.395965",
-  "total_tests": 480,
+  "last_updated": "2026-06-07T09:05:21.457904",
+  "total_tests": 482,
   "results": [
     {
       "name": "University of Reading",
@@ -12483,6 +12483,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-07T09:05:20.738209",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1958.9679999999996,
+        "largest_contentful_paint": 3809.3019999999997,
+        "cumulative_layout_shift": 0.001284050537127653,
+        "total_blocking_time": 573.5000000000005,
+        "speed_index": 2226.113726282223,
+        "interactive": 5077.670799999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-07T09:05:21.457904",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6211.011,
+        "largest_contentful_paint": 14747.707999999999,
+        "cumulative_layout_shift": 0.002550280057072263,
+        "total_blocking_time": 5162.999999999998,
+        "speed_index": 6906.65090082292,
+        "interactive": 24175.542
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
