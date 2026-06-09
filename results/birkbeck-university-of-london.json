@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-06-08T11:05:08.863180",
-  "total_tests": 468,
+  "last_updated": "2026-06-09T09:55:54.847268",
+  "total_tests": 470,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -12171,6 +12171,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-09T09:55:51.684278",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1848.868,
+        "largest_contentful_paint": 3554.9999999999995,
+        "cumulative_layout_shift": 0.061502792586763604,
+        "total_blocking_time": 3345.3794999999996,
+        "speed_index": 4713.083615417465,
+        "interactive": 11635.873099999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-09T09:55:54.847268",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 532.5719999999999,
+        "largest_contentful_paint": 906.4580000000001,
+        "cumulative_layout_shift": 0.06328396170841645,
+        "total_blocking_time": 529.5000000000002,
+        "speed_index": 1397.8397196925491,
+        "interactive": 2579.9563500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
