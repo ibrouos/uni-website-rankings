@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-06-09T09:52:58.026152",
-  "total_tests": 486,
+  "last_updated": "2026-06-10T10:10:43.306873",
+  "total_tests": 488,
   "results": [
     {
       "name": "University of Reading",
@@ -12639,6 +12639,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-10T10:09:31.692127",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 77.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2279.7895,
+        "largest_contentful_paint": 4682.700750000001,
+        "cumulative_layout_shift": 0.002558995042878805,
+        "total_blocking_time": 205.00000000000045,
+        "speed_index": 2748.747504382498,
+        "interactive": 5433.506925000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-10T10:10:43.306873",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6391.136,
+        "largest_contentful_paint": 18438.150999999998,
+        "cumulative_layout_shift": 0.1706703832258769,
+        "total_blocking_time": 1664,
+        "speed_index": 11131.359559342423,
+        "interactive": 21616.444999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

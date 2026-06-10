@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-06-09T09:46:58.655600",
-  "total_tests": 484,
+  "last_updated": "2026-06-10T10:03:59.948434",
+  "total_tests": 486,
   "results": [
     {
       "name": "University of Warwick",
@@ -12583,6 +12583,58 @@
         "total_blocking_time": 87.5,
         "speed_index": 1783.9175575655381,
         "interactive": 2437.1445
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-10T10:03:55.769019",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6490.745000000001,
+        "largest_contentful_paint": 8755.4375,
+        "cumulative_layout_shift": 8.82916394604065e-05,
+        "total_blocking_time": 975,
+        "speed_index": 7467.441249996888,
+        "interactive": 10748.177950000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-10T10:03:59.948434",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 97.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2300.0155,
+        "largest_contentful_paint": 3245.128,
+        "cumulative_layout_shift": 8.82916394604065e-05,
+        "total_blocking_time": 46,
+        "speed_index": 2620.9155547028927,
+        "interactive": 3300.9260000000004
       },
       "throttling_config": {
         "method": "simulate",

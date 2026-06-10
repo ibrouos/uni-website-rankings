@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-06-09T09:54:49.183568",
-  "total_tests": 486,
+  "last_updated": "2026-06-10T10:11:18.682224",
+  "total_tests": 488,
   "results": [
     {
       "name": "City, University of London",
@@ -12639,6 +12639,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-10T10:11:03.510890",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5001.073500000002,
+        "largest_contentful_paint": 9864.144250000001,
+        "cumulative_layout_shift": 0.043847141094774514,
+        "total_blocking_time": 1586.0000000000027,
+        "speed_index": 6284.772202460724,
+        "interactive": 16026.895925
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-10T10:11:18.682224",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2208.6132500000003,
+        "largest_contentful_paint": 3977.7864999999993,
+        "cumulative_layout_shift": 0.07974484714638756,
+        "total_blocking_time": 354.5000000000001,
+        "speed_index": 3108.2212484443717,
+        "interactive": 4395.541375
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

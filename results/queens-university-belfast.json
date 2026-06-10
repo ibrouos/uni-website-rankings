@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-06-09T09:52:00.955136",
-  "total_tests": 482,
+  "last_updated": "2026-06-10T10:08:36.417005",
+  "total_tests": 484,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -12535,6 +12535,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-10T10:08:35.432820",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7179.817999999999,
+        "largest_contentful_paint": 15016.632999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 29859.059999999998,
+        "speed_index": 7659.926011540561,
+        "interactive": 41895.028
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-10T10:08:36.417005",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1263.6485,
+        "largest_contentful_paint": 2710.2025,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5871.528000000001,
+        "speed_index": 2420.7052652303373,
+        "interactive": 8836.582350000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

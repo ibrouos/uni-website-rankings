@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-06-09T09:58:47.050808",
-  "total_tests": 488,
+  "last_updated": "2026-06-10T10:03:10.476167",
+  "total_tests": 490,
   "results": [
     {
       "name": "King's College London",
@@ -12691,6 +12691,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-10T10:03:05.908679",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3282.6140000000005,
+        "largest_contentful_paint": 7258.9715000000015,
+        "cumulative_layout_shift": 0.03607552607373964,
+        "total_blocking_time": 14949.730000000001,
+        "speed_index": 6998.727544731688,
+        "interactive": 24712.3217
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-10T10:03:10.476167",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 66.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1520.464,
+        "largest_contentful_paint": 2254.832,
+        "cumulative_layout_shift": 0.02586925999034443,
+        "total_blocking_time": 2058.9999999999995,
+        "speed_index": 2494.4459190327157,
+        "interactive": 6574.696899999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
