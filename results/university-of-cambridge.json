@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2026-06-11T10:26:15.073619",
-  "total_tests": 492,
+  "last_updated": "2026-06-12T10:15:09.183459",
+  "total_tests": 494,
   "results": [
     {
       "name": "University of Cambridge",
@@ -12795,6 +12795,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-12T10:15:08.192413",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 77.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2468.5315,
+        "largest_contentful_paint": 8087.018500000001,
+        "cumulative_layout_shift": 0.04295927459181579,
+        "total_blocking_time": 6664.892000000002,
+        "speed_index": 4454.650714222953,
+        "interactive": 16773.519300000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-12T10:15:09.183459",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 77.0
+      },
+      "metrics": {
+        "first_contentful_paint": 645.875,
+        "largest_contentful_paint": 2135.779,
+        "cumulative_layout_shift": 0.04295927459181579,
+        "total_blocking_time": 1075.9999999999995,
+        "speed_index": 1714.004272416632,
+        "interactive": 3227.2402999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
