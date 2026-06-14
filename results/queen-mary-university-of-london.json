@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-06-13T09:21:40.347266",
-  "total_tests": 490,
+  "last_updated": "2026-06-14T09:39:30.527293",
+  "total_tests": 492,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -12743,6 +12743,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-14T09:39:26.341825",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4149.044000000001,
+        "largest_contentful_paint": 9658.724000000002,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 14805.493499999997,
+        "speed_index": 6235.798628531282,
+        "interactive": 28262.641350000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-14T09:39:30.527293",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 899.1070000000001,
+        "largest_contentful_paint": 2619.9495,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2536.914499999998,
+        "speed_index": 2529.450330375611,
+        "interactive": 6225.719449999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
