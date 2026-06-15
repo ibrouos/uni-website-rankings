@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-06-14T09:46:43.711480",
-  "total_tests": 480,
+  "last_updated": "2026-06-15T12:26:10.260625",
+  "total_tests": 482,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -12483,6 +12483,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-15T12:26:08.979663",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1837.8494999999998,
+        "largest_contentful_paint": 3361.5910000000003,
+        "cumulative_layout_shift": 0.10158141453378974,
+        "total_blocking_time": 7238.746,
+        "speed_index": 5639.051369259812,
+        "interactive": 14788.3112
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-15T12:26:10.260625",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 615.228,
+        "largest_contentful_paint": 1093.454,
+        "cumulative_layout_shift": 0.06362800610929106,
+        "total_blocking_time": 614.0375000000005,
+        "speed_index": 1623.2219797608661,
+        "interactive": 2795.4617500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

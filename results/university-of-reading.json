@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-06-14T09:43:42.634820",
-  "total_tests": 496,
+  "last_updated": "2026-06-15T12:23:15.747861",
+  "total_tests": 498,
   "results": [
     {
       "name": "University of Reading",
@@ -12899,6 +12899,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-15T12:23:11.630496",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1827.1309999999999,
+        "largest_contentful_paint": 3456.2590000000005,
+        "cumulative_layout_shift": 0.0038430455800064585,
+        "total_blocking_time": 167.49999999999977,
+        "speed_index": 2000.5257296486861,
+        "interactive": 4589.2914500000015
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-15T12:23:15.747861",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6046.5125,
+        "largest_contentful_paint": 14910.097000000005,
+        "cumulative_layout_shift": 0.002558995042878805,
+        "total_blocking_time": 2208.500000000002,
+        "speed_index": 10861.866983260576,
+        "interactive": 21006.10940000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
