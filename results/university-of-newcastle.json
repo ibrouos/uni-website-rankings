@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2026-06-15T12:21:28.571275",
-  "total_tests": 497,
+  "last_updated": "2026-06-16T11:17:50.089248",
+  "total_tests": 499,
   "results": [
     {
       "name": "University of Newcastle",
@@ -12925,6 +12925,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-16T11:17:49.957167",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1170.0339999999999,
+        "largest_contentful_paint": 2472.293,
+        "cumulative_layout_shift": 9.936230528116527e-05,
+        "total_blocking_time": 2320.81475,
+        "speed_index": 2163.249197979349,
+        "interactive": 6118.745275
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-16T11:17:50.089248",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3054.94775,
+        "largest_contentful_paint": 9984.001499999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12792.856740000005,
+        "speed_index": 6969.144721296325,
+        "interactive": 25730.304297000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
