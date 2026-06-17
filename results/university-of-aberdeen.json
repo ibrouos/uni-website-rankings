@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-06-16T11:18:23.426989",
-  "total_tests": 470,
+  "last_updated": "2026-06-17T11:03:59.727219",
+  "total_tests": 472,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -12223,6 +12223,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-17T11:03:54.356438",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2986.3815999999997,
+        "largest_contentful_paint": 11704.0105,
+        "cumulative_layout_shift": 0.1903710514793961,
+        "total_blocking_time": 3662.3460999999998,
+        "speed_index": 12915.545906610438,
+        "interactive": 11712.575420000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-17T11:03:59.727219",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1376.37,
+        "largest_contentful_paint": 2983.7529999999997,
+        "cumulative_layout_shift": 0.2537536794051032,
+        "total_blocking_time": 524.8610000000003,
+        "speed_index": 5477.060121557205,
+        "interactive": 3007.5922
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
