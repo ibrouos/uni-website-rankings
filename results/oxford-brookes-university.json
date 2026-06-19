@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-06-18T10:31:23.767215",
-  "total_tests": 506,
+  "last_updated": "2026-06-19T10:37:13.700998",
+  "total_tests": 508,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -13159,6 +13159,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-19T10:37:13.511916",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 22.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2762.556,
+        "largest_contentful_paint": 15894.221,
+        "cumulative_layout_shift": 0.2073079972164221,
+        "total_blocking_time": 8816.15625000001,
+        "speed_index": 9033.957845803845,
+        "interactive": 24913.79112500001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:37:13.700998",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 95.0,
+        "best_practices": 71.0,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1384.303,
+        "largest_contentful_paint": 3386.59375,
+        "cumulative_layout_shift": 0.2074659706680239,
+        "total_blocking_time": 1751.9777500000005,
+        "speed_index": 3385.0476198382357,
+        "interactive": 5586.435725000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

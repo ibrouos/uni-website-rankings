@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-06-18T10:28:13.617894",
-  "total_tests": 474,
+  "last_updated": "2026-06-19T10:33:55.634442",
+  "total_tests": 476,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -12327,6 +12327,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-19T10:33:54.442371",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3134.415,
+        "largest_contentful_paint": 9355.531500000001,
+        "cumulative_layout_shift": 0.1206778696208596,
+        "total_blocking_time": 6768.999999999998,
+        "speed_index": 14640.243720936149,
+        "interactive": 17080.4393
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:33:55.634442",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1525.4489999999998,
+        "largest_contentful_paint": 2596.0214999999994,
+        "cumulative_layout_shift": 0.18649270720572153,
+        "total_blocking_time": 628.0677500000004,
+        "speed_index": 5817.2618570420145,
+        "interactive": 2986.7315750000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

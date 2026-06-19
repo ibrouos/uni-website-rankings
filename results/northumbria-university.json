@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-06-18T10:34:19.568484",
-  "total_tests": 506,
+  "last_updated": "2026-06-19T10:40:03.557875",
+  "total_tests": 508,
   "results": [
     {
       "name": "Northumbria University",
@@ -13159,6 +13159,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-19T10:40:03.480203",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5319.8765,
+        "largest_contentful_paint": 15538.931999999999,
+        "cumulative_layout_shift": 0.03919660903342393,
+        "total_blocking_time": 9128.681999999999,
+        "speed_index": 9683.438199964003,
+        "interactive": 27045.4293
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:40:03.557875",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2186.9725,
+        "largest_contentful_paint": 3936.3540000000003,
+        "cumulative_layout_shift": 0.03807455461083167,
+        "total_blocking_time": 1300.5000000000023,
+        "speed_index": 3563.182490075549,
+        "interactive": 5843.332150000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

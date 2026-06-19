@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-06-18T10:34:18.882358",
-  "total_tests": 506,
+  "last_updated": "2026-06-19T10:40:44.598275",
+  "total_tests": 507,
   "results": [
     {
       "name": "University of Essex",
@@ -13159,6 +13159,32 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:40:44.598275",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1467.926,
+        "largest_contentful_paint": 4473.976,
+        "cumulative_layout_shift": 0.07292362560552847,
+        "total_blocking_time": 7288.500000000009,
+        "speed_index": 8928.137169924306,
+        "interactive": 13009.720150000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

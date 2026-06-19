@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-06-18T10:31:20.840668",
-  "total_tests": 502,
+  "last_updated": "2026-06-19T10:37:06.074286",
+  "total_tests": 504,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -13055,6 +13055,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:37:05.173693",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1486.193,
+        "largest_contentful_paint": 1778.3638999999998,
+        "cumulative_layout_shift": 0.00047362298323868853,
+        "total_blocking_time": 790.6964499999995,
+        "speed_index": 2515.4904965791566,
+        "interactive": 4720.141405
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-19T10:37:06.074286",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3378.327,
+        "largest_contentful_paint": 8519.8175,
+        "cumulative_layout_shift": 0.00047362298323868853,
+        "total_blocking_time": 4304.627249999999,
+        "speed_index": 6432.737547294073,
+        "interactive": 19016.0836
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

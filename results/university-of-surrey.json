@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2026-06-18T10:27:17.000703",
-  "total_tests": 506,
+  "last_updated": "2026-06-19T10:33:02.167267",
+  "total_tests": 508,
   "results": [
     {
       "name": "University of Surrey",
@@ -13159,6 +13159,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-19T10:33:00.967738",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2960.1399999999994,
+        "largest_contentful_paint": 3260.9399999999996,
+        "cumulative_layout_shift": 0.4617253948967193,
+        "total_blocking_time": 1895.7000000000007,
+        "speed_index": 4973.948965871745,
+        "interactive": 8337.446
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-19T10:33:02.167267",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1520.8860000000002,
+        "largest_contentful_paint": 1520.8860000000002,
+        "cumulative_layout_shift": 0.4617253948967193,
+        "total_blocking_time": 69,
+        "speed_index": 2197.5180522499936,
+        "interactive": 2409.1189000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
