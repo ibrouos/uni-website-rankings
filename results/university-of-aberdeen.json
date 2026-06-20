@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-06-19T10:33:55.634442",
-  "total_tests": 476,
+  "last_updated": "2026-06-20T09:04:08.952860",
+  "total_tests": 478,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -12379,6 +12379,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-20T09:04:08.607275",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1379.6149999999998,
+        "largest_contentful_paint": 3285.0779999999995,
+        "cumulative_layout_shift": 0.2410136903826706,
+        "total_blocking_time": 760.495000000001,
+        "speed_index": 4296.991344045398,
+        "interactive": 3299.2312999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-20T09:04:08.952860",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2974.502,
+        "largest_contentful_paint": 9941.638,
+        "cumulative_layout_shift": 0.051170704791652574,
+        "total_blocking_time": 3810.4455000000003,
+        "speed_index": 13028.697749415507,
+        "interactive": 10130.016300000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
