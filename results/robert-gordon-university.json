@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-06-20T09:09:16.409998",
-  "total_tests": 509,
+  "last_updated": "2026-06-21T10:03:07.724735",
+  "total_tests": 511,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -13237,6 +13237,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-21T10:02:58.557734",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3449.1884999999997,
+        "largest_contentful_paint": 11499.121500000001,
+        "cumulative_layout_shift": 0.0002986029347399358,
+        "total_blocking_time": 1058,
+        "speed_index": 5766.8210664798025,
+        "interactive": 13325.2524
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-21T10:03:07.724735",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1652.4162999999996,
+        "largest_contentful_paint": 3568.3116999999993,
+        "cumulative_layout_shift": 0.0002986029347399358,
+        "total_blocking_time": 473,
+        "speed_index": 2290.0685631914357,
+        "interactive": 3574.38802
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

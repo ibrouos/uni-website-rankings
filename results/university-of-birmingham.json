@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-06-20T09:00:19.071433",
-  "total_tests": 508,
+  "last_updated": "2026-06-21T09:54:00.514252",
+  "total_tests": 510,
   "results": [
     {
       "name": "University of Birmingham",
@@ -13211,6 +13211,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-21T09:53:59.123579",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1744.6135,
+        "largest_contentful_paint": 3175.125,
+        "cumulative_layout_shift": 0.05705309938006493,
+        "total_blocking_time": 784,
+        "speed_index": 2906.616101415318,
+        "interactive": 3191.1928500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-21T09:54:00.514252",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2621.1845,
+        "largest_contentful_paint": 11210.489500000003,
+        "cumulative_layout_shift": 0.05705309938006493,
+        "total_blocking_time": 5336.383500000001,
+        "speed_index": 9002.529859944229,
+        "interactive": 12581.264650000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

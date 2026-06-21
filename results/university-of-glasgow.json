@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2026-06-20T08:59:55.081361",
-  "total_tests": 510,
+  "last_updated": "2026-06-21T09:53:32.094043",
+  "total_tests": 512,
   "results": [
     {
       "name": "University of Glasgow",
@@ -13263,6 +13263,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-21T09:53:31.089577",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 97.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2436.5325000000003,
+        "largest_contentful_paint": 3501.3779999999997,
+        "cumulative_layout_shift": 0.7940237185505653,
+        "total_blocking_time": 440.99999999999955,
+        "speed_index": 2857.0051541849352,
+        "interactive": 3501.3779999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-21T09:53:32.094043",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 6.0,
+        "accessibility": 97.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6894.412,
+        "largest_contentful_paint": 13231.145500000002,
+        "cumulative_layout_shift": 0.8096395200210099,
+        "total_blocking_time": 2422.384500000001,
+        "speed_index": 7199.855626834014,
+        "interactive": 13239.099850000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
