@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-06-23T09:41:19.980352",
-  "total_tests": 516,
+  "last_updated": "2026-06-24T09:32:02.513770",
+  "total_tests": 518,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -13415,6 +13415,58 @@
         "total_blocking_time": 36,
         "speed_index": 1874.9188014296963,
         "interactive": 1426.3013999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-24T09:32:01.211809",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3559.816,
+        "largest_contentful_paint": 7023.816,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 734,
+        "speed_index": 5617.118241702123,
+        "interactive": 7023.816
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-24T09:32:02.513770",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 454.452,
+        "largest_contentful_paint": 1348.952,
+        "cumulative_layout_shift": 0.03884415323338086,
+        "total_blocking_time": 0,
+        "speed_index": 1168.9402069066637,
+        "interactive": 1351.502
       },
       "throttling_config": {
         "method": "simulate",
