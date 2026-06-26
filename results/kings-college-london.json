@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-06-25T09:23:38.014067",
-  "total_tests": 520,
+  "last_updated": "2026-06-26T09:29:46.545171",
+  "total_tests": 522,
   "results": [
     {
       "name": "King's College London",
@@ -13519,6 +13519,58 @@
         "total_blocking_time": 645.5009999999997,
         "speed_index": 2257.9372941325446,
         "interactive": 3027.7819
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-26T09:29:40.489629",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3247.9250000000006,
+        "largest_contentful_paint": 9653.54,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3284.1124999999993,
+        "speed_index": 5532.336577450489,
+        "interactive": 11573.722250000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-26T09:29:46.545171",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1201.132,
+        "largest_contentful_paint": 2347.795,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 517.5,
+        "speed_index": 1803.8144632628073,
+        "interactive": 2795.16715
       },
       "throttling_config": {
         "method": "simulate",
