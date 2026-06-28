@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-06-27T08:47:59.517729",
-  "total_tests": 524,
+  "last_updated": "2026-06-28T09:03:12.549517",
+  "total_tests": 526,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -13627,6 +13627,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-28T09:03:11.455196",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 911.6735000000001,
+        "largest_contentful_paint": 1289.0760000000002,
+        "cumulative_layout_shift": 1.1954981903181467,
+        "total_blocking_time": 140.28424999999993,
+        "speed_index": 2003.0166074052531,
+        "interactive": 1816.0412500000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-28T09:03:12.549517",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2261.6734999999994,
+        "largest_contentful_paint": 3062.888499999999,
+        "cumulative_layout_shift": 1.1966265885928404,
+        "total_blocking_time": 2185.8925,
+        "speed_index": 5519.847423647551,
+        "interactive": 6792.9554499999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
