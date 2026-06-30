@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-06-29T11:04:19.486988",
-  "total_tests": 528,
+  "last_updated": "2026-06-30T09:40:43.673498",
+  "total_tests": 530,
   "results": [
     {
       "name": "University of Southampton",
@@ -13731,6 +13731,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-30T09:40:42.881340",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 808.3240000000001,
+        "largest_contentful_paint": 1688.5865,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5145.718,
+        "speed_index": 2016.8723711917391,
+        "interactive": 9723.3947
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-30T09:40:43.673498",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1958.3340000000003,
+        "largest_contentful_paint": 2272.982,
+        "cumulative_layout_shift": 0.3437213257885016,
+        "total_blocking_time": 24421.446499999995,
+        "speed_index": 4468.777656348619,
+        "interactive": 34082.73335
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

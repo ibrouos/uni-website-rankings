@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-06-29T11:04:53.718330",
-  "total_tests": 522,
+  "last_updated": "2026-06-30T09:41:16.302401",
+  "total_tests": 524,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -13575,6 +13575,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-06-30T09:41:14.329414",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1220.1839999999997,
+        "largest_contentful_paint": 2983.6609999999996,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3660.0830000000037,
+        "speed_index": 3380.441137066632,
+        "interactive": 8236.259700000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-06-30T09:41:16.302401",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 61.0,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4670.127,
+        "largest_contentful_paint": 10284.682,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21007.473250000003,
+        "speed_index": 8153.656515498369,
+        "interactive": 33412.045925000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
