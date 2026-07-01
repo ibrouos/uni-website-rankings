@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-06-30T09:44:46.547173",
-  "total_tests": 529,
+  "last_updated": "2026-07-01T09:55:49.302503",
+  "total_tests": 531,
   "results": [
     {
       "name": "University of Dundee",
@@ -13757,6 +13757,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-01T09:55:19.294317",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1638.87,
+        "largest_contentful_paint": 4949.259749999999,
+        "cumulative_layout_shift": 2.905383477507818e-05,
+        "total_blocking_time": 6275.999999999999,
+        "speed_index": 5072.236241603254,
+        "interactive": 11624.369999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-01T09:55:49.302503",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 85.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 511.442,
+        "largest_contentful_paint": 1166.9895000000001,
+        "cumulative_layout_shift": 3.765773318030316e-05,
+        "total_blocking_time": 1243.4999999999995,
+        "speed_index": 2226.66439266985,
+        "interactive": 5140.420999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

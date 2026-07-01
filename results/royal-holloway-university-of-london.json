@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-06-30T09:48:42.844057",
-  "total_tests": 530,
+  "last_updated": "2026-07-01T09:59:42.819513",
+  "total_tests": 532,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -13783,6 +13783,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-01T09:59:38.727065",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 94.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1714.1349999999995,
+        "largest_contentful_paint": 3551.4030000000002,
+        "cumulative_layout_shift": 0.01110667583214175,
+        "total_blocking_time": 1714.7510000000002,
+        "speed_index": 3185.6831592957724,
+        "interactive": 5755.817400000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-01T09:59:42.819513",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 94.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5487.901,
+        "largest_contentful_paint": 18332.58,
+        "cumulative_layout_shift": 0.0174265863589086,
+        "total_blocking_time": 8433.330000000002,
+        "speed_index": 10334.364774010017,
+        "interactive": 23293.742075000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
