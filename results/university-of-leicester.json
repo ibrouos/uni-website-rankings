@@ -2,8 +2,8 @@
   "name": "University of Leicester",
   "slug": "university-of-leicester",
   "url": "https://www.le.ac.uk",
-  "last_updated": "2026-07-04T08:47:08.914496",
-  "total_tests": 536,
+  "last_updated": "2026-07-05T09:02:14.667481",
+  "total_tests": 538,
   "results": [
     {
       "name": "University of Leicester",
@@ -13939,6 +13939,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-05T09:02:08.155004",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3711.8459999999995,
+        "largest_contentful_paint": 5896.35,
+        "cumulative_layout_shift": 0.1761846901579587,
+        "total_blocking_time": 12023.936999999998,
+        "speed_index": 8038.685783486915,
+        "interactive": 27822.177999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-05T09:02:14.667481",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1991.73,
+        "largest_contentful_paint": 2879.2579999999994,
+        "cumulative_layout_shift": 0.1761846901579587,
+        "total_blocking_time": 1247.0000000000005,
+        "speed_index": 3002.4387961012944,
+        "interactive": 6828.557450000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
