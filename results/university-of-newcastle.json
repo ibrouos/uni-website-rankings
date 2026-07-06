@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2026-07-05T09:00:11.621034",
-  "total_tests": 537,
+  "last_updated": "2026-07-06T10:29:18.082907",
+  "total_tests": 539,
   "results": [
     {
       "name": "University of Newcastle",
@@ -13965,6 +13965,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-06T10:29:14.139489",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2572.716000000001,
+        "largest_contentful_paint": 10459.7,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9005.300999999998,
+        "speed_index": 5765.4975311602575,
+        "interactive": 24023.689400000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-06T10:29:18.082907",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1129.653,
+        "largest_contentful_paint": 2371.0109999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2029.3779999999988,
+        "speed_index": 1994.1145828300457,
+        "interactive": 6150.2562
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
