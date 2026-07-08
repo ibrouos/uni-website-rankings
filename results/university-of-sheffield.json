@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-07-07T09:45:11.904021",
-  "total_tests": 544,
+  "last_updated": "2026-07-08T08:32:37.500962",
+  "total_tests": 546,
   "results": [
     {
       "name": "University of Sheffield",
@@ -14147,6 +14147,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-08T08:32:37.331813",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 88.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1639.8996,
+        "largest_contentful_paint": 1834.3468,
+        "cumulative_layout_shift": 0.0110547451596245,
+        "total_blocking_time": 426.3125000000002,
+        "speed_index": 2774.652986671983,
+        "interactive": 4159.433380000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-08T08:32:37.500962",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3287.066,
+        "largest_contentful_paint": 4502.5845,
+        "cumulative_layout_shift": 0.010992762421087276,
+        "total_blocking_time": 4071.4649999999992,
+        "speed_index": 7656.4922265628375,
+        "interactive": 17795.56795
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
