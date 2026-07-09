@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-07-08T08:36:29.353106",
-  "total_tests": 546,
+  "last_updated": "2026-07-09T09:47:55.331488",
+  "total_tests": 548,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -14199,6 +14199,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-09T09:47:55.051748",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 665.4949999999998,
+        "largest_contentful_paint": 954.1119999999996,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 1795.4999999999998,
+        "speed_index": 3603.37970157579,
+        "interactive": 3932.5949999999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-09T09:47:55.331488",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2631.574,
+        "largest_contentful_paint": 5011.8845,
+        "cumulative_layout_shift": 0.017984978603921484,
+        "total_blocking_time": 14275.5,
+        "speed_index": 11876.862482275723,
+        "interactive": 19542.724000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

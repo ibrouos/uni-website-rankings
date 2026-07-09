@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-07-08T08:40:21.270927",
-  "total_tests": 528,
+  "last_updated": "2026-07-09T09:52:11.846164",
+  "total_tests": 530,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -13731,6 +13731,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-09T09:52:11.332438",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 561.0004999999999,
+        "largest_contentful_paint": 1070.4957499999998,
+        "cumulative_layout_shift": 0.1012223294362965,
+        "total_blocking_time": 1849.8344999999997,
+        "speed_index": 3101.2530302664522,
+        "interactive": 4063.8808
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-09T09:52:11.846164",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1381.2314999999996,
+        "largest_contentful_paint": 4083.1624999999967,
+        "cumulative_layout_shift": 0.07096598272459037,
+        "total_blocking_time": 4890.370249999999,
+        "speed_index": 11731.148482417993,
+        "interactive": 13022.311625000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
