@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2026-07-09T09:42:37.389101",
-  "total_tests": 548,
+  "last_updated": "2026-07-10T09:38:19.034881",
+  "total_tests": 550,
   "results": [
     {
       "name": "University of Glasgow",
@@ -14251,6 +14251,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-10T09:38:18.403888",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 3.0,
+        "accessibility": 97.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 6670.762000000001,
+        "largest_contentful_paint": 13256.803000000004,
+        "cumulative_layout_shift": 0.8098122143450186,
+        "total_blocking_time": 4385.821000000001,
+        "speed_index": 9002.575501150935,
+        "interactive": 13964.529700000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-10T09:38:19.034881",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 97.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1938.0605000000003,
+        "largest_contentful_paint": 3673.9965,
+        "cumulative_layout_shift": 0.8507398490805267,
+        "total_blocking_time": 950.0000000000009,
+        "speed_index": 3223.0765128184366,
+        "interactive": 3682.2259250000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

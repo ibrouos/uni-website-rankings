@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-07-09T09:47:45.213384",
-  "total_tests": 512,
+  "last_updated": "2026-07-10T09:43:09.571679",
+  "total_tests": 514,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -13311,6 +13311,58 @@
         "total_blocking_time": 745.5000000000007,
         "speed_index": 5560.865637461358,
         "interactive": 2642.402650000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-10T09:43:06.113212",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 10.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2702.6888,
+        "largest_contentful_paint": 8342.2776,
+        "cumulative_layout_shift": 0.5700035033382911,
+        "total_blocking_time": 7199.500000000004,
+        "speed_index": 11285.061569835325,
+        "interactive": 16961.080200000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-10T09:43:09.571679",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1230.94,
+        "largest_contentful_paint": 2032.0999999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1199.5,
+        "speed_index": 6290.046829688799,
+        "interactive": 3354.7200000000003
       },
       "throttling_config": {
         "method": "simulate",

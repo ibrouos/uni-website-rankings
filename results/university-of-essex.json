@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-07-09T09:54:06.109944",
-  "total_tests": 545,
+  "last_updated": "2026-07-10T09:49:22.063563",
+  "total_tests": 547,
   "results": [
     {
       "name": "University of Essex",
@@ -14173,6 +14173,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-10T09:49:21.173777",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 24.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6015.01125,
+        "largest_contentful_paint": 26660.741500000007,
+        "cumulative_layout_shift": 0.06884526210209303,
+        "total_blocking_time": 34177.32092999997,
+        "speed_index": 29092.389031440227,
+        "interactive": 55896.839526999975
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-10T09:49:22.063563",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1183.301,
+        "largest_contentful_paint": 3949.141999999999,
+        "cumulative_layout_shift": 0.07292362560552847,
+        "total_blocking_time": 7487.000000000002,
+        "speed_index": 8176.216745677155,
+        "interactive": 12335.032750999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
