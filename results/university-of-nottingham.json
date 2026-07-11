@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-07-10T09:39:41.995502",
-  "total_tests": 548,
+  "last_updated": "2026-07-11T08:00:14.033630",
+  "total_tests": 550,
   "results": [
     {
       "name": "University of Nottingham",
@@ -14247,6 +14247,58 @@
         "total_blocking_time": 1659,
         "speed_index": 5318.01412001253,
         "interactive": 5678.0577
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-11T08:00:13.227059",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 13971.143999999998,
+        "largest_contentful_paint": 23390.562999999995,
+        "cumulative_layout_shift": 0.011825863059163272,
+        "total_blocking_time": 4530.114999999998,
+        "speed_index": 13971.143999999998,
+        "interactive": 24220.348849999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-11T08:00:14.033630",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3229.1775,
+        "largest_contentful_paint": 5325.636,
+        "cumulative_layout_shift": 0.013640343171486831,
+        "total_blocking_time": 549.6119999999992,
+        "speed_index": 3960.5427475140705,
+        "interactive": 5397.954000000001
       },
       "throttling_config": {
         "method": "simulate",
