@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2026-07-11T08:04:31.153044",
-  "total_tests": 550,
+  "last_updated": "2026-07-12T08:27:08.621337",
+  "total_tests": 552,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -14303,6 +14303,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-12T08:27:05.584765",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1382.3045,
+        "largest_contentful_paint": 2379.4294999999997,
+        "cumulative_layout_shift": 3.726982314183352e-05,
+        "total_blocking_time": 3108.4999999999995,
+        "speed_index": 2653.484409275254,
+        "interactive": 6165.7865
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-12T08:27:08.621337",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3719.7149999999997,
+        "largest_contentful_paint": 9075.626499999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 16877.801000000003,
+        "speed_index": 9475.885477120231,
+        "interactive": 25523.674700000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

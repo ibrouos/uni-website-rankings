@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-07-11T08:03:25.363574",
-  "total_tests": 516,
+  "last_updated": "2026-07-12T08:25:58.522732",
+  "total_tests": 518,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -13419,6 +13419,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-12T08:25:58.103605",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1461.7450000000003,
+        "largest_contentful_paint": 2650.553,
+        "cumulative_layout_shift": 0.27572671828093115,
+        "total_blocking_time": 452.211,
+        "speed_index": 6209.577219472894,
+        "interactive": 2903.635800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-12T08:25:58.522732",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3050.1926999999996,
+        "largest_contentful_paint": 11132.959750000002,
+        "cumulative_layout_shift": 0.04919809624288504,
+        "total_blocking_time": 6550.610199999997,
+        "speed_index": 15255.018881710692,
+        "interactive": 11401.548214999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
