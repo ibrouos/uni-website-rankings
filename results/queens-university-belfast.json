@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-07-12T08:25:57.310061",
-  "total_tests": 548,
+  "last_updated": "2026-07-13T09:35:02.895320",
+  "total_tests": 550,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -14251,6 +14251,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-13T09:34:50.736849",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2138.4300000000003,
+        "largest_contentful_paint": 2955.2085000000006,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 38548.29225000002,
+        "speed_index": 4622.332102288926,
+        "interactive": 48477.038675000025
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-13T09:35:02.895320",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 61.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 999.372,
+        "largest_contentful_paint": 2202.9290000000005,
+        "cumulative_layout_shift": 0.0001075039367583294,
+        "total_blocking_time": 7376.999999999999,
+        "speed_index": 2339.15031226672,
+        "interactive": 11030.088000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

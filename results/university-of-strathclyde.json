@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2026-07-12T08:27:08.621337",
-  "total_tests": 552,
+  "last_updated": "2026-07-13T09:35:59.058560",
+  "total_tests": 554,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -14355,6 +14355,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-13T09:35:54.177711",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3275.155,
+        "largest_contentful_paint": 8076.8910000000005,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 14351.999999999996,
+        "speed_index": 7001.189651739424,
+        "interactive": 24245.9983
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-13T09:35:59.058560",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 71.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1032.702,
+        "largest_contentful_paint": 2263.0519999999997,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 2680,
+        "speed_index": 2689.9398238437525,
+        "interactive": 5662.456675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
