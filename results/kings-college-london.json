@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-07-14T08:06:51.113270",
-  "total_tests": 558,
+  "last_updated": "2026-07-15T08:12:40.446482",
+  "total_tests": 560,
   "results": [
     {
       "name": "King's College London",
@@ -14511,6 +14511,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-15T08:12:38.678667",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3748.1330000000007,
+        "largest_contentful_paint": 9167.555,
+        "cumulative_layout_shift": 0.035487923889276844,
+        "total_blocking_time": 15067.499999999993,
+        "speed_index": 7197.752862813077,
+        "interactive": 28930.26087805938
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-15T08:12:40.446482",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 91.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1519.607,
+        "largest_contentful_paint": 2378.9000000000005,
+        "cumulative_layout_shift": 0.03486341201986037,
+        "total_blocking_time": 2941.5000000000027,
+        "speed_index": 3429.8557888177825,
+        "interactive": 6638.675500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

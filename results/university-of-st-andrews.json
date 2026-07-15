@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-07-14T08:10:29.656586",
-  "total_tests": 540,
+  "last_updated": "2026-07-15T08:16:23.813126",
+  "total_tests": 542,
   "results": [
     {
       "name": "University of St Andrews",
@@ -14043,6 +14043,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-15T08:16:21.293139",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.99999999999999,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2454.60525,
+        "largest_contentful_paint": 3417.7819999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2193.376750000001,
+        "speed_index": 4428.957461684219,
+        "interactive": 6034.442950000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-15T08:16:23.813126",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 7147.9005,
+        "largest_contentful_paint": 10297.9005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10011.231000000002,
+        "speed_index": 11447.181099216374,
+        "interactive": 23591.75105
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
