@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-07-15T08:16:23.813126",
-  "total_tests": 542,
+  "last_updated": "2026-07-16T08:19:41.715193",
+  "total_tests": 544,
   "results": [
     {
       "name": "University of St Andrews",
@@ -14095,6 +14095,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-16T08:19:33.680124",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8557.132000000001,
+        "largest_contentful_paint": 13460.909499999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12970.359499999993,
+        "speed_index": 8785.181148043976,
+        "interactive": 38290.20859999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-16T08:19:41.715193",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 57.99999999999999,
+        "accessibility": 98.0,
+        "best_practices": 61.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2459.1115,
+        "largest_contentful_paint": 3627.4745,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2252.312500000001,
+        "speed_index": 3021.2204232004997,
+        "interactive": 8187.5838
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
