@@ -2,8 +2,8 @@
   "name": "Queen Mary University of London",
   "slug": "queen-mary-university-of-london",
   "url": "https://www.qmul.ac.uk",
-  "last_updated": "2026-07-16T08:17:56.910943",
-  "total_tests": 556,
+  "last_updated": "2026-07-17T08:13:36.514969",
+  "total_tests": 558,
   "results": [
     {
       "name": "Queen Mary University of London",
@@ -14459,6 +14459,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-17T08:13:33.395182",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3378.3709999999996,
+        "largest_contentful_paint": 10174.363,
+        "cumulative_layout_shift": 0.01108481692230076,
+        "total_blocking_time": 13542.000000000015,
+        "speed_index": 6143.705089693434,
+        "interactive": 26888.983200000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen Mary University of London",
+      "url": "https://www.qmul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-17T08:13:36.514969",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 95.0,
+        "best_practices": 56.99999999999999,
+        "seo": 82.0
+      },
+      "metrics": {
+        "first_contentful_paint": 741.1780000000001,
+        "largest_contentful_paint": 3053.5644999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2689.5000000000005,
+        "speed_index": 2545.5537868518513,
+        "interactive": 6427.1974
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
