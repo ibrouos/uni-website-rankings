@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-07-17T08:12:29.440577",
-  "total_tests": 558,
+  "last_updated": "2026-07-18T07:52:57.165942",
+  "total_tests": 560,
   "results": [
     {
       "name": "University of Manchester",
@@ -14511,6 +14511,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-18T07:52:56.898427",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1071.2345,
+        "largest_contentful_paint": 1505.4195,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4984,
+        "speed_index": 1332.960137963361,
+        "interactive": 9650.3106
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-18T07:52:57.165942",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9541.5585,
+        "largest_contentful_paint": 12425.214,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 29478.424999999996,
+        "speed_index": 9541.5585,
+        "interactive": 47326.290499999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

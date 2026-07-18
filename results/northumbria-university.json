@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-07-17T08:21:02.734659",
-  "total_tests": 564,
+  "last_updated": "2026-07-18T08:03:14.783133",
+  "total_tests": 566,
   "results": [
     {
       "name": "Northumbria University",
@@ -14667,6 +14667,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-18T08:03:14.278867",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5275.062,
+        "largest_contentful_paint": 16750.588,
+        "cumulative_layout_shift": 0.03321724007092565,
+        "total_blocking_time": 4550.675000000003,
+        "speed_index": 7812.345828505462,
+        "interactive": 17946.6845
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-18T08:03:14.783133",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1938.8569999999997,
+        "largest_contentful_paint": 4029.131,
+        "cumulative_layout_shift": 0.03749581075075775,
+        "total_blocking_time": 748.3540000000005,
+        "speed_index": 2953.612306000167,
+        "interactive": 4093.4116000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
