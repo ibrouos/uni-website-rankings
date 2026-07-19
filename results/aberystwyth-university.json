@@ -2,8 +2,8 @@
   "name": "Aberystwyth University",
   "slug": "aberystwyth-university",
   "url": "https://www.aber.ac.uk",
-  "last_updated": "2026-07-18T08:01:49.231062",
-  "total_tests": 566,
+  "last_updated": "2026-07-19T08:31:36.742698",
+  "total_tests": 568,
   "results": [
     {
       "name": "Aberystwyth University",
@@ -14719,6 +14719,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-19T08:31:13.768041",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2788.829,
+        "largest_contentful_paint": 7642.243999999997,
+        "cumulative_layout_shift": 0.0009146990376405253,
+        "total_blocking_time": 1787.2359999999999,
+        "speed_index": 6148.561745054704,
+        "interactive": 8169.168749999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Aberystwyth University",
+      "url": "https://www.aber.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-19T08:31:36.742698",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 69.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 979.1790000000001,
+        "largest_contentful_paint": 1102.8030000000003,
+        "cumulative_layout_shift": 0.9611178614823814,
+        "total_blocking_time": 312.00000000000034,
+        "speed_index": 2212.2400765438106,
+        "interactive": 1942.3948500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
