@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-07-19T08:30:49.203139",
-  "total_tests": 550,
+  "last_updated": "2026-07-20T09:08:53.686596",
+  "total_tests": 552,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -14303,6 +14303,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-20T09:08:51.631770",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 623.4205,
+        "largest_contentful_paint": 937.73725,
+        "cumulative_layout_shift": 0.10201743325585835,
+        "total_blocking_time": 1028.6439999999998,
+        "speed_index": 2180.3761212643785,
+        "interactive": 2995.4181
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-20T09:08:53.686596",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2054.4804999999997,
+        "largest_contentful_paint": 3606.3844999999997,
+        "cumulative_layout_shift": 0.09799568477764466,
+        "total_blocking_time": 7234.2715,
+        "speed_index": 6860.726622866196,
+        "interactive": 14739.8379
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

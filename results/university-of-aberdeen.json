@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-07-19T08:26:40.020183",
-  "total_tests": 532,
+  "last_updated": "2026-07-20T09:05:23.245131",
+  "total_tests": 534,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -13835,6 +13835,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-20T09:05:17.435327",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 8.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2782.1550000000007,
+        "largest_contentful_paint": 9717.911500000002,
+        "cumulative_layout_shift": 0.6683799444953052,
+        "total_blocking_time": 3156.89775,
+        "speed_index": 13779.852257059983,
+        "interactive": 9949.562512000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-20T09:05:23.245131",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1253.9230000000002,
+        "largest_contentful_paint": 2857.219000000001,
+        "cumulative_layout_shift": 0.23927486795757297,
+        "total_blocking_time": 659.3910000000001,
+        "speed_index": 6711.263282724303,
+        "interactive": 2861.146100000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
