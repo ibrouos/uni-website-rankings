@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2026-07-20T08:59:35.839391",
-  "total_tests": 569,
+  "last_updated": "2026-07-21T08:29:59.086850",
+  "total_tests": 571,
   "results": [
     {
       "name": "University of Oxford",
@@ -14793,6 +14793,58 @@
         "total_blocking_time": 6129.0355,
         "speed_index": 5568.200288440957,
         "interactive": 10761.70395
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-21T08:29:57.633930",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 92.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 561.4195,
+        "largest_contentful_paint": 665.4110000000001,
+        "cumulative_layout_shift": 0.2510941499840744,
+        "total_blocking_time": 1468.0000000000002,
+        "speed_index": 3444.208870597863,
+        "interactive": 2999.0695000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-21T08:29:59.086850",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 87.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1642.493,
+        "largest_contentful_paint": 1683.993,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6189.5515,
+        "speed_index": 7845.579520891277,
+        "interactive": 11295.689349999999
       },
       "throttling_config": {
         "method": "simulate",

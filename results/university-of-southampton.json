@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-07-20T09:01:25.487581",
-  "total_tests": 570,
+  "last_updated": "2026-07-21T08:31:57.691046",
+  "total_tests": 572,
   "results": [
     {
       "name": "University of Southampton",
@@ -14823,6 +14823,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-21T08:31:57.586494",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2078.5155,
+        "largest_contentful_paint": 2693.135,
+        "cumulative_layout_shift": 0.3732209301166789,
+        "total_blocking_time": 19512.1885,
+        "speed_index": 3593.884755907973,
+        "interactive": 33944.07304999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-21T08:31:57.691046",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 471.6930000000001,
+        "largest_contentful_paint": 603.8685,
+        "cumulative_layout_shift": 0.3929716468839475,
+        "total_blocking_time": 2863.5000000000023,
+        "speed_index": 1154.6140849282506,
+        "interactive": 8133.823850000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
