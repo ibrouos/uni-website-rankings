@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2026-07-21T08:30:24.556933",
-  "total_tests": 572,
+  "last_updated": "2026-07-22T08:30:51.242827",
+  "total_tests": 574,
   "results": [
     {
       "name": "University College London",
@@ -14875,6 +14875,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-22T08:30:50.321970",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 995.7644999999999,
+        "largest_contentful_paint": 1040.53875,
+        "cumulative_layout_shift": 0.0001981512562329528,
+        "total_blocking_time": 9,
+        "speed_index": 1713.4769910735945,
+        "interactive": 1258.1104249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-22T08:30:51.242827",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3170.1895,
+        "largest_contentful_paint": 3551.4835000000003,
+        "cumulative_layout_shift": 0.0008219607665959524,
+        "total_blocking_time": 288.5775000000008,
+        "speed_index": 5115.961312041837,
+        "interactive": 3978.7369250000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
