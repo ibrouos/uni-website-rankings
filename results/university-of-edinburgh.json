@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-07-22T08:31:04.195157",
-  "total_tests": 574,
+  "last_updated": "2026-07-23T08:31:38.628591",
+  "total_tests": 576,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -14923,6 +14923,58 @@
         "total_blocking_time": 0,
         "speed_index": 1125.6705948954905,
         "interactive": 1318.16135
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-23T08:31:37.900515",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3309.775,
+        "largest_contentful_paint": 6683.775,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 434,
+        "speed_index": 5572.533508812319,
+        "interactive": 6691.174999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-23T08:31:38.628591",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 337.5265,
+        "largest_contentful_paint": 875.5264999999999,
+        "cumulative_layout_shift": 0.038436388281633,
+        "total_blocking_time": 64,
+        "speed_index": 642.5092532013846,
+        "interactive": 930.0175
       },
       "throttling_config": {
         "method": "simulate",

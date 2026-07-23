@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-07-22T08:40:59.889689",
-  "total_tests": 556,
+  "last_updated": "2026-07-23T08:38:58.885217",
+  "total_tests": 558,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -14459,6 +14459,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-23T08:38:55.667985",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 53.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2042.0220000000004,
+        "largest_contentful_paint": 3547.058,
+        "cumulative_layout_shift": 0.09554905710482982,
+        "total_blocking_time": 3357.4030000000002,
+        "speed_index": 5331.784277375231,
+        "interactive": 12629.676750000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-23T08:38:58.885217",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 619.778,
+        "largest_contentful_paint": 958.982,
+        "cumulative_layout_shift": 0.0655004344269919,
+        "total_blocking_time": 729.846,
+        "speed_index": 1820.031590841549,
+        "interactive": 2781.6958999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
