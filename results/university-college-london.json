@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2026-07-25T08:07:50.039161",
-  "total_tests": 580,
+  "last_updated": "2026-07-26T08:27:51.222348",
+  "total_tests": 582,
   "results": [
     {
       "name": "University College London",
@@ -15079,6 +15079,58 @@
         "total_blocking_time": 0,
         "speed_index": 2960.326818658036,
         "interactive": 2004.4994000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-26T08:27:49.687890",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3299.5564999999997,
+        "largest_contentful_paint": 4245.440750000001,
+        "cumulative_layout_shift": 0.008252632875331683,
+        "total_blocking_time": 860,
+        "speed_index": 5172.668082560671,
+        "interactive": 4737.963
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-26T08:27:51.222348",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1010.8235000000002,
+        "largest_contentful_paint": 1042.0982500000002,
+        "cumulative_layout_shift": 0.0001981512562329528,
+        "total_blocking_time": 30.5,
+        "speed_index": 1678.2176998167347,
+        "interactive": 1388.643
       },
       "throttling_config": {
         "method": "simulate",

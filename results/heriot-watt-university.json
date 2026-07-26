@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-07-25T08:12:38.437593",
-  "total_tests": 580,
+  "last_updated": "2026-07-26T08:34:27.557600",
+  "total_tests": 582,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -15083,6 +15083,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-26T08:34:27.452402",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1157.1565000000003,
+        "largest_contentful_paint": 1597.2600000000002,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 1281.739,
+        "speed_index": 3403.9307829738477,
+        "interactive": 3676.709500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-26T08:34:27.557600",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5633.525999999998,
+        "largest_contentful_paint": 7841.325749999998,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 7355.0000000000055,
+        "speed_index": 8186.58248901639,
+        "interactive": 15232.396500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
