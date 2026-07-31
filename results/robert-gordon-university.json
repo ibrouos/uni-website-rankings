@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-07-30T08:39:04.738793",
-  "total_tests": 589,
+  "last_updated": "2026-07-31T09:03:21.238367",
+  "total_tests": 591,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -15317,6 +15317,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-07-31T09:03:21.178247",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1593.2169999999999,
+        "largest_contentful_paint": 3795.3655,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 849.9999999999995,
+        "speed_index": 2966.403451229536,
+        "interactive": 3809.3253999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-07-31T09:03:21.238367",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3526.6509999999994,
+        "largest_contentful_paint": 8835.451999999997,
+        "cumulative_layout_shift": 0.002458969796654297,
+        "total_blocking_time": 2171.349500000001,
+        "speed_index": 7092.718897689272,
+        "interactive": 14104.229780000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
