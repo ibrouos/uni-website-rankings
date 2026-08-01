@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-07-31T08:51:34.372806",
-  "total_tests": 592,
+  "last_updated": "2026-08-01T08:22:32.075277",
+  "total_tests": 594,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -15395,6 +15395,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-01T08:22:31.229116",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 336.84000000000003,
+        "largest_contentful_paint": 991.8399999999999,
+        "cumulative_layout_shift": 0.0996372792985388,
+        "total_blocking_time": 758.0000000000002,
+        "speed_index": 958.1965363716829,
+        "interactive": 1852.2565000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-01T08:22:32.075277",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2129.649,
+        "largest_contentful_paint": 8645.537500000002,
+        "cumulative_layout_shift": 0.03884415323338086,
+        "total_blocking_time": 666.5,
+        "speed_index": 4683.527234800039,
+        "interactive": 8816.086600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
