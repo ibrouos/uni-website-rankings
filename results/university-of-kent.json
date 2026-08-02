@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-08-01T08:33:31.080590",
-  "total_tests": 592,
+  "last_updated": "2026-08-02T08:39:55.182064",
+  "total_tests": 594,
   "results": [
     {
       "name": "University of Kent",
@@ -15395,6 +15395,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-02T08:39:53.269913",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1265.966,
+        "largest_contentful_paint": 6188.017,
+        "cumulative_layout_shift": 0.0005985819198703784,
+        "total_blocking_time": 1577.6924999999983,
+        "speed_index": 3372.01074137145,
+        "interactive": 6929.689249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-02T08:39:55.182064",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 97.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5523.490499999999,
+        "largest_contentful_paint": 22570.449999999997,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 8588.078000000007,
+        "speed_index": 10788.48535591334,
+        "interactive": 26361.087499999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

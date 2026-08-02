@@ -2,8 +2,8 @@
   "name": "University of Southampton",
   "slug": "university-of-southampton",
   "url": "https://www.southampton.ac.uk",
-  "last_updated": "2026-08-01T08:23:32.568597",
-  "total_tests": 594,
+  "last_updated": "2026-08-02T08:27:18.166120",
+  "total_tests": 596,
   "results": [
     {
       "name": "University of Southampton",
@@ -15447,6 +15447,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-02T08:27:09.784713",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 910.8420000000001,
+        "largest_contentful_paint": 3286.5219999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3528.049499999999,
+        "speed_index": 2380.396725255251,
+        "interactive": 8881.56955
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Southampton",
+      "url": "https://www.southampton.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-02T08:27:18.166120",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 94.0,
+        "best_practices": 61.0,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1617.9009999999998,
+        "largest_contentful_paint": 2355.611,
+        "cumulative_layout_shift": 0.01746368484765122,
+        "total_blocking_time": 21048.07400000001,
+        "speed_index": 3816.147664883221,
+        "interactive": 36193.59030000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

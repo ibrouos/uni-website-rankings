@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-08-01T08:31:57.526844",
-  "total_tests": 591,
+  "last_updated": "2026-08-02T08:37:50.134668",
+  "total_tests": 593,
   "results": [
     {
       "name": "University of Essex",
@@ -15369,6 +15369,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-02T08:37:47.420142",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4101.027249999999,
+        "largest_contentful_paint": 27385.419415292956,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 32911.081249999996,
+        "speed_index": 24096.242201310088,
+        "interactive": 56225.441504
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-02T08:37:50.134668",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1379.996,
+        "largest_contentful_paint": 6338.050750000001,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 6740.405500000001,
+        "speed_index": 6913.7364051022105,
+        "interactive": 12650.181639000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
