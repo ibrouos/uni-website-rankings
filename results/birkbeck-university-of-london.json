@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-08-02T08:35:57.408560",
-  "total_tests": 578,
+  "last_updated": "2026-08-03T09:53:56.146012",
+  "total_tests": 580,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -15031,6 +15031,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-03T09:53:54.756570",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 954.759,
+        "largest_contentful_paint": 1534.5789999999997,
+        "cumulative_layout_shift": 0.09845975486027805,
+        "total_blocking_time": 699.3689999999997,
+        "speed_index": 2619.8720091494915,
+        "interactive": 3513.4451
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-03T09:53:56.146012",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 51.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1983.0950000000003,
+        "largest_contentful_paint": 3380.3430000000008,
+        "cumulative_layout_shift": 0.10107372181725172,
+        "total_blocking_time": 7271.957999999999,
+        "speed_index": 7074.646710070158,
+        "interactive": 14977.599450000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
