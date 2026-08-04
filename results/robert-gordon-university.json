@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-08-03T09:55:01.571943",
-  "total_tests": 597,
+  "last_updated": "2026-08-04T08:50:11.619657",
+  "total_tests": 599,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -15525,6 +15525,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-04T08:50:11.137401",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2096.5865999999996,
+        "largest_contentful_paint": 3492.7058000000006,
+        "cumulative_layout_shift": 0.021296379366313598,
+        "total_blocking_time": 709.9999999999991,
+        "speed_index": 3492.2355037617194,
+        "interactive": 3725.7024649999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-04T08:50:11.619657",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4135.27,
+        "largest_contentful_paint": 12893.775400000002,
+        "cumulative_layout_shift": 0.021321821964679737,
+        "total_blocking_time": 1804.49525,
+        "speed_index": 8710.776916567529,
+        "interactive": 14084.181705000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
