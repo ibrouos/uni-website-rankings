@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-08-04T08:46:30.657153",
-  "total_tests": 598,
+  "last_updated": "2026-08-05T08:45:02.966419",
+  "total_tests": 600,
   "results": [
     {
       "name": "Brunel University London",
@@ -15551,6 +15551,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-05T08:45:02.624871",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2099.3445,
+        "largest_contentful_paint": 3781.7464999999993,
+        "cumulative_layout_shift": 0.0007545785308517737,
+        "total_blocking_time": 1326.8590000000008,
+        "speed_index": 2825.6044273773596,
+        "interactive": 5399.875600000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-05T08:45:02.966419",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4044.164999999999,
+        "largest_contentful_paint": 17534.415,
+        "cumulative_layout_shift": 0.0005774461979706209,
+        "total_blocking_time": 13462.5,
+        "speed_index": 7775.796527691415,
+        "interactive": 19509.145
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-08-04T08:39:50.371270",
-  "total_tests": 598,
+  "last_updated": "2026-08-05T08:38:26.487961",
+  "total_tests": 600,
   "results": [
     {
       "name": "University of Birmingham",
@@ -15551,6 +15551,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-05T08:38:25.632634",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1394.7915000000003,
+        "largest_contentful_paint": 2736.8235000000004,
+        "cumulative_layout_shift": 0.0787201456013252,
+        "total_blocking_time": 781.4969999999994,
+        "speed_index": 2863.1574957535495,
+        "interactive": 3045.443800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-05T08:38:26.487961",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2233.7484999999997,
+        "largest_contentful_paint": 9867.0665,
+        "cumulative_layout_shift": 0.0787201456013252,
+        "total_blocking_time": 5563.313,
+        "speed_index": 8694.513448258547,
+        "interactive": 11731.1869
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

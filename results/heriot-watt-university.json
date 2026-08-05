@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-08-04T08:44:19.107200",
-  "total_tests": 600,
+  "last_updated": "2026-08-05T08:42:55.526236",
+  "total_tests": 602,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -15603,6 +15603,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-05T08:42:54.510701",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4812.9439999999995,
+        "largest_contentful_paint": 6902.972499999998,
+        "cumulative_layout_shift": 0.009768237709608846,
+        "total_blocking_time": 10915.071999999993,
+        "speed_index": 10369.426410260132,
+        "interactive": 17960.822849999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-05T08:42:55.526236",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 631.5144999999999,
+        "largest_contentful_paint": 1337.4484999999995,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 1325.9999999999995,
+        "speed_index": 2769.1322814187547,
+        "interactive": 2948.5144999999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

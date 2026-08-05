@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-08-04T08:39:35.914351",
-  "total_tests": 594,
+  "last_updated": "2026-08-05T08:38:19.454789",
+  "total_tests": 596,
   "results": [
     {
       "name": "University of Manchester",
@@ -15447,6 +15447,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-05T08:38:12.265717",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3330.3555000000006,
+        "largest_contentful_paint": 5901.968000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 28598.454999999998,
+        "speed_index": 4141.296831897153,
+        "interactive": 43707.3336
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-05T08:38:19.454789",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1520.7345,
+        "largest_contentful_paint": 2160.7345,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5820.999999999999,
+        "speed_index": 2324.2549979737764,
+        "interactive": 10385.870050000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
