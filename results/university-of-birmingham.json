@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-08-05T08:38:26.487961",
-  "total_tests": 600,
+  "last_updated": "2026-08-06T08:38:46.244651",
+  "total_tests": 602,
   "results": [
     {
       "name": "University of Birmingham",
@@ -15603,6 +15603,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-06T08:38:46.232156",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4959.039000000001,
+        "largest_contentful_paint": 10741.074499999999,
+        "cumulative_layout_shift": 0.0787201456013252,
+        "total_blocking_time": 5717.887999999998,
+        "speed_index": 8280.301183562737,
+        "interactive": 12313.28355
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-06T08:38:46.244651",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1011.4869999999999,
+        "largest_contentful_paint": 2942.9519999999998,
+        "cumulative_layout_shift": 0.0787201456013252,
+        "total_blocking_time": 1269.6100000000001,
+        "speed_index": 3067.2180521993128,
+        "interactive": 3099.28445
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
