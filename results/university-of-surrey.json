@@ -2,8 +2,8 @@
   "name": "University of Surrey",
   "slug": "university-of-surrey",
   "url": "https://www.surrey.ac.uk",
-  "last_updated": "2026-08-06T08:42:11.618139",
-  "total_tests": 604,
+  "last_updated": "2026-08-07T07:21:50.406395",
+  "total_tests": 606,
   "results": [
     {
       "name": "University of Surrey",
@@ -15703,6 +15703,58 @@
         "total_blocking_time": 119,
         "speed_index": 1825.2682389384909,
         "interactive": 1987.438
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-07T07:21:44.366390",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2589.5030000000006,
+        "largest_contentful_paint": 3979.2965000000004,
+        "cumulative_layout_shift": 0.01717586097430359,
+        "total_blocking_time": 1408,
+        "speed_index": 4285.981128100879,
+        "interactive": 7801.918400000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Surrey",
+      "url": "https://www.surrey.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-07T07:21:50.406395",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1140.9969999999998,
+        "largest_contentful_paint": 1363.9415,
+        "cumulative_layout_shift": 0.9418437816720036,
+        "total_blocking_time": 419.5,
+        "speed_index": 1856.8087371714803,
+        "interactive": 2516.063
       },
       "throttling_config": {
         "method": "simulate",
