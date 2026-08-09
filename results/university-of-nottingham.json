@@ -2,8 +2,8 @@
   "name": "University of Nottingham",
   "slug": "university-of-nottingham",
   "url": "https://www.nottingham.ac.uk",
-  "last_updated": "2026-08-08T06:57:11.288774",
-  "total_tests": 606,
+  "last_updated": "2026-08-09T07:00:57.229177",
+  "total_tests": 608,
   "results": [
     {
       "name": "University of Nottingham",
@@ -15759,6 +15759,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-09T07:00:56.257669",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3910.637,
+        "largest_contentful_paint": 5533.80775,
+        "cumulative_layout_shift": 0.015475492707384448,
+        "total_blocking_time": 961.2340000000008,
+        "speed_index": 4954.659297638234,
+        "interactive": 5759.005125000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Nottingham",
+      "url": "https://www.nottingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-09T07:00:57.229177",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 88.0,
+        "best_practices": 100,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 14923.2785,
+        "largest_contentful_paint": 23029.228750000002,
+        "cumulative_layout_shift": 0.015716143853282533,
+        "total_blocking_time": 6913.841000000002,
+        "speed_index": 14923.2785,
+        "interactive": 25021.000525000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
