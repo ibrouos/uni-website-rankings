@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-08-11T07:09:40.922543",
-  "total_tests": 610,
+  "last_updated": "2026-08-12T07:26:49.082941",
+  "total_tests": 612,
   "results": [
     {
       "name": "University of Warwick",
@@ -15863,6 +15863,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-12T07:26:49.006649",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 25.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6171.181999999999,
+        "largest_contentful_paint": 10147.286999999998,
+        "cumulative_layout_shift": 0.1051243819114908,
+        "total_blocking_time": 4123.770000000002,
+        "speed_index": 7975.660477159375,
+        "interactive": 13470.650000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-12T07:26:49.082941",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2254.2599999999998,
+        "largest_contentful_paint": 3218.3175,
+        "cumulative_layout_shift": 0.11828391596549134,
+        "total_blocking_time": 547.7650000000001,
+        "speed_index": 2970.491178797559,
+        "interactive": 3813.0945
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
