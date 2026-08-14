@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-08-13T07:35:51.063542",
-  "total_tests": 616,
+  "last_updated": "2026-08-14T07:30:57.621231",
+  "total_tests": 618,
   "results": [
     {
       "name": "University of Reading",
@@ -16019,6 +16019,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-14T07:30:53.992796",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6733.582999999999,
+        "largest_contentful_paint": 14822.103000000001,
+        "cumulative_layout_shift": 0.001284050537127653,
+        "total_blocking_time": 3496.499999999998,
+        "speed_index": 7202.47295945384,
+        "interactive": 23631.720925
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-14T07:30:57.621231",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2249.781,
+        "largest_contentful_paint": 4520.0335000000005,
+        "cumulative_layout_shift": 0.001284050537127653,
+        "total_blocking_time": 280,
+        "speed_index": 2682.260613841072,
+        "interactive": 5216.1005000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
