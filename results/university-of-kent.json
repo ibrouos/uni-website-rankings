@@ -2,8 +2,8 @@
   "name": "University of Kent",
   "slug": "university-of-kent",
   "url": "https://www.kent.ac.uk",
-  "last_updated": "2026-08-14T07:37:23.371069",
-  "total_tests": 618,
+  "last_updated": "2026-08-15T06:54:09.261666",
+  "total_tests": 620,
   "results": [
     {
       "name": "University of Kent",
@@ -16071,6 +16071,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-15T06:54:08.444934",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 93.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1851.9479999999999,
+        "largest_contentful_paint": 22457.527000000002,
+        "cumulative_layout_shift": 0.0004115250699108851,
+        "total_blocking_time": 9850.444500000003,
+        "speed_index": 6871.704359913544,
+        "interactive": 25907.655000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Kent",
+      "url": "https://www.kent.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-15T06:54:09.261666",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 55.00000000000001,
+        "accessibility": 93.0,
+        "best_practices": 61.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 917.576,
+        "largest_contentful_paint": 5441.682000000001,
+        "cumulative_layout_shift": 0.0004115250699108851,
+        "total_blocking_time": 1316.9999999999995,
+        "speed_index": 2683.344156746649,
+        "interactive": 6249.0521499999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
