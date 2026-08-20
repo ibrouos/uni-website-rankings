@@ -2,8 +2,8 @@
   "name": "University of Oxford",
   "slug": "university-of-oxford",
   "url": "https://www.ox.ac.uk",
-  "last_updated": "2026-08-18T06:43:17.135686",
-  "total_tests": 627,
+  "last_updated": "2026-08-20T06:46:08.729011",
+  "total_tests": 629,
   "results": [
     {
       "name": "University of Oxford",
@@ -16305,6 +16305,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-20T06:46:07.331824",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2563.175,
+        "largest_contentful_paint": 3423.0545000000006,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 7081.166000000001,
+        "speed_index": 6163.869954398309,
+        "interactive": 12872.957000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Oxford",
+      "url": "https://www.ox.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-20T06:46:08.729011",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 92.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 751.307,
+        "largest_contentful_paint": 2313.4055,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1491.5649999999998,
+        "speed_index": 3102.2601611723107,
+        "interactive": 3008.022
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

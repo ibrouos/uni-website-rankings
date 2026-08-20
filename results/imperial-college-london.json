@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-08-18T06:43:11.281810",
-  "total_tests": 626,
+  "last_updated": "2026-08-20T06:45:59.408967",
+  "total_tests": 628,
   "results": [
     {
       "name": "Imperial College London",
@@ -16279,6 +16279,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-20T06:45:57.873609",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2855.6016000000004,
+        "largest_contentful_paint": 4793.8362,
+        "cumulative_layout_shift": 0.045689760810477625,
+        "total_blocking_time": 7037.462300000004,
+        "speed_index": 5148.150561051724,
+        "interactive": 17311.014800000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-20T06:45:59.408967",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1127.7452999999998,
+        "largest_contentful_paint": 1826.2606500000002,
+        "cumulative_layout_shift": 0.0481759971889584,
+        "total_blocking_time": 1835.5000000000005,
+        "speed_index": 3233.8499631993163,
+        "interactive": 4528.12016
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

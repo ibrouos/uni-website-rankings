@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2026-08-18T06:45:17.249974",
-  "total_tests": 610,
+  "last_updated": "2026-08-20T06:48:25.515009",
+  "total_tests": 612,
   "results": [
     {
       "name": "University of Leeds",
@@ -15863,6 +15863,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-20T06:48:24.692261",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1633.0459200000003,
+        "largest_contentful_paint": 2292.3725,
+        "cumulative_layout_shift": 0.3922007897934386,
+        "total_blocking_time": 35,
+        "speed_index": 1735.507133926902,
+        "interactive": 2302.76475
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-20T06:48:25.515009",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 42.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2899.3548400000004,
+        "largest_contentful_paint": 5741.992,
+        "cumulative_layout_shift": 0.40144420616186904,
+        "total_blocking_time": 466,
+        "speed_index": 4041.638258717519,
+        "interactive": 5741.992
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
