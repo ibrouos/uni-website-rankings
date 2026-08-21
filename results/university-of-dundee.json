@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-08-20T06:53:18.297357",
-  "total_tests": 629,
+  "last_updated": "2026-08-21T06:52:43.677343",
+  "total_tests": 631,
   "results": [
     {
       "name": "University of Dundee",
@@ -16357,6 +16357,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-21T06:52:42.578834",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 756.7935,
+        "largest_contentful_paint": 1191.6989999999998,
+        "cumulative_layout_shift": 1.7342624664467672e-05,
+        "total_blocking_time": 453.6144999999999,
+        "speed_index": 1393.4168824123994,
+        "interactive": 2301.9700999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-21T06:52:43.677343",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2175.1319999999996,
+        "largest_contentful_paint": 4960.605000000001,
+        "cumulative_layout_shift": 1.8650141295290852e-05,
+        "total_blocking_time": 3702.953000000001,
+        "speed_index": 3239.7745929098187,
+        "interactive": 9818.6254
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

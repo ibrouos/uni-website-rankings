@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-08-20T06:47:22.060252",
-  "total_tests": 626,
+  "last_updated": "2026-08-21T06:48:39.199664",
+  "total_tests": 628,
   "results": [
     {
       "name": "University of Warwick",
@@ -16279,6 +16279,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-21T06:48:37.714464",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 83.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2297.186,
+        "largest_contentful_paint": 3228.9339999999993,
+        "cumulative_layout_shift": 0.11828391596549134,
+        "total_blocking_time": 206.99999999999955,
+        "speed_index": 2902.919186752677,
+        "interactive": 3342.1354999999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-21T06:48:39.199664",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6235.185,
+        "largest_contentful_paint": 9888.519500000002,
+        "cumulative_layout_shift": 0.11828391596549134,
+        "total_blocking_time": 2011.2979999999989,
+        "speed_index": 7576.392617504199,
+        "interactive": 11097.593200000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
