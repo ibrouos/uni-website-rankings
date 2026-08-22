@@ -2,8 +2,8 @@
   "name": "University of Aberdeen",
   "slug": "university-of-aberdeen",
   "url": "https://www.abdn.ac.uk",
-  "last_updated": "2026-08-21T06:52:49.339991",
-  "total_tests": 596,
+  "last_updated": "2026-08-22T06:47:31.589288",
+  "total_tests": 598,
   "results": [
     {
       "name": "University of Aberdeen",
@@ -15499,6 +15499,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-22T06:47:27.528956",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2924.6690000000003,
+        "largest_contentful_paint": 10812.7535,
+        "cumulative_layout_shift": 0.0681735892441136,
+        "total_blocking_time": 6438.226000000001,
+        "speed_index": 9788.474117872109,
+        "interactive": 15695.595900000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Aberdeen",
+      "url": "https://www.abdn.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-22T06:47:31.589288",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1376.178,
+        "largest_contentful_paint": 3086.374999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1002.4739999999993,
+        "speed_index": 3362.647482258005,
+        "interactive": 3140.6169999999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
