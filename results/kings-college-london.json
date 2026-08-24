@@ -2,8 +2,8 @@
   "name": "King's College London",
   "slug": "kings-college-london",
   "url": "https://www.kcl.ac.uk",
-  "last_updated": "2026-08-23T06:42:26.028842",
-  "total_tests": 636,
+  "last_updated": "2026-08-24T06:59:51.830348",
+  "total_tests": 638,
   "results": [
     {
       "name": "King's College London",
@@ -16535,6 +16535,58 @@
         "total_blocking_time": 1017.2725000000003,
         "speed_index": 2973.7885358589538,
         "interactive": 3623.3722500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-24T06:59:47.600887",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3255.3059999999996,
+        "largest_contentful_paint": 10305.806,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4814.5525,
+        "speed_index": 5751.843091967523,
+        "interactive": 12355.419249999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "King's College London",
+      "url": "https://www.kcl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-24T06:59:51.830348",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 94.0,
+        "best_practices": 100,
+        "seo": 69.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1229.885,
+        "largest_contentful_paint": 2012.9464999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 724.6544999999999,
+        "speed_index": 1993.2162661463844,
+        "interactive": 2752.3870500000003
       },
       "throttling_config": {
         "method": "simulate",
