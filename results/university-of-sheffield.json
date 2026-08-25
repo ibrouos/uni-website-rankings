@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-08-24T07:02:00.126877",
-  "total_tests": 638,
+  "last_updated": "2026-08-25T06:50:33.095839",
+  "total_tests": 640,
   "results": [
     {
       "name": "University of Sheffield",
@@ -16591,6 +16591,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-25T06:50:31.730890",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2149.971,
+        "largest_contentful_paint": 2149.971,
+        "cumulative_layout_shift": 0.0003907553093291758,
+        "total_blocking_time": 292.99999999999955,
+        "speed_index": 3483.970701529643,
+        "interactive": 4358.506949999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-25T06:50:33.095839",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 99.0,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3951.0258000000003,
+        "largest_contentful_paint": 4226.9872000000005,
+        "cumulative_layout_shift": 0.0003907553093291758,
+        "total_blocking_time": 3729.296449999998,
+        "speed_index": 8348.691876813256,
+        "interactive": 18671.799605
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
