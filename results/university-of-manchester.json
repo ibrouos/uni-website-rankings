@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-08-26T06:52:46.139869",
-  "total_tests": 636,
+  "last_updated": "2026-08-27T17:26:40.410963",
+  "total_tests": 638,
   "results": [
     {
       "name": "University of Manchester",
@@ -16539,6 +16539,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-27T17:26:38.935801",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1827.333,
+        "largest_contentful_paint": 2425.614047943115,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5206.371499999998,
+        "speed_index": 2468.389913391316,
+        "interactive": 10551.089849999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-27T17:26:40.410963",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3272.8469999999993,
+        "largest_contentful_paint": 5832.2325,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 28262.91350000001,
+        "speed_index": 4437.4771003190435,
+        "interactive": 44616.79565
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
