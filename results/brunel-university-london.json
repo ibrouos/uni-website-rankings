@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-08-28T18:26:54.550063",
-  "total_tests": 644,
+  "last_updated": "2026-08-29T12:35:19.583046",
+  "total_tests": 646,
   "results": [
     {
       "name": "Brunel University London",
@@ -16747,6 +16747,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-29T12:35:17.043395",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1308.5660000000003,
+        "largest_contentful_paint": 2033.7090000000003,
+        "cumulative_layout_shift": 0.0048670601077229585,
+        "total_blocking_time": 2399.499999999999,
+        "speed_index": 2766.2861903737708,
+        "interactive": 6018.4163499999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-29T12:35:19.583046",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 100,
+        "best_practices": 56.99999999999999,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2942.3600000000006,
+        "largest_contentful_paint": 5387.535000000001,
+        "cumulative_layout_shift": 0.001174658226530203,
+        "total_blocking_time": 16293.661,
+        "speed_index": 8089.253209949448,
+        "interactive": 24740.746900000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

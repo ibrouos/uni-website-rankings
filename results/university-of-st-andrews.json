@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-08-28T18:20:53.779510",
-  "total_tests": 628,
+  "last_updated": "2026-08-29T12:31:38.583687",
+  "total_tests": 630,
   "results": [
     {
       "name": "University of St Andrews",
@@ -16331,6 +16331,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-29T12:31:37.522515",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2435.2160000000003,
+        "largest_contentful_paint": 3221.699,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3052.221999999998,
+        "speed_index": 3878.017511908712,
+        "interactive": 9405.868599999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-29T12:31:38.583687",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 9086.613000000001,
+        "largest_contentful_paint": 10736.613000000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 17113.826,
+        "speed_index": 9086.613000000001,
+        "interactive": 34917.7108
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
