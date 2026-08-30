@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2026-08-29T12:39:10.636261",
-  "total_tests": 648,
+  "last_updated": "2026-08-30T11:37:55.687703",
+  "total_tests": 650,
   "results": [
     {
       "name": "University of Bradford",
@@ -16851,6 +16851,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-30T11:37:55.528535",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2440.104,
+        "largest_contentful_paint": 3199.1020000000003,
+        "cumulative_layout_shift": 0.01016640362364523,
+        "total_blocking_time": 363.92450000000053,
+        "speed_index": 3283.0372713468123,
+        "interactive": 4935.005750000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-30T11:37:55.687703",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 907.1094999999999,
+        "largest_contentful_paint": 1115.1354999999999,
+        "cumulative_layout_shift": 0.03834659533849743,
+        "total_blocking_time": 16.999999999999886,
+        "speed_index": 1201.795111408114,
+        "interactive": 1588.2241999999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

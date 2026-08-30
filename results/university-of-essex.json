@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-08-29T12:39:13.499744",
-  "total_tests": 641,
+  "last_updated": "2026-08-30T11:38:01.760552",
+  "total_tests": 643,
   "results": [
     {
       "name": "University of Essex",
@@ -16669,6 +16669,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-30T11:38:01.283967",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 26.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4140.8135,
+        "largest_contentful_paint": 20404.26099999999,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 36462.86150000002,
+        "speed_index": 22482.23512779032,
+        "interactive": 56613.63534999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-30T11:38:01.760552",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 990.232,
+        "largest_contentful_paint": 6712.685207500001,
+        "cumulative_layout_shift": 0.06884669918935168,
+        "total_blocking_time": 7021.619370000004,
+        "speed_index": 7632.4567319106045,
+        "interactive": 12711.332808000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
