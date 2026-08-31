@@ -2,8 +2,8 @@
   "name": "University of Liverpool",
   "slug": "university-of-liverpool",
   "url": "https://www.liverpool.ac.uk",
-  "last_updated": "2026-08-30T11:29:27.540940",
-  "total_tests": 650,
+  "last_updated": "2026-08-31T12:59:17.481959",
+  "total_tests": 652,
   "results": [
     {
       "name": "University of Liverpool",
@@ -16903,6 +16903,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-31T12:59:11.753748",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1484.6529999999998,
+        "largest_contentful_paint": 2156.6044999999995,
+        "cumulative_layout_shift": 0.08348533845005726,
+        "total_blocking_time": 1859.7434999999996,
+        "speed_index": 3272.147887346181,
+        "interactive": 5232.84715
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-31T12:59:17.481959",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2608.6180000000004,
+        "largest_contentful_paint": 10013.2252,
+        "cumulative_layout_shift": 0.06234537120863895,
+        "total_blocking_time": 9667.492900000003,
+        "speed_index": 7451.785414906507,
+        "interactive": 23215.95221
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

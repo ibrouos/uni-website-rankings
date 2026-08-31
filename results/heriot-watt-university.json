@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-08-30T11:31:34.008452",
-  "total_tests": 650,
+  "last_updated": "2026-08-31T13:01:19.793120",
+  "total_tests": 652,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -16903,6 +16903,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-08-31T13:01:16.929919",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 986.1045000000006,
+        "largest_contentful_paint": 1171.7715000000007,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 928.7005000000001,
+        "speed_index": 2649.4859815847713,
+        "interactive": 3095.6379500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-08-31T13:01:19.793120",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4721.395,
+        "largest_contentful_paint": 6519.500000000002,
+        "cumulative_layout_shift": 0.001513655429557279,
+        "total_blocking_time": 9069.844,
+        "speed_index": 9592.079517695762,
+        "interactive": 15373.5236
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
