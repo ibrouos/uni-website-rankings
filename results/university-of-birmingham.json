@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-09-02T10:49:22.142083",
-  "total_tests": 654,
+  "last_updated": "2026-09-03T10:49:53.779909",
+  "total_tests": 656,
   "results": [
     {
       "name": "University of Birmingham",
@@ -17007,6 +17007,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-03T10:49:52.831689",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1512.5475000000001,
+        "largest_contentful_paint": 2478.1850000000004,
+        "cumulative_layout_shift": 0.008964762692871558,
+        "total_blocking_time": 1238,
+        "speed_index": 3253.985086262075,
+        "interactive": 3324.3065000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-03T10:49:53.779909",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5194.165499999998,
+        "largest_contentful_paint": 9283.699499999999,
+        "cumulative_layout_shift": 0.008964762692871558,
+        "total_blocking_time": 5377.805500000001,
+        "speed_index": 8914.898048787923,
+        "interactive": 12544.1823
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
