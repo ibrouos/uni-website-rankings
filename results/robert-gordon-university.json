@@ -2,8 +2,8 @@
   "name": "Robert Gordon University",
   "slug": "robert-gordon-university",
   "url": "https://www.rgu.ac.uk",
-  "last_updated": "2026-09-03T10:58:46.003595",
-  "total_tests": 657,
+  "last_updated": "2026-09-04T10:58:23.149951",
+  "total_tests": 659,
   "results": [
     {
       "name": "Robert Gordon University",
@@ -17085,6 +17085,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-04T10:58:22.090195",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 38.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 3296.0287623291015,
+        "largest_contentful_paint": 11411.686,
+        "cumulative_layout_shift": 0.0002986029347399358,
+        "total_blocking_time": 1477.0467376709003,
+        "speed_index": 6010.232455292793,
+        "interactive": 14001.814600000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Robert Gordon University",
+      "url": "https://www.rgu.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-04T10:58:23.149951",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 91.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1525.9995999999999,
+        "largest_contentful_paint": 2673.2771999999995,
+        "cumulative_layout_shift": 0.12719141937404704,
+        "total_blocking_time": 432.50000000000045,
+        "speed_index": 2593.8238088512653,
+        "interactive": 3125.6033000000007
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

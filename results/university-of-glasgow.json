@@ -2,8 +2,8 @@
   "name": "University of Glasgow",
   "slug": "university-of-glasgow",
   "url": "https://www.gla.ac.uk",
-  "last_updated": "2026-09-03T10:49:27.393138",
-  "total_tests": 658,
+  "last_updated": "2026-09-04T10:47:48.631491",
+  "total_tests": 660,
   "results": [
     {
       "name": "University of Glasgow",
@@ -17111,6 +17111,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-04T10:47:47.555222",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 4.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5168.816500000001,
+        "largest_contentful_paint": 15070.885500000004,
+        "cumulative_layout_shift": 0.7944082386315625,
+        "total_blocking_time": 6779.569250000002,
+        "speed_index": 8008.205850998191,
+        "interactive": 15455.379275000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Glasgow",
+      "url": "https://www.gla.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-04T10:47:48.631491",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1901.0865000000001,
+        "largest_contentful_paint": 3354.8137500000003,
+        "cumulative_layout_shift": 0.7983354864460684,
+        "total_blocking_time": 924.4655,
+        "speed_index": 2744.0972743149277,
+        "interactive": 3506.534825
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
