@@ -2,8 +2,8 @@
   "name": "University College London",
   "slug": "university-college-london",
   "url": "https://www.ucl.ac.uk",
-  "last_updated": "2026-09-04T10:46:34.642405",
-  "total_tests": 660,
+  "last_updated": "2026-09-05T10:04:19.957516",
+  "total_tests": 662,
   "results": [
     {
       "name": "University College London",
@@ -17163,6 +17163,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-05T10:04:18.886786",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 809.0264999999996,
+        "largest_contentful_paint": 895.8084999999994,
+        "cumulative_layout_shift": 0.008252632875331683,
+        "total_blocking_time": 5.5,
+        "speed_index": 1386.7128385978242,
+        "interactive": 900.1475999999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University College London",
+      "url": "https://www.ucl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-05T10:04:19.957516",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3018.2560000000003,
+        "largest_contentful_paint": 5188.3135,
+        "cumulative_layout_shift": 0.008252632875331683,
+        "total_blocking_time": 269.3710000000001,
+        "speed_index": 4772.851121471074,
+        "interactive": 5293.3135
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2026-09-04T10:51:53.626979",
-  "total_tests": 657,
+  "last_updated": "2026-09-05T10:08:18.016309",
+  "total_tests": 659,
   "results": [
     {
       "name": "University of Newcastle",
@@ -17085,6 +17085,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-05T10:08:15.249750",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1220.7450000000001,
+        "largest_contentful_paint": 2206.9250000000006,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 807.0000000000005,
+        "speed_index": 2070.183574431987,
+        "interactive": 5138.505652413858
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-05T10:08:18.016309",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3052.2879385834103,
+        "largest_contentful_paint": 9310.461272265522,
+        "cumulative_layout_shift": 9.936230528116527e-05,
+        "total_blocking_time": 4878.5,
+        "speed_index": 5279.778672073624,
+        "interactive": 22020.968751135937
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
