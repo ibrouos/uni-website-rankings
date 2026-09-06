@@ -2,8 +2,8 @@
   "name": "University of Warwick",
   "slug": "university-of-warwick",
   "url": "https://www.warwick.ac.uk",
-  "last_updated": "2026-09-05T10:05:11.201312",
-  "total_tests": 658,
+  "last_updated": "2026-09-06T10:26:06.302664",
+  "total_tests": 660,
   "results": [
     {
       "name": "University of Warwick",
@@ -17111,6 +17111,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-06T10:26:02.801213",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 89.0,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1854.8629999999994,
+        "largest_contentful_paint": 2674.414499999999,
+        "cumulative_layout_shift": 1.787118568686279e-05,
+        "total_blocking_time": 288.0419999999999,
+        "speed_index": 2428.5901308061707,
+        "interactive": 2862.9044999999987
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Warwick",
+      "url": "https://www.warwick.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-06T10:26:06.302664",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 100,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6572.542999999999,
+        "largest_contentful_paint": 8998.644499999999,
+        "cumulative_layout_shift": 1.787118568686279e-05,
+        "total_blocking_time": 3832.544500000001,
+        "speed_index": 7958.901966476667,
+        "interactive": 12853.508050000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

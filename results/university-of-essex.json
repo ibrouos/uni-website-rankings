@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-09-05T10:13:16.060707",
-  "total_tests": 655,
+  "last_updated": "2026-09-06T10:37:50.543334",
+  "total_tests": 657,
   "results": [
     {
       "name": "University of Essex",
@@ -17033,6 +17033,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-06T10:37:46.843808",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2922.008,
+        "largest_contentful_paint": 14842.712000000001,
+        "cumulative_layout_shift": 0.07290400972053462,
+        "total_blocking_time": 34160.999999999985,
+        "speed_index": 21040.10436186693,
+        "interactive": 56579.91412399997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-06T10:37:50.543334",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1680.3890000000001,
+        "largest_contentful_paint": 5440.153159999998,
+        "cumulative_layout_shift": 0.22221403395593542,
+        "total_blocking_time": 5603.757819999998,
+        "speed_index": 7605.735830703286,
+        "interactive": 11730.071607999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
