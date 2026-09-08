@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-09-07T11:48:10.867498",
-  "total_tests": 664,
+  "last_updated": "2026-09-08T10:46:38.513201",
+  "total_tests": 666,
   "results": [
     {
       "name": "University of Birmingham",
@@ -17267,6 +17267,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-08T10:46:37.567200",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 84.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1381.129,
+        "largest_contentful_paint": 2547.575,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 510.62699999999995,
+        "speed_index": 2609.686060201261,
+        "interactive": 2548.225
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-08T10:46:38.513201",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1973.4689999999996,
+        "largest_contentful_paint": 8780.414999999997,
+        "cumulative_layout_shift": 0.009692529405946003,
+        "total_blocking_time": 5644.999999999998,
+        "speed_index": 7466.60396634319,
+        "interactive": 11042.713
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Goldsmiths, University of London",
   "slug": "goldsmiths-university-of-london",
   "url": "https://www.gold.ac.uk",
-  "last_updated": "2026-09-07T11:56:15.068008",
-  "total_tests": 662,
+  "last_updated": "2026-09-08T10:56:36.428607",
+  "total_tests": 664,
   "results": [
     {
       "name": "Goldsmiths, University of London",
@@ -17215,6 +17215,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-08T10:56:35.550707",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1291.107,
+        "largest_contentful_paint": 1511.907,
+        "cumulative_layout_shift": 6.830077849549158e-05,
+        "total_blocking_time": 2987.5,
+        "speed_index": 2316.2900255384043,
+        "interactive": 6096.3434
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Goldsmiths, University of London",
+      "url": "https://www.gold.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-08T10:56:36.428607",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4706.2175,
+        "largest_contentful_paint": 5470.0335,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12530.199250000005,
+        "speed_index": 7739.901956842508,
+        "interactive": 23515.723025000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
