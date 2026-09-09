@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-09-08T10:55:14.242769",
-  "total_tests": 668,
+  "last_updated": "2026-09-09T11:03:36.156416",
+  "total_tests": 670,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -17371,6 +17371,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-09T11:03:30.965739",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2986.0979999999995,
+        "largest_contentful_paint": 12141.119249999996,
+        "cumulative_layout_shift": 0.03099338496742638,
+        "total_blocking_time": 18700.452999999994,
+        "speed_index": 10149.476447527995,
+        "interactive": 28867.969999999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-09T11:03:36.156416",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1358.7804999999996,
+        "largest_contentful_paint": 3108.93775,
+        "cumulative_layout_shift": 0.04912305356776397,
+        "total_blocking_time": 3813.5,
+        "speed_index": 3683.902397799402,
+        "interactive": 7262.7919999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
