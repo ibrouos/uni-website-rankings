@@ -2,8 +2,8 @@
   "name": "University of Cambridge",
   "slug": "university-of-cambridge",
   "url": "https://www.cam.ac.uk",
-  "last_updated": "2026-09-10T10:47:09.244270",
-  "total_tests": 672,
+  "last_updated": "2026-09-11T10:44:38.658074",
+  "total_tests": 674,
   "results": [
     {
       "name": "University of Cambridge",
@@ -17475,6 +17475,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-11T10:44:38.632344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2760.3104999999996,
+        "largest_contentful_paint": 10934.869500000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10700,
+        "speed_index": 8602.881878836015,
+        "interactive": 21117.321875
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Cambridge",
+      "url": "https://www.cam.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-11T10:44:38.658074",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 82.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 848.2029999999991,
+        "largest_contentful_paint": 1502.640499999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 689.5,
+        "speed_index": 3323.442470215805,
+        "interactive": 3222.621299999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
