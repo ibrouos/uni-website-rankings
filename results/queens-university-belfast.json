@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-09-11T10:51:36.008526",
-  "total_tests": 668,
+  "last_updated": "2026-09-12T10:20:26.959893",
+  "total_tests": 670,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -17371,6 +17371,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-12T10:20:23.142871",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 954.0995,
+        "largest_contentful_paint": 1753.6785000000004,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 9424.914999999994,
+        "speed_index": 1955.0785502243405,
+        "interactive": 13221.918899999993
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-12T10:20:26.959893",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 61.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1836.3055000000004,
+        "largest_contentful_paint": 3132.4035000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 45440.5,
+        "speed_index": 3745.993838510897,
+        "interactive": 55464.7945
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
