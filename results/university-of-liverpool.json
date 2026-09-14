@@ -2,8 +2,8 @@
   "name": "University of Liverpool",
   "slug": "university-of-liverpool",
   "url": "https://www.liverpool.ac.uk",
-  "last_updated": "2026-09-13T11:19:30.693834",
-  "total_tests": 678,
+  "last_updated": "2026-09-14T12:03:34.452910",
+  "total_tests": 680,
   "results": [
     {
       "name": "University of Liverpool",
@@ -17631,6 +17631,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-14T12:03:34.053734",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 87.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1015.6846,
+        "largest_contentful_paint": 2027.9118000000003,
+        "cumulative_layout_shift": 0.12182799511307173,
+        "total_blocking_time": 363.9327999999996,
+        "speed_index": 2120.340161885325,
+        "interactive": 4439.7635
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Liverpool",
+      "url": "https://www.liverpool.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-14T12:03:34.452910",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2199.4341000000004,
+        "largest_contentful_paint": 8765.38775,
+        "cumulative_layout_shift": 0.06292410073485462,
+        "total_blocking_time": 2952.499999999998,
+        "speed_index": 5442.683977956278,
+        "interactive": 19102.829500000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
