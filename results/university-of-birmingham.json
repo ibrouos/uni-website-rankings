@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-09-14T12:02:12.052238",
-  "total_tests": 678,
+  "last_updated": "2026-09-15T11:18:18.740015",
+  "total_tests": 680,
   "results": [
     {
       "name": "University of Birmingham",
@@ -17631,6 +17631,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-15T11:18:16.441361",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4977.255999999999,
+        "largest_contentful_paint": 9963.892,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5503.5,
+        "speed_index": 8899.019050281166,
+        "interactive": 12175.405550000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-15T11:18:18.740015",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1460.7920000000004,
+        "largest_contentful_paint": 3071.5545000000006,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 751.5005000000001,
+        "speed_index": 2772.0956219489262,
+        "interactive": 3083.429250000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
