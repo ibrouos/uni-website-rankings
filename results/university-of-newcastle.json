@@ -2,8 +2,8 @@
   "name": "University of Newcastle",
   "slug": "university-of-newcastle",
   "url": "https://www.ncl.ac.uk",
-  "last_updated": "2026-09-15T11:22:11.575892",
-  "total_tests": 679,
+  "last_updated": "2026-09-16T11:02:34.860012",
+  "total_tests": 681,
   "results": [
     {
       "name": "University of Newcastle",
@@ -17657,6 +17657,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-16T11:02:30.367583",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 34.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3149.6930577063818,
+        "largest_contentful_paint": 10140.902468938193,
+        "cumulative_layout_shift": 9.936230528116527e-05,
+        "total_blocking_time": 8219.000000000004,
+        "speed_index": 6318.339940606855,
+        "interactive": 22812.055038951163
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Newcastle",
+      "url": "https://www.ncl.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-16T11:02:34.860012",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 92.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1169.262,
+        "largest_contentful_paint": 2177.6550000000007,
+        "cumulative_layout_shift": 9.936230528116527e-05,
+        "total_blocking_time": 1371.1077500000001,
+        "speed_index": 2208.0348537666796,
+        "interactive": 5465.420225000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
