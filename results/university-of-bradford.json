@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2026-09-16T11:08:12.182127",
-  "total_tests": 684,
+  "last_updated": "2026-09-17T11:20:45.588604",
+  "total_tests": 686,
   "results": [
     {
       "name": "University of Bradford",
@@ -17787,6 +17787,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-17T11:20:45.543165",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1112.1734999999999,
+        "largest_contentful_paint": 1334.0484999999999,
+        "cumulative_layout_shift": 0.03923479622349278,
+        "total_blocking_time": 33,
+        "speed_index": 1520.9167372790316,
+        "interactive": 1897.5019
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-17T11:20:45.588604",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2598.5260000000003,
+        "largest_contentful_paint": 4287.592000000001,
+        "cumulative_layout_shift": 0.03923479622349278,
+        "total_blocking_time": 335.80800000000045,
+        "speed_index": 3381.612019526021,
+        "interactive": 5522.1642
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
