@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-09-17T11:16:52.825332",
-  "total_tests": 684,
+  "last_updated": "2026-09-18T10:51:49.854822",
+  "total_tests": 686,
   "results": [
     {
       "name": "Swansea University",
@@ -17787,6 +17787,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-18T10:51:49.737046",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1230.136,
+        "largest_contentful_paint": 1802.13625,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5092.04275,
+        "speed_index": 4842.763824068708,
+        "interactive": 9997.3252
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-18T10:51:49.854822",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3434.2850000000003,
+        "largest_contentful_paint": 7564.839,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 21829.769249999994,
+        "speed_index": 10870.591655667748,
+        "interactive": 41557.77425
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-09-17T11:14:10.691288",
-  "total_tests": 680,
+  "last_updated": "2026-09-18T10:49:29.780553",
+  "total_tests": 682,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -17683,6 +17683,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-18T10:49:23.293577",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 526.8265,
+        "largest_contentful_paint": 723.4065,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 12624.50000000001,
+        "speed_index": 1517.709755811255,
+        "interactive": 16123.051250000011
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-18T10:49:29.780553",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1933.984,
+        "largest_contentful_paint": 2738.8745,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 56374.42650000004,
+        "speed_index": 4227.576022198789,
+        "interactive": 64886.217850000045
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-09-17T11:16:39.469402",
-  "total_tests": 684,
+  "last_updated": "2026-09-18T10:52:15.502563",
+  "total_tests": 686,
   "results": [
     {
       "name": "City, University of London",
@@ -17783,6 +17783,58 @@
         "total_blocking_time": 499,
         "speed_index": 1800.994075280933,
         "interactive": 3551.9741150000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-18T10:51:30.750102",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 37.0,
+        "accessibility": 96.0,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3344.4625000000005,
+        "largest_contentful_paint": 6409.530000000001,
+        "cumulative_layout_shift": 0.0028182077513076165,
+        "total_blocking_time": 5987.3405,
+        "speed_index": 5432.085196963279,
+        "interactive": 14575.2487
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-18T10:52:15.502563",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 590.915,
+        "largest_contentful_paint": 1575.426,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 10897,
+        "speed_index": 1281.7561285061313,
+        "interactive": 15537.686000000002
       },
       "throttling_config": {
         "method": "simulate",

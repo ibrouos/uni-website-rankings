@@ -2,8 +2,8 @@
   "name": "Edinburgh Napier University",
   "slug": "edinburgh-napier-university",
   "url": "https://www.napier.ac.uk",
-  "last_updated": "2026-09-17T11:21:04.014411",
-  "total_tests": 630,
+  "last_updated": "2026-09-18T10:55:57.532451",
+  "total_tests": 632,
   "results": [
     {
       "name": "Edinburgh Napier University",
@@ -16383,6 +16383,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-18T10:55:57.484064",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1716.9129999999998,
+        "largest_contentful_paint": 3423.005999999999,
+        "cumulative_layout_shift": 0.62025465842509,
+        "total_blocking_time": 808.9999999999995,
+        "speed_index": 2721.106104182411,
+        "interactive": 5225.66035
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-18T10:55:57.532451",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 8.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4486.352000000001,
+        "largest_contentful_paint": 17369.944,
+        "cumulative_layout_shift": 0.6203542304190395,
+        "total_blocking_time": 4688.223999999999,
+        "speed_index": 6468.761177067561,
+        "interactive": 26458.787075000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
