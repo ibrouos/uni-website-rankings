@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-09-18T10:42:11.766013",
-  "total_tests": 686,
+  "last_updated": "2026-09-19T10:26:40.748302",
+  "total_tests": 688,
   "results": [
     {
       "name": "Imperial College London",
@@ -17839,6 +17839,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-19T10:26:40.194109",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2920.558,
+        "largest_contentful_paint": 5172.324,
+        "cumulative_layout_shift": 0.03062765657457455,
+        "total_blocking_time": 15684.490000000003,
+        "speed_index": 5938.104725533271,
+        "interactive": 23226.1071
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-19T10:26:40.748302",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1112.3961,
+        "largest_contentful_paint": 1391.67415,
+        "cumulative_layout_shift": 0.0461710631022738,
+        "total_blocking_time": 2646.6075499999997,
+        "speed_index": 2113.6110379321317,
+        "interactive": 5064.447575
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

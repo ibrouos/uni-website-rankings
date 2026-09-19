@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-09-18T10:45:35.274330",
-  "total_tests": 688,
+  "last_updated": "2026-09-19T10:29:50.802058",
+  "total_tests": 690,
   "results": [
     {
       "name": "University of Sheffield",
@@ -17891,6 +17891,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-19T10:29:48.906516",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 99.0,
+        "best_practices": 93.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 909.1460000000001,
+        "largest_contentful_paint": 1117.1460000000002,
+        "cumulative_layout_shift": 0.0003907553093291758,
+        "total_blocking_time": 429,
+        "speed_index": 1294.3873177613611,
+        "interactive": 3294.0103000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-19T10:29:50.802058",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 50.0,
+        "accessibility": 99.0,
+        "best_practices": 93.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2720.882,
+        "largest_contentful_paint": 4210.206,
+        "cumulative_layout_shift": 0.0003907553093291758,
+        "total_blocking_time": 4949,
+        "speed_index": 4278.952891423288,
+        "interactive": 14307.371949999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

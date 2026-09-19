@@ -2,8 +2,8 @@
   "name": "Edinburgh Napier University",
   "slug": "edinburgh-napier-university",
   "url": "https://www.napier.ac.uk",
-  "last_updated": "2026-09-18T10:55:57.532451",
-  "total_tests": 632,
+  "last_updated": "2026-09-19T10:40:03.112721",
+  "total_tests": 634,
   "results": [
     {
       "name": "Edinburgh Napier University",
@@ -16435,6 +16435,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-19T10:39:55.677210",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 5.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4586.771,
+        "largest_contentful_paint": 16149.885999999999,
+        "cumulative_layout_shift": 0.6182143770439993,
+        "total_blocking_time": 4454.988999999996,
+        "speed_index": 9843.498059717203,
+        "interactive": 27886.51525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Edinburgh Napier University",
+      "url": "https://www.napier.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-19T10:40:03.112721",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 54.0,
+        "accessibility": 93.0,
+        "best_practices": 100,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1505.6709999999998,
+        "largest_contentful_paint": 3459.084999999999,
+        "cumulative_layout_shift": 0.62025465842509,
+        "total_blocking_time": 542.0000000000002,
+        "speed_index": 2671.495286836028,
+        "interactive": 5419.170525000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
