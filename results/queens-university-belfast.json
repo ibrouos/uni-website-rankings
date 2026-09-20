@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-09-19T10:33:23.647313",
-  "total_tests": 684,
+  "last_updated": "2026-09-20T10:53:00.247158",
+  "total_tests": 686,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -17787,6 +17787,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-20T10:52:58.874391",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 554.875,
+        "largest_contentful_paint": 941.5849999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 7879.1569999999965,
+        "speed_index": 1346.8066787132573,
+        "interactive": 11647.860299999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-20T10:53:00.247158",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 62.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1758.7675,
+        "largest_contentful_paint": 3041.3345,
+        "cumulative_layout_shift": 0.02575901828666332,
+        "total_blocking_time": 40352.13400000001,
+        "speed_index": 3837.3375480253544,
+        "interactive": 52175.35010000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

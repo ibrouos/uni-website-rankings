@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-09-19T10:26:40.748302",
-  "total_tests": 688,
+  "last_updated": "2026-09-20T10:47:03.426711",
+  "total_tests": 690,
   "results": [
     {
       "name": "Imperial College London",
@@ -17891,6 +17891,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-20T10:47:01.972682",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1288.5219999999997,
+        "largest_contentful_paint": 1488.07,
+        "cumulative_layout_shift": 0.04612529509293121,
+        "total_blocking_time": 2148.7162500000004,
+        "speed_index": 2347.104942487101,
+        "interactive": 4773.366625000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-20T10:47:03.426711",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 44.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3191.0108999999998,
+        "largest_contentful_paint": 4749.5943,
+        "cumulative_layout_shift": 0.04765926159960669,
+        "total_blocking_time": 13084.135049999999,
+        "speed_index": 4737.7857480656885,
+        "interactive": 21422.282124999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
