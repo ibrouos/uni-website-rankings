@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-09-20T10:53:58.821752",
-  "total_tests": 690,
+  "last_updated": "2026-09-21T12:18:53.900070",
+  "total_tests": 692,
   "results": [
     {
       "name": "University of Reading",
@@ -17943,6 +17943,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-21T12:18:40.324549",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 93.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5556.377,
+        "largest_contentful_paint": 8354.934000000001,
+        "cumulative_layout_shift": 0.0013830831636694261,
+        "total_blocking_time": 1968.5,
+        "speed_index": 6189.228827561536,
+        "interactive": 19117.22435
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-21T12:18:53.900070",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 93.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1846.7020000000002,
+        "largest_contentful_paint": 2273.6695,
+        "cumulative_layout_shift": 0.0013830831636694261,
+        "total_blocking_time": 695.9999999999995,
+        "speed_index": 2556.6057396507613,
+        "interactive": 4496.555899999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
