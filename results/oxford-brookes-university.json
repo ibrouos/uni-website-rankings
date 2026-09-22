@@ -2,8 +2,8 @@
   "name": "Oxford Brookes University",
   "slug": "oxford-brookes-university",
   "url": "https://www.brookes.ac.uk",
-  "last_updated": "2026-09-21T12:21:20.584036",
-  "total_tests": 694,
+  "last_updated": "2026-09-22T11:13:32.859727",
+  "total_tests": 696,
   "results": [
     {
       "name": "Oxford Brookes University",
@@ -18047,6 +18047,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-22T11:13:32.602211",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1186.9649999999997,
+        "largest_contentful_paint": 2615.4000000000005,
+        "cumulative_layout_shift": 0.04912305356776397,
+        "total_blocking_time": 1417.2954999999993,
+        "speed_index": 2742.255427859076,
+        "interactive": 6198.656225
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Oxford Brookes University",
+      "url": "https://www.brookes.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-22T11:13:32.859727",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 33.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2872.191,
+        "largest_contentful_paint": 13031.033499999996,
+        "cumulative_layout_shift": 0.03099338496742638,
+        "total_blocking_time": 8426.499999999998,
+        "speed_index": 7644.194624706683,
+        "interactive": 27678.666525
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
