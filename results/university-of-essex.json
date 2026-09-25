@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-09-23T11:08:36.474582",
-  "total_tests": 691,
+  "last_updated": "2026-09-25T11:33:32.668260",
+  "total_tests": 693,
   "results": [
     {
       "name": "University of Essex",
@@ -17969,6 +17969,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-25T11:33:27.838358",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 46.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1076.98,
+        "largest_contentful_paint": 4297.459999999999,
+        "cumulative_layout_shift": 0.07161083233060828,
+        "total_blocking_time": 8927.611999999992,
+        "speed_index": 9484.106839585553,
+        "interactive": 13976.291999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-25T11:33:32.668260",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2563.3435,
+        "largest_contentful_paint": 7231.8060000000005,
+        "cumulative_layout_shift": 0.0688434563659179,
+        "total_blocking_time": 44259.09514999999,
+        "speed_index": 25317.139691839046,
+        "interactive": 68017.05808500003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
