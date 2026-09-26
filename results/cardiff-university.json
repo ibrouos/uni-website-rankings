@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-09-25T11:25:31.152859",
-  "total_tests": 702,
+  "last_updated": "2026-09-26T10:58:52.264980",
+  "total_tests": 704,
   "results": [
     {
       "name": "Cardiff University",
@@ -18251,6 +18251,58 @@
         "total_blocking_time": 13228.951,
         "speed_index": 1307.9425285450227,
         "interactive": 17673.7599
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-26T10:58:51.842292",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1012.874,
+        "largest_contentful_paint": 3676.9965,
+        "cumulative_layout_shift": 0.006106223607873112,
+        "total_blocking_time": 10702,
+        "speed_index": 2290.262118660764,
+        "interactive": 14077.361
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-26T10:58:52.264980",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 303.962,
+        "largest_contentful_paint": 507.924,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1871.4905,
+        "speed_index": 1182.67759532086,
+        "interactive": 3431.8034500000003
       },
       "throttling_config": {
         "method": "simulate",
