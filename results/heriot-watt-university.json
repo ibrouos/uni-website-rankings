@@ -2,8 +2,8 @@
   "name": "Heriot-Watt University",
   "slug": "heriot-watt-university",
   "url": "https://www.hw.ac.uk",
-  "last_updated": "2026-09-26T11:00:15.194165",
-  "total_tests": 704,
+  "last_updated": "2026-09-27T11:40:09.562795",
+  "total_tests": 706,
   "results": [
     {
       "name": "Heriot-Watt University",
@@ -18307,6 +18307,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-27T11:40:05.397642",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 4646.184,
+        "largest_contentful_paint": 8224.104,
+        "cumulative_layout_shift": 0.004996352964780119,
+        "total_blocking_time": 12085.968000000004,
+        "speed_index": 12267.194627774297,
+        "interactive": 18398.502000000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Heriot-Watt University",
+      "url": "https://www.hw.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-27T11:40:09.562795",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 95.0,
+        "best_practices": 93.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1046.3465,
+        "largest_contentful_paint": 1632.5645000000002,
+        "cumulative_layout_shift": 0.017067324999752383,
+        "total_blocking_time": 1088.3635,
+        "speed_index": 2937.9303664112877,
+        "interactive": 3144.8093500000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
