@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-09-28T13:06:02.212443",
-  "total_tests": 706,
+  "last_updated": "2026-09-29T12:16:13.245296",
+  "total_tests": 708,
   "results": [
     {
       "name": "Imperial College London",
@@ -18359,6 +18359,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-29T12:16:11.915122",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1419.0369999999998,
+        "largest_contentful_paint": 1795.7259999999997,
+        "cumulative_layout_shift": 0.03693478353946161,
+        "total_blocking_time": 2015.499999999999,
+        "speed_index": 2822.358253769794,
+        "interactive": 4499.920649999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-29T12:16:13.245296",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 39.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3336.71,
+        "largest_contentful_paint": 5355.477999999999,
+        "cumulative_layout_shift": 0.03062175102498195,
+        "total_blocking_time": 9943.224999999995,
+        "speed_index": 5607.840464671539,
+        "interactive": 17696.918475
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

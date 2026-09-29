@@ -2,8 +2,8 @@
   "name": "University of Bradford",
   "slug": "university-of-bradford",
   "url": "https://www.bradford.ac.uk",
-  "last_updated": "2026-09-28T13:18:22.999640",
-  "total_tests": 708,
+  "last_updated": "2026-09-29T12:27:18.301118",
+  "total_tests": 710,
   "results": [
     {
       "name": "University of Bradford",
@@ -18411,6 +18411,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-29T12:27:17.524032",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2293.2145,
+        "largest_contentful_paint": 3243.4769999999994,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 37,
+        "speed_index": 2634.396511320568,
+        "interactive": 3283.477
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Bradford",
+      "url": "https://www.bradford.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-29T12:27:18.301118",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6256.224999999999,
+        "largest_contentful_paint": 16767.4985,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1894.5789999999997,
+        "speed_index": 6576.999076171021,
+        "interactive": 16954.9985
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
