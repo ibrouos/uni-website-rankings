@@ -2,8 +2,8 @@
   "name": "Royal Holloway, University of London",
   "slug": "royal-holloway-university-of-london",
   "url": "https://www.rhul.ac.uk",
-  "last_updated": "2026-09-29T12:25:24.892521",
-  "total_tests": 704,
+  "last_updated": "2026-09-30T12:14:00.257475",
+  "total_tests": 706,
   "results": [
     {
       "name": "Royal Holloway, University of London",
@@ -18307,6 +18307,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-09-30T12:13:34.423877",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 94.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6760.580999999999,
+        "largest_contentful_paint": 17249.530999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13626.084999999992,
+        "speed_index": 8891.587021481573,
+        "interactive": 27614.251549999994
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Royal Holloway, University of London",
+      "url": "https://www.rhul.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-09-30T12:14:00.257475",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 94.0,
+        "best_practices": 79.0,
+        "seo": 91.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1738.131,
+        "largest_contentful_paint": 3564.464,
+        "cumulative_layout_shift": 0.036045723966771415,
+        "total_blocking_time": 1140.9839999999997,
+        "speed_index": 2564.205078080602,
+        "interactive": 5283.571900000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
