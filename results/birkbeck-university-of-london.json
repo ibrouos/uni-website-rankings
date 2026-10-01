@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-09-30T12:13:55.493696",
-  "total_tests": 694,
+  "last_updated": "2026-10-01T12:42:43.958946",
+  "total_tests": 696,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -18047,6 +18047,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-01T12:42:42.521735",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 90.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 627.2484999999999,
+        "largest_contentful_paint": 1399.5369999999998,
+        "cumulative_layout_shift": 0.06163573665825619,
+        "total_blocking_time": 397.5000000000007,
+        "speed_index": 1651.2039479436053,
+        "interactive": 2845.005800000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-01T12:42:43.958946",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1323.2279999999996,
+        "largest_contentful_paint": 2865.5634999999993,
+        "cumulative_layout_shift": 0.06438248620685073,
+        "total_blocking_time": 5073.296499999997,
+        "speed_index": 5178.371263591667,
+        "interactive": 14402.277999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

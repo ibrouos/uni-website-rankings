@@ -2,8 +2,8 @@
   "name": "Imperial College London",
   "slug": "imperial-college-london",
   "url": "https://www.imperial.ac.uk",
-  "last_updated": "2026-09-30T12:02:19.011217",
-  "total_tests": 710,
+  "last_updated": "2026-10-01T12:35:21.371021",
+  "total_tests": 712,
   "results": [
     {
       "name": "Imperial College London",
@@ -18463,6 +18463,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-01T12:35:21.004101",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 40.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3125.0549999999994,
+        "largest_contentful_paint": 5425.571999999999,
+        "cumulative_layout_shift": 0.04020350523896067,
+        "total_blocking_time": 5779.691500000001,
+        "speed_index": 5051.410883460507,
+        "interactive": 17231.81805
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Imperial College London",
+      "url": "https://www.imperial.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-01T12:35:21.371021",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 76.0,
+        "accessibility": 97.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1174.077,
+        "largest_contentful_paint": 1553.6589999999994,
+        "cumulative_layout_shift": 0.04000419294021074,
+        "total_blocking_time": 1134.9000000000005,
+        "speed_index": 1970.0017867814483,
+        "interactive": 3992.4853000000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
