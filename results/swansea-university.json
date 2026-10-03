@@ -2,8 +2,8 @@
   "name": "Swansea University",
   "slug": "swansea-university",
   "url": "https://www.swansea.ac.uk",
-  "last_updated": "2026-10-02T12:10:17.176565",
-  "total_tests": 714,
+  "last_updated": "2026-10-03T11:22:53.835137",
+  "total_tests": 716,
   "results": [
     {
       "name": "Swansea University",
@@ -18567,6 +18567,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-03T11:22:53.280284",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 95.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3418.911,
+        "largest_contentful_paint": 7771.412,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 28485.159999999996,
+        "speed_index": 12307.701504981474,
+        "interactive": 42883.5934
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Swansea University",
+      "url": "https://www.swansea.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-03T11:22:53.835137",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1535.1785000000002,
+        "largest_contentful_paint": 1858.2937499999998,
+        "cumulative_layout_shift": 9.217790677422012e-05,
+        "total_blocking_time": 4393.354749999999,
+        "speed_index": 4208.045868948302,
+        "interactive": 9046.230749999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
