@@ -2,8 +2,8 @@
   "name": "University of Leicester",
   "slug": "university-of-leicester",
   "url": "https://www.le.ac.uk",
-  "last_updated": "2026-10-03T11:22:27.975287",
-  "total_tests": 716,
+  "last_updated": "2026-10-04T12:03:21.257136",
+  "total_tests": 718,
   "results": [
     {
       "name": "University of Leicester",
@@ -18619,6 +18619,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-04T12:02:29.844773",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 71.0,
+        "accessibility": 81.0,
+        "best_practices": 75.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1072.277,
+        "largest_contentful_paint": 1117.394,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3236.5,
+        "speed_index": 1475.2188012036165,
+        "interactive": 5591.965700000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Leicester",
+      "url": "https://www.le.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-04T12:03:21.257136",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 59.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2202.31,
+        "largest_contentful_paint": 3163.867,
+        "cumulative_layout_shift": 0.002357919679566026,
+        "total_blocking_time": 54392.5,
+        "speed_index": 4303.414787237092,
+        "interactive": 61013.717000000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
