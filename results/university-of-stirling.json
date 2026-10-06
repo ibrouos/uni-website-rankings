@@ -2,8 +2,8 @@
   "name": "University of Stirling",
   "slug": "university-of-stirling",
   "url": "https://www.stir.ac.uk",
-  "last_updated": "2026-10-05T14:01:34.219941",
-  "total_tests": 722,
+  "last_updated": "2026-10-06T13:01:47.380571",
+  "total_tests": 724,
   "results": [
     {
       "name": "University of Stirling",
@@ -18775,6 +18775,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-06T13:01:46.665328",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1569.3289999999997,
+        "largest_contentful_paint": 5375.436,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6099.169999999998,
+        "speed_index": 3117.448261461046,
+        "interactive": 21340.894899999992
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Stirling",
+      "url": "https://www.stir.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-06T13:01:47.380571",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 73.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 938.2450000000001,
+        "largest_contentful_paint": 1492.1744999999999,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1814,
+        "speed_index": 1608.0754506201092,
+        "interactive": 6730.154300000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
