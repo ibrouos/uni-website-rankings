@@ -2,8 +2,8 @@
   "name": "University of Reading",
   "slug": "university-of-reading",
   "url": "https://www.reading.ac.uk",
-  "last_updated": "2026-10-06T12:58:39.022408",
-  "total_tests": 722,
+  "last_updated": "2026-10-07T12:55:36.952826",
+  "total_tests": 724,
   "results": [
     {
       "name": "University of Reading",
@@ -18775,6 +18775,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-07T12:55:36.572209",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 91.0,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1693.9969999999998,
+        "largest_contentful_paint": 2266.192,
+        "cumulative_layout_shift": 0.0013830831636694261,
+        "total_blocking_time": 304,
+        "speed_index": 2242.1445686168126,
+        "interactive": 3980.2299750000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Reading",
+      "url": "https://www.reading.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-07T12:55:36.952826",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 90.0,
+        "best_practices": 93.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6463.927,
+        "largest_contentful_paint": 9519.271,
+        "cumulative_layout_shift": 0.001284050537127653,
+        "total_blocking_time": 4213.000000000001,
+        "speed_index": 6808.73019592389,
+        "interactive": 20215.2689
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-10-06T12:54:10.176749",
-  "total_tests": 724,
+  "last_updated": "2026-10-07T12:48:26.154350",
+  "total_tests": 726,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -18823,6 +18823,58 @@
         "total_blocking_time": 0,
         "speed_index": 1170.446521064616,
         "interactive": 1321.473
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-07T12:48:18.159575",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3314.333,
+        "largest_contentful_paint": 6472.3330000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 426.701,
+        "speed_index": 5407.733804091256,
+        "interactive": 6473.133000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-07T12:48:26.154350",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 805.262,
+        "largest_contentful_paint": 1310.262,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 13.5,
+        "speed_index": 1869.0561085287495,
+        "interactive": 1313.262
       },
       "throttling_config": {
         "method": "simulate",
