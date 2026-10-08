@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-10-07T13:01:14.605695",
-  "total_tests": 708,
+  "last_updated": "2026-10-08T13:10:17.864684",
+  "total_tests": 710,
   "results": [
     {
       "name": "University of Essex",
@@ -18411,6 +18411,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-08T13:10:08.249172",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2546.9035,
+        "largest_contentful_paint": 15085.110499999999,
+        "cumulative_layout_shift": 0.06867781854215574,
+        "total_blocking_time": 37271.67924999999,
+        "speed_index": 20980.24299386513,
+        "interactive": 60704.057625
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-08T13:10:17.864684",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 52.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 940.7349999999999,
+        "largest_contentful_paint": 3654.1685000000016,
+        "cumulative_layout_shift": 0.06698244161877755,
+        "total_blocking_time": 6785.119000000005,
+        "speed_index": 7671.046479889128,
+        "interactive": 12810.300100000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
