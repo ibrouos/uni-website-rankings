@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-10-08T13:04:37.105028",
-  "total_tests": 727,
+  "last_updated": "2026-10-09T12:50:03.790210",
+  "total_tests": 729,
   "results": [
     {
       "name": "University of Dundee",
@@ -18905,6 +18905,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-09T12:48:45.030677",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 87.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 651.1590000000001,
+        "largest_contentful_paint": 788.65025,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 591.8140000000004,
+        "speed_index": 1335.1930554155072,
+        "interactive": 1805.1230000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-09T12:50:03.790210",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 67.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 981.046,
+        "largest_contentful_paint": 2213.0690000000004,
+        "cumulative_layout_shift": 0.008485554488176839,
+        "total_blocking_time": 59033.9885,
+        "speed_index": 3579.4563255609364,
+        "interactive": 65153.156350000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
