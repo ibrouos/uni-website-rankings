@@ -2,8 +2,8 @@
   "name": "University of Leeds",
   "slug": "university-of-leeds",
   "url": "https://www.leeds.ac.uk",
-  "last_updated": "2026-10-09T12:45:01.805877",
-  "total_tests": 708,
+  "last_updated": "2026-10-10T12:03:59.136853",
+  "total_tests": 710,
   "results": [
     {
       "name": "University of Leeds",
@@ -18411,6 +18411,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-10T12:03:56.818909",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4061.8178,
+        "largest_contentful_paint": 6770.909000000001,
+        "cumulative_layout_shift": 0.3922007897934386,
+        "total_blocking_time": 601.7423400000007,
+        "speed_index": 5202.819128147263,
+        "interactive": 6810.014500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-10T12:03:59.136853",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 100,
+        "best_practices": 96.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 909.8138399999999,
+        "largest_contentful_paint": 1669.3819999999998,
+        "cumulative_layout_shift": 0.40144420616186904,
+        "total_blocking_time": 33,
+        "speed_index": 1652.1303912924177,
+        "interactive": 1675.6954999999998
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

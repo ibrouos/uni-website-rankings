@@ -2,8 +2,8 @@
   "name": "University of Sheffield",
   "slug": "university-of-sheffield",
   "url": "https://www.sheffield.ac.uk",
-  "last_updated": "2026-10-09T12:45:21.157882",
-  "total_tests": 730,
+  "last_updated": "2026-10-10T12:04:26.099142",
+  "total_tests": 732,
   "results": [
     {
       "name": "University of Sheffield",
@@ -18983,6 +18983,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-10T12:04:25.649640",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 86.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1075.1039999999998,
+        "largest_contentful_paint": 1366.1039999999998,
+        "cumulative_layout_shift": 0.0003907553093291758,
+        "total_blocking_time": 541.9999999999995,
+        "speed_index": 2167.2080450904227,
+        "interactive": 3815.33635
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://www.sheffield.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-10T12:04:26.099142",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 35.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3082.2165,
+        "largest_contentful_paint": 6157.2165,
+        "cumulative_layout_shift": 0.000915342269528796,
+        "total_blocking_time": 4816.86,
+        "speed_index": 7528.729738367858,
+        "interactive": 14858.5105
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
