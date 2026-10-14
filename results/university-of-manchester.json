@@ -2,8 +2,8 @@
   "name": "University of Manchester",
   "slug": "university-of-manchester",
   "url": "https://www.manchester.ac.uk",
-  "last_updated": "2026-10-13T13:44:19.144386",
-  "total_tests": 732,
+  "last_updated": "2026-10-14T11:23:09.496641",
+  "total_tests": 734,
   "results": [
     {
       "name": "University of Manchester",
@@ -19035,6 +19035,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-14T11:23:07.270075",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 66.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1709.9044999999999,
+        "largest_contentful_paint": 2479.1255,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 6175.499999999996,
+        "speed_index": 2585.6342081288403,
+        "interactive": 10921.54165
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Manchester",
+      "url": "https://www.manchester.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-14T11:23:09.496641",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 95.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 8528.379,
+        "largest_contentful_paint": 14371.7285,
+        "cumulative_layout_shift": 1.712134572797345e-05,
+        "total_blocking_time": 30344.38949999999,
+        "speed_index": 8528.379,
+        "interactive": 47164.38884999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
