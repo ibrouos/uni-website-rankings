@@ -2,8 +2,8 @@
   "name": "University of Edinburgh",
   "slug": "university-of-edinburgh",
   "url": "https://www.ed.ac.uk",
-  "last_updated": "2026-10-14T11:21:56.715418",
-  "total_tests": 740,
+  "last_updated": "2026-10-15T10:59:22.977653",
+  "total_tests": 742,
   "results": [
     {
       "name": "University of Edinburgh",
@@ -19239,6 +19239,58 @@
         "total_blocking_time": 128,
         "speed_index": 1233.1244897794318,
         "interactive": 1535.9675000000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-15T10:59:14.827670",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 48.0,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 4327.0615,
+        "largest_contentful_paint": 7080.561500000001,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 565,
+        "speed_index": 6202.085831382861,
+        "interactive": 7080.561500000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Edinburgh",
+      "url": "https://www.ed.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-15T10:59:22.977653",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 100,
+        "accessibility": 95.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 447.81,
+        "largest_contentful_paint": 1314.31,
+        "cumulative_layout_shift": 0.03884415323338086,
+        "total_blocking_time": 0,
+        "speed_index": 1187.1366778520994,
+        "interactive": 1318.56
       },
       "throttling_config": {
         "method": "simulate",

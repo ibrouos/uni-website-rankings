@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-10-14T11:25:50.375147",
-  "total_tests": 740,
+  "last_updated": "2026-10-15T11:02:40.205927",
+  "total_tests": 742,
   "results": [
     {
       "name": "Cardiff University",
@@ -19243,6 +19243,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-15T11:02:37.508229",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1647.408,
+        "largest_contentful_paint": 2420.7889999999998,
+        "cumulative_layout_shift": 8.251823012341439e-06,
+        "total_blocking_time": 1089.8759999999993,
+        "speed_index": 1655.4552716244848,
+        "interactive": 3789.0563999999995
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-15T11:02:40.205927",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2447.863,
+        "largest_contentful_paint": 6706.415000000001,
+        "cumulative_layout_shift": 0.00613842462039679,
+        "total_blocking_time": 6604.122250000001,
+        "speed_index": 4321.794598516091,
+        "interactive": 14318.719075
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
