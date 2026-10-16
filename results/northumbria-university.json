@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-10-15T11:10:32.941027",
-  "total_tests": 742,
+  "last_updated": "2026-10-16T11:04:35.482467",
+  "total_tests": 744,
   "results": [
     {
       "name": "Northumbria University",
@@ -19295,6 +19295,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-16T11:04:24.475720",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 12.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5778.782,
+        "largest_contentful_paint": 15085.516,
+        "cumulative_layout_shift": 0.2838623282498294,
+        "total_blocking_time": 12211.783000000005,
+        "speed_index": 10911.31546921118,
+        "interactive": 24316.202700000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-16T11:04:35.482467",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 47.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2089.813,
+        "largest_contentful_paint": 3896.73,
+        "cumulative_layout_shift": 0.28316723579056685,
+        "total_blocking_time": 1178.8205000000012,
+        "speed_index": 3155.8065607339063,
+        "interactive": 5107.867450000002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
