@@ -2,8 +2,8 @@
   "name": "University of Strathclyde",
   "slug": "university-of-strathclyde",
   "url": "https://www.strath.ac.uk",
-  "last_updated": "2026-10-17T10:23:17.395501",
-  "total_tests": 744,
+  "last_updated": "2026-10-18T10:37:04.779411",
+  "total_tests": 746,
   "results": [
     {
       "name": "University of Strathclyde",
@@ -19347,6 +19347,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-18T10:37:03.590819",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 31.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3349.0605,
+        "largest_contentful_paint": 9534.034500000002,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 15182.499999999998,
+        "speed_index": 8060.978665214985,
+        "interactive": 27739.536999999997
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Strathclyde",
+      "url": "https://www.strath.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-18T10:37:04.779411",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 68.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1185.6614999999997,
+        "largest_contentful_paint": 2229.8595,
+        "cumulative_layout_shift": 0.0180794709808675,
+        "total_blocking_time": 3510.5895,
+        "speed_index": 2845.0192274415995,
+        "interactive": 7232.438550000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

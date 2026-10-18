@@ -2,8 +2,8 @@
   "name": "Queen's University Belfast",
   "slug": "queens-university-belfast",
   "url": "https://www.qub.ac.uk",
-  "last_updated": "2026-10-17T10:22:18.545897",
-  "total_tests": 740,
+  "last_updated": "2026-10-18T10:36:22.643305",
+  "total_tests": 742,
   "results": [
     {
       "name": "Queen's University Belfast",
@@ -19243,6 +19243,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-18T10:36:04.822824",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 63.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1788.7345,
+        "largest_contentful_paint": 2929.4304999999995,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 41482.25149999999,
+        "speed_index": 3561.8159921983543,
+        "interactive": 53597.60984999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Queen's University Belfast",
+      "url": "https://www.qub.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-18T10:36:22.643305",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 470.464,
+        "largest_contentful_paint": 706.21075,
+        "cumulative_layout_shift": 0.02575901828666332,
+        "total_blocking_time": 8014.000000000002,
+        "speed_index": 1176.3622427641317,
+        "interactive": 12238.112000000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

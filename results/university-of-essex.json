@@ -2,8 +2,8 @@
   "name": "University of Essex",
   "slug": "university-of-essex",
   "url": "https://www.essex.ac.uk",
-  "last_updated": "2026-10-17T10:28:45.804091",
-  "total_tests": 727,
+  "last_updated": "2026-10-18T10:40:56.784502",
+  "total_tests": 729,
   "results": [
     {
       "name": "University of Essex",
@@ -18905,6 +18905,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-18T10:40:56.271138",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 32.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2629.087,
+        "largest_contentful_paint": 6498.778,
+        "cumulative_layout_shift": 0.06884382501483437,
+        "total_blocking_time": 32360.22283999999,
+        "speed_index": 19928.68668714387,
+        "interactive": 70832.66020600002
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Essex",
+      "url": "https://www.essex.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-18T10:40:56.784502",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 60.0,
+        "accessibility": 89.0,
+        "best_practices": 56.99999999999999,
+        "seo": 85.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1223.6909999999998,
+        "largest_contentful_paint": 2174.182,
+        "cumulative_layout_shift": 0.06700174103307016,
+        "total_blocking_time": 6355.628590000001,
+        "speed_index": 7803.585525994375,
+        "interactive": 14410.804151
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
