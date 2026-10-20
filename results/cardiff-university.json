@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-10-19T12:25:53.053956",
-  "total_tests": 750,
+  "last_updated": "2026-10-20T11:03:58.423801",
+  "total_tests": 752,
   "results": [
     {
       "name": "Cardiff University",
@@ -19503,6 +19503,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-20T11:03:57.674382",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 85.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1073.0584999999999,
+        "largest_contentful_paint": 2920.9895,
+        "cumulative_layout_shift": 0.006096806263013082,
+        "total_blocking_time": 410.0000000000002,
+        "speed_index": 1591.3957941980175,
+        "interactive": 2928.5250000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-20T11:03:58.423801",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 43.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2243.6859999999997,
+        "largest_contentful_paint": 7546.500999999999,
+        "cumulative_layout_shift": 0.006096806263013082,
+        "total_blocking_time": 3417.499999999999,
+        "speed_index": 3826.418397643506,
+        "interactive": 12521.3675
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]

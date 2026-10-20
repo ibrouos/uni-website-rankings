@@ -2,8 +2,8 @@
   "name": "University of Birmingham",
   "slug": "university-of-birmingham",
   "url": "https://www.birmingham.ac.uk",
-  "last_updated": "2026-10-19T12:23:30.732642",
-  "total_tests": 748,
+  "last_updated": "2026-10-20T11:02:41.326154",
+  "total_tests": 750,
   "results": [
     {
       "name": "University of Birmingham",
@@ -19451,6 +19451,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-20T11:02:38.638395",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 36.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1756.288,
+        "largest_contentful_paint": 9004.044999999998,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 4748.208,
+        "speed_index": 8401.529725317354,
+        "interactive": 11755.3322
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Birmingham",
+      "url": "https://www.birmingham.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-20T11:02:41.326154",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 99.0,
+        "best_practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 887.4915,
+        "largest_contentful_paint": 2490.4355,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1007.0960000000002,
+        "speed_index": 3065.679057595138,
+        "interactive": 2923.1415000000006
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
