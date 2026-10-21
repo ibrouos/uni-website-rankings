@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-10-20T11:04:28.119981",
-  "total_tests": 734,
+  "last_updated": "2026-10-21T11:23:20.773503",
+  "total_tests": 736,
   "results": [
     {
       "name": "University of St Andrews",
@@ -19087,6 +19087,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-21T11:23:20.374168",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.000000000000004,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 5126.860000000001,
+        "largest_contentful_paint": 9549.814999999999,
+        "cumulative_layout_shift": 0.0005115588268637201,
+        "total_blocking_time": 14805.440000000002,
+        "speed_index": 7862.931432637901,
+        "interactive": 28964.773000000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-21T11:23:20.773503",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1950.5195,
+        "largest_contentful_paint": 2898.3784999999993,
+        "cumulative_layout_shift": 0.0005115588268637201,
+        "total_blocking_time": 2353.2799999999997,
+        "speed_index": 2789.775404574996,
+        "interactive": 7393.562050000001
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

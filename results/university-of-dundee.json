@@ -2,8 +2,8 @@
   "name": "University of Dundee",
   "slug": "university-of-dundee",
   "url": "https://www.dundee.ac.uk",
-  "last_updated": "2026-10-20T11:05:51.321869",
-  "total_tests": 751,
+  "last_updated": "2026-10-21T11:25:58.499311",
+  "total_tests": 753,
   "results": [
     {
       "name": "University of Dundee",
@@ -19529,6 +19529,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-21T11:25:58.223871",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 64.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 976.565,
+        "largest_contentful_paint": 2650.8475,
+        "cumulative_layout_shift": 0.008485554488176839,
+        "total_blocking_time": 54099.7175,
+        "speed_index": 4137.626266595665,
+        "interactive": 60224.065
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "University of Dundee",
+      "url": "https://www.dundee.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-21T11:25:58.499311",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 93.0,
+        "best_practices": 96.0,
+        "seo": 40.0
+      },
+      "metrics": {
+        "first_contentful_paint": 327.99424,
+        "largest_contentful_paint": 1659.04384,
+        "cumulative_layout_shift": 0.008485554488176839,
+        "total_blocking_time": 10621.99856,
+        "speed_index": 1540.740717271437,
+        "interactive": 15183.092944
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
