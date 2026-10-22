@@ -2,8 +2,8 @@
   "name": "City, University of London",
   "slug": "city-university-of-london",
   "url": "https://www.city.ac.uk",
-  "last_updated": "2026-10-21T11:27:07.832440",
-  "total_tests": 752,
+  "last_updated": "2026-10-22T11:22:01.297259",
+  "total_tests": 754,
   "results": [
     {
       "name": "City, University of London",
@@ -19555,6 +19555,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-22T11:21:54.356203",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 45.0,
+        "accessibility": 96.0,
+        "best_practices": 93.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 3692.459499999999,
+        "largest_contentful_paint": 4466.2175,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 3870.8462499999987,
+        "speed_index": 4652.6773235227265,
+        "interactive": 13172.025800000003
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "City, University of London",
+      "url": "https://www.city.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-22T11:22:01.297259",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 96.0,
+        "best_practices": 93.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 2234.0017500000004,
+        "largest_contentful_paint": 3852.3024999999993,
+        "cumulative_layout_shift": 0.03991416242457327,
+        "total_blocking_time": 301.375249999999,
+        "speed_index": 2889.7704477823836,
+        "interactive": 3892.1186
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
