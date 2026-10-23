@@ -2,8 +2,8 @@
   "name": "Loughborough University",
   "slug": "loughborough-university",
   "url": "https://www.lboro.ac.uk",
-  "last_updated": "2026-10-22T11:21:22.329207",
-  "total_tests": 752,
+  "last_updated": "2026-10-23T11:15:52.694610",
+  "total_tests": 754,
   "results": [
     {
       "name": "Loughborough University",
@@ -19555,6 +19555,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-23T11:15:51.808320",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 56.00000000000001,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1835.6760000000004,
+        "largest_contentful_paint": 3240.9980000000005,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 5627.314000000001,
+        "speed_index": 6268.639370714613,
+        "interactive": 14227.058950000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Loughborough University",
+      "url": "https://www.lboro.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-23T11:15:52.694610",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 78.0,
+        "accessibility": 96.0,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 648.2209999999999,
+        "largest_contentful_paint": 839.7376655197144,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 1020.9968004226685,
+        "speed_index": 2142.5507450442938,
+        "interactive": 3031.9035195350652
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

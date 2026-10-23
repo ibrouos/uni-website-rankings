@@ -2,8 +2,8 @@
   "name": "Birkbeck, University of London",
   "slug": "birkbeck-university-of-london",
   "url": "https://www.bbk.ac.uk",
-  "last_updated": "2026-10-22T11:25:22.458185",
-  "total_tests": 738,
+  "last_updated": "2026-10-23T11:19:16.448527",
+  "total_tests": 740,
   "results": [
     {
       "name": "Birkbeck, University of London",
@@ -19191,6 +19191,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-23T11:19:14.071370",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 41.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 1897.5194999999999,
+        "largest_contentful_paint": 6258.836,
+        "cumulative_layout_shift": 0.07121069393583337,
+        "total_blocking_time": 6014.150000000002,
+        "speed_index": 5619.495096595156,
+        "interactive": 15618.996650000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Birkbeck, University of London",
+      "url": "https://www.bbk.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-23T11:19:16.448527",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 79.0,
+        "accessibility": 97.0,
+        "best_practices": 79.0,
+        "seo": 92.0
+      },
+      "metrics": {
+        "first_contentful_paint": 621.104,
+        "largest_contentful_paint": 1372.1985,
+        "cumulative_layout_shift": 0.07096014638065708,
+        "total_blocking_time": 885.4999999999998,
+        "speed_index": 1887.7237603548106,
+        "interactive": 3036.6571999999996
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

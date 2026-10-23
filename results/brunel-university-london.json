@@ -2,8 +2,8 @@
   "name": "Brunel University London",
   "slug": "brunel-university-london",
   "url": "https://www.brunel.ac.uk",
-  "last_updated": "2026-10-22T11:22:04.048639",
-  "total_tests": 754,
+  "last_updated": "2026-10-23T11:17:12.868493",
+  "total_tests": 756,
   "results": [
     {
       "name": "Brunel University London",
@@ -19607,6 +19607,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-23T11:17:12.652344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 49.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1802.747,
+        "largest_contentful_paint": 4123.701,
+        "cumulative_layout_shift": 0.003692401881192755,
+        "total_blocking_time": 12690,
+        "speed_index": 6852.133392232761,
+        "interactive": 20673.9155
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Brunel University London",
+      "url": "https://www.brunel.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-23T11:17:12.868493",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 72.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1333.9743199999998,
+        "largest_contentful_paint": 1371.4179999999997,
+        "cumulative_layout_shift": 0.0003993765651408566,
+        "total_blocking_time": 1889,
+        "speed_index": 2668.367329795962,
+        "interactive": 4393.98135
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]

@@ -2,8 +2,8 @@
   "name": "Cardiff University",
   "slug": "cardiff-university",
   "url": "https://www.cardiff.ac.uk",
-  "last_updated": "2026-10-22T11:19:20.012128",
-  "total_tests": 756,
+  "last_updated": "2026-10-23T11:13:03.531950",
+  "total_tests": 758,
   "results": [
     {
       "name": "Cardiff University",
@@ -19659,6 +19659,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-23T11:13:00.643902",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 30.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5142.853999999999,
+        "largest_contentful_paint": 13227.241500000002,
+        "cumulative_layout_shift": 8.251823012341439e-06,
+        "total_blocking_time": 4291.000000000004,
+        "speed_index": 6191.413468398141,
+        "interactive": 13627.462700000004
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
+      }
+    },
+    {
+      "name": "Cardiff University",
+      "url": "https://www.cardiff.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-23T11:13:03.531950",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 75.0,
+        "accessibility": 93.0,
+        "best_practices": 79.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 686.4099999999999,
+        "largest_contentful_paint": 1747.576,
+        "cumulative_layout_shift": 0.005920987157909393,
+        "total_blocking_time": 1323.1230000000003,
+        "speed_index": 1410.7901275944619,
+        "interactive": 3451.6002000000008
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
       }
     }
   ]
