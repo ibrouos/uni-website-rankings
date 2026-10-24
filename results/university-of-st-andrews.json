@@ -2,8 +2,8 @@
   "name": "University of St Andrews",
   "slug": "university-of-st-andrews",
   "url": "https://www.st-andrews.ac.uk",
-  "last_updated": "2026-10-23T11:13:47.362791",
-  "total_tests": 740,
+  "last_updated": "2026-10-24T10:30:41.668298",
+  "total_tests": 742,
   "results": [
     {
       "name": "University of St Andrews",
@@ -19243,6 +19243,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-24T10:30:41.028300",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 65.0,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 2094.34925,
+        "largest_contentful_paint": 2766.9860000000003,
+        "cumulative_layout_shift": 0,
+        "total_blocking_time": 2535.939249999999,
+        "speed_index": 2566.175209311802,
+        "interactive": 7512.858699999999
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "University of St Andrews",
+      "url": "https://www.st-andrews.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-24T10:30:41.668298",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 28.999999999999996,
+        "accessibility": 98.0,
+        "best_practices": 79.0,
+        "seo": 83.0
+      },
+      "metrics": {
+        "first_contentful_paint": 6609.254999999999,
+        "largest_contentful_paint": 10711.662499999999,
+        "cumulative_layout_shift": 0.0005115588268637201,
+        "total_blocking_time": 13229.042249999999,
+        "speed_index": 6609.254999999999,
+        "interactive": 28186.331825000005
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
