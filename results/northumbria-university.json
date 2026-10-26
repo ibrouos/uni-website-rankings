@@ -2,8 +2,8 @@
   "name": "Northumbria University",
   "slug": "northumbria-university",
   "url": "https://www.northumbria.ac.uk",
-  "last_updated": "2026-10-25T11:05:53.557605",
-  "total_tests": 762,
+  "last_updated": "2026-10-26T12:35:29.818344",
+  "total_tests": 764,
   "results": [
     {
       "name": "Northumbria University",
@@ -19815,6 +19815,58 @@
       "throttling_config": {
         "method": "simulate",
         "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "desktop",
+      "timestamp": "2026-10-26T12:35:29.095235",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 70.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 1912.111,
+        "largest_contentful_paint": 3673.2785000000003,
+        "cumulative_layout_shift": 0.039911180534127434,
+        "total_blocking_time": 741.5000000000002,
+        "speed_index": 2906.096428267139,
+        "interactive": 4384.188975
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "desktop"
+      }
+    },
+    {
+      "name": "Northumbria University",
+      "url": "https://www.northumbria.ac.uk",
+      "device": "mobile",
+      "timestamp": "2026-10-26T12:35:29.818344",
+      "lighthouse_version": "12.8.2",
+      "test_type": "lab",
+      "scores": {
+        "performance": 27.0,
+        "accessibility": 100,
+        "best_practices": 75.0,
+        "seo": 100
+      },
+      "metrics": {
+        "first_contentful_paint": 5922.709000000001,
+        "largest_contentful_paint": 15301.143499999998,
+        "cumulative_layout_shift": 0.027905198212390143,
+        "total_blocking_time": 10049.391000000001,
+        "speed_index": 9508.089988328378,
+        "interactive": 22860.7099
+      },
+      "throttling_config": {
+        "method": "simulate",
+        "device": "mobile"
       }
     }
   ]
