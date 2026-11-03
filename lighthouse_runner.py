@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Lighthouse Monitor for Top 50 Universities
+Lighthouse runner for the universities in config.json "sites_file"
 - One test at a time per machine: parallel Chromes compete for CPU and inflate TBT/performance
 - Sites are split into shards so several CI machines can share the work (--shard/--shards)
 - Shard results are written with --output and combined into results/ with --merge
@@ -24,7 +24,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('lighthouse_top50.log'),
+        logging.FileHandler('lighthouse_runner.log'),
         logging.StreamHandler()
     ]
 )

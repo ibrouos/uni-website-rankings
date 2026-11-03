@@ -1,4 +1,4 @@
-name: Lighthouse Monitor - Top 50 Universities
+name: Lighthouse Monitor
 
 on:
   schedule:
@@ -47,7 +47,7 @@ jobs:
         install-dependencies: true
 
     - name: Run Lighthouse tests (shard ${{ matrix.shard }})
-      run: python lighthouse_top50.py --shard ${{ matrix.shard }} --shards ${{ env.SHARDS }} --output shard-results/shard-${{ matrix.shard }}.json
+      run: python lighthouse_runner.py --shard ${{ matrix.shard }} --shards ${{ env.SHARDS }} --output shard-results/shard-${{ matrix.shard }}.json
       env:
         CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
 
@@ -83,7 +83,7 @@ jobs:
         merge-multiple: true
 
     - name: Merge results
-      run: python lighthouse_top50.py --merge shard-results
+      run: python lighthouse_runner.py --merge shard-results
 
     # Real-user data from the Chrome UX Report; a failure here never blocks the Lighthouse results
     - name: Fetch CrUX real-user data

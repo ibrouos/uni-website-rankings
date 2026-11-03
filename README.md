@@ -24,7 +24,7 @@ Lighthouse Monitor (daily, 06:00 UTC)          Build Dashboard (after each monit
                fetches CrUX real-user data, commits ────────────────┘
 ```
 
-- **`.github/workflows/lighthouse-monitor.yml`** runs `lighthouse_top50.py`. Sites are split into shards
+- **`.github/workflows/lighthouse-monitor.yml`** runs `lighthouse_runner.py`. Sites are split into shards
   (`--shard`/`--shards`) so each GitHub machine runs one test at a time. Parallel tests on one machine
   compete for CPU, which inflates total blocking time and lowers performance scores.
   Lighthouse is pinned (`LIGHTHOUSE_VERSION`), so scoring only changes when the version is bumped on purpose.
@@ -83,8 +83,8 @@ Running tests needs Node.js and Chrome:
 
 ```bash
 npm install -g lighthouse@12.8.2
-python lighthouse_top50.py --shard 0 --shards 50 --output shard-results/test.json   # one site, results to a scratch file
-python lighthouse_top50.py --merge shard-results                                      # append those results to results/
+python lighthouse_runner.py --shard 0 --shards 132 --output shard-results/test.json   # one site, results to a scratch file
+python lighthouse_runner.py --merge shard-results                                      # append those results to results/
 ```
 
 ## Real-user data (CrUX)

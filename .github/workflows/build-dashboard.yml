@@ -6,7 +6,7 @@ on:
     - cron: '0 8 * * *'
   workflow_dispatch: # Manual trigger
   workflow_run:
-    workflows: ["Lighthouse Monitor - Top 50 Universities"]
+    workflows: ["Lighthouse Monitor"]
     types:
       - completed
 
