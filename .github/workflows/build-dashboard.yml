@@ -5,13 +5,26 @@ on:
     # Run daily at 8 AM UTC, after the Lighthouse monitor has had time to finish
     - cron: '0 8 * * *'
   workflow_dispatch: # Manual trigger
+  workflow_run:
+    workflows: ["Lighthouse Monitor - Top 50 Universities"]
+    types:
+      - completed
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build-dashboard:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
     - name: Checkout repository
@@ -25,8 +38,14 @@ jobs:
     - name: Create dashboard only
       run: python build_dashboard_new.py
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
+        path: './docs'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
