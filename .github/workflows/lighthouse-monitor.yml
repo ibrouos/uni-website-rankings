@@ -85,6 +85,13 @@ jobs:
     - name: Merge results
       run: python lighthouse_top50.py --merge shard-results
 
+    # Real-user data from the Chrome UX Report; a failure here never blocks the Lighthouse results
+    - name: Fetch CrUX real-user data
+      run: python crux.py
+      continue-on-error: true
+      env:
+        CRUX_API_KEY: ${{ secrets.CRUX_API_KEY }}
+
     # The Build Dashboard workflow builds and deploys the site once this run completes
     - name: Commit and push results
       run: |

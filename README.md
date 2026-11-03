@@ -1,14 +1,16 @@
 # University Web Rankings
 
-Daily Google Lighthouse tests of UK university homepages, published as a dashboard at
+Daily Google Lighthouse tests of UK university homepages, plus real-user data from the Chrome UX Report,
+published as a dashboard at
 **https://ibrouos.github.io/uni-website-rankings/**.
 
 The dashboard has three views:
 
-- **Rankings**: every university with its current score, 30-day change and a 90-day trend chart
-  (Web Vitals or Lighthouse scores, mobile or desktop).
+- **Rankings**: every university with its current score, 30-day change, real-user Core Web Vitals
+  pass/fail and a 90-day trend chart (Web Vitals or Lighthouse scores, mobile or desktop).
+  Russell Group members are tagged RG.
 - **Compare**: up to six universities side by side. The selection is kept in the URL, so links can be shared.
-- **University pages**: full history, Web Vitals charts and every test run.
+- **University pages**: full history, Web Vitals charts, real-user trends and every test run.
 
 ## How it works
 
@@ -18,7 +20,8 @@ Lighthouse Monitor (daily, 06:00 UTC)          Build Dashboard (after each monit
   of the sites one at a time                     deploys it to GitHub Pages
         │                                                   ▲
         ▼                                                   │
-  publish job: merges the shards, appends to results/, commits ───┘
+  publish job: merges the shards, appends to results/,
+               fetches CrUX real-user data, commits ────────────────┘
 ```
 
 - **`.github/workflows/lighthouse-monitor.yml`** runs `lighthouse_top50.py`. Sites are split into shards
@@ -26,6 +29,7 @@ Lighthouse Monitor (daily, 06:00 UTC)          Build Dashboard (after each monit
   compete for CPU, which inflates total blocking time and lowers performance scores.
   Lighthouse is pinned (`LIGHTHOUSE_VERSION`), so scoring only changes when the version is bumped on purpose.
   If you change the number of shards, update both `SHARDS` and the `matrix.shard` list.
+- The publish job also runs **`crux.py`** (see below). If CrUX fails, the Lighthouse results are still committed.
 - **`.github/workflows/build-dashboard.yml`** runs `build_dashboard_new.py` and deploys `docs/` with
   GitHub Actions. Pages must be set to deploy from **GitHub Actions** (Settings → Pages).
   `docs/` is generated and is not committed.
@@ -39,7 +43,7 @@ Mobile tests use Lighthouse's default mobile settings (4× CPU slowdown, slow 4G
 
 | Setting | What it does |
 |---|---|
-| `sites_file` | Which list of universities is tested and shown, e.g. `universities_top50.json` or `universities.json` (130) |
+| `sites_file` | Which list of universities is tested and shown, e.g. `universities_top50.json` or `universities.json` (132) |
 | `display_settings.hidden_universities` | Names to leave off the dashboard |
 
 ## Results data
@@ -83,7 +87,16 @@ python lighthouse_top50.py --shard 0 --shards 50 --output shard-results/test.jso
 python lighthouse_top50.py --merge shard-results                                      # append those results to results/
 ```
 
-## Real-user data (not yet wired in)
+## Real-user data (CrUX)
 
-`fetch_crux_data.py` and `crux_only_monitor.py` fetch Chrome UX Report field data. They need a
-`CRUX_API_KEY` (see `CRUX_SETUP.md`), which is set as a repository secret for Actions.
+`crux.py` asks the [CrUX History API](https://developer.chrome.com/docs/crux/history-api) for each homepage on
+phone and desktop. Each weekly period is the 75th percentile over the previous 28 days of real Chrome users, for
+LCP, INP, CLS, FCP and TTFB. Periods are merged into `results/crux/<slug>.json` (one period per line), so history
+keeps growing beyond the API's 40 weeks, and unchanged files are not rewritten.
+
+- Homepage data is used where Chrome has enough of it; otherwise the whole site (origin). The dashboard says which.
+  A change between the two starts that university's history afresh, as the figures aren't comparable.
+- The dashboard's Core Web Vitals pass needs LCP ≤ 2.5 s, INP ≤ 200 ms and CLS ≤ 0.1.
+- It needs `CRUX_API_KEY`, stored as a repository secret (see `CRUX_SETUP.md`). Without it the script does nothing.
+
+University groups (for example `"groups": ["Russell Group"]`) are set per entry in the sites file.

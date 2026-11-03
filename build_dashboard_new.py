@@ -16,6 +16,7 @@ from typing import Dict, List, Any, Optional
 from urllib.parse import urlparse
 
 import results_store
+from crux import CRUX_DIR
 
 # Configure logging
 logging.basicConfig(
@@ -225,8 +226,8 @@ select.field {
 .list-meta .count { margin-left: auto; font-size: var(--t-sm); color: var(--ink-3); }
 .row {
   position: relative; display: grid; align-items: center; column-gap: var(--space-3);
-  grid-template-columns: 20px 26px minmax(170px, 1fr) 62px 64px minmax(160px, 1.15fr) repeat(3, 40px);
-  grid-template-areas: "check rank name cur delta spark a11y bp seo";
+  grid-template-columns: 20px 26px minmax(170px, 1fr) 62px 64px 70px minmax(150px, 1.15fr) repeat(3, 40px);
+  grid-template-areas: "check rank name cur delta cwv spark a11y bp seo";
   padding: 0 var(--space-4); min-height: 58px; border-top: 1px solid var(--line);
   transition: background-color .12s;
 }
@@ -263,6 +264,9 @@ h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; 
 .spark:hover .guide { opacity: .6; }
 .mini { text-align: right; font-size: var(--t-sm); color: var(--ink-2); }
 .mini.a11y { grid-area: a11y; } .mini.bp { grid-area: bp; } .mini.seo { grid-area: seo; }
+.cwv { display: inline-flex; align-items: center; gap: 5px; font-size: var(--t-sm); color: var(--ink-2); white-space: nowrap; }
+.row > .cwv-cell { grid-area: cwv; display: flex; justify-content: flex-end; }
+.sub-cwv { display: none; }
 .empty { padding: var(--space-7) var(--space-4); text-align: center; color: var(--ink-3); }
 .empty b { display: block; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
 
@@ -304,7 +308,11 @@ h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; 
 .strip-label { font-size: var(--t-sm); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .strip-value { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
 .strip-sub { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 4px; font-size: var(--t-xs); color: var(--ink-3); }
-.strip.vitals .strip-value { font-size: 1.1875rem; }
+.strip.vitals .strip-value, .strip.five .strip-value { font-size: 1.1875rem; }
+.strip.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.strip.flat { border: 0; border-radius: 0; border-bottom: 1px solid var(--line); background: transparent; }
+.panel-head .cwv { font-size: var(--t-sm); }
+tr.group td { padding-top: 14px; font-size: var(--t-xs); font-weight: 500; color: var(--ink-3); background: var(--surface-2); }
 
 .multiples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .multiples > div { border-top: 1px solid var(--line); border-left: 1px solid var(--line); padding: var(--space-3) var(--space-4) var(--space-2); min-width: 0; }
@@ -361,7 +369,7 @@ td.best { font-weight: 600; color: var(--ink); }
 .foot p + p { margin-top: var(--space-2); }
 
 @media (max-width: 1000px) {
-  .row { grid-template-columns: 20px 26px minmax(150px, 1fr) 58px 60px minmax(120px, 1fr); grid-template-areas: "check rank name cur delta spark"; }
+  .row { grid-template-columns: 20px 26px minmax(150px, 1fr) 58px 60px 64px minmax(120px, 1fr); grid-template-areas: "check rank name cur delta cwv spark"; }
   .mini, .list-head .hide-md { display: none; }
 }
 @media (max-width: 640px) {
@@ -379,6 +387,9 @@ td.best { font-weight: 600; color: var(--ink); }
     padding: 4px var(--space-3) 10px; row-gap: 2px; column-gap: var(--space-3);
   }
   .rank { display: none; }
+  .row > .cwv-cell { display: none; }
+  .sub-cwv { display: inline; }
+  .strip.five > div:nth-child(odd) { border-left: 0; }
   .spark { height: 34px; }
   .list-meta .count { margin-left: 0; width: 100%; }
   .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -418,12 +429,24 @@ const META = {
   first_contentful_paint: { label: 'First contentful paint', short: 'FCP', kind: 'ms', good: 1800, poor: 3000 },
   total_blocking_time: { label: 'Total blocking time', short: 'TBT', kind: 'ms', good: 200, poor: 600 },
   cumulative_layout_shift: { label: 'Cumulative layout shift', short: 'CLS', kind: 'cls', good: 0.1, poor: 0.25 },
+  interaction_to_next_paint: { label: 'Interaction to next paint', short: 'INP', kind: 'ms', good: 200, poor: 500 },
+  experimental_time_to_first_byte: { label: 'Time to first byte', short: 'TTFB', kind: 'ms', good: 800, poor: 1800 },
 };
 // Series colour per metric (fixed so a metric keeps its colour on every chart)
 const SERIES = {
   performance: '--s1', accessibility: '--s2', best_practices: '--s3', seo: '--s4',
   largest_contentful_paint: '--s1', first_contentful_paint: '--s2', total_blocking_time: '--s3', cumulative_layout_shift: '--s4',
+  interaction_to_next_paint: '--s5', experimental_time_to_first_byte: '--s6',
 };
+// Real-user (CrUX) rows are [last day of the 28-day period, ...CRUX_KEYS p75s]; crux.py writes this order
+const CRUX_KEYS = ['largest_contentful_paint', 'interaction_to_next_paint', 'cumulative_layout_shift', 'first_contentful_paint', 'experimental_time_to_first_byte'];
+const CWV_KEYS = CRUX_KEYS.slice(0, 3);
+// Google's assessment: LCP, INP and CLS all good at the 75th percentile (INP may be missing on quiet sites)
+function cwvPass(v) {
+  const [lcp, inp, cls] = v;
+  if (!has(lcp) || !has(cls)) return null;
+  return lcp <= META.largest_contentful_paint.good && cls <= META.cumulative_layout_shift.good && (!has(inp) || inp <= META.interaction_to_next_paint.good);
+}
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -510,11 +533,13 @@ const tip = (() => {
 })();
 const tipRow = (color, label, value) => `<div class="tip-row"><span class="swatch" style="--c:${color}"></span>${esc(label)}<span class="v num">${value}</span></div>`;
 
-// Trailing rolling median per column over `days` calendar days (rows are [day, ...FIELDS])
-function smooth(rows, days = 7) {
+// Trailing rolling median per column over `days` calendar days (rows are [day, ...FIELDS]).
+// Days on or after `floor` (the method change) never include days before it.
+function smooth(rows, days = 7, floor = null) {
   let lo = 0;
   return rows.map((r, hi) => {
-    const cutoff = addDays(r[0], -(days - 1));
+    let cutoff = addDays(r[0], -(days - 1));
+    if (floor && r[0] >= floor && cutoff < floor) cutoff = floor;
     while (rows[lo][0] < cutoff) lo++;
     const win = rows.slice(lo, hi + 1);
     return [r[0], ...FIELDS.map((_, i) => median(win.map(w => w[i + 1])))];
@@ -527,6 +552,15 @@ const storage = {
   set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch {} },
 };
 const MAX_COMPARE = 6;
+
+// c = { day, v: [...CRUX_KEYS], scope: 'page' | 'origin' }
+function cwvBadge(c, { word = true } = {}) {
+  const pass = c ? cwvPass(c.v) : null;
+  if (pass == null) return '<span class="cwv muted" title="Not enough real-user data from Chrome">–</span>';
+  const title = `Core Web Vitals for real Chrome users, 28 days to ${fmtDay(c.day)}${c.scope === 'origin' ? ' (whole site)' : ''}: ` +
+    CWV_KEYS.map((k, i) => `${META[k].short} ${fmt(k, c.v[i])}`).join(', ');
+  return `<span class="cwv" title="${esc(title)}">${glyph(pass ? 'good' : 'poor', 9)}${word ? `<span>${pass ? 'Pass' : 'Fail'}</span>` : ''}</span>`;
+}
 
 // University groups from the sites file, shown as small tags beside the name
 const GROUPS = { 'Russell Group': { short: 'RG', title: 'Russell Group member' } };
@@ -566,6 +600,8 @@ function methodNote(day) {
     total blocking time and lowered performance scores. Results either side of the line aren't directly comparable.`;
 }
 const inWindow = (day, from, to) => !!day && (!from || day >= from) && (!to || day <= to);
+// Summary figures only use results from one method: when [from, to] crosses the change, start at the change
+const methodFloor = (day, from, to) => day && (!from || from < day) && day <= to ? day : from;
 // True when comparing [prevFrom, to] would mix results from before and after the method change
 const spansChange = (day, prevFrom, to) => !!day && !!prevFrom && prevFrom < day && day <= to;
 """
@@ -657,7 +693,7 @@ function axisTicks(key) {
 }
 
 // Base line-chart config. series: [{ label, color, data: [{x, y}], width }]
-function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null }) {
+function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null, gapDays = 3 }) {
   const grid = css('--grid'), axis = css('--axis'), muted = css('--ink-3');
   const kind = META[key].kind;
   const box = canvas.parentElement;
@@ -670,8 +706,12 @@ function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax,
     data: {
       datasets: series.map(s => ({
         label: s.label, data: s.data, borderColor: s.color, backgroundColor: s.color,
-        borderWidth: s.width || 2, pointRadius: 0, pointHoverRadius: 4, pointHoverBorderWidth: 2,
-        pointHoverBorderColor: css('--surface'), tension: 0.25, spanGaps: 3 * 864e5,
+        borderWidth: s.width || 2, pointHoverRadius: 4, pointHoverBorderWidth: 2,
+        pointRadius: c => {
+          const d = c.dataset.data, i = c.dataIndex, gap = gapDays * 864e5;
+          return (i === 0 || d[i].x - d[i - 1].x > gap) && (i === d.length - 1 || d[i + 1].x - d[i].x > gap) ? 2.5 : 0;
+        },
+        pointHoverBorderColor: css('--surface'), tension: 0.25, spanGaps: gapDays * 864e5,
       })),
     },
     options: {
@@ -782,6 +822,7 @@ __TOPBAR__
       <option value="performance">Sort: Performance</option>
       <option value="trend">Sort: Biggest improvers</option>
       <option value="largest_contentful_paint">Sort: Fastest LCP</option>
+      <option value="cwv">Sort: Real users (Core Web Vitals)</option>
       <option value="accessibility">Sort: Accessibility</option>
       <option value="best_practices">Sort: Best practices</option>
       <option value="seo">Sort: SEO</option>
@@ -798,7 +839,7 @@ __TOPBAR__
       <span class="count" id="count"></span>
     </div>
     <div class="row list-head" aria-hidden="true">
-      <span></span><span class="rank">#</span><span>University</span><span id="curHead">Perf.</span><span>30 days</span>
+      <span></span><span class="rank">#</span><span>University</span><span id="curHead">Perf.</span><span>30 days</span><span title="Core Web Vitals for real Chrome users over 28 days">Real users</span>
       <span class="spark-h">Last 90 days</span><span class="hide-md">A11y</span><span class="hide-md">BP</span><span class="hide-md">SEO</span>
     </div>
     <ol class="list" id="list"></ol>
@@ -808,6 +849,9 @@ __TOPBAR__
     <p>Scores are Google Lighthouse lab results (0–100): 90 or more is good, 50–89 needs improvement, under 50 is poor.
       The 30-day change compares the mean performance score of the latest 30 days of tests with the 30 days before.
       <span class="tag" aria-hidden="true">RG</span> marks members of the Russell Group.</p>
+    <p>"Real users" is Google's Core Web Vitals assessment from the Chrome UX Report: how the homepage performed for real
+      Chrome users over the latest 28 days. It passes when LCP, INP and CLS are all good for at least 75% of visits.
+      Where the homepage gets too little traffic, figures for the whole site are used. "–" means Chrome has too little data.</p>
     <p>Web Vitals lines are each divided by Google's "good" threshold (LCP 2.5 s, FCP 1.8 s, TBT 200 ms, CLS 0.1),
       so anything under the dashed line is good and lower is better. The scale is logarithmic, from a quarter of the threshold to 16×.
       Lines in this list are 7-day rolling medians to smooth out day-to-day noise; detail pages show every day.</p>
@@ -840,6 +884,11 @@ function sortValue(u) {
   const d = dev(u);
   if (!d) return null;
   if (state.sort === 'trend') return d.delta;
+  if (state.sort === 'cwv') {
+    // Passing sites first, then by real-user LCP (lower is better)
+    const c = u.crux?.[state.device], pass = c ? cwvPass(c.v) : null;
+    return pass == null ? null : (pass ? 1e6 : 0) - (c.v[0] ?? 1e6);
+  }
   const v = cur(u, state.sort);
   return has(v) && lowerIsBetter(state.sort) ? -v : v;
 }
@@ -856,15 +905,17 @@ function sparkY(key, v) {
   return (H - PAD - frac * (H - 2 * PAD)).toFixed(1);
 }
 function sparkPath(rows, key) {
-  let d = '', prev = null;
+  const segments = [];
+  let prev = null;
   for (const r of rows) {
     const v = r[COL[key]];
     if (!has(v)) { prev = null; continue; }
-    const x = (r[0] / (SPAN - 1) * W).toFixed(1);
-    d += `${prev == null || r[0] - prev > 3 ? 'M' : 'L'}${x} ${sparkY(key, v)}`;
+    if (prev == null || r[0] - prev > 3) segments.push([]);
+    segments.at(-1).push(`${(r[0] / (SPAN - 1) * W).toFixed(1)} ${sparkY(key, v)}`);
     prev = r[0];
   }
-  return d;
+  // A lone point becomes a dot (a tiny stroke with round caps)
+  return segments.map(seg => `M${seg.join('L')}${seg.length === 1 ? 'l0.01 0' : ''}`).join('');
 }
 function sparkline(u) {
   const rows = dev(u)?.spark || [];
@@ -897,9 +948,10 @@ function row(u, i) {
   return `<li class="row${isSel ? ' selected' : ''}" data-slug="${esc(u.slug)}">
     <label class="check" title="${full ? `You can compare up to ${MAX_COMPARE}` : 'Select to compare'}"><input type="checkbox" ${isSel ? 'checked' : ''} ${full ? 'disabled' : ''} aria-label="Compare ${esc(u.name)}"></label>
     <span class="rank num">${i + 1}</span>
-    <span class="name"><a href="${esc(u.slug)}.html"><span class="nm">${esc(u.name)}</span>${groupTags(u.groups)}</a><span class="sub">${esc(u.domain)}${stale ? ` · last tested ${fmtDay(d.last, { day: 'numeric', month: 'short' })}` : ''}</span></span>
+    <span class="name"><a href="${esc(u.slug)}.html"><span class="nm">${esc(u.name)}</span>${groupTags(u.groups)}</a><span class="sub">${esc(u.domain)}${stale ? ` · last tested ${fmtDay(d.last, { day: 'numeric', month: 'short' })}` : ''}<span class="sub-cwv"> · Real users ${cwvBadge(u.crux?.[state.device])}</span></span></span>
     <span class="cur num" aria-label="${META[shownKey()].label} ${fmt(shownKey(), v)}">${graded(shownKey(), v)}</span>
     ${deltaHtml(d?.delta)}
+    <span class="cwv-cell">${cwvBadge(u.crux?.[state.device])}</span>
     <span class="spark" data-slug="${esc(u.slug)}">${sparkline(u)}</span>
     ${['accessibility', 'best_practices', 'seo'].map((k, j) => `<span class="mini num ${['a11y', 'bp', 'seo'][j]}" title="${META[k].label}">${fmt(k, cur(u, k))}</span>`).join('')}
   </li>`;
@@ -1027,6 +1079,7 @@ __TOPBAR__
 
   <footer class="foot">
     <p>Each line is one university's daily median. Web Vitals charts show Google's "good" and "poor" thresholds as dashed lines.
+      Real-user figures come from the Chrome UX Report and don't follow the period filter.
       Change compares the selected period with the one before it. With "7-day median" on, each point is the median of that day and the six before it.</p>
     <p id="methodNote" hidden></p>
   </footer>
@@ -1205,7 +1258,7 @@ function renderChart() {
   const ready = state.sel.filter(s => cache[s]);
   const series = ready.map(slug => ({
     label: shortName(bySlug[slug].name), color: colorOf(slug),
-    data: (state.smooth === '7' ? smooth(rowsIn(slug, null, to)).filter(r => !from || r[0] >= from) : rowsIn(slug, from, to)).filter(r => has(r[COL[key]])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[COL[key]] })),
+    data: (state.smooth === '7' ? smooth(rowsIn(slug, null, to), 7, DATA.method_change).filter(r => !from || r[0] >= from) : rowsIn(slug, from, to)).filter(r => has(r[COL[key]])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[COL[key]] })),
   }));
   $('#chartTitle').textContent = `${META[key].label} over time`;
   $('#cLegend').innerHTML = ready.map(s => `<span><span class="swatch" style="--c:var(--s${slotOf(s)})"></span>${esc(bySlug[s].name)}</span>`).join('') +
@@ -1222,11 +1275,11 @@ function renderChart() {
 }
 
 function renderTable() {
-  const { from, to, prevFrom, prevTo } = periods();
+  const { from: rangeFrom, to, prevFrom, prevTo } = periods();
+  const from = methodFloor(DATA.method_change, rangeFrom, to);
   const sel = state.sel;
   const stat = (slug, key, a, b) => median(rowsIn(slug, a, b).map(r => r[COL[key]]));
-  const rows = DISPLAY_KEYS.map(key => {
-    const vals = sel.map(s => cache[s] ? stat(s, key, from, to) : null);
+  const metricRow = (label, key, vals) => {
     const rounded = v => key === 'cumulative_layout_shift' ? +v.toFixed(3) : Math.round(v);
     const ok = vals.filter(has);
     // Only mark a winner when there is one: a row where everyone ties gets no tag
@@ -1235,8 +1288,16 @@ function renderTable() {
       const isBest = has(v) && has(best) && rounded(v) === rounded(best);
       return `<td class="num${isBest ? ' best' : ''}"><span class="cell">${isBest ? '<span class="best-tag">Best</span>' : ''}${graded(key, v, 9)}</span></td>`;
     }).join('');
-    return `<tr><td>${META[key].label}</td>${cells}</tr>`;
-  });
+    return `<tr><td>${label}</td>${cells}</tr>`;
+  };
+  const group = label => `<tr class="group"><td colspan="${sel.length + 1}">${label}</td></tr>`;
+  const rows = [group('Lab tests (Lighthouse)'), ...DISPLAY_KEYS.map(key => metricRow(META[key].label, key, sel.map(s => cache[s] ? stat(s, key, from, to) : null)))];
+  const cruxOf = s => bySlug[s].crux?.[state.device];
+  const realUsers = [
+    group('Real users (Chrome UX Report, latest 28 days)'),
+    `<tr><td>Core Web Vitals</td>${sel.map(s => `<td class="num">${cwvBadge(cruxOf(s))}</td>`).join('')}</tr>`,
+    ...CRUX_KEYS.map((key, i) => metricRow(META[key].label, key, sel.map(s => cruxOf(s)?.v?.[i] ?? null))),
+  ];
   const change = sel.map(s => {
     if (!cache[s] || !prevFrom || spansChange(DATA.method_change, prevFrom, to)) return '<td class="num muted" title="Not comparable across the test-method change">–</td>';
     const now = avg(rowsIn(s, from, to).map(r => r[COL.performance]));
@@ -1246,8 +1307,9 @@ function renderTable() {
   const days = sel.map(s => `<td class="num muted">${cache[s] ? rowsIn(s, from, to).length : '–'}</td>`).join('');
   const last = sel.map(s => { const l = cache[s]?.daily?.[state.device]?.at(-1)?.[0]; return `<td class="muted">${l ? fmtDay(l, { day: 'numeric', month: 'short' }) : '–'}</td>`; }).join('');
   $('#table').innerHTML = `<thead><tr><th>Metric</th>${sel.map(s => `<th scope="col"><span class="cell"><span class="swatch" style="--c:var(--s${slotOf(s)})"></span><a href="${esc(s)}.html" style="color:var(--ink);text-decoration:none">${esc(shortName(bySlug[s].name))}</a></span></th>`).join('')}</tr></thead>
-    <tbody>${rows.join('')}<tr><td>Performance change</td>${change}</tr><tr><td>Days tested</td>${days}</tr><tr><td>Latest test</td>${last}</tr></tbody>`;
-  $('#period').textContent = state.range === 'all' ? `All tests to ${fmtDay(to)}` : `${fmtDay(from)} – ${fmtDay(to)}`;
+    <tbody>${rows.join('')}<tr><td>Performance change</td>${change}</tr><tr><td>Days tested</td>${days}</tr><tr><td>Latest test</td>${last}</tr>${realUsers.join('')}</tbody>`;
+  $('#period').textContent = from !== rangeFrom ? `Since the methodology change: ${fmtDay(from)} – ${fmtDay(to)}`
+    : state.range === 'all' ? `All tests to ${fmtDay(to)}` : `${fmtDay(from)} – ${fmtDay(to)}`;
 }
 
 let ticket = 0;
@@ -1333,6 +1395,13 @@ __TOPBAR__
     <div class="multiples" id="multiples"></div>
   </section>
 
+  <section class="panel" aria-labelledby="cruxTitle">
+    <div class="panel-head"><span class="panel-title" id="cruxTitle">Real users</span><span id="cruxVerdict"></span>
+      <span class="muted end" id="cruxMeta" style="font-size:var(--t-sm)"></span></div>
+    <div class="strip five flat" id="cruxStrip"></div>
+    <div class="multiples" id="cruxCharts"></div>
+  </section>
+
   <section class="panel" aria-labelledby="runsTitle">
     <div class="panel-head"><span class="panel-title" id="runsTitle">Test runs</span><span class="muted end" id="runCount" style="font-size:var(--t-sm)"></span></div>
     <div class="table-scroll">
@@ -1373,7 +1442,8 @@ function periods() {
 const rowsIn = (a, b) => daily().filter(r => (!a || r[0] >= a) && r[0] <= b);
 
 function renderStrips() {
-  const { from, to, prevFrom, prevTo } = periods();
+  const { from: rangeFrom, to, prevFrom, prevTo } = periods();
+  const from = methodFloor(UNI.method_change, rangeFrom, to);
   const now = rowsIn(from, to), before = prevFrom ? rowsIn(prevFrom, prevTo) : [];
   const cell = key => {
     const v = median(now.map(r => r[COL[key]]));
@@ -1388,14 +1458,15 @@ function renderStrips() {
   };
   $('#scores').innerHTML = SCORE_KEYS.map(cell).join('');
   $('#vitals').innerHTML = VITAL_KEYS.map(cell).join('');
-  $('#period').textContent = to ? (from ? `${fmtDay(from)} – ${fmtDay(to)}` : `All tests to ${fmtDay(to)}`) : '';
+  $('#period').textContent = !to ? '' : from !== rangeFrom ? `Figures since the methodology change (${fmtDay(from)}); charts show the full period`
+    : from ? `${fmtDay(from)} – ${fmtDay(to)}` : `All tests to ${fmtDay(to)}`;
 }
 
 let charts = [];
 function renderCharts() {
   charts.forEach(c => c.destroy()); charts = [];
   const { from, to } = periods();
-  const rows = !to ? [] : state.smooth === '7' ? smooth(rowsIn(null, to)).filter(r => !from || r[0] >= from) : rowsIn(from, to);
+  const rows = !to ? [] : state.smooth === '7' ? smooth(rowsIn(null, to), 7, UNI.method_change).filter(r => !from || r[0] >= from) : rowsIn(from, to);
   const pts = key => rows.filter(r => has(r[COL[key]])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[COL[key]] }));
   const narrow = innerWidth < 640;
   charts.push(lineChart($('#scoreChart'), {
@@ -1411,6 +1482,34 @@ function renderCharts() {
     const data = pts(k);
     const yMax = Math.max(META[k].poor * 1.1, ...data.map(p => p.y));
     charts.push(lineChart($(`#c-${k}`), { key: k, yMax, methodChange: UNI.method_change, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
+  });
+  renderCrux();
+}
+
+// Real-user data is weekly (each point covers the 28 days before it) and ignores the period filter
+const CRUX_CHART_KEYS = ['largest_contentful_paint', 'interaction_to_next_paint', 'cumulative_layout_shift', 'experimental_time_to_first_byte'];
+function renderCrux() {
+  const entry = UNI.crux?.[state.device];
+  const rows = entry?.rows || [];
+  if (!rows.length) {
+    $('#cruxVerdict').innerHTML = ''; $('#cruxMeta').textContent = ''; $('#cruxCharts').innerHTML = '';
+    $('#cruxStrip').innerHTML = `<div class="empty" style="grid-column: 1 / -1">Chrome doesn't have enough real-user data for this site on ${state.device}.</div>`;
+    return;
+  }
+  const last = rows.at(-1);
+  const latest = { day: last[0], v: last.slice(1), scope: entry.scope };
+  $('#cruxVerdict').innerHTML = `<span class="muted" style="font-size:var(--t-sm)">Core Web Vitals</span> ${cwvBadge(latest)}`;
+  $('#cruxMeta').textContent = `28 days to ${fmtDay(latest.day)} · ${entry.scope === 'origin' ? 'whole site (homepage has too little traffic)' : 'homepage'} · weekly since ${fmtDay(rows[0][0])}`;
+  $('#cruxStrip').innerHTML = CRUX_KEYS.map((key, i) => `<div><div class="strip-label">${META[key].label}</div>
+    <div class="strip-value num">${graded(key, latest.v[i], 11)}</div>
+    <div class="strip-sub"><span>${META[key].short} · ${thresholdText(key)}</span></div></div>`).join('');
+  $('#cruxCharts').innerHTML = CRUX_CHART_KEYS.map(k => `<div><div class="mult-head"><span class="swatch" style="--c:var(${SERIES[k]})"></span><b>${META[k].label}</b><span>${META[k].short} · 75th percentile</span></div>
+    <div class="chart-box sm"><canvas id="cx-${k}" role="img" aria-label="Real-user ${META[k].label} over time"></canvas></div></div>`).join('');
+  CRUX_CHART_KEYS.forEach(k => {
+    const i = CRUX_KEYS.indexOf(k);
+    const data = rows.filter(r => has(r[i + 1])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[i + 1] }));
+    const yMax = Math.max(META[k].poor * 1.1, ...data.map(p => p.y));
+    charts.push(lineChart($(`#cx-${k}`), { key: k, yMax, gapDays: 10, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
   });
 }
 
@@ -1495,12 +1594,13 @@ class UniversityDashboard:
         }
 
     @staticmethod
-    def rolling_median(rows: List[list], days: int = SMOOTH_DAYS) -> List[list]:
-        """Each daily row replaced by the median of the trailing `days` days"""
+    def rolling_median(rows: List[list], days: int = SMOOTH_DAYS, floor: Optional[str] = None) -> List[list]:
+        """Each daily row replaced by the median of the trailing `days` days, never reaching back past `floor`"""
         dates = [date.fromisoformat(r[0]) for r in rows]
+        floor_day = date.fromisoformat(floor) if floor else None
         smoothed, lo = [], 0
         for hi, day in enumerate(dates):
-            while dates[lo] <= day - timedelta(days=days):
+            while dates[lo] <= day - timedelta(days=days) or (floor_day and day >= floor_day > dates[lo]):
                 lo += 1
             window = rows[lo:hi + 1]
             smoothed.append([rows[hi][0]] + [
@@ -1531,8 +1631,26 @@ class UniversityDashboard:
             delta = round(mean(latest_window) - mean(previous_window), 1)
 
         spark = [[(date.fromisoformat(r[0]) - spark_start).days] + r[1:]
-                 for r in UniversityDashboard.rolling_median(rows) if date.fromisoformat(r[0]) >= spark_start]
+                 for r in UniversityDashboard.rolling_median(rows, floor=method_change) if date.fromisoformat(r[0]) >= spark_start]
         return {'last': rows[-1][0], 'current': current, 'delta': delta, 'spark': spark}
+
+    def load_crux(self, slug: str) -> Dict[str, Any]:
+        """Real-user history written by crux.py: {device: {scope, rows}}"""
+        path = self.results_dir / CRUX_DIR.name / f"{slug}.json"
+        if not path.exists():
+            return {}
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading CrUX data for {slug}: {e}")
+            return {}
+
+    @staticmethod
+    def crux_latest(crux: Dict[str, Any]) -> Dict[str, Any]:
+        """Latest real-user period per device, for the rankings and compare pages"""
+        return {device: {'day': entry['rows'][-1][0], 'v': entry['rows'][-1][1:], 'scope': entry['scope']}
+                for device, entry in crux.items() if entry.get('rows')}
 
     @staticmethod
     def find_method_change(universities: List[Dict[str, Any]]) -> Optional[str]:
@@ -1570,6 +1688,7 @@ class UniversityDashboard:
                 'name': site['name'],
                 'slug': slug,
                 'groups': site.get('groups', []),
+                'crux': self.load_crux(slug),
                 'url': url,
                 'domain': urlparse(url).netloc.removeprefix('www.') or url,
                 'total_tests': len(results),
@@ -1597,6 +1716,7 @@ class UniversityDashboard:
             'slug': u['slug'],
             'domain': u['domain'],
             'groups': u['groups'],
+            'crux': self.crux_latest(u['crux']),
             'total_tests': u['total_tests'],
             'devices': {device: self.summarise(u['daily'][device], spark_start, self.method_change) for device in DEVICES},
         } for u in universities]
@@ -1622,6 +1742,7 @@ class UniversityDashboard:
             'slug': s['slug'],
             'domain': s['domain'],
             'groups': s['groups'],
+            'crux': s['crux'],
             'current': {d: (s['devices'][d] or {}).get('current', [None])[0] for d in DEVICES},
             'delta': {d: (s['devices'][d] or {}).get('delta') for d in DEVICES},
         } for s in summaries]
@@ -1648,7 +1769,7 @@ class UniversityDashboard:
         """Create a detail page for a specific university"""
         runs = [[r['timestamp'], r.get('device')] + [round_field(f, field_value(r, f)) for f in FIELDS]
                 for r in university['results']]
-        data = {k: university[k] for k in ('name', 'slug', 'groups', 'total_tests', 'daily')}
+        data = {k: university[k] for k in ('name', 'slug', 'groups', 'total_tests', 'daily', 'crux')}
         data['runs'] = runs
         data['method_change'] = self.method_change
 
