@@ -66,6 +66,7 @@ def round_field(field: str, value: Optional[float]) -> Optional[float]:
 STYLES = r"""
 :root {
   --bg: oklch(0.985 0.002 230); --surface: oklch(1 0 0); --surface-2: oklch(0.972 0.003 230);
+  --home: oklch(0.975 0.04 95); --home-hover: oklch(0.96 0.05 95);
   --hover: oklch(0.977 0.005 205); --line: oklch(0.925 0.004 230); --line-strong: oklch(0.87 0.006 230);
   --ink: oklch(0.22 0.012 240); --ink-2: oklch(0.42 0.012 240); --ink-3: oklch(0.52 0.01 240);
   --accent: oklch(0.5 0.09 200); --accent-ink: oklch(0.43 0.08 200); --accent-soft: oklch(0.5 0.09 200 / 0.12);
@@ -83,6 +84,7 @@ STYLES = r"""
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: oklch(0.165 0.005 240); --surface: oklch(0.195 0.006 240); --surface-2: oklch(0.215 0.006 240);
+    --home: oklch(0.255 0.03 95); --home-hover: oklch(0.28 0.036 95);
     --hover: oklch(0.225 0.008 215); --line: oklch(0.27 0.007 240); --line-strong: oklch(0.34 0.008 240);
     --ink: oklch(0.94 0.004 240); --ink-2: oklch(0.78 0.008 240); --ink-3: oklch(0.66 0.008 240);
     --accent: oklch(0.74 0.1 198); --accent-ink: oklch(0.8 0.09 198); --accent-soft: oklch(0.74 0.1 198 / 0.16);
@@ -235,6 +237,8 @@ select.field {
 .list-head span:nth-child(n+4) { text-align: right; }
 .list-head .spark-h { text-align: left !important; }
 li.row:hover { background: var(--hover); }
+li.row.home { background: var(--home); }
+li.row.home:hover { background: var(--home-hover); }
 li.row.selected { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
 .check { grid-area: check; position: relative; z-index: 1; display: grid; place-items: center; width: 32px; height: 32px; margin: -6px; cursor: pointer; }
 .check input { appearance: none; width: 16px; height: 16px; margin: 0; border: 1.5px solid var(--line-strong); border-radius: 4px; background: var(--surface); cursor: pointer; display: grid; place-items: center; transition: background-color .12s, border-color .12s; }
@@ -945,7 +949,7 @@ function row(u, i) {
   const full = selected.length >= MAX_COMPARE && !isSel;
   const stale = d && daysAgo(d.last) > 2 && d.last < DATA.end;
   const v = cur(u, shownKey());
-  return `<li class="row${isSel ? ' selected' : ''}" data-slug="${esc(u.slug)}">
+  return `<li class="row${isSel ? ' selected' : ''}${u.highlight ? ' home' : ''}" data-slug="${esc(u.slug)}">
     <label class="check" title="${full ? `You can compare up to ${MAX_COMPARE}` : 'Select to compare'}"><input type="checkbox" ${isSel ? 'checked' : ''} ${full ? 'disabled' : ''} aria-label="Compare ${esc(u.name)}"></label>
     <span class="rank num">${i + 1}</span>
     <span class="name"><a href="${esc(u.slug)}.html"><span class="nm">${esc(u.name)}</span>${groupTags(u.groups)}</a><span class="sub">${esc(u.domain)}${stale ? ` · last tested ${fmtDay(d.last, { day: 'numeric', month: 'short' })}` : ''}<span class="sub-cwv"> · Real users ${cwvBadge(u.crux?.[state.device])}</span></span></span>
@@ -1718,6 +1722,7 @@ class UniversityDashboard:
             'groups': u['groups'],
             'crux': self.crux_latest(u['crux']),
             'total_tests': u['total_tests'],
+            'highlight': u['name'] in self.config.get('display_settings', {}).get('highlight_universities', []),
             'devices': {device: self.summarise(u['daily'][device], spark_start, self.method_change) for device in DEVICES},
         } for u in universities]
         data = {'start': start, 'end': end, 'spark_days': SPARK_DAYS, 'method_change': self.method_change,
