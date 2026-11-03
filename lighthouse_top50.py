@@ -10,14 +10,14 @@ import argparse
 import json
 import subprocess
 import os
-from datetime import datetime, date
+from datetime import datetime
 from pathlib import Path
 import logging
 from typing import Dict, List, Any
 import tempfile
 import concurrent.futures
-import re
-from collections import defaultdict
+
+import results_store
 
 # Configure logging
 logging.basicConfig(
@@ -30,22 +30,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def slugify(text: str) -> str:
-    """Convert university name to URL-safe slug"""
-    text = text.lower()
-    text = re.sub(r'[^\w\s-]', '', text)
-    text = re.sub(r'[-\s]+', '-', text)
-    return text.strip('-')
-
-
 class LighthouseMonitor:
     def __init__(self, sites: List[Dict[str, str]], max_workers: int = 1, max_retries: int = 2):
         self.sites = sites
-        self.output_dir = Path("lighthouse_results")
-        self.output_dir.mkdir(exist_ok=True)
-        self.results_dir = Path("results")
-        self.results_dir.mkdir(exist_ok=True)
-        self.today = date.today().isoformat()
         self.max_workers = max_workers
         self.max_retries = max_retries  # Retry failed tests
         self.known_slow_sites = [
@@ -116,7 +103,6 @@ class LighthouseMonitor:
                     'device': device,
                     'timestamp': datetime.now().isoformat(),
                     'lighthouse_version': lighthouse_data.get('lighthouseVersion', 'unknown'),
-                    'test_type': 'lab',
                     'scores': {
                         'performance': categories.get('performance', {}).get('score', 0) * 100,
                         'accessibility': categories.get('accessibility', {}).get('score', 0) * 100,
@@ -131,12 +117,9 @@ class LighthouseMonitor:
                         'speed_index': audits.get('speed-index', {}).get('numericValue', 0),
                         'interactive': audits.get('interactive', {}).get('numericValue', 0)
                     },
-                    'throttling_config': {
-                        'method': settings.get('throttlingMethod', 'simulate'),
-                        'device': device,
-                        'form_factor': settings.get('formFactor'),
-                        **{k: settings.get('throttling', {}).get(k) for k in ('rttMs', 'throughputKbps', 'cpuSlowdownMultiplier')}
-                    },
+                    # Only runs from the corrected method record these; the dashboard dates the change by them
+                    'form_factor': settings.get('formFactor'),
+                    'throttling': {k: settings.get('throttling', {}).get(k) for k in ('rttMs', 'throughputKbps', 'cpuSlowdownMultiplier')},
                     # How fast the test machine was; lets slow-machine runs be spotted later
                     'benchmark_index': lighthouse_data.get('environment', {}).get('benchmarkIndex')
                 }
@@ -259,89 +242,9 @@ class LighthouseMonitor:
         return all_results
     
     def save_results(self, results: List[Dict[str, Any]]):
-        """Save results to JSON files"""
-        # Daily results file
-        results_file = self.output_dir / f"lighthouse_results_{self.today}.json"
-        with open(results_file, 'w') as f:
-            json.dump(results, f, indent=2)
-        logger.info(f"Results saved to {results_file}")
-        
-        # Latest results
-        latest_file = self.output_dir / "lighthouse_results_latest.json"
-        with open(latest_file, 'w') as f:
-            json.dump(results, f, indent=2)
-        
-        # Per-university format
-        self.save_per_university_results(results)
-    
-    def save_per_university_results(self, new_results: List[Dict[str, Any]]):
-        """Save results to per-university files"""
-        university_results = defaultdict(list)
-        for result in new_results:
-            uni_name = result.get('name')
-            if uni_name:
-                university_results[uni_name].append(result)
-        
-        for uni_name, results in university_results.items():
-            slug = slugify(uni_name)
-            uni_file = self.results_dir / f"{slug}.json"
-            
-            # Load existing
-            existing_data = {'results': []}
-            if uni_file.exists():
-                try:
-                    with open(uni_file, 'r') as f:
-                        existing_data = json.load(f)
-                except Exception as e:
-                    logger.warning(f"Could not load existing data for {uni_name}: {e}")
-            
-            # Append and sort
-            all_results = existing_data.get('results', []) + results
-            all_results.sort(key=lambda x: x.get('timestamp', ''))
-            
-            # Update metadata
-            uni_data = {
-                'name': uni_name,
-                'slug': slug,
-                'url': results[0].get('url', '') if results else existing_data.get('url', ''),
-                'last_updated': all_results[-1].get('timestamp', '') if all_results else '',
-                'total_tests': len(all_results),
-                'results': all_results
-            }
-            
-            with open(uni_file, 'w') as f:
-                json.dump(uni_data, f, indent=2)
-            
-            logger.info(f"Updated {slug}.json ({len(results)} new, {len(all_results)} total)")
-        
-        self.update_index_file()
-    
-    def update_index_file(self):
-        """Update index file"""
-        index_data = []
-        
-        for uni_file in sorted(self.results_dir.glob("*.json")):
-            if uni_file.name == "index.json":
-                continue
-            
-            try:
-                with open(uni_file, 'r') as f:
-                    uni_data = json.load(f)
-                    index_data.append({
-                        'name': uni_data.get('name'),
-                        'slug': uni_data.get('slug'),
-                        'url': uni_data.get('url'),
-                        'total_tests': uni_data.get('total_tests', 0),
-                        'last_updated': uni_data.get('last_updated')
-                    })
-            except Exception as e:
-                logger.warning(f"Error reading {uni_file.name}: {e}")
-        
-        index_file = self.results_dir / "index.json"
-        with open(index_file, 'w') as f:
-            json.dump(index_data, f, indent=2)
-        
-        logger.info(f"Updated index.json with {len(index_data)} universities")
+        """Append results to each university's file in results/"""
+        for slug, count in sorted(results_store.append_results(results).items()):
+            logger.info(f"Added {count} tests to {slug}.jsonl")
 
 
 def load_sites_from_json(filename: str = "universities_top50.json") -> List[Dict[str, str]]:
@@ -366,7 +269,7 @@ def load_sites_from_json(filename: str = "universities_top50.json") -> List[Dict
 
 
 def merge_shards(shard_dir: str):
-    """Combine shard outputs (written with --output) into the daily and per-university files"""
+    """Combine shard outputs (written with --output) into the per-university files"""
     results = []
     for shard_file in sorted(Path(shard_dir).glob("*.json")):
         with open(shard_file, 'r') as f:
@@ -396,7 +299,8 @@ def main():
         return
 
     try:
-        sites = load_sites_from_json()
+        with open('config.json', 'r') as f:
+            sites = load_sites_from_json(json.load(f).get('sites_file', 'universities_top50.json'))
     except Exception as e:
         logger.error(f"Failed to load sites: {str(e)}")
         return

@@ -84,14 +84,12 @@ jobs:
     - name: Merge results
       run: python lighthouse_top50.py --merge shard-results
 
-    - name: Build dashboard
-      run: python build_dashboard_new.py
-
+    # The Build Dashboard workflow builds and deploys the site once this run completes
     - name: Commit and push results
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add results/ lighthouse_results/ docs/
+        git add results/
         git diff --staged --quiet || git commit -m "Update lighthouse results (Top 50) $(date +'%Y-%m-%d')"
         git pull --rebase
         git push

@@ -15,6 +15,8 @@ from statistics import mean, median
 from typing import Dict, List, Any, Optional
 from urllib.parse import urlparse
 
+import results_store
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -1523,44 +1525,45 @@ class UniversityDashboard:
     def find_method_change(universities: List[Dict[str, Any]]) -> Optional[str]:
         """First day of the corrected test method. Only runs from the fixed runner record a form factor."""
         days = [r['timestamp'][:10] for u in universities for r in u['results']
-                if (r.get('throttling_config') or {}).get('form_factor')]
+                if r.get('form_factor')]
         return min(days) if days else None
 
     def load_university_data(self) -> List[Dict[str, Any]]:
-        """Load all university data"""
+        """Load results for the universities in the configured site list (config.json "sites_file")"""
         universities = []
         hidden = self.config.get('display_settings', {}).get('hidden_universities', [])
+        sites_file = self.config.get('sites_file', 'universities_top50.json')
+        with open(sites_file, 'r', encoding='utf-8') as f:
+            sites = json.load(f)
 
-        for uni_file in sorted(self.results_dir.glob("*.json")):
-            if uni_file.name == "index.json":
+        for site in sites:
+            # Skip hidden universities
+            if site['name'] in hidden:
                 continue
 
+            slug = results_store.slugify(site['name'])
             try:
-                with open(uni_file, 'r') as f:
-                    uni_data = json.load(f)
-
-                # Skip hidden universities
-                if uni_data.get('name') in hidden:
-                    continue
-
-                results = sorted((r for r in uni_data.get('results', []) if r.get('timestamp')),
-                                 key=lambda r: r['timestamp'])
-                url = uni_data.get('url') or ''
-
-                universities.append({
-                    'name': uni_data.get('name'),
-                    'slug': uni_data.get('slug'),
-                    'url': url,
-                    'domain': urlparse(url).netloc.removeprefix('www.') or url,
-                    'total_tests': uni_data.get('total_tests', len(results)),
-                    'results': results,
-                    'daily': self.daily_medians(results),
-                })
-
+                results = [r for r in results_store.read_results(slug, self.results_dir) if r.get('timestamp')]
             except Exception as e:
-                logger.error(f"Error loading {uni_file.name}: {e}")
+                logger.error(f"Error loading {slug}.jsonl: {e}")
+                continue
+            if not results:
+                logger.warning(f"No results yet for {site['name']}")
+                continue
 
-        return universities
+            results.sort(key=lambda r: r['timestamp'])
+            url = site.get('url') or ''
+            universities.append({
+                'name': site['name'],
+                'slug': slug,
+                'url': url,
+                'domain': urlparse(url).netloc.removeprefix('www.') or url,
+                'total_tests': len(results),
+                'results': results,
+                'daily': self.daily_medians(results),
+            })
+
+        return sorted(universities, key=lambda u: u['slug'])
 
     def create_stylesheet(self):
         with open(self.docs_dir / "styles.css", 'w', encoding='utf-8') as f:
