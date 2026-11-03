@@ -14,9 +14,9 @@ jobs:
         fetch-depth: 0  # Fetch all history to get all lighthouse results
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.12'
         
     - name: Create results directory
       run: mkdir -p results
