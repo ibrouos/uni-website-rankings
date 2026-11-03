@@ -199,6 +199,23 @@ select.field {
 .legend .note { color: var(--ink-3); }
 .legend .dash { display: inline-block; width: 14px; border-top: 1.5px dashed var(--ink-3); vertical-align: 3px; margin-right: 6px; }
 .legend .vline { display: inline-block; height: 11px; border-left: 1.5px dashed var(--ink-2); vertical-align: -1px; margin-right: 6px; }
+.hint-btn {
+  display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none;
+  font: inherit; color: inherit; cursor: help; text-decoration: underline dotted; text-underline-offset: 3px;
+}
+.hint-btn:hover { color: var(--ink); }
+.hint-btn svg, .mc-flag svg { flex: none; color: var(--ink-3); }
+.mc-flag {
+  position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 6px;
+  border: 1px solid var(--line-strong); border-radius: 5px; background: var(--surface); color: var(--ink-2);
+  font-size: 11px; font-weight: 500; white-space: nowrap; cursor: help; transition: color .15s, border-color .15s;
+}
+.mc-flag:hover, .mc-flag:focus-visible { color: var(--ink); border-color: var(--ink-3); }
+.tip-hint { max-width: 300px; white-space: normal; line-height: 1.5; color: var(--ink-2); }
+.tip-hint ul { margin: 4px 0 6px; padding-left: 14px; list-style: disc; }
+.tip-hint li + li { margin-top: 4px; }
+.tip-hint p { color: var(--ink-3); }
+.tip-foot { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--line); color: var(--ink-3); }
 
 /* Rankings list */
 .list-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
@@ -503,12 +520,35 @@ const storage = {
 const MAX_COMPARE = 6;
 
 // First day of the corrected test method (desktop preset, one test per machine); null until it has run
-const METHOD_LEGEND = '<span class="note"><span class="vline"></span>test method changed</span>';
+const INFO_ICON = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v4M8 4.75v.01"/></svg>';
+const methodLegend = day => `<span class="note"><span class="vline"></span><button type="button" class="hint-btn" data-method-hint="${day}">methodology changed${INFO_ICON}</button></span>`;
+const methodHint = day => `<div class="tip-hint"><div class="tip-title">Methodology changed · ${fmtDay(day)}</div>
+  From this date:<ul>
+  <li>Desktop tests use Lighthouse's real desktop setup. Before, they emulated a phone on a faster connection.</li>
+  <li>Each test runs on its own machine, one at a time. Before, several ran at once, which inflated blocking time and lowered performance scores.</li></ul>
+  <p>Results either side of the line aren't directly comparable, so change figures that span it are hidden.</p></div>`;
+
+// Any [data-method-hint] element explains the change on hover, focus or tap
+(() => {
+  let pinned = null;
+  const show = el => { const r = el.getBoundingClientRect(); tip.show(methodHint(el.dataset.methodHint), r.left, r.top); };
+  const target = e => e.target.closest?.('[data-method-hint]');
+  document.addEventListener('pointerover', e => { const t = target(e); if (t) show(t); });
+  document.addEventListener('pointerout', e => { if (target(e) && !e.relatedTarget?.closest?.('[data-method-hint]') && !pinned) tip.hide(); });
+  document.addEventListener('focusin', e => { const t = target(e); if (t) show(t); });
+  document.addEventListener('focusout', e => { if (target(e)) { pinned = null; tip.hide(); } });
+  document.addEventListener('click', e => {
+    const t = target(e);
+    if (t) { pinned = pinned === t ? null : t; pinned ? show(t) : tip.hide(); }
+    else if (pinned) { pinned = null; tip.hide(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.activeElement?.matches?.('[data-method-hint]')) { pinned = null; tip.hide(); } });
+})();
 function methodNote(day) {
   const el = $('#methodNote');
   if (!el || !day) return;
   el.hidden = false;
-  el.innerHTML = `The dashed vertical line marks <b>${fmtDay(day)}</b>, when the test method changed. Desktop tests now use Lighthouse's real desktop setup
+  el.innerHTML = `The dashed vertical line marks <b>${fmtDay(day)}</b>, when the testing methodology changed. Desktop tests now use Lighthouse's real desktop setup
     (before then they mistakenly emulated a phone on a faster connection), and each test runs on its own machine instead of several at once, which had inflated
     total blocking time and lowered performance scores. Results either side of the line aren't directly comparable.`;
 }
@@ -579,14 +619,19 @@ const methodPlugin = {
     ctx.save();
     ctx.strokeStyle = css('--ink-2'); ctx.globalAlpha = 0.7; ctx.lineWidth = 1.25; ctx.setLineDash([4, 3]);
     ctx.beginPath(); ctx.moveTo(px, a.top - 14); ctx.lineTo(px, a.bottom); ctx.stroke();
-    ctx.globalAlpha = 1; ctx.setLineDash([]);
-    // Label sits in the reserved strip above the plot, so it never covers data
-    ctx.font = `500 11px ${Chart.defaults.font.family}`; ctx.textBaseline = 'middle';
-    const label = opts.label || 'Method change';
-    const w = ctx.measureText(label).width;
-    const left = px + 6 + w > a.right ? px - 6 - w : px + 6;
-    ctx.fillStyle = css('--ink-2'); ctx.fillText(label, left, a.top - 8);
     ctx.restore();
+    // The label is a real button (hover, focus or tap explains the change), placed in the strip above the plot
+    const flag = chart.canvas.parentElement.querySelector('.mc-flag');
+    if (!flag) return;
+    flag.hidden = false;
+    const cx = chart.canvas.offsetLeft, cy = chart.canvas.offsetTop;
+    const w = flag.offsetWidth;
+    const left = px + 4 + w > a.right ? px - 4 - w : px + 4;
+    flag.style.left = `${cx + left}px`; flag.style.top = `${cy + a.top - 21}px`;
+  },
+  beforeDraw(chart, _, opts) {
+    const flag = chart.canvas.parentElement.querySelector('.mc-flag');
+    if (flag && (!opts?.at || opts.at < chart.scales.x.min || opts.at > chart.scales.x.max)) flag.hidden = true;
   },
 };
 Chart.register(thresholdPlugin, endLabelPlugin, methodPlugin);
@@ -602,6 +647,10 @@ function axisTicks(key) {
 function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null }) {
   const grid = css('--grid'), axis = css('--axis'), muted = css('--ink-3');
   const kind = META[key].kind;
+  const box = canvas.parentElement;
+  if (methodChange && !box.querySelector('.mc-flag')) {
+    box.insertAdjacentHTML('beforeend', `<button type="button" class="mc-flag" data-method-hint="${methodChange}" hidden>Methodology changed${INFO_ICON}</button>`);
+  }
   const thresholds = kind === 'score' ? [] : [{ value: META[key].good, label: 'Good' }, { value: META[key].poor, label: 'Poor' }];
   return new Chart(canvas, {
     type: 'line',
@@ -614,13 +663,13 @@ function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax,
     },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false, normalized: true,
-      layout: { padding: { right: rightPad, top: methodChange ? 18 : 0 } },
+      layout: { padding: { right: rightPad, top: methodChange ? 24 : 0 } },
       interaction: { mode: 'index', axis: 'x', intersect: false },
       plugins: {
         legend: { display: false },
         thresholds: { lines: thresholds },
         endLabels: { enabled: endLabels },
-        methodChange: { at: methodChange ? dayDate(methodChange).getTime() : null, label: 'Test method changed' },
+        methodChange: { at: methodChange ? dayDate(methodChange).getTime() : null },
         tooltip: {
           backgroundColor: css('--surface'), borderColor: css('--line-strong'), borderWidth: 1,
           titleColor: css('--ink'), bodyColor: css('--ink-2'), padding: 10, cornerRadius: 8,
@@ -821,7 +870,7 @@ function renderLegend() {
   const keys = sparkKeys();
   $('#legend').innerHTML = keys.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].short}</span>`).join('') +
     (state.chart === 'vitals' ? '<span class="note"><span class="dash"></span>good threshold · lower is better</span>' : '<span class="note">0–100 · higher is better</span>') +
-    (inWindow(DATA.method_change, START, DATA.end) ? METHOD_LEGEND : '');
+    (inWindow(DATA.method_change, START, DATA.end) ? methodLegend(DATA.method_change) : '');
 }
 
 function row(u, i) {
@@ -897,7 +946,8 @@ $('#list').addEventListener('pointermove', e => {
   guide.setAttribute('x1', gx); guide.setAttribute('x2', gx);
   const day = addDays(START, r[0]);
   tip.show(`<div class="tip-title">${esc(u.name)} · ${fmtDay(day, { weekday: 'short', day: 'numeric', month: 'short' })}</div>` +
-    sparkKeys().map(k => tipRow(`var(${SERIES[k]})`, META[k].short, `${glyph(gradeOf(k, r[COL[k]]), 8)} ${fmt(k, r[COL[k]])}`)).join(''), e.clientX, e.clientY);
+    sparkKeys().map(k => tipRow(`var(${SERIES[k]})`, META[k].short, `${glyph(gradeOf(k, r[COL[k]]), 8)} ${fmt(k, r[COL[k]])}`)).join('') +
+    (DATA.method_change && day < DATA.method_change ? '<div class="tip-foot">Before the methodology change</div>' : ''), e.clientX, e.clientY);
 });
 $('#list').addEventListener('pointerleave', () => tip.hide(), true);
 $('#list').addEventListener('pointerout', e => { if (e.target.closest('.spark') && !e.relatedTarget?.closest?.('.spark')) tip.hide(); });
@@ -1146,7 +1196,7 @@ function renderChart() {
   $('#chartTitle').textContent = `${META[key].label} over time`;
   $('#cLegend').innerHTML = ready.map(s => `<span><span class="swatch" style="--c:var(--s${slotOf(s)})"></span>${esc(bySlug[s].name)}</span>`).join('') +
     (META[key].kind === 'score' ? '<span class="note">higher is better</span>' : '<span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span>') +
-    (inWindow(DATA.method_change, from, to) ? METHOD_LEGEND : '');
+    (inWindow(DATA.method_change, from, to) ? methodLegend(DATA.method_change) : '');
   if (chart) chart.destroy();
   const vals = series.flatMap(s => s.data.map(p => p.y));
   const yMax = META[key].kind === 'score' ? 100 : Math.max(META[key].poor * 1.1, ...vals);
@@ -1340,7 +1390,7 @@ function renderCharts() {
     tooltipLabel: i => ` ${META[SCORE_KEYS[i.datasetIndex]].label}  ${Math.round(i.parsed.y)}`,
   }));
   $('#sLegend').innerHTML = SCORE_KEYS.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].label}</span>`).join('') +
-    (inWindow(UNI.method_change, from, to) ? METHOD_LEGEND : '');
+    (inWindow(UNI.method_change, from, to) ? methodLegend(UNI.method_change) : '');
   $('#multiples').innerHTML = VITAL_KEYS.map(k => `<div><div class="mult-head"><span class="swatch" style="--c:var(${SERIES[k]})"></span><b>${META[k].label}</b><span>${META[k].short} · ${thresholdText(k)}</span></div>
     <div class="chart-box sm"><canvas id="c-${k}" role="img" aria-label="${META[k].label} over time"></canvas></div></div>`).join('');
   VITAL_KEYS.forEach(k => {

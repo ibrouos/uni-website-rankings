@@ -209,12 +209,35 @@ const storage = {
 const MAX_COMPARE = 6;
 
 // First day of the corrected test method (desktop preset, one test per machine); null until it has run
-const METHOD_LEGEND = '<span class="note"><span class="vline"></span>test method changed</span>';
+const INFO_ICON = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v4M8 4.75v.01"/></svg>';
+const methodLegend = day => `<span class="note"><span class="vline"></span><button type="button" class="hint-btn" data-method-hint="${day}">methodology changed${INFO_ICON}</button></span>`;
+const methodHint = day => `<div class="tip-hint"><div class="tip-title">Methodology changed · ${fmtDay(day)}</div>
+  From this date:<ul>
+  <li>Desktop tests use Lighthouse's real desktop setup. Before, they emulated a phone on a faster connection.</li>
+  <li>Each test runs on its own machine, one at a time. Before, several ran at once, which inflated blocking time and lowered performance scores.</li></ul>
+  <p>Results either side of the line aren't directly comparable, so change figures that span it are hidden.</p></div>`;
+
+// Any [data-method-hint] element explains the change on hover, focus or tap
+(() => {
+  let pinned = null;
+  const show = el => { const r = el.getBoundingClientRect(); tip.show(methodHint(el.dataset.methodHint), r.left, r.top); };
+  const target = e => e.target.closest?.('[data-method-hint]');
+  document.addEventListener('pointerover', e => { const t = target(e); if (t) show(t); });
+  document.addEventListener('pointerout', e => { if (target(e) && !e.relatedTarget?.closest?.('[data-method-hint]') && !pinned) tip.hide(); });
+  document.addEventListener('focusin', e => { const t = target(e); if (t) show(t); });
+  document.addEventListener('focusout', e => { if (target(e)) { pinned = null; tip.hide(); } });
+  document.addEventListener('click', e => {
+    const t = target(e);
+    if (t) { pinned = pinned === t ? null : t; pinned ? show(t) : tip.hide(); }
+    else if (pinned) { pinned = null; tip.hide(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.activeElement?.matches?.('[data-method-hint]')) { pinned = null; tip.hide(); } });
+})();
 function methodNote(day) {
   const el = $('#methodNote');
   if (!el || !day) return;
   el.hidden = false;
-  el.innerHTML = `The dashed vertical line marks <b>${fmtDay(day)}</b>, when the test method changed. Desktop tests now use Lighthouse's real desktop setup
+  el.innerHTML = `The dashed vertical line marks <b>${fmtDay(day)}</b>, when the testing methodology changed. Desktop tests now use Lighthouse's real desktop setup
     (before then they mistakenly emulated a phone on a faster connection), and each test runs on its own machine instead of several at once, which had inflated
     total blocking time and lowered performance scores. Results either side of the line aren't directly comparable.`;
 }
@@ -291,7 +314,7 @@ function renderLegend() {
   const keys = sparkKeys();
   $('#legend').innerHTML = keys.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].short}</span>`).join('') +
     (state.chart === 'vitals' ? '<span class="note"><span class="dash"></span>good threshold · lower is better</span>' : '<span class="note">0–100 · higher is better</span>') +
-    (inWindow(DATA.method_change, START, DATA.end) ? METHOD_LEGEND : '');
+    (inWindow(DATA.method_change, START, DATA.end) ? methodLegend(DATA.method_change) : '');
 }
 
 function row(u, i) {
@@ -367,7 +390,8 @@ $('#list').addEventListener('pointermove', e => {
   guide.setAttribute('x1', gx); guide.setAttribute('x2', gx);
   const day = addDays(START, r[0]);
   tip.show(`<div class="tip-title">${esc(u.name)} · ${fmtDay(day, { weekday: 'short', day: 'numeric', month: 'short' })}</div>` +
-    sparkKeys().map(k => tipRow(`var(${SERIES[k]})`, META[k].short, `${glyph(gradeOf(k, r[COL[k]]), 8)} ${fmt(k, r[COL[k]])}`)).join(''), e.clientX, e.clientY);
+    sparkKeys().map(k => tipRow(`var(${SERIES[k]})`, META[k].short, `${glyph(gradeOf(k, r[COL[k]]), 8)} ${fmt(k, r[COL[k]])}`)).join('') +
+    (DATA.method_change && day < DATA.method_change ? '<div class="tip-foot">Before the methodology change</div>' : ''), e.clientX, e.clientY);
 });
 $('#list').addEventListener('pointerleave', () => tip.hide(), true);
 $('#list').addEventListener('pointerout', e => { if (e.target.closest('.spark') && !e.relatedTarget?.closest?.('.spark')) tip.hide(); });

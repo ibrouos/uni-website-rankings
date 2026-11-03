@@ -136,6 +136,23 @@ select.field {
 .legend .note { color: var(--ink-3); }
 .legend .dash { display: inline-block; width: 14px; border-top: 1.5px dashed var(--ink-3); vertical-align: 3px; margin-right: 6px; }
 .legend .vline { display: inline-block; height: 11px; border-left: 1.5px dashed var(--ink-2); vertical-align: -1px; margin-right: 6px; }
+.hint-btn {
+  display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none;
+  font: inherit; color: inherit; cursor: help; text-decoration: underline dotted; text-underline-offset: 3px;
+}
+.hint-btn:hover { color: var(--ink); }
+.hint-btn svg, .mc-flag svg { flex: none; color: var(--ink-3); }
+.mc-flag {
+  position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 6px;
+  border: 1px solid var(--line-strong); border-radius: 5px; background: var(--surface); color: var(--ink-2);
+  font-size: 11px; font-weight: 500; white-space: nowrap; cursor: help; transition: color .15s, border-color .15s;
+}
+.mc-flag:hover, .mc-flag:focus-visible { color: var(--ink); border-color: var(--ink-3); }
+.tip-hint { max-width: 300px; white-space: normal; line-height: 1.5; color: var(--ink-2); }
+.tip-hint ul { margin: 4px 0 6px; padding-left: 14px; list-style: disc; }
+.tip-hint li + li { margin-top: 4px; }
+.tip-hint p { color: var(--ink-3); }
+.tip-foot { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--line); color: var(--ink-3); }
 
 /* Rankings list */
 .list-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
