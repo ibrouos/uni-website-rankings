@@ -243,7 +243,14 @@ li.row.selected { background: color-mix(in srgb, var(--accent) 6%, var(--surface
 .check input:disabled { opacity: .4; cursor: not-allowed; }
 .rank { grid-area: rank; color: var(--ink-3); font-size: var(--t-sm); text-align: right; }
 .name { grid-area: name; min-width: 0; padding: 9px 0; }
-.name a { display: block; font-weight: 500; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.name a { display: flex; align-items: center; gap: 7px; min-width: 0; font-weight: 500; text-decoration: none; }
+.name a .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tag {
+  flex: none; display: inline-flex; align-items: center; height: 17px; padding: 0 5px;
+  border: 1px solid var(--line-strong); border-radius: 4px; background: var(--surface-2);
+  font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; line-height: 1; color: var(--ink-2);
+}
+h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; }
 .name a::after { content: ''; position: absolute; inset: 0; }
 .name a:focus-visible { outline: none; }
 .name a:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 2px; }
@@ -521,6 +528,10 @@ const storage = {
 };
 const MAX_COMPARE = 6;
 
+// University groups from the sites file, shown as small tags beside the name
+const GROUPS = { 'Russell Group': { short: 'RG', title: 'Russell Group member' } };
+const groupTags = groups => (groups || []).map(g => `<span class="tag" title="${esc(GROUPS[g]?.title || g)}"><span aria-hidden="true">${esc(GROUPS[g]?.short || g)}</span><span class="sr-only">${esc(g)}</span></span>`).join('');
+
 // First day of the corrected test method (desktop preset, one test per machine); null until it has run
 const INFO_ICON = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v4M8 4.75v.01"/></svg>';
 const methodLegend = day => `<span class="note"><span class="vline"></span><button type="button" class="hint-btn" data-method-hint="${day}">methodology changed${INFO_ICON}</button></span>`;
@@ -795,7 +806,8 @@ __TOPBAR__
 
   <footer class="foot">
     <p>Scores are Google Lighthouse lab results (0–100): 90 or more is good, 50–89 needs improvement, under 50 is poor.
-      The 30-day change compares the mean performance score of the latest 30 days of tests with the 30 days before.</p>
+      The 30-day change compares the mean performance score of the latest 30 days of tests with the 30 days before.
+      <span class="tag" aria-hidden="true">RG</span> marks members of the Russell Group.</p>
     <p>Web Vitals lines are each divided by Google's "good" threshold (LCP 2.5 s, FCP 1.8 s, TBT 200 ms, CLS 0.1),
       so anything under the dashed line is good and lower is better. The scale is logarithmic, from a quarter of the threshold to 16×.
       Lines in this list are 7-day rolling medians to smooth out day-to-day noise; detail pages show every day.</p>
@@ -885,7 +897,7 @@ function row(u, i) {
   return `<li class="row${isSel ? ' selected' : ''}" data-slug="${esc(u.slug)}">
     <label class="check" title="${full ? `You can compare up to ${MAX_COMPARE}` : 'Select to compare'}"><input type="checkbox" ${isSel ? 'checked' : ''} ${full ? 'disabled' : ''} aria-label="Compare ${esc(u.name)}"></label>
     <span class="rank num">${i + 1}</span>
-    <span class="name"><a href="${esc(u.slug)}.html">${esc(u.name)}</a><span class="sub">${esc(u.domain)}${stale ? ` · last tested ${fmtDay(d.last, { day: 'numeric', month: 'short' })}` : ''}</span></span>
+    <span class="name"><a href="${esc(u.slug)}.html"><span class="nm">${esc(u.name)}</span>${groupTags(u.groups)}</a><span class="sub">${esc(u.domain)}${stale ? ` · last tested ${fmtDay(d.last, { day: 'numeric', month: 'short' })}` : ''}</span></span>
     <span class="cur num" aria-label="${META[shownKey()].label} ${fmt(shownKey(), v)}">${graded(shownKey(), v)}</span>
     ${deltaHtml(d?.delta)}
     <span class="spark" data-slug="${esc(u.slug)}">${sparkline(u)}</span>
@@ -1105,7 +1117,7 @@ function renderOptions() {
     const on = state.sel.includes(u.slug);
     const p = u.current[state.device];
     return `<div class="opt" role="option" id="opt-${i}" data-slug="${esc(u.slug)}" aria-selected="${i === active}" aria-disabled="${on}">
-      ${esc(u.name)}<span class="num">${on ? 'Added' : graded('performance', p)}</span></div>`;
+      ${esc(u.name)}${groupTags(u.groups)}<span class="num">${on ? 'Added' : graded('performance', p)}</span></div>`;
   }).join('') : '<div class="opt-empty">No universities match</div>';
   pick.setAttribute('aria-activedescendant', active >= 0 ? `opt-${active}` : '');
   listbox.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
@@ -1282,7 +1294,7 @@ __TOPBAR__
 <main class="wrap">
   <section class="page-head head-row">
     <div>
-      <h1>__NAME__</h1>
+      <h1>__NAME__<span id="groups"></span></h1>
       <p class="facts"><a class="ext" href="__URL__" target="_blank" rel="noopener">__DOMAIN__
         <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg></a>
         <span id="meta" style="display:contents"></span></p>
@@ -1426,6 +1438,7 @@ $('#meta').innerHTML = `<span><b>${UNI.total_tests.toLocaleString('en-GB')}</b> 
   (first ? `<span>Daily since <b>${fmtDay(first)}</b></span><span>Latest test <b>${fmtDay(last)}</b></span>` : '');
 staleNotice(last);
 methodNote(UNI.method_change);
+$('#groups').innerHTML = groupTags(UNI.groups);
 // Carry this university into the compare page, alongside anything already selected
 const carry = [UNI.slug, ...storage.get('compare', []).filter(s => s !== UNI.slug)].slice(0, MAX_COMPARE);
 $('#compareLink').href = `compare.html?u=${carry.join(',')}`;
@@ -1556,6 +1569,7 @@ class UniversityDashboard:
             universities.append({
                 'name': site['name'],
                 'slug': slug,
+                'groups': site.get('groups', []),
                 'url': url,
                 'domain': urlparse(url).netloc.removeprefix('www.') or url,
                 'total_tests': len(results),
@@ -1582,6 +1596,7 @@ class UniversityDashboard:
             'name': u['name'],
             'slug': u['slug'],
             'domain': u['domain'],
+            'groups': u['groups'],
             'total_tests': u['total_tests'],
             'devices': {device: self.summarise(u['daily'][device], spark_start, self.method_change) for device in DEVICES},
         } for u in universities]
@@ -1606,6 +1621,7 @@ class UniversityDashboard:
             'name': s['name'],
             'slug': s['slug'],
             'domain': s['domain'],
+            'groups': s['groups'],
             'current': {d: (s['devices'][d] or {}).get('current', [None])[0] for d in DEVICES},
             'delta': {d: (s['devices'][d] or {}).get('delta') for d in DEVICES},
         } for s in summaries]
@@ -1632,7 +1648,7 @@ class UniversityDashboard:
         """Create a detail page for a specific university"""
         runs = [[r['timestamp'], r.get('device')] + [round_field(f, field_value(r, f)) for f in FIELDS]
                 for r in university['results']]
-        data = {k: university[k] for k in ('name', 'slug', 'total_tests', 'daily')}
+        data = {k: university[k] for k in ('name', 'slug', 'groups', 'total_tests', 'daily')}
         data['runs'] = runs
         data['method_change'] = self.method_change
 
