@@ -135,6 +135,7 @@ select.field {
 .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; font-size: var(--t-sm); color: var(--ink-2); }
 .legend .note { color: var(--ink-3); }
 .legend .dash { display: inline-block; width: 14px; border-top: 1.5px dashed var(--ink-3); vertical-align: 3px; margin-right: 6px; }
+.legend .vline { display: inline-block; height: 11px; border-left: 1.5px dashed var(--ink-2); vertical-align: -1px; margin-right: 6px; }
 
 /* Rankings list */
 .list-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }

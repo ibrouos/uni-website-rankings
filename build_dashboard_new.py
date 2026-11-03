@@ -198,6 +198,7 @@ select.field {
 .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; font-size: var(--t-sm); color: var(--ink-2); }
 .legend .note { color: var(--ink-3); }
 .legend .dash { display: inline-block; width: 14px; border-top: 1.5px dashed var(--ink-3); vertical-align: 3px; margin-right: 6px; }
+.legend .vline { display: inline-block; height: 11px; border-left: 1.5px dashed var(--ink-2); vertical-align: -1px; margin-right: 6px; }
 
 /* Rankings list */
 .list-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
@@ -441,7 +442,7 @@ const ARROW = {
 };
 // Score change; for timings pass lowerBetter so a drop reads as an improvement
 function deltaHtml(d, { lowerBetter = false, unit = '', label = 'over 30 days', format = v => Math.round(Math.abs(v)), flatBelow = 1 } = {}) {
-  if (!has(d)) return '<span class="delta muted" title="Not enough data">–</span>';
+  if (!has(d)) return '<span class="delta muted" title="Not enough comparable data">–</span>';
   if (Math.abs(d) < flatBelow) return `<span class="delta flat" title="No change ${label}">${ARROW.flat}<span class="num">0</span></span>`;
   const better = lowerBetter ? d < 0 : d > 0;
   const dir = better ? 'up' : 'down';
@@ -500,6 +501,20 @@ const storage = {
   set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch {} },
 };
 const MAX_COMPARE = 6;
+
+// First day of the corrected test method (desktop preset, one test per machine); null until it has run
+const METHOD_LEGEND = '<span class="note"><span class="vline"></span>test method changed</span>';
+function methodNote(day) {
+  const el = $('#methodNote');
+  if (!el || !day) return;
+  el.hidden = false;
+  el.innerHTML = `The dashed vertical line marks <b>${fmtDay(day)}</b>, when the test method changed. Desktop tests now use Lighthouse's real desktop setup
+    (before then they mistakenly emulated a phone on a faster connection), and each test runs on its own machine instead of several at once, which had inflated
+    total blocking time and lowered performance scores. Results either side of the line aren't directly comparable.`;
+}
+const inWindow = (day, from, to) => !!day && (!from || day >= from) && (!to || day <= to);
+// True when comparing [prevFrom, to] would mix results from before and after the method change
+const spansChange = (day, prevFrom, to) => !!day && !!prevFrom && prevFrom < day && day <= to;
 """
 
 # Chart.js helpers, inlined into pages that draw full charts
@@ -553,7 +568,28 @@ const endLabelPlugin = {
     ctx.restore();
   },
 };
-Chart.register(thresholdPlugin, endLabelPlugin);
+// Vertical marker for the test-method change
+const methodPlugin = {
+  id: 'methodChange',
+  afterDatasetsDraw(chart, _, opts) {
+    if (!opts?.at) return;
+    const { ctx, chartArea: a, scales: { x } } = chart;
+    if (opts.at < x.min || opts.at > x.max) return;
+    const px = Math.round(x.getPixelForValue(opts.at)) + 0.5;
+    ctx.save();
+    ctx.strokeStyle = css('--ink-2'); ctx.globalAlpha = 0.7; ctx.lineWidth = 1.25; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(px, a.top - 14); ctx.lineTo(px, a.bottom); ctx.stroke();
+    ctx.globalAlpha = 1; ctx.setLineDash([]);
+    // Label sits in the reserved strip above the plot, so it never covers data
+    ctx.font = `500 11px ${Chart.defaults.font.family}`; ctx.textBaseline = 'middle';
+    const label = opts.label || 'Method change';
+    const w = ctx.measureText(label).width;
+    const left = px + 6 + w > a.right ? px - 6 - w : px + 6;
+    ctx.fillStyle = css('--ink-2'); ctx.fillText(label, left, a.top - 8);
+    ctx.restore();
+  },
+};
+Chart.register(thresholdPlugin, endLabelPlugin, methodPlugin);
 
 function axisTicks(key) {
   const kind = META[key].kind;
@@ -563,7 +599,7 @@ function axisTicks(key) {
 }
 
 // Base line-chart config. series: [{ label, color, data: [{x, y}], width }]
-function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel }) {
+function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null }) {
   const grid = css('--grid'), axis = css('--axis'), muted = css('--ink-3');
   const kind = META[key].kind;
   const thresholds = kind === 'score' ? [] : [{ value: META[key].good, label: 'Good' }, { value: META[key].poor, label: 'Poor' }];
@@ -578,12 +614,13 @@ function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax,
     },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false, normalized: true,
-      layout: { padding: { right: rightPad } },
+      layout: { padding: { right: rightPad, top: methodChange ? 18 : 0 } },
       interaction: { mode: 'index', axis: 'x', intersect: false },
       plugins: {
         legend: { display: false },
         thresholds: { lines: thresholds },
         endLabels: { enabled: endLabels },
+        methodChange: { at: methodChange ? dayDate(methodChange).getTime() : null, label: 'Test method changed' },
         tooltip: {
           backgroundColor: css('--surface'), borderColor: css('--line-strong'), borderWidth: 1,
           titleColor: css('--ink'), bodyColor: css('--ink-2'), padding: 10, cornerRadius: 8,
@@ -711,6 +748,7 @@ __TOPBAR__
     <p>Web Vitals lines are each divided by Google's "good" threshold (LCP 2.5 s, FCP 1.8 s, TBT 200 ms, CLS 0.1),
       so anything under the dashed line is good and lower is better. The scale is logarithmic, from a quarter of the threshold to 16×.
       Lines in this list are 7-day rolling medians to smooth out day-to-day noise; detail pages show every day.</p>
+    <p id="methodNote" hidden></p>
   </footer>
 </main>
 
@@ -771,14 +809,19 @@ function sparkline(u) {
   const ref = state.chart === 'vitals'
     ? `<line x1="0" x2="${W}" y1="${sparkY('largest_contentful_paint', META.largest_contentful_paint.good)}" y2="${sparkY('largest_contentful_paint', META.largest_contentful_paint.good)}" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="3 3" opacity=".6" vector-effect="non-scaling-stroke"/>`
     : `<line x1="0" x2="${W}" y1="${sparkY('performance', 90)}" y2="${sparkY('performance', 90)}" stroke="var(--grid)" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+  const mOff = DATA.method_change ? Math.round((dayDate(DATA.method_change) - dayDate(START)) / 864e5) : -1;
+  const mx = (mOff / (SPAN - 1) * W).toFixed(1);
+  const marker = mOff >= 0 && mOff < SPAN
+    ? `<line x1="${mx}" x2="${mx}" y1="0" y2="${H}" stroke="var(--ink-2)" stroke-width="1.25" stroke-dasharray="3 2" opacity=".7" vector-effect="non-scaling-stroke"/>` : '';
   const paths = sparkKeys().map(k => `<path d="${sparkPath(rows, k)}" fill="none" stroke="var(${SERIES[k]})" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${ref}${paths}<line class="guide" x1="0" x2="0" y1="0" y2="${H}" vector-effect="non-scaling-stroke"/></svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${ref}${marker}${paths}<line class="guide" x1="0" x2="0" y1="0" y2="${H}" vector-effect="non-scaling-stroke"/></svg>`;
 }
 
 function renderLegend() {
   const keys = sparkKeys();
   $('#legend').innerHTML = keys.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].short}</span>`).join('') +
-    (state.chart === 'vitals' ? '<span class="note"><span class="dash"></span>good threshold · lower is better</span>' : '<span class="note">0–100 · higher is better</span>');
+    (state.chart === 'vitals' ? '<span class="note"><span class="dash"></span>good threshold · lower is better</span>' : '<span class="note">0–100 · higher is better</span>') +
+    (inWindow(DATA.method_change, START, DATA.end) ? METHOD_LEGEND : '');
 }
 
 function row(u, i) {
@@ -864,6 +907,7 @@ const tests = UNIS.reduce((n, u) => n + (u.total_tests || 0), 0);
 $('#facts').innerHTML = `<span><b>${UNIS.length}</b> universities</span><span><b>${tests.toLocaleString('en-GB')}</b> tests</span>` +
   `<span>Daily since <b>${fmtDay(DATA.start)}</b></span><span>Latest tests <b>${fmtDay(DATA.end)}</b></span>`;
 staleNotice(DATA.end);
+methodNote(DATA.method_change);
 
 bindSeg(state, render);
 $('#sort').addEventListener('change', e => { state.sort = e.target.value; renderList(); });
@@ -920,6 +964,7 @@ __TOPBAR__
   <footer class="foot">
     <p>Each line is one university's daily median. Web Vitals charts show Google's "good" and "poor" thresholds as dashed lines.
       Change compares the selected period with the one before it. With "7-day median" on, each point is the median of that day and the six before it.</p>
+    <p id="methodNote" hidden></p>
   </footer>
 </main>
 
@@ -1100,13 +1145,14 @@ function renderChart() {
   }));
   $('#chartTitle').textContent = `${META[key].label} over time`;
   $('#cLegend').innerHTML = ready.map(s => `<span><span class="swatch" style="--c:var(--s${slotOf(s)})"></span>${esc(bySlug[s].name)}</span>`).join('') +
-    (META[key].kind === 'score' ? '<span class="note">higher is better</span>' : '<span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span>');
+    (META[key].kind === 'score' ? '<span class="note">higher is better</span>' : '<span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span>') +
+    (inWindow(DATA.method_change, from, to) ? METHOD_LEGEND : '');
   if (chart) chart.destroy();
   const vals = series.flatMap(s => s.data.map(p => p.y));
   const yMax = META[key].kind === 'score' ? 100 : Math.max(META[key].poor * 1.1, ...vals);
   chart = lineChart($('#chart'), {
     series, key, yMax,
-    endLabels: !narrow && series.length <= 4, rightPad: !narrow && series.length <= 4 ? 120 : 0,
+    endLabels: !narrow && series.length <= 4, rightPad: !narrow && series.length <= 4 ? 120 : 0, methodChange: DATA.method_change,
     tooltipLabel: i => ` ${bySlug[ready[i.datasetIndex]].name}  ${fmt(key, i.parsed.y)}`,
   });
 }
@@ -1128,7 +1174,7 @@ function renderTable() {
     return `<tr><td>${META[key].label}</td>${cells}</tr>`;
   });
   const change = sel.map(s => {
-    if (!cache[s] || !prevFrom) return '<td class="num muted">–</td>';
+    if (!cache[s] || !prevFrom || spansChange(DATA.method_change, prevFrom, to)) return '<td class="num muted" title="Not comparable across the test-method change">–</td>';
     const now = avg(rowsIn(s, from, to).map(r => r[COL.performance]));
     const before = avg(rowsIn(s, prevFrom, prevTo).map(r => r[COL.performance]));
     return `<td class="num">${deltaHtml(has(now) && has(before) ? now - before : null, { label: 'vs previous period' })}</td>`;
@@ -1166,6 +1212,7 @@ async function update() {
   renderChart(); renderTable();
 }
 
+methodNote(DATA.method_change);
 bindSeg(state, () => update(), $('#filters'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => state.sel.length >= 2 && renderChart());
 let resizeTimer;
@@ -1236,6 +1283,7 @@ __TOPBAR__
   <footer class="foot">
     <p>Scores are Google Lighthouse lab results. The figures at the top are medians over the selected period; the change compares it with the period before.
       LCP is when the main content appears, FCP is when anything first appears, TBT is how long the page is unresponsive to input, and CLS is how much the layout jumps.</p>
+    <p id="methodNote" hidden></p>
   </footer>
 </main>
 
@@ -1267,7 +1315,7 @@ function renderStrips() {
     const v = median(now.map(r => r[COL[key]]));
     const p = median(before.map(r => r[COL[key]]));
     const lower = lowerIsBetter(key);
-    const d = has(v) && has(p) ? v - p : null;
+    const d = has(v) && has(p) && !spansChange(UNI.method_change, prevFrom, to) ? v - p : null;
     const opts = META[key].kind === 'score' ? { label: 'vs previous period' }
       : { lowerBetter: true, label: 'vs previous period', format: x => fmt(key, Math.abs(x)), flatBelow: META[key].good * 0.02 };
     return `<div><div class="strip-label">${META[key].label}</div>
@@ -1287,17 +1335,18 @@ function renderCharts() {
   const pts = key => rows.filter(r => has(r[COL[key]])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[COL[key]] }));
   const narrow = innerWidth < 640;
   charts.push(lineChart($('#scoreChart'), {
-    key: 'performance', endLabels: !narrow, rightPad: narrow ? 0 : 56,
+    key: 'performance', endLabels: !narrow, rightPad: narrow ? 0 : 56, methodChange: UNI.method_change,
     series: SCORE_KEYS.map(k => ({ label: META[k].short, color: css(SERIES[k]), data: pts(k) })),
     tooltipLabel: i => ` ${META[SCORE_KEYS[i.datasetIndex]].label}  ${Math.round(i.parsed.y)}`,
   }));
-  $('#sLegend').innerHTML = SCORE_KEYS.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].label}</span>`).join('');
+  $('#sLegend').innerHTML = SCORE_KEYS.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].label}</span>`).join('') +
+    (inWindow(UNI.method_change, from, to) ? METHOD_LEGEND : '');
   $('#multiples').innerHTML = VITAL_KEYS.map(k => `<div><div class="mult-head"><span class="swatch" style="--c:var(${SERIES[k]})"></span><b>${META[k].label}</b><span>${META[k].short} · ${thresholdText(k)}</span></div>
     <div class="chart-box sm"><canvas id="c-${k}" role="img" aria-label="${META[k].label} over time"></canvas></div></div>`).join('');
   VITAL_KEYS.forEach(k => {
     const data = pts(k);
     const yMax = Math.max(META[k].poor * 1.1, ...data.map(p => p.y));
-    charts.push(lineChart($(`#c-${k}`), { key: k, yMax, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
+    charts.push(lineChart($(`#c-${k}`), { key: k, yMax, methodChange: UNI.method_change, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
   });
 }
 
@@ -1324,6 +1373,7 @@ const last = [UNI.daily.mobile?.at(-1)?.[0], UNI.daily.desktop?.at(-1)?.[0]].fil
 $('#meta').innerHTML = `<span><b>${UNI.total_tests.toLocaleString('en-GB')}</b> tests</span>` +
   (first ? `<span>Daily since <b>${fmtDay(first)}</b></span><span>Latest test <b>${fmtDay(last)}</b></span>` : '');
 staleNotice(last);
+methodNote(UNI.method_change);
 // Carry this university into the compare page, alongside anything already selected
 const carry = [UNI.slug, ...storage.get('compare', []).filter(s => s !== UNI.slug)].slice(0, MAX_COMPARE);
 $('#compareLink').href = `compare.html?u=${carry.join(',')}`;
@@ -1346,6 +1396,7 @@ class UniversityDashboard:
         self.docs_dir = docs_dir
         self.data_dir = docs_dir / "data"
         self.data_dir.mkdir(parents=True, exist_ok=True)
+        self.method_change: Optional[str] = None
 
         # Load configuration
         self.config = self.load_config()
@@ -1393,7 +1444,7 @@ class UniversityDashboard:
         return smoothed
 
     @staticmethod
-    def summarise(rows: List[list], spark_start: date) -> Optional[Dict[str, Any]]:
+    def summarise(rows: List[list], spark_start: date, method_change: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Current medians, 30-day performance change and the sparkline window for one device"""
         if not rows:
             return None
@@ -1409,12 +1460,21 @@ class UniversityDashboard:
         latest_window = perf_between(last, TREND_DAYS)
         previous_window = perf_between(last - timedelta(days=TREND_DAYS), TREND_DAYS)
         delta = None
-        if len(latest_window) >= TREND_MIN_DAYS and len(previous_window) >= TREND_MIN_DAYS:
+        # A comparison that straddles the test-method change would measure the method, not the site
+        straddles = method_change and last - timedelta(days=2 * TREND_DAYS) < date.fromisoformat(method_change) <= last
+        if not straddles and len(latest_window) >= TREND_MIN_DAYS and len(previous_window) >= TREND_MIN_DAYS:
             delta = round(mean(latest_window) - mean(previous_window), 1)
 
         spark = [[(date.fromisoformat(r[0]) - spark_start).days] + r[1:]
                  for r in UniversityDashboard.rolling_median(rows) if date.fromisoformat(r[0]) >= spark_start]
         return {'last': rows[-1][0], 'current': current, 'delta': delta, 'spark': spark}
+
+    @staticmethod
+    def find_method_change(universities: List[Dict[str, Any]]) -> Optional[str]:
+        """First day of the corrected test method. Only runs from the fixed runner record a form factor."""
+        days = [r['timestamp'][:10] for u in universities for r in u['results']
+                if (r.get('throttling_config') or {}).get('form_factor')]
+        return min(days) if days else None
 
     def load_university_data(self) -> List[Dict[str, Any]]:
         """Load all university data"""
@@ -1470,9 +1530,10 @@ class UniversityDashboard:
             'slug': u['slug'],
             'domain': u['domain'],
             'total_tests': u['total_tests'],
-            'devices': {device: self.summarise(u['daily'][device], spark_start) for device in DEVICES},
+            'devices': {device: self.summarise(u['daily'][device], spark_start, self.method_change) for device in DEVICES},
         } for u in universities]
-        data = {'start': start, 'end': end, 'spark_days': SPARK_DAYS, 'universities': summaries}
+        data = {'start': start, 'end': end, 'spark_days': SPARK_DAYS, 'method_change': self.method_change,
+                'universities': summaries}
 
         html_content = page_head(
             "University Web Rankings",
@@ -1502,7 +1563,7 @@ class UniversityDashboard:
         ) + self.fill(COMPARE_TEMPLATE, TOPBAR=topbar('compare'), ICON_SEARCH=ICON_SEARCH,
                       CHART_JS=CHART_JS, CHART_ADAPTER=CHART_ADAPTER, COMMON=COMMON_JS,
                       CHART_HELPERS=CHART_HELPERS_JS, STALE=STALE_NOTICE,
-                      DATA=to_script_json({'end': end, 'universities': unis}))
+                      DATA=to_script_json({'end': end, 'method_change': self.method_change, 'universities': unis}))
 
         with open(self.docs_dir / "compare.html", 'w', encoding='utf-8') as f:
             f.write(html_content)
@@ -1520,6 +1581,7 @@ class UniversityDashboard:
                 for r in university['results']]
         data = {k: university[k] for k in ('name', 'slug', 'total_tests', 'daily')}
         data['runs'] = runs
+        data['method_change'] = self.method_change
 
         html_content = page_head(
             f"{university['name']} · University Web Rankings",
@@ -1551,9 +1613,12 @@ class UniversityDashboard:
 
         days = [rows[i][0] for u in universities for rows in u['daily'].values() if rows for i in (0, -1)]
         start, end = min(days), max(days)
+        self.method_change = self.find_method_change(universities)
+        if self.method_change:
+            logger.info(f"Test method changed on {self.method_change}")
 
         self.create_stylesheet()
-        summaries = self.create_main_dashboard(universities, start, end)
+        summaries = self.create_main_dashboard(universities, start, end)  # needs self.method_change
         self.create_compare_page(summaries, end)
 
         # Create detail pages and history files for each university

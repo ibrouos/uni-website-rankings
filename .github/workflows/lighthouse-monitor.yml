@@ -6,50 +6,94 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch: # Allow manual trigger
 
+env:
+  # Pinned so scores don't shift when Lighthouse changes its scoring; bump deliberately
+  LIGHTHOUSE_VERSION: '12.8.2'
+  SHARDS: 6
+
 jobs:
-  lighthouse-top50:
+  # Each shard runs on its own machine and tests its sites one at a time,
+  # so tests never compete for CPU (which inflates TBT and lowers performance scores)
+  lighthouse-shard:
     runs-on: ubuntu-latest
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '22'
-        
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        
+
     - name: Install Lighthouse CLI
-      run: npm install -g lighthouse
-      
-    - name: Install Chrome dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-        
-    - name: Create necessary directories
-      run: |
-        mkdir -p lighthouse_results
-        mkdir -p results
-        mkdir -p docs
-        
-    - name: Run Lighthouse tests (Top 50)
-      run: python lighthouse_top50.py
-      
+      run: npm install -g lighthouse@${{ env.LIGHTHOUSE_VERSION }}
+
+    - name: Install Chrome
+      id: chrome
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: stable
+        install-dependencies: true
+
+    - name: Run Lighthouse tests (shard ${{ matrix.shard }})
+      run: python lighthouse_top50.py --shard ${{ matrix.shard }} --shards ${{ env.SHARDS }} --output shard-results/shard-${{ matrix.shard }}.json
+      env:
+        CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+
+    - name: Upload shard results
+      uses: actions/upload-artifact@v4
+      with:
+        name: shard-${{ matrix.shard }}
+        path: shard-results/
+        retention-days: 7
+
+  publish:
+    needs: lighthouse-shard
+    # Publish whatever succeeded, even if a shard failed
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Download shard results
+      uses: actions/download-artifact@v4
+      with:
+        pattern: shard-*
+        path: shard-results
+        merge-multiple: true
+
+    - name: Merge results
+      run: python lighthouse_top50.py --merge shard-results
+
     - name: Build dashboard
       run: python build_dashboard_new.py
-      
+
     - name: Commit and push results
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add .
+        git add results/ lighthouse_results/ docs/
         git diff --staged --quiet || git commit -m "Update lighthouse results (Top 50) $(date +'%Y-%m-%d')"
+        git pull --rebase
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

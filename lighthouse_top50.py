@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Optimized Lighthouse Monitor for Top 50 Universities
-- Single run per site/device (not 2)
-- Faster timeout settings
-- Better error handling
-- 16 concurrent workers for speed
+Lighthouse Monitor for Top 50 Universities
+- One test at a time per machine: parallel Chromes compete for CPU and inflate TBT/performance
+- Sites are split into shards so several CI machines can share the work (--shard/--shards)
+- Shard results are written with --output and combined into results/ with --merge
 """
 
+import argparse
 import json
 import subprocess
 import os
@@ -39,7 +39,7 @@ def slugify(text: str) -> str:
 
 
 class LighthouseMonitor:
-    def __init__(self, sites: List[Dict[str, str]], max_workers: int = 16, max_retries: int = 2):
+    def __init__(self, sites: List[Dict[str, str]], max_workers: int = 1, max_retries: int = 2):
         self.sites = sites
         self.output_dir = Path("lighthouse_results")
         self.output_dir.mkdir(exist_ok=True)
@@ -82,21 +82,11 @@ class LighthouseMonitor:
             "--disable-storage-reset",  # Faster
         ]
         
-        # Device-specific settings
-        if device == "mobile":
-            cmd.extend([
-                "--emulated-form-factor=mobile",
-                "--throttling.rttMs=150",
-                "--throttling.throughputKbps=1638.4",
-                "--throttling.cpuSlowdownMultiplier=4"
-            ])
-        else:
-            cmd.extend([
-                "--emulated-form-factor=desktop",
-                "--throttling.rttMs=40",
-                "--throttling.throughputKbps=10240",
-                "--throttling.cpuSlowdownMultiplier=1"
-            ])
+        # Mobile is Lighthouse's default (Moto G Power, 150 ms RTT, 1.6 Mbps, 4x CPU slowdown).
+        # Desktop needs the preset: the old --emulated-form-factor flag was removed in Lighthouse 7
+        # and is silently ignored, which left "desktop" runs emulating a phone.
+        if device == "desktop":
+            cmd.append("--preset=desktop")
         
         try:
             with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp_file:
@@ -118,6 +108,7 @@ class LighthouseMonitor:
                 # Extract metrics
                 categories = lighthouse_data.get('categories', {})
                 audits = lighthouse_data.get('audits', {})
+                settings = lighthouse_data.get('configSettings', {})
                 
                 metrics = {
                     'name': name,
@@ -141,9 +132,13 @@ class LighthouseMonitor:
                         'interactive': audits.get('interactive', {}).get('numericValue', 0)
                     },
                     'throttling_config': {
-                        'method': 'simulate',
-                        'device': device
-                    }
+                        'method': settings.get('throttlingMethod', 'simulate'),
+                        'device': device,
+                        'form_factor': settings.get('formFactor'),
+                        **{k: settings.get('throttling', {}).get(k) for k in ('rttMs', 'throughputKbps', 'cpuSlowdownMultiplier')}
+                    },
+                    # How fast the test machine was; lets slow-machine runs be spotted later
+                    'benchmark_index': lighthouse_data.get('environment', {}).get('benchmarkIndex')
                 }
                 
                 os.unlink(tmp_file.name)
@@ -370,25 +365,65 @@ def load_sites_from_json(filename: str = "universities_top50.json") -> List[Dict
         raise
 
 
+def merge_shards(shard_dir: str):
+    """Combine shard outputs (written with --output) into the daily and per-university files"""
+    results = []
+    for shard_file in sorted(Path(shard_dir).glob("*.json")):
+        with open(shard_file, 'r') as f:
+            shard_results = json.load(f)
+        logger.info(f"Loaded {len(shard_results)} results from {shard_file.name}")
+        results.extend(shard_results)
+
+    if not results:
+        logger.error(f"No shard results found in {shard_dir}")
+        raise SystemExit(1)
+
+    LighthouseMonitor([]).save_results(results)
+    logger.info(f"Merged {len(results)} results")
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--shard', type=int, default=0, help='Which shard of the site list to test (0-based)')
+    parser.add_argument('--shards', type=int, default=1, help='How many shards the site list is split into')
+    parser.add_argument('--workers', type=int, default=1, help='Concurrent tests; keep at 1 for stable scores')
+    parser.add_argument('--output', help="Write this shard's results to a file instead of updating results/")
+    parser.add_argument('--merge', metavar='DIR', help='Merge shard result files from DIR into results/')
+    args = parser.parse_args()
+
+    if args.merge:
+        merge_shards(args.merge)
+        return
+
     try:
-        sites_to_test = load_sites_from_json()
+        sites = load_sites_from_json()
     except Exception as e:
         logger.error(f"Failed to load sites: {str(e)}")
         return
-    
-    # Initialize with fewer workers and retries for stability
-    monitor = LighthouseMonitor(sites_to_test, max_workers=8, max_retries=1)
+
+    # Every Nth site, so slow and fast sites spread evenly across shards
+    sites_to_test = sites[args.shard::args.shards]
+    logger.info(f"Shard {args.shard + 1}/{args.shards}: {len(sites_to_test)} sites")
+
+    monitor = LighthouseMonitor(sites_to_test, max_workers=args.workers, max_retries=1)
     
     logger.info("Starting Lighthouse tests with retry logic...")
     results = monitor.run_all_tests()
     
-    if results:
-        monitor.save_results(results)
-        success_rate = (len(results) / (len(sites_to_test) * 2) * 100)
-        logger.info(f"All tasks completed! Success rate: {success_rate:.1f}%")
-    else:
+    if not results:
         logger.error("No results to save")
+        raise SystemExit(1)
+
+    if args.output:
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        with open(args.output, 'w') as f:
+            json.dump(results, f, indent=2)
+        logger.info(f"Shard results saved to {args.output}")
+    else:
+        monitor.save_results(results)
+
+    success_rate = (len(results) / (len(sites_to_test) * 2) * 100)
+    logger.info(f"All tasks completed! Success rate: {success_rate:.1f}%")
 
 
 if __name__ == "__main__":
