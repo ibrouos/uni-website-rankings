@@ -14,7 +14,7 @@ The dashboard has three views:
 
 ```
 Lighthouse Monitor (daily, 06:00 UTC)          Build Dashboard (after each monitor run, and 08:00 UTC)
-  6 parallel jobs, each testing its share        builds docs/ from results/
+  13 parallel jobs, each testing its share       builds docs/ from results/
   of the sites one at a time                     deploys it to GitHub Pages
         │                                                   ▲
         ▼                                                   │

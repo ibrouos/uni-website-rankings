@@ -9,7 +9,8 @@ on:
 env:
   # Pinned so scores don't shift when Lighthouse changes its scoring; bump deliberately
   LIGHTHOUSE_VERSION: '12.8.2'
-  SHARDS: 6
+  # About 10 universities per shard keeps each job near 15 minutes; keep matrix.shard in step
+  SHARDS: 13
 
 jobs:
   # Each shard runs on its own machine and tests its sites one at a time,
@@ -19,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
     steps:
     - name: Checkout repository
@@ -90,7 +91,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add results/
-        git diff --staged --quiet || git commit -m "Update lighthouse results (Top 50) $(date +'%Y-%m-%d')"
+        git diff --staged --quiet || git commit -m "Update lighthouse results $(date +'%Y-%m-%d')"
         git pull --rebase
         git push
       env:
