@@ -129,7 +129,7 @@ ol, ul { list-style: none; }
 .nav a { padding: 5px 10px; border-radius: 6px; font-size: var(--t-sm); font-weight: 500; color: var(--ink-2); text-decoration: none; transition: color .15s, background-color .15s; }
 .nav a:hover { color: var(--ink); background: var(--surface-2); }
 .nav a[aria-current="page"] { color: var(--ink); background: var(--surface-2); }
-.topbar-meta { margin-left: auto; color: var(--ink-3); font-size: var(--t-sm); white-space: nowrap; }
+.topbar-meta { margin-left: auto; min-width: 0; color: var(--ink-3); font-size: var(--t-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Page header */
 .page-head { padding: var(--space-7) 0 var(--space-5); }
@@ -228,7 +228,7 @@ select.field {
 .list-meta .count { margin-left: auto; font-size: var(--t-sm); color: var(--ink-3); }
 .row {
   position: relative; display: grid; align-items: center; column-gap: var(--space-3);
-  grid-template-columns: 20px 26px minmax(170px, 1fr) 62px 64px 70px minmax(150px, 1.15fr) repeat(3, 40px);
+  grid-template-columns: 20px 26px minmax(170px, 1fr) 62px 64px 112px minmax(130px, 1fr) repeat(3, 40px);
   grid-template-areas: "check rank name cur delta cwv spark a11y bp seo";
   padding: 0 var(--space-4); min-height: 58px; border-top: 1px solid var(--line);
   transition: background-color .12s;
@@ -269,6 +269,9 @@ h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; 
 .mini { text-align: right; font-size: var(--t-sm); color: var(--ink-2); }
 .mini.a11y { grid-area: a11y; } .mini.bp { grid-area: bp; } .mini.seo { grid-area: seo; }
 .cwv { display: inline-flex; align-items: center; gap: 5px; font-size: var(--t-sm); color: var(--ink-2); white-space: nowrap; }
+.cwv.fail { color: var(--ink); }
+.cwv-explain { color: var(--ink); }
+.cwv-explain:empty, .sect-note:empty { display: none; }
 .row > .cwv-cell { grid-area: cwv; display: flex; justify-content: flex-end; }
 .sub-cwv { display: none; }
 .empty { padding: var(--space-7) var(--space-4); text-align: center; color: var(--ink-3); }
@@ -298,6 +301,30 @@ h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; 
 
 /* Panels */
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-top: var(--space-4); }
+/* Detail page sections: one per data source, each heading + intro + figures + charts */
+.sect { margin-top: var(--space-5); }
+.sect + .sect { margin-top: var(--space-7); padding-top: var(--space-6); border-top: 1px solid var(--line); }
+.sect-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3) var(--space-5); margin-bottom: var(--space-4); }
+.sect-intro { flex: 1 1 420px; max-width: 78ch; font-size: var(--t-sm); color: var(--ink-2); }
+.sect-intro h2 { font-size: var(--t-lg); font-weight: 600; letter-spacing: -0.015em; color: var(--ink); }
+.sect-intro h2, .sect-title { margin-bottom: var(--space-2); }
+.sect-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--space-3); }
+.sect-title h2 { margin-bottom: 0; }
+.head-tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.sect-intro p + p { margin-top: var(--space-2); }
+.sect-note { color: var(--ink-3); }
+.sect-tools { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.verdict .cwv { font-size: var(--t-sm); font-weight: 500; letter-spacing: 0; }
+.sect .panel { margin-top: var(--space-3); }
+.runs { overflow: hidden; }
+.runs > summary { cursor: pointer; list-style: none; border-bottom: 0; transition: background-color .12s; }
+.runs > summary::-webkit-details-marker { display: none; }
+.runs > summary:hover { background: var(--hover); }
+.runs > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 10px; }
+.runs[open] > summary { border-bottom: 1px solid var(--line); }
+.runs #runCount { font-size: var(--t-sm); }
+.chev { flex: none; color: var(--ink-3); transition: transform .2s var(--ease-out); }
+.runs[open] .chev { transform: rotate(180deg); }
 .panel-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); padding: 12px var(--space-4); border-bottom: 1px solid var(--line); }
 .panel-title { font-weight: 600; font-size: var(--t-md); letter-spacing: -0.01em; }
 .panel-head .end { margin-left: auto; }
@@ -314,8 +341,6 @@ h1 .tag { height: 20px; font-size: 12px; vertical-align: 5px; margin-left: 8px; 
 .strip-sub { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 4px; font-size: var(--t-xs); color: var(--ink-3); }
 .strip.vitals .strip-value, .strip.five .strip-value { font-size: 1.1875rem; }
 .strip.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.strip.flat { border: 0; border-radius: 0; border-bottom: 1px solid var(--line); background: transparent; }
-.panel-head .cwv { font-size: var(--t-sm); }
 tr.group td { padding-top: 14px; font-size: var(--t-xs); font-weight: 500; color: var(--ink-3); background: var(--surface-2); }
 
 .multiples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -335,6 +360,7 @@ th:first-child, td:first-child { text-align: left; }
 tbody tr:first-child td { border-top: 0; }
 tbody tr:hover td { background: var(--hover); }
 td .cell { display: inline-flex; align-items: center; gap: 6px; }
+td .quiet { color: var(--ink-2); }
 td.best { font-weight: 600; color: var(--ink); }
 .best-tag { font-family: 'Geist', sans-serif; font-size: 10.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--accent-ink); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; line-height: 17px; }
 .more { display: block; width: 100%; height: 40px; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--ink-2); font-size: var(--t-sm); cursor: pointer; border-radius: 0 0 10px 10px; }
@@ -373,7 +399,7 @@ td.best { font-weight: 600; color: var(--ink); }
 .foot p + p { margin-top: var(--space-2); }
 
 @media (max-width: 1000px) {
-  .row { grid-template-columns: 20px 26px minmax(150px, 1fr) 58px 60px 64px minmax(120px, 1fr); grid-template-areas: "check rank name cur delta cwv spark"; }
+  .row { grid-template-columns: 20px 26px minmax(150px, 1fr) 58px 60px 108px minmax(110px, 1fr); grid-template-areas: "check rank name cur delta cwv spark"; }
   .mini, .list-head .hide-md { display: none; }
 }
 @media (max-width: 640px) {
@@ -396,7 +422,7 @@ td.best { font-weight: 600; color: var(--ink); }
   .strip.five > div:nth-child(odd) { border-left: 0; }
   .spark { height: 34px; }
   .list-meta .count { margin-left: 0; width: 100%; }
-  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip, .strip.five { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .strip > div:nth-child(3) { border-left: 0; }
   .strip > div:nth-child(n+3) { border-top: 1px solid var(--line); }
   .multiples { grid-template-columns: 1fr; }
@@ -412,6 +438,23 @@ td.best { font-weight: 600; color: var(--ink); }
   .compare-table th:first-child { background: var(--surface-2); }
   .compare-table th:not(:first-child) { min-width: 104px; }
 }
+/* Very narrow phones: the page heading already names the university; let long labels wrap rather than truncate */
+@media (max-width: 480px) {
+  .topbar-meta { display: none; }
+  .strip-label { white-space: normal; }
+}
+
+/* Touch screens: same layout, but every control is a comfortable 44px tap target */
+@media (pointer: coarse) {
+  .seg button { min-height: 40px; min-width: 44px; padding: 0 12px; }
+  .btn { min-height: 44px; }
+  .nav a { padding: 12px 12px; }
+  .brand { min-height: 44px; min-width: 44px; }
+  .ext, .hint-btn { padding-block: 12px; margin-block: -12px; }
+  .runs > summary { min-height: 52px; }
+  .more { min-height: 48px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
   .skeleton { animation: none; }
@@ -486,7 +529,9 @@ const GLYPH_SHAPE = {
 };
 const glyph = (g, size = 10) => g ? `<svg class="glyph ${g}" width="${size}" height="${size}" viewBox="0 0 10 10" role="img" aria-label="${GRADE_LABEL[g]}"><title>${GRADE_LABEL[g]}</title>${GLYPH_SHAPE[g]}</svg>` : '';
 const graded = (key, v, size) => `${glyph(gradeOf(key, v), size)}<span>${fmt(key, v)}</span>`;
-const thresholdText = key => { const m = META[key]; return m.kind === 'score' ? '90+ is good' : `Good ≤ ${fmt(key, m.good)}`; };
+// Thresholds are round numbers, so print them as such (2.5 s, not 2.50 s)
+const fmtLimit = (key, v) => META[key].kind === 'cls' ? String(v) : v < 1000 ? `${v} ms` : `${v / 1000} s`;
+const thresholdText = key => { const m = META[key]; return m.kind === 'score' ? '90+ is good' : `Good ≤ ${fmtLimit(key, m.good)}`; };
 
 const ARROW = {
   up: '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg>',
@@ -557,13 +602,34 @@ const storage = {
 };
 const MAX_COMPARE = 6;
 
+// Core Web Vitals that miss Google's "good" threshold, e.g. ['largest_contentful_paint']
+const cwvFails = v => CWV_KEYS.filter((k, i) => has(v[i]) && v[i] > META[k].good);
+
 // c = { day, v: [...CRUX_KEYS], scope: 'page' | 'origin' }
-function cwvBadge(c, { word = true } = {}) {
+// Names the failing metrics ("LCP · INP") rather than a bare "Fail"; the tooltip gives each value against its threshold
+function cwvBadge(c, { verbose = false } = {}) {
   const pass = c ? cwvPass(c.v) : null;
   if (pass == null) return '<span class="cwv muted" title="Not enough real-user data from Chrome">–</span>';
-  const title = `Core Web Vitals for real Chrome users, 28 days to ${fmtDay(c.day)}${c.scope === 'origin' ? ' (whole site)' : ''}: ` +
-    CWV_KEYS.map((k, i) => `${META[k].short} ${fmt(k, c.v[i])}`).join(', ');
-  return `<span class="cwv" title="${esc(title)}">${glyph(pass ? 'good' : 'poor', 9)}${word ? `<span>${pass ? 'Pass' : 'Fail'}</span>` : ''}</span>`;
+  const fails = cwvFails(c.v);
+  const title = `${pass ? 'Passes' : 'Fails'} Core Web Vitals for real Chrome users, 28 days to ${fmtDay(c.day)}${c.scope === 'origin' ? ' (whole site)' : ''}\n` +
+    CWV_KEYS.map((k, i) => `${fails.includes(k) ? '✗' : '✓'} ${META[k].short} ${fmt(k, c.v[i])} (${thresholdText(k)})`).join('\n');
+  const names = fails.map(k => META[k].short).join(' · ');
+  const label = verbose ? (pass ? 'Passes' : `Fails on ${names}`) : (pass ? 'Pass' : names);
+  return `<span class="cwv${pass ? '' : ' fail'}" title="${esc(title)}">${glyph(pass ? 'good' : 'poor', 9)}<span>${label}</span></span>`;
+}
+
+// Plain-English verdict for the detail page, e.g. "Fails: pages take 3.1 s to load (LCP, needs 2.5 s or less)"
+const CWV_PLAIN = {
+  largest_contentful_paint: v => `main content takes ${fmt('largest_contentful_paint', v)} to appear`,
+  interaction_to_next_paint: v => `the page takes ${fmt('interaction_to_next_paint', v)} to respond to taps and clicks`,
+  cumulative_layout_shift: v => `the layout jumps around by ${fmt('cumulative_layout_shift', v)} while loading`,
+};
+function cwvExplain(c) {
+  if (!c || cwvPass(c.v) == null) return '';
+  const fails = cwvFails(c.v);
+  if (!fails.length) return 'Most real visitors get a fast, responsive, stable page: LCP, INP and CLS are all good for at least 75% of visits.';
+  const reasons = fails.map(k => `${CWV_PLAIN[k](c.v[CWV_KEYS.indexOf(k)])} (${META[k].short}, needs ${fmtLimit(k, META[k].good)} or less)`);
+  return `For at least 1 in 4 visits, ${reasons.join('; ')}. A site passes only when all three are good.`;
 }
 
 // University groups from the sites file, shown as small tags beside the name
@@ -624,13 +690,17 @@ const thresholdPlugin = {
     ctx.save();
     ctx.font = `11px ${Chart.defaults.font.family}`;
     ctx.textBaseline = 'bottom';
+    // When two lines sit close together (TBT's 200 ms and 600 ms on a 6 s scale), set their labels side by side
+    let prev = null;
     lines.forEach(l => {
       if (l.value < y.min || l.value > y.max) return;
       const py = Math.round(y.getPixelForValue(l.value)) + 0.5;
+      const x = prev && Math.abs(prev.py - py) < 13 ? prev.x - prev.w - 8 : a.right - 2;
       ctx.strokeStyle = css('--ink-3'); ctx.globalAlpha = 0.55; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
       ctx.beginPath(); ctx.moveTo(a.left, py); ctx.lineTo(a.right, py); ctx.stroke();
       ctx.globalAlpha = 1; ctx.setLineDash([]); ctx.fillStyle = css('--ink-3'); ctx.textAlign = 'right';
-      ctx.fillText(l.label, a.right - 2, py - 3);
+      ctx.fillText(l.label, x, py - 3);
+      prev = { py, x, w: ctx.measureText(l.label).width };
     });
     ctx.restore();
   },
@@ -697,11 +767,11 @@ function axisTicks(key) {
 }
 
 // Base line-chart config. series: [{ label, color, data: [{x, y}], width }]
-function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null, gapDays = 3 }) {
+function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax, tooltipLabel, methodChange = null, flag = true, gapDays = 3 }) {
   const grid = css('--grid'), axis = css('--axis'), muted = css('--ink-3');
   const kind = META[key].kind;
   const box = canvas.parentElement;
-  if (methodChange && !box.querySelector('.mc-flag')) {
+  if (methodChange && flag && !box.querySelector('.mc-flag')) {
     box.insertAdjacentHTML('beforeend', `<button type="button" class="mc-flag" data-method-hint="${methodChange}" hidden>Methodology changed${INFO_ICON}</button>`);
   }
   const thresholds = kind === 'score' ? [] : [{ value: META[key].good, label: 'Good' }, { value: META[key].poor, label: 'Poor' }];
@@ -720,7 +790,7 @@ function lineChart(canvas, { series, key, endLabels = false, rightPad = 0, yMax,
     },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false, normalized: true,
-      layout: { padding: { right: rightPad, top: methodChange ? 24 : 0 } },
+      layout: { padding: { right: rightPad, top: methodChange ? (flag ? 24 : 14) : 0 } },
       interaction: { mode: 'index', axis: 'x', intersect: false },
       plugins: {
         legend: { display: false },
@@ -854,7 +924,8 @@ __TOPBAR__
       The 30-day change compares the mean performance score of the latest 30 days of tests with the 30 days before.
       <span class="tag" aria-hidden="true">RG</span> marks members of the Russell Group.</p>
     <p>"Real users" is Google's Core Web Vitals assessment from the Chrome UX Report: how the homepage performed for real
-      Chrome users over the latest 28 days. It passes when LCP, INP and CLS are all good for at least 75% of visits.
+      Chrome users over the latest 28 days. It passes when LCP (loading), INP (responsiveness) and CLS (layout stability) are all good for at least 75% of visits;
+      otherwise the badge names the metrics that miss. Hover a badge for the figures.
       Where the homepage gets too little traffic, figures for the whole site are used. "–" means Chrome has too little data.</p>
     <p>Web Vitals lines are each divided by Google's "good" threshold (LCP 2.5 s, FCP 1.8 s, TBT 200 ms, CLS 0.1),
       so anything under the dashed line is good and lower is better. The scale is logarithmic, from a quarter of the threshold to 16×.
@@ -1299,7 +1370,7 @@ function renderTable() {
   const cruxOf = s => bySlug[s].crux?.[state.device];
   const realUsers = [
     group('Real users (Chrome UX Report, latest 28 days)'),
-    `<tr><td>Core Web Vitals</td>${sel.map(s => `<td class="num">${cwvBadge(cruxOf(s))}</td>`).join('')}</tr>`,
+    `<tr><td>Core Web Vitals</td>${sel.map(s => `<td class="num">${cwvBadge(cruxOf(s), { verbose: true })}</td>`).join('')}</tr>`,
     ...CRUX_KEYS.map((key, i) => metricRow(META[key].label, key, sel.map(s => cruxOf(s)?.v?.[i] ?? null))),
   ];
   const change = sel.map(s => {
@@ -1365,61 +1436,88 @@ __TOPBAR__
         <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg></a>
         <span id="meta" style="display:contents"></span></p>
     </div>
-    <a class="btn" id="compareLink" href="compare.html">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>
-      Compare with others</a>
+    <div class="head-tools" id="filters">
+      <div class="seg" data-key="device" role="group" aria-label="Device">
+        <button data-value="mobile">Mobile</button><button data-value="desktop">Desktop</button>
+      </div>
+      <a class="btn" id="compareLink" href="compare.html">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>
+        Compare with others</a>
+    </div>
   </section>
 
   <div class="notice" id="staleNotice" role="status" hidden></div>
 
-  <div class="toolbar" id="filters">
-    <div class="seg" data-key="device" role="group" aria-label="Device">
-      <button data-value="mobile">Mobile</button><button data-value="desktop">Desktop</button>
-    </div>
-    <div class="seg" data-key="range" role="group" aria-label="Period">
-      <button data-value="30">30D</button><button data-value="90">90D</button><button data-value="365">1Y</button><button data-value="all">All</button>
-    </div>
-    <div class="seg" data-key="smooth" role="group" aria-label="Line smoothing">
-      <button data-value="7" title="Each point is the median of the previous 7 days">7-day median</button><button data-value="1">Daily</button>
-    </div>
-    <span class="muted" id="period" style="font-size:var(--t-sm); margin-left:4px"></span>
-  </div>
+  <section class="sect" aria-labelledby="labTitle">
+    <header class="sect-head">
+      <div class="sect-intro">
+        <h2 id="labTitle">Lab tests</h2>
+        <p>Google Lighthouse loads the homepage once a day on a simulated device and network, so results are repeatable and
+          comparable between universities. Figures are medians over the selected period.</p>
+        <p class="sect-note" id="period"></p>
+      </div>
+      <div class="sect-tools" id="labFilters">
+        <div class="seg" data-key="range" role="group" aria-label="Period">
+          <button data-value="30">30D</button><button data-value="90">90D</button><button data-value="365">1Y</button><button data-value="all">All</button>
+        </div>
+        <div class="seg" data-key="smooth" role="group" aria-label="Line smoothing">
+          <button data-value="7" title="Each point is the median of the previous 7 days">7-day median</button><button data-value="1">Daily</button>
+        </div>
+      </div>
+    </header>
 
-  <section class="strip" id="scores" aria-label="Lighthouse scores"></section>
-  <section class="strip vitals" id="vitals" aria-label="Web Vitals"></section>
+    <div class="strip" id="scores" role="group" aria-label="Lighthouse scores"></div>
+    <div class="strip vitals" id="vitals" role="group" aria-label="Lab Web Vitals"></div>
 
-  <section class="panel" aria-labelledby="scoresTitle">
-    <div class="panel-head"><span class="panel-title" id="scoresTitle">Lighthouse scores over time</span><span class="legend end" id="sLegend"></span></div>
-    <div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Lighthouse scores over time"></canvas></div>
+    <div class="panel">
+      <div class="panel-head"><h3 class="panel-title">Scores over time</h3><span class="legend end" id="sLegend"></span></div>
+      <div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Lighthouse scores over time"></canvas></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3 class="panel-title">Web Vitals over time</h3>
+        <span class="legend end" id="vLegend"></span></div>
+      <div class="multiples" id="multiples"></div>
+    </div>
+
+    <details class="panel runs">
+      <summary class="panel-head"><h3 class="panel-title">Test runs</h3><span class="muted end" id="runCount"></span>
+        <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Date</th><th>Perf.</th><th>A11y</th><th>BP</th><th>SEO</th><th>LCP</th><th>FCP</th><th>TBT</th><th>CLS</th></tr></thead>
+          <tbody id="runs"></tbody>
+        </table>
+      </div>
+      <button class="more" id="more" type="button" hidden></button>
+    </details>
   </section>
 
-  <section class="panel" aria-labelledby="vitalsTitle">
-    <div class="panel-head"><span class="panel-title" id="vitalsTitle">Web Vitals over time</span>
-      <span class="legend end"><span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span></span></div>
-    <div class="multiples" id="multiples"></div>
-  </section>
+  <section class="sect" aria-labelledby="cruxTitle">
+    <header class="sect-head">
+      <div class="sect-intro">
+        <div class="sect-title"><h2 id="cruxTitle">Real users</h2><span class="verdict" id="cruxVerdict"></span></div>
+        <p>How the site performs for real visitors, from Google's Chrome UX Report (CrUX). Chrome collects these timings from people
+          who visit the site on their own devices and connections. Each figure is the 75th percentile over a rolling 28 days, so three in four
+          visits were at least this fast. Because the lab tests run in controlled conditions, the two can disagree.</p>
+        <p class="cwv-explain" id="cruxExplain"></p>
+        <p class="sect-note" id="cruxMeta"></p>
+      </div>
+    </header>
 
-  <section class="panel" aria-labelledby="cruxTitle">
-    <div class="panel-head"><span class="panel-title" id="cruxTitle">Real users</span><span id="cruxVerdict"></span>
-      <span class="muted end" id="cruxMeta" style="font-size:var(--t-sm)"></span></div>
-    <div class="strip five flat" id="cruxStrip"></div>
-    <div class="multiples" id="cruxCharts"></div>
-  </section>
+    <div class="strip five" id="cruxStrip" role="group" aria-label="Real-user Web Vitals"></div>
 
-  <section class="panel" aria-labelledby="runsTitle">
-    <div class="panel-head"><span class="panel-title" id="runsTitle">Test runs</span><span class="muted end" id="runCount" style="font-size:var(--t-sm)"></span></div>
-    <div class="table-scroll">
-      <table>
-        <thead><tr><th>Date</th><th>Perf.</th><th>A11y</th><th>BP</th><th>SEO</th><th>LCP</th><th>FCP</th><th>TBT</th><th>CLS</th></tr></thead>
-        <tbody id="runs"></tbody>
-      </table>
+    <div class="panel" id="cruxPanel">
+      <div class="panel-head"><h3 class="panel-title">Core Web Vitals over time</h3>
+        <span class="legend end"><span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span></span></div>
+      <div class="multiples" id="cruxCharts"></div>
     </div>
-    <button class="more" id="more" type="button" hidden></button>
   </section>
 
   <footer class="foot">
-    <p>Scores are Google Lighthouse lab results. The figures at the top are medians over the selected period; the change compares it with the period before.
-      LCP is when the main content appears, FCP is when anything first appears, TBT is how long the page is unresponsive to input, and CLS is how much the layout jumps.</p>
+    <p>The change under each lab figure compares it with the period before. LCP is when the main content appears, FCP is when anything first appears,
+      TBT is how long the page is unresponsive to input, CLS is how much the layout jumps, INP is how quickly the page responds to taps and clicks,
+      and TTFB is how long the server takes to start responding.</p>
     <p id="methodNote" hidden></p>
   </footer>
 </main>
@@ -1458,11 +1556,11 @@ function renderStrips() {
       : { lowerBetter: true, label: 'vs previous period', format: x => fmt(key, Math.abs(x)), flatBelow: META[key].good * 0.02 };
     return `<div><div class="strip-label">${META[key].label}</div>
       <div class="strip-value num">${graded(key, v, 11)}</div>
-      <div class="strip-sub">${prevFrom ? deltaHtml(d, opts) : ''}<span>${thresholdText(key)}</span></div></div>`;
+      <div class="strip-sub">${has(d) ? deltaHtml(d, opts) : ''}<span>${META[key].kind === 'score' ? '' : `${META[key].short} · `}${thresholdText(key)}</span></div></div>`;
   };
   $('#scores').innerHTML = SCORE_KEYS.map(cell).join('');
   $('#vitals').innerHTML = VITAL_KEYS.map(cell).join('');
-  $('#period').textContent = !to ? '' : from !== rangeFrom ? `Figures since the methodology change (${fmtDay(from)}); charts show the full period`
+  $('#period').textContent = !to ? '' : from !== rangeFrom ? `Figures cover ${from === to ? fmtDay(to) : `${fmtDay(from)} – ${fmtDay(to)}`} only, since the methodology change; charts show the full period`
     : from ? `${fmtDay(from)} – ${fmtDay(to)}` : `All tests to ${fmtDay(to)}`;
 }
 
@@ -1474,18 +1572,20 @@ function renderCharts() {
   const pts = key => rows.filter(r => has(r[COL[key]])).map(r => ({ x: dayDate(r[0]).getTime(), y: r[COL[key]] }));
   const narrow = innerWidth < 640;
   charts.push(lineChart($('#scoreChart'), {
-    key: 'performance', endLabels: !narrow, rightPad: narrow ? 0 : 56, methodChange: UNI.method_change,
+    key: 'performance', endLabels: !narrow, rightPad: narrow ? 0 : 56, methodChange: UNI.method_change, flag: false,
     series: SCORE_KEYS.map(k => ({ label: META[k].short, color: css(SERIES[k]), data: pts(k) })),
     tooltipLabel: i => ` ${META[SCORE_KEYS[i.datasetIndex]].label}  ${Math.round(i.parsed.y)}`,
   }));
   $('#sLegend').innerHTML = SCORE_KEYS.map(k => `<span><span class="swatch" style="--c:var(${SERIES[k]})"></span>${META[k].label}</span>`).join('') +
+    (inWindow(UNI.method_change, from, to) ? methodLegend(UNI.method_change) : '');
+  $('#vLegend').innerHTML = '<span class="note"><span class="dash"></span>good / poor thresholds · lower is better</span>' +
     (inWindow(UNI.method_change, from, to) ? methodLegend(UNI.method_change) : '');
   $('#multiples').innerHTML = VITAL_KEYS.map(k => `<div><div class="mult-head"><span class="swatch" style="--c:var(${SERIES[k]})"></span><b>${META[k].label}</b><span>${META[k].short} · ${thresholdText(k)}</span></div>
     <div class="chart-box sm"><canvas id="c-${k}" role="img" aria-label="${META[k].label} over time"></canvas></div></div>`).join('');
   VITAL_KEYS.forEach(k => {
     const data = pts(k);
     const yMax = Math.max(META[k].poor * 1.1, ...data.map(p => p.y));
-    charts.push(lineChart($(`#c-${k}`), { key: k, yMax, methodChange: UNI.method_change, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
+    charts.push(lineChart($(`#c-${k}`), { key: k, yMax, methodChange: UNI.method_change, flag: false, series: [{ label: META[k].short, color: css(SERIES[k]), data }] }));
   });
   renderCrux();
 }
@@ -1496,14 +1596,16 @@ function renderCrux() {
   const entry = UNI.crux?.[state.device];
   const rows = entry?.rows || [];
   if (!rows.length) {
-    $('#cruxVerdict').innerHTML = ''; $('#cruxMeta').textContent = ''; $('#cruxCharts').innerHTML = '';
+    $('#cruxVerdict').innerHTML = ''; $('#cruxMeta').textContent = ''; $('#cruxExplain').textContent = ''; $('#cruxCharts').innerHTML = ''; $('#cruxPanel').hidden = true;
     $('#cruxStrip').innerHTML = `<div class="empty" style="grid-column: 1 / -1">Chrome doesn't have enough real-user data for this site on ${state.device}.</div>`;
     return;
   }
+  $('#cruxPanel').hidden = false;
   const last = rows.at(-1);
   const latest = { day: last[0], v: last.slice(1), scope: entry.scope };
-  $('#cruxVerdict').innerHTML = `<span class="muted" style="font-size:var(--t-sm)">Core Web Vitals</span> ${cwvBadge(latest)}`;
-  $('#cruxMeta').textContent = `28 days to ${fmtDay(latest.day)} · ${entry.scope === 'origin' ? 'whole site (homepage has too little traffic)' : 'homepage'} · weekly since ${fmtDay(rows[0][0])}`;
+  $('#cruxVerdict').innerHTML = cwvBadge(latest, { verbose: true });
+  $('#cruxExplain').textContent = cwvExplain(latest);
+  $('#cruxMeta').textContent = `28 days to ${fmtDay(latest.day)} · ${entry.scope === 'origin' ? 'whole site, as the homepage has too little traffic on its own' : 'homepage only'} · charts show weekly figures since ${fmtDay(rows[0][0])}`;
   $('#cruxStrip').innerHTML = CRUX_KEYS.map((key, i) => `<div><div class="strip-label">${META[key].label}</div>
     <div class="strip-value num">${graded(key, latest.v[i], 11)}</div>
     <div class="strip-sub"><span>${META[key].short} · ${thresholdText(key)}</span></div></div>`).join('');
@@ -1517,14 +1619,17 @@ function renderCrux() {
   });
 }
 
+// In the run table only scores below good carry a grade mark, so problems stand out from the 99s and 100s
+const runScore = (k, v) => gradeOf(k, v) === 'good' ? `<span class="quiet">${fmt(k, v)}</span>` : `<span class="cell">${graded(k, v, 8)}</span>`;
+
 function renderRuns() {
   const { from, to } = periods();
   const all = UNI.runs.filter(r => r[1] === state.device && (!from || r[0].slice(0, 10) >= from) && (!to || r[0].slice(0, 10) <= to)).reverse();
   const shown = all.slice(0, state.limit);
-  $('#runCount').textContent = all.length ? `${all.length.toLocaleString('en-GB')} on ${state.device}` : '';
+  $('#runCount').textContent = all.length ? `${all.length.toLocaleString('en-GB')} on ${state.device} · scores under 90 marked` : '';
   $('#runs').innerHTML = shown.length ? shown.map(r => `<tr>
       <td>${new Date(r[0]).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
-      ${FIELDS.slice(0, 4).map((k, i) => `<td class="num"><span class="cell">${graded(k, r[i + 2], 8)}</span></td>`).join('')}
+      ${FIELDS.slice(0, 4).map((k, i) => `<td class="num">${runScore(k, r[i + 2])}</td>`).join('')}
       ${['largest_contentful_paint', 'first_contentful_paint', 'total_blocking_time', 'cumulative_layout_shift'].map(k => `<td class="num">${fmt(k, r[2 + FIELDS.indexOf(k)])}</td>`).join('')}
     </tr>`).join('')
     : `<tr><td colspan="9" class="empty">No ${state.device} tests in this period</td></tr>`;
@@ -1546,7 +1651,9 @@ $('#groups').innerHTML = groupTags(UNI.groups);
 const carry = [UNI.slug, ...storage.get('compare', []).filter(s => s !== UNI.slug)].slice(0, MAX_COMPARE);
 $('#compareLink').href = `compare.html?u=${carry.join(',')}`;
 
-bindSeg(state, key => { if (key === 'smooth') return renderCharts(); state.limit = PAGE; render(); }, $('#filters'));
+const onFilter = key => { if (key === 'smooth') return renderCharts(); state.limit = PAGE; render(); };
+bindSeg(state, onFilter, $('#filters'));
+bindSeg(state, onFilter, $('#labFilters'));
 $('#more').addEventListener('click', () => { state.limit += PAGE * 5; renderRuns(); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderCharts);
 let resizeTimer;
@@ -1782,7 +1889,7 @@ class UniversityDashboard:
             f"{university['name']} · University Web Rankings",
             f"Daily Lighthouse scores and Web Vitals for the {university['name']} homepage.",
         ) + self.fill(DETAIL_TEMPLATE,
-                      TOPBAR=topbar('detail', html.escape(university['domain'])),
+                      TOPBAR=topbar('detail', html.escape(university['name'])),
                       NAME=html.escape(university['name']),
                       URL=html.escape(university['url']),
                       DOMAIN=html.escape(university['domain']),
